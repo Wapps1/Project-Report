@@ -222,7 +222,7 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 <table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
   <tr>
     <td style="width: 150px; text-align: center;">
-      <img src="img/profile-photos/fabiola-saldaña.png"  width="520"></img>
+      <img src="img/profile-photos/fabiola.jpeg"  width="520"></img>
     </td>
       <td>
           <p align="center"><strong>Fabiola Saldaña - u202313773</strong></p>
