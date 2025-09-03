@@ -11,7 +11,8 @@
 
 
 <p align="center">
-    <strong>Startup: Awawa</strong><br>
+    <strong>Startup: 
+        Wapps</strong><br>
     <strong>Producto: Red Carga</strong>
 </p>
 
@@ -226,7 +227,7 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
       <td>
           <p align="center"><strong>Fabiola Saldaña - u202313773</strong></p>
           <p align="justify">
-             /descripción
+             Mi nombre es Fabiola Saldaña, tengo 19 años y actualmente curso el 6to ciclo de la carrera de Ingeniería de Software. En lo personal busco aprender constantemente y me considero alguien responsable, proactiva y dedicada con mis trabajos. Es por ello que me comprometo apoyar al equipo con mis habilidades y conocimientos para alcanzar los mejores resultados.
           </p>
     </td>
   </tr>
