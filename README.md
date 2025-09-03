@@ -11,7 +11,8 @@
 
 
 <p align="center">
-    <strong>Startup: Awawa</strong><br>
+    <strong>Startup: 
+        Wapps</strong><br>
     <strong>Producto: Red Carga</strong>
 </p>
 
@@ -160,6 +161,77 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ## 1.1. Startup Profile
 ### 1.1.1. Descripción de la Startup
 ### 1.1.2. Perfiles de integrantes del equipo
+
+<table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 150px; text-align: center;">
+      <img src="img/profile-photos/ari.jpg"  width="520"></img>
+    </td>
+      <td>
+          <p align="center"><strong>Ariana Agreda - u202315044</strong></p>
+          <p align="justify">
+            Mi nombre es Ariana Agreda, tengo 19 años y soy estudiante del 6to ciclo de Ingeniería de Software en la UPC. Me considero una persona creativa, responsable y comprometida con cada tarea. Por ello, estoy dispuesta a dedicar un gran esfuerzo y apoyo para que logremos los mejores resultados para el proyecto.
+          </p>
+    </td>
+  </tr>
+</table>
+
+<table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 150px; text-align: center;">
+      <img src="img/profile-photos/ClaudiaBelledonne.jpg"  width="520"></img>
+    </td>
+      <td>
+          <p align="center"><strong>Claudia Belledonne - u202210259</strong></p>
+          <p align="justify">
+            Mi nombre es Claudia Belledonne, tengo 20 años y me encuentro en mi tercer año de Ingeniería de Software en la UPC.
+            En general, soy alguien creativa, responsable, dedicada y manejo bien el hacer muchas tareas a la vez.
+            Para este trabajo, me comprometo a brindar mi máximo esfuerzo y dedicación.
+          </p>
+    </td>
+  </tr>
+</table>
+
+<table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 150px; text-align: center;">
+      <img src="img/profile-photos/mau.jpg"  width="520"></img>
+    </td>
+      <td>
+          <p align="center"><strong>Mauricio Elera - u202313702</strong></p>
+          <p align="justify">
+            Mi nombre es Mauricio Elera, tengo 19 años y soy estudiante del 6to ciclo de Ingeniería de Software en la UPC. Me considero una persona proactiva, organizada y con muchas ganas de aprender. Estoy comprometido con el trabajo en equipo y dispuesto a aportar todo lo necesario para que nuestro proyecto sea exitoso.
+          </p>
+    </td>
+  </tr>
+</table>
+
+<table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 150px; text-align: center;">
+      <img src="img/profile-photos/maria-hernandez.jpeg"  width="520"></img>
+    </td>
+      <td>
+          <p align="center"><strong>María Hernández - u202311258</strong></p>
+          <p align="justify">
+             Estudio la carrera de Ingeniería de Software, tengo 19 años y actualmente me encuentro cursando el sexto ciclo de dicha carrera. Tengo conocimientos en C++, C#, Python, Java, HTML, CSS, JavaScript y Vue. Me considero una persona con responsabilidad, optimismo y honestidad, cualidades que considero fundamentales para una colaboración efectiva en equipo y un buen desarrollo en este proyecto.
+          </p>
+    </td>
+  </tr>
+</table>
+<table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 150px; text-align: center;">
+      <img src="img/profile-photos/fabiola.jpeg"  width="520"></img>
+    </td>
+      <td>
+          <p align="center"><strong>Fabiola Saldaña - u202313773</strong></p>
+          <p align="justify">
+             Mi nombre es Fabiola Saldaña, tengo 19 años y actualmente curso el 6to ciclo de la carrera de Ingeniería de Software. En lo personal busco aprender constantemente y me considero alguien responsable, proactiva y dedicada con mis trabajos. Es por ello que me comprometo apoyar al equipo con mis habilidades y conocimientos para alcanzar los mejores resultados.
+          </p>
+    </td>
+  </tr>
+</table>
 
 ## 1.2. Solution Profile
 ### 1.2.1. Antecedentes y problemática
