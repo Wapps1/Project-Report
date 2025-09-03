@@ -208,12 +208,12 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 <table align="center" border="1" cellspacing="0" cellpadding="8" style="width: 90%; border-collapse: collapse;">
   <tr>
     <td style="width: 150px; text-align: center;">
-      <img src="img/profile-photos/maria-hernandez.png"  width="520"></img>
+      <img src="img/profile-photos/maria-hernandez.jpeg"  width="520"></img>
     </td>
       <td>
           <p align="center"><strong>María Hernández - u202311258</strong></p>
           <p align="justify">
-             /descripción
+             Estudio la carrera de Ingeniería de Software, tengo 19 años y actualmente me encuentro cursando el sexto ciclo de dicha carrera. Tengo conocimientos en C++, C#, Python, Java, HTML, CSS, JavaScript y Vue. Me considero una persona con responsabilidad, optimismo y honestidad, cualidades que considero fundamentales para una colaboración efectiva en equipo y un buen desarrollo en este proyecto.
           </p>
     </td>
   </tr>
