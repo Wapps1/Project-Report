@@ -243,6 +243,46 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 ## 1.3. Segmentos objetivo
 
+### 🎯 Segmento Objetivo #1: Personas o empresas que quieres transportar carga de forma interprovincial
+
+#### 📊 Aspectos Demográficos
+- **Sexo:** Masculino y Femenino
+- **Edades:** 18 a 65+ años (personas naturales) y responsables de logística/administración en empresas
+- **Nivel socioeconómico:** Clases A, B, C, D y E
+
+#### 🌍 Aspectos Geográficos
+- **Nacionalidad:** Peruana
+- **Zona geográfica:** Urbana y rural
+- **Departamento:** Todos los departamentos del Perú (incluida Lima Metropolitana y Callao)
+
+#### 🧠 Aspectos Psicográficos
+- Valoran comparar precios y tiempos de entrega para optimizar costo/beneficio
+- Buscan formalidad (emisión de guía de remisión cuando corresponda) y trazabilidad en tiempo real
+- Prefieren procesos simples desde el móvil: solicitud → cotización → trato → pago en la app
+- Confían en proveedores con buena reputación, soporte en chat y políticas claras de cambios
+- **Perfil de uso:** envíos puntuales (personas) y recurrentes (pymes/empresas), con necesidades de plantilla para ítems frecuentes
+
+---
+
+### 🚛 Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga
+
+#### 📊 Aspectos Demográficos
+- **Sexo:** Masculino y Femenino
+- **Edades:** 21 a 65+ años (conductores y administradores/operadores de flota)
+- **Nivel socioeconómico:** Clases A, B, C, D y E (predominio de micro, pequeñas y medianas empresas; compatible con grandes flotas)
+
+#### 🌍 Aspectos Geográficos
+- **Nacionalidad:** Peruana
+- **Zona geográfica:** Urbana y rural
+- **Departamento:** Todos los departamentos del Perú (incluida Lima Metropolitana y Callao)
+
+#### 🧠 Aspectos Psicográficos
+- Quieren captar demanda formal y estable para mejorar ocupación y flujo de caja
+- Valoran una app que facilite cotizar rápido, chatear con el cliente y gestionar documentos (guía de transportista)
+- Necesitan activar geolocalización para generar confianza y cumplir con hitos operativos (recogido/en ruta/entregado)
+- Prefieren liquidaciones claras en la plataforma (99% al proveedor, 1% fee) y visibilidad de pagos
+- **Perfil operativo:** flotas pequeñas y medianas como núcleo, con soporte para grandes operadores y subcontratación controlada
+
 <br>
 <br>
 
