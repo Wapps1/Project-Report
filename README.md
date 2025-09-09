@@ -254,6 +254,56 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 ## 2.2. Entrevistas
 ### 2.2.1. Diseño de entrevistas
+
+#### **Segmento 1: Personas o empresas que quieres transportar carga de forma interprovincial**
+
+**Dirigido a:** Personas o representantes de empresas que desean enviar carga interprovincial y buscan seleccionar entre distintas propuestas el servicio más adecuado.<br>
+**Objetivo:** Conocer las necesidades, prioridades y problemas de quienes desean transportar carga interprovincialmente, identificando los procesos más complicados o lentos, así como sus expectativas frente a una herramienta digital como Red Carga.<br>
+**Preguntas:**<br>
+**Preguntas:**  
+1. ¿Cuál es su nombre completo?  
+2. ¿Qué edad tiene?  
+3. ¿En qué provincia reside actualmente?  
+4. ¿A qué se dedica (ocupación/empresa)?  
+5. ¿Con qué frecuencia realiza envíos interprovinciales y qué tipo de carga envía normalmente?  
+6. ¿Cómo busca y selecciona actualmente una empresa de transporte? (canales, criterios).  
+7. ¿Cuánto tiempo le toma en promedio encontrar una empresa que se ajuste a sus necesidades?  
+8. ¿Qué canales utiliza para contactar a la empresa (teléfono, redes sociales, página web, presencial, etc.)?  
+9. ¿Cuántas cotizaciones suele solicitar antes de decidirse por una empresa?  
+10. ¿Qué tan fácil o difícil le resulta obtener una cotización adecuada?  
+11. ¿Qué documentos o requisitos legales suele solicitarle la empresa de transporte y qué tan complicados le resultan?  
+12. ¿Qué medio de pago utiliza normalmente y qué problemas ha tenido en este proceso?  
+13. ¿Qué tan importante es para usted la seguridad, el precio, la rapidez y la atención al cliente en este servicio?  
+14. ¿Qué experiencias negativas ha tenido en el pasado (demoras, pérdidas, mal servicio, etc.)?  
+15. Si existiera una aplicación que centralice cotizaciones, contratos, pagos y seguimiento, ¿qué funcionalidades consideraría imprescindibles?  
+
+
+
+#### **Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
+
+**Dirigido a:** Personas que administran una empresa de transporte interprovincial y desean agilizar sus procesos de conexión con clientes y cotizaciones.<br>
+**Objetivo:** Comprender los procesos internos que siguen los administradores desde el primer contacto con el cliente hasta la entrega final, identificando fallas, tiempos, impacto en la calidad del servicio, así como sus expectativas frente a una herramienta digital como Red Carga.<br>
+**Preguntas:**<br>
+1. ¿Cuál es su nombre completo?  
+2. ¿Qué edad tiene?  
+3. ¿En qué provincia opera principalmente su empresa?  
+4. ¿Cuál es su cargo u ocupación dentro de la empresa?  
+5. ¿Qué tipo de carga gestionan con mayor frecuencia y qué volumen promedio manejan en sus envíos?  
+6. ¿Cómo es actualmente el proceso desde que un cliente solicita información hasta la confirmación de un envío?  
+7. ¿Cuánto suele demorar este proceso y qué pasos generan más retrasos?  
+8. ¿Qué canales utilizan para captar clientes y cuáles resultan más efectivos?  
+9. ¿Qué factores influyen más en la decisión de un cliente al contratarlos (precio, tiempo, seguridad, reputación)?  
+10. ¿Qué problemas o dificultades se presentan con mayor frecuencia al coordinar un envío?  
+11. ¿Qué tipo de documentos o trámites legales deben gestionarse en cada envío y qué dificultades enfrentan con ellos?  
+12. ¿Qué dificultades han tenido en el manejo de contratos, comprobantes de pago o facturación?  
+13. ¿Qué aspectos considera más débiles en la comunicación actual con los clientes?  
+14. ¿Cómo gestionan actualmente el seguimiento de la carga y qué tan importante es la trazabilidad en tiempo real?  
+15. Si existiera una aplicación que le permita centralizar en un solo lugar la gestión de cotizaciones, contratos, pagos y seguimiento de envíos, ¿qué funcionalidades le resultarían más valiosas para su empresa?
+
+
+
+<br>
+
 ### 2.2.2. Registro de entrevistas
 ### 2.2.3. Análisis de entrevistas
 
