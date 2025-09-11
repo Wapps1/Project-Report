@@ -313,6 +313,8 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 
 #### 1.2.2.4. Lean UX Canvas
 
+![Lean UX Canvas](./img/Chapter-1/Lean-UX-Canvas.jpg)
+
 ## 1.3. Segmentos objetivo
 
 ### 🎯 Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial
