@@ -250,6 +250,13 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ### 1.2.1. Antecedentes y problemática
 ### 1.2.2. Lean UX Process
 #### 1.2.2.1. Lean UX Problem Statements
+
+Nuestro servicio ofrece un aplicativo móvil que conecta a clientes que desean transportar carga interprovincial con proveedores que cuentan con flotas disponibles para realizar dicho servicio. La aplicación busca centralizar solicitudes, cotizaciones, pagos y trazabilidad en un solo espacio confiable.
+
+Hemos observado un factor crítico que afecta la confianza y satisfacción de los usuarios: actualmente, el proceso de solicitar transporte y coordinar con proveedores es informal, fragmentado y poco transparente. Los clientes enfrentan dificultades para obtener cotizaciones rápidas y confiables, mientras que los proveedores carecen de herramientas para gestionar sus flotas, pagos y documentación de manera eficiente. Esto genera demoras, desconfianza en los pagos y problemas en la trazabilidad de la carga.
+
+¿Cómo podemos mejorar la confianza, rapidez y transparencia en la gestión del transporte interprovincial, asegurando que tanto clientes como proveedores cumplan sus objetivos con una experiencia clara, segura y satisfactoria dentro del aplicativo móvil?
+
 #### 1.2.2.2. Lean UX Assumptions
 #### 1.2.2.3. Lean UX Hypothesis Statements
 #### 1.2.2.4. Lean UX Canvas
