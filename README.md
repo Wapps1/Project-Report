@@ -297,6 +297,20 @@ Debe tener una interfaz móvil intuitiva, clara y confiable, con notificaciones 
 - Creemos que la aplicación debe ofrecer un sistema de calificaciones y comentarios para aumentar la confianza entre usuarios.
 
 #### 1.2.2.3. Lean UX Hypothesis Statements
+
+- Creemos que los clientes usarán la pasarela de pagos dentro del aplicativo móvil cuando vean que al hacerlo obtienen automáticamente sus documentos de transporte.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando al menos el 80% de los pagos de tratos formales se realicen dentro de la app y recibamos comentarios positivos sobre la facilidad del trámite de documentos.
+- Creemos que los clientes valorarán la trazabilidad en tiempo real de su carga a través de geolocalización.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando al menos el 70% de los clientes consulte la vista de trazabilidad en cada envío y un 60% de ellos la califique como “muy útil”.
+- Creemos que el sistema de calificaciones aumentará la confianza entre clientes y proveedores.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando al menos el 50% de los usuarios califiquen después de un trato formal y observemos un incremento en la cantidad de solicitudes aceptadas sin necesidad de negociación extensa.
+- Creemos que el chat en tiempo real entre cliente y proveedor facilitará la coordinación y reducirá disputas.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin uso de chat activo y los usuarios lo reporten como una herramienta clave para coordinar detalles.
+
 #### 1.2.2.4. Lean UX Canvas
 
 ## 1.3. Segmentos objetivo
