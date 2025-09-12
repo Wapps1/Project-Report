@@ -299,99 +299,143 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 <br>
 <br>
 
-# Capítulo II: Requirements Elicitation & Analysis
+<!-- Capítulo II: Requirements Elicitation & Analysis -->
+<h1>2.1. Competidores</h1>
+<h2>2.1.1. Análisis competitivo</h2>
 
-## 2.1. Competidores
-### 2.1.1. Análisis competitivo
-
-<table>
+<table border="1" cellspacing="0" cellpadding="6" width="100%">
   <tr>
     <th colspan="6">Competitive Analysis Landscape</th>
   </tr>
+
   <tr>
-    <td align="center">¿Por qué llevar a cabo este análisis?</td>
-    <td colspan="5" align="center">Escriba la pregunta u objetivo de este análisis</td>
+    <td align="center"><b>¿Por qué llevar a cabo este análisis?</b></td>
+    <td colspan="5" align="center">
+      Identificar cómo <b>RedCarga</b> puede diferenciarse en el mercado peruano de carga interprovincial frente a jugadores existentes,
+      qué funcionalidades y tácticas priorizar, y qué riesgos/amenazas debemos mitigar.
+    </td>
   </tr>
 
   <tr>
     <th colspan="2" align="center">Nombre y logo</th>
-    <th align="center">Su startup</th>
-    <th align="center">Efletex (Perú)</th>
-    <th align="center">DeltaX (LatAm)</th>
-    <th align="center">Competidor 3</th>
+    <th align="center">Su startup: <b>RedCarga</b></th>
+    <th align="center">Competidor 1: <b>Efletex (Perú)</b></th>
+    <th align="center">Competidor 2: <b>DeltaX (LatAm)</b></th>
+    <th align="center">Competidor 3: <b>MiCarga (Tracklink, Perú)</b></th>
   </tr>
 
   <!-- PERFIL -->
   <tr>
     <th rowspan="2" align="center">Perfil</th>
-    <td align="center">Overview</td>
-    <td></td>
+    <td align="center"><b>Overview</b></td>
     <td>
-      <ul>
-        <li>Marketplace peruano de carga pesada (2018).</li>
-        <li>Web &amp; app móvil; conecta generadores con transportistas.</li>
-        <li>~1.8k transportistas, ~2k usuarios; 21.6k envíos (&gt;≈600k t).</li>
-        <li>Foco Perú; inició B2B y extendió a pymes/particulares.</li>
-      </ul>
+      <p align="justify">
+        <b>RedCarga</b> es una app móvil que conecta empresas/usuarios que envían <b>carga pesada interprovincial</b> con transportistas,
+        con experiencia en tiempo real: solicitud con fotos (IA estima medidas), cotizaciones instantáneas, negociación por chat,
+        pago in-app, <b>documentos automáticos</b> y <b>tracking GPS obligatorio</b> tras el pago.
+      </p>
     </td>
     <td>
-      <ul>
-        <li>Plataforma logística B2B regional (2020, Bolivia).</li>
-        <li>SaaS TMS + Marketplace; presencia en BO, PE, CL, MX, PY.</li>
-        <li>&gt;200 clientes y 42k transportistas registrados.</li>
-        <li>Apoyo de VC (&gt;USD 1M) y expansión LatAm.</li>
-      </ul>
+      <p align="justify">
+        Plataforma peruana de transporte de carga pesada (2018). Conecta generadores de carga con transportistas vía web/móvil,
+        modernizando la logística con comunidades de transporte. Empezó B2B y se amplió a pymes/usuarios.
+      </p>
     </td>
-    <td></td>
+    <td>
+      <p align="justify">
+        Plataforma digital B2B (2020) conocida como “Uber de camiones” andino. Ofrece software integral para gestionar logística
+        end-to-end y opera en varios países con marketplace regional unificado y respaldo de inversión.
+      </p>
+    </td>
+    <td>
+      <p align="justify">
+        Plataforma peruana creada por <b>Tracklink</b> (GPS vehicular) para conectar clientes y transportistas a nivel nacional.
+        Comunidad online + app móvil; los transportistas ofertan/aceptan servicios “de A a B”.
+      </p>
+    </td>
   </tr>
+
   <tr>
-    <td align="center">Ventaja competitiva ¿Qué valor ofrece a los clientes?</td>
-    <td></td>
+    <td align="center"><b>Ventaja competitiva<br/>¿Qué valor ofrece?</b></td>
+    <td>
+      <ul>
+        <li><b>1% de comisión</b> (solo si el pago es in-app) → mejores tarifas netas y retención en la plataforma.</li>
+        <li><b>Documentos obligatorios automáticos</b> (guía de remisión y de transportista) tras el pago.</li>
+        <li><b>IA</b> para estimar medidas desde fotos + plantillas reutilizables.</li>
+        <li><b>Tracking obligatorio</b> y ratings “doble ciego” (7 días) para confianza.</li>
+        <li>Enfoque <b>Perú</b> (adaptación rápida a normativa local).</li>
+      </ul>
+    </td>
     <td>
       <ul>
         <li>Pionero local; conocimiento del mercado peruano.</li>
         <li>Ahorro de tiempo/costos; comparación de ofertas.</li>
-        <li>Seguimiento GPS 24/7; verificación y reputación de transportistas.</li>
+        <li>Seguimiento GPS 24/7; verificación y reputación.</li>
         <li>Soporte con asesores; menos viajes en vacío.</li>
       </ul>
     </td>
     <td>
       <ul>
         <li>Digitaliza procesos end-to-end (licitaciones, planificación, tracking).</li>
-        <li>Homologación/seguridad; alertas y documentación digital (OCR).</li>
+        <li>Homologación/seguridad; alertas y documentación digital.</li>
         <li>Gran red regional; cargas de retorno.</li>
-        <li>Fintech: anticipos de pago y beneficios a transportistas.</li>
+        <li>Fintech: anticipos de pago y beneficios.</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>Matching con <b>cotización y cierre</b> en línea.</li>
+        <li><b>Seguimiento GPS</b> con el stack Tracklink.</li>
+        <li>App móvil nativa para transportistas (Android/iOS).</li>
+      </ul>
+    </td>
   </tr>
 
   <!-- PERFIL DE MARKETING -->
   <tr>
     <th rowspan="2" align="center">Perfil de marketing</th>
-    <td align="center">Mercado objetivo</td>
-    <td></td>
+    <td align="center"><b>Mercado objetivo</b></td>
     <td>
       <ul>
-        <li>Perú; carga pesada interprovincial (&ge;1 t).</li>
-        <li>Corporativos (minería, consumo, logística) → pymes y mudanzas.</li>
+        <li><b>Perú</b>, rutas interprovinciales.</li>
+        <li>Empresas medianas/grandes y transportistas verificados (heavy cargo).</li>
+        <li>Pymes con envíos recurrentes y usuarios con envíos puntuales de alto volumen.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Perú; carga pesada interprovincial (≥1 t).</li>
+        <li>Corporativos (minería, consumo, logística) → pymes/mudanzas.</li>
         <li>No última milla/paquetería ligera.</li>
       </ul>
     </td>
     <td>
       <ul>
         <li>Medianas y grandes empresas (bebidas, puertos, agro, construcción).</li>
-        <li>Región andina + México; proveedores: empresas y choferes independientes.</li>
+        <li>Región andina + México; oferta: empresas y choferes independientes.</li>
       </ul>
     </td>
-    <td></td>
-  </tr>
-  <tr>
-    <td align="center">Estrategias de marketing</td>
-    <td></td>
     <td>
       <ul>
-        <li>PR y estudios del mercado; prensa local.</li>
+        <li>Perú; cargas ligeras-medianas-pesadas (foco operativo nacional).</li>
+        <li>Transportistas con GPS Tracklink y clientes que requieren visibilidad.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Estrategias de marketing</b></td>
+    <td>
+      <ul>
+        <li>Lanzamiento por <b>corredores</b> (Lima–Arequipa, Lima–Piura) con clientes ancla.</li>
+        <li><b>Onboarding asistido</b> a transportistas (WhatsApp/llamadas) + verificación rápida.</li>
+        <li>Incentivos a <b>pago in-app</b> (documentos + tracking solo tras pagar).</li>
+        <li>Narrativa “<b>hecho en Perú</b>”, casos de uso locales y PR sectorial.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>PR y estudios de mercado; prensa local.</li>
         <li>RR. SS. (comunidad “amigos ruteros”, tutoriales, promos).</li>
         <li>Activaciones B2B y testimonios de ahorros.</li>
       </ul>
@@ -403,41 +447,65 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
         <li>Incentivos (anticipos/beneficios) y oficinas locales.</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>Uso de canales Tracklink (base instalada GPS) y prensa logística.</li>
+        <li>Redes sociales para captar oferta y demanda.</li>
+        <li>Promesa de seguridad/visibilidad 24/7.</li>
+      </ul>
+    </td>
   </tr>
 
   <!-- PERFIL DEL PRODUCTO -->
   <tr>
     <th rowspan="3" align="center">Perfil del producto</th>
-    <td align="center">Productos &amp; Servicios</td>
-    <td></td>
+    <td align="center"><b>Productos &amp; Servicios</b></td>
     <td>
       <ul>
-        <li>Marketplace de cargas: órdenes, chat/alertas, calificaciones.</li>
+        <li>Marketplace móvil: solicitud por ítem (fotos→<b>IA</b>→medidas), ruta con puntos intermedios.</li>
+        <li><b>Cotizaciones en tiempo real</b>, chat, estado <i>trato</i> y <i>trato formal</i> tras pagar.</li>
+        <li><b>Documentos</b> automáticos (cliente/proveedor) y <b>tracking</b> obligatorio.</li>
+        <li>Plantillas de ítems, historial y <b>ratings</b> de doble ciego.</li>
+        <li>Ajustes post-pago: top-ups, reembolsos, y recálculo del 1%.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Marketplace: órdenes, chat/alertas, calificaciones.</li>
         <li>Tracking en vivo.</li>
-        <li>GPS/Fleet management propio: reportes, cumplimiento SUTRAN/OSINERGMIN.</li>
+        <li>GPS/fleet propio (reportes, cumplimiento SUTRAN/OSINERGMIN).</li>
         <li>Vertical de mudanzas.</li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>SaaS TMS configurable (roles, dashboards, KPIs; ML para matching).</li>
+        <li><b>SaaS TMS</b> configurable (roles, dashboards, KPIs; ML para matching).</li>
         <li>Marketplace por invitación; compartir cargas/rutas entre clientes.</li>
-        <li>APIs/integraciones.</li>
-        <li>Fintech: factoring/anticipos.</li>
+        <li>APIs/integraciones; <b>fintech</b> (anticipos/factoring).</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>Marketplace: clientes publican; transportistas ofertan y cierran en línea.</li>
+        <li>Tracking en tiempo real con GPS de Tracklink.</li>
+      </ul>
+    </td>
   </tr>
+
   <tr>
-    <td align="center">Precios &amp; Costos</td>
-    <td></td>
+    <td align="center"><b>Precios &amp; Costos</b></td>
+    <td>
+      <ul>
+        <li><b>1% de comisión</b> solo si el pago se realiza en la app.</li>
+        <li>Con top-ups o reembolsos, el 1% se <b>recalcula</b> sobre el monto final.</li>
+        <li>Documentos/tracking se habilitan <b>solo tras el pago</b> (incentivo anti “cerrar por fuera”).</li>
+      </ul>
+    </td>
     <td>
       <ul>
         <li>Registro/uso básico gratis.</li>
-        <li>Comisión al transportista por flete (≈5–10% estimado).</li>
-        <li>Ahorros reportados para clientes (millones en S/).</li>
-        <li>GPS con precio adicional competitivo.</li>
+        <li>Comisión al transportista por flete (rango de mercado ~5–10%).</li>
+        <li>Ahorros reportados para clientes; GPS con precio adicional.</li>
       </ul>
     </td>
     <td>
@@ -445,39 +513,59 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
         <li>SaaS: suscripción/licenciamiento según tamaño/uso.</li>
         <li>Marketplace: comisión por transacción.</li>
         <li>Ingresos fintech (descuentos/intereses de anticipos).</li>
-        <li>ROI positivo para clientes; mercados rentables.</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>No publica comisión/estructura de precios en canales abiertos.</li>
+      </ul>
+    </td>
   </tr>
+
   <tr>
-    <td align="center">Canales de distribución (Web y/o Móvil)</td>
-    <td></td>
+    <td align="center"><b>Canales de distribución<br/>(Web y/o Móvil)</b></td>
+    <td>
+      <ul>
+        <li><b>Móvil (Android)</b> como canal principal.</li>
+        <li>Panel web para empresas (posterior/roadmap).</li>
+      </ul>
+    </td>
     <td>
       <ul>
         <li>Web + apps Android/iOS (&gt;5k descargas Android).</li>
-        <li>Disponibilidad 24/7; notificaciones en tiempo real.</li>
-        <li>Soporte telefónico y oficina en Lima; números para MX/CO/AR.</li>
+        <li>24/7; notificaciones en tiempo real.</li>
+        <li>Soporte telefónico y oficina en Lima; números MX/CO/AR.</li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>Web SaaS para empresas; apps Android/iOS (&gt;10k descargas).</li>
-        <li>Tracking resiliente a conectividad; equipos locales por país.</li>
-        <li>Integraciones vía API con ERPs y sistemas de clientes.</li>
+        <li>Web SaaS (empresas) + apps Android/iOS (&gt;10k descargas).</li>
+        <li>Tracking resiliente; equipos locales por país.</li>
+        <li>Integraciones vía API con ERPs.</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>Web (captación) + <b>MiCarga Transportista</b> en Android/iOS.</li>
+      </ul>
+    </td>
   </tr>
 
   <!-- SWOT -->
   <tr>
     <th rowspan="4" align="center">Análisis SWOT</th>
-    <td align="center">Fortalezas</td>
-    <td></td>
+    <td align="center"><b>Fortalezas</b></td>
     <td>
       <ul>
-        <li>First mover en Perú; red local validada por grandes clientes.</li>
+        <li><b>Costos</b>: 1% → propuesta agresiva para atraer oferta/demanda.</li>
+        <li><b>Compliance</b>: documentos automáticos + tracking obligatorio.</li>
+        <li><b>UX</b> simple y móvil-first; IA en captura de medidas.</li>
+        <li><b>Local</b>: velocidad para adaptar normativa peruana.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>First mover en Perú; red local validada.</li>
         <li>Funcionalidades adaptadas a normativa local.</li>
         <li>Seguridad: verificación + GPS + reputación.</li>
         <li>Soporte personalizado y servicios complementarios (GPS).</li>
@@ -488,20 +576,33 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
         <li>Solución integral TMS + Marketplace.</li>
         <li>&gt;200 empresas; 42k transportistas, 240k viajes monitoreados.</li>
         <li>Seguridad/homologación y analítica avanzada.</li>
-        <li>Respaldo VC; beneficios y fintech para transportistas.</li>
+        <li>Respaldo VC; beneficios y fintech.</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>Respaldo Tracklink (confianza + infraestructura GPS).</li>
+        <li>Matching con cotización/cierre en app.</li>
+        <li>Apps móviles nativas para operación en campo.</li>
+      </ul>
+    </td>
   </tr>
+
   <tr>
-    <td align="center">Debilidades</td>
-    <td></td>
+    <td align="center"><b>Debilidades</b></td>
+    <td>
+      <ul>
+        <li><b>Efecto red</b> inicial limitado (liquidez por corredor).</li>
+        <li>Riesgo de <b>desintermediación</b> si no se incentiva pago in-app.</li>
+        <li>Necesidad de soporte 24/7 y verificación robusta.</li>
+      </ul>
+    </td>
     <td>
       <ul>
         <li>Menor escala vs actores regionales.</li>
         <li>Menor financiación; posible menor sofisticación analítica.</li>
-        <li>Foco amplio (B2B y mudanzas) puede diluir esfuerzos.</li>
-        <li>Limitada presencia internacional.</li>
+        <li>Foco amplio (B2B + mudanzas) diluye esfuerzos.</li>
+        <li>Presencia internacional limitada.</li>
       </ul>
     </td>
     <td>
@@ -509,48 +610,79 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
         <li>Menos accesible para pequeños/espóradicos.</li>
         <li>Plataforma compleja; curva de aprendizaje.</li>
         <li>Marketplace por invitación limita crecimiento.</li>
-        <li>Riesgos de adopción digital y operación multi-país.</li>
+        <li>Riesgos de adopción digital multi-país.</li>
       </ul>
     </td>
-    <td></td>
-  </tr>
-  <tr>
-    <td align="center">Oportunidades</td>
-    <td></td>
     <td>
       <ul>
-        <li>Digitalización/guías electrónicas; captar transportistas independientes.</li>
+        <li>Información pública limitada sobre comisiones/precios.</li>
+        <li>Foco mixto (ligera-mediana-pesada) puede diluir heavy cargo.</li>
+        <li>Dependencia del ecosistema GPS Tracklink.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Oportunidades</b></td>
+    <td>
+      <ul>
+        <li>Formalización (guías electrónicas) y digitalización del sector.</li>
+        <li>Nichos de heavy cargo especializado y pymes regionales.</li>
+        <li>Alianzas con gremios, terminales, aseguradoras.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Digitalización/guías electrónicas; captar independientes.</li>
         <li>Verticales clave: minería, agro, retail.</li>
         <li>Expansión andina y alianzas (seguros, combustible, MTC).</li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>Mercado LatAm enorme; expansión a nuevos países.</li>
+        <li>Mercado LatAm grande; nuevos países/industrias.</li>
         <li>Profundizar fintech (seguros, leasing, puntos).</li>
-        <li>Alianzas gobierno/gremios; monetizar data/insights.</li>
+        <li>Alianzas gobierno/gremios; monetizar insights.</li>
       </ul>
     </td>
-    <td></td>
-  </tr>
-  <tr>
-    <td align="center">Amenazas</td>
-    <td></td>
     <td>
       <ul>
-        <li>Competidores tecnológicos (DeltaX) y nuevos entrantes (p.ej., RedCarga 1%).</li>
-        <li>Actores tradicionales/soluciones internas de empresas.</li>
+        <li>Integrar documentación electrónica para diferenciarse.</li>
+        <li>Captar pymes y regiones poco digitalizadas.</li>
+        <li>Aprovechar base Tracklink para escalar oferta.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Amenazas</b></td>
+    <td>
+      <ul>
+        <li>Efletex/DeltaX/MiCarga con base instalada o escala.</li>
+        <li>Cambios regulatorios/seguros que eleven barreras.</li>
+        <li>Desintermediación cliente-transportista.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Competidores tecnológicos y nuevos entrantes.</li>
+        <li>Actores tradicionales/soluciones internas.</li>
         <li>Cambios regulatorios; resistencia de transportistas.</li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>Competencia local ágil y nuevos jugadores globales.</li>
-        <li>Entornos regulatorios diversos por país.</li>
-        <li>Preferencia por soluciones locales; incidentes de seguridad dañarían reputación.</li>
+        <li>Competencia local ágil y jugadores globales.</li>
+        <li>Entornos regulatorios diversos.</li>
+        <li>Preferencia por soluciones locales; incidentes de seguridad.</li>
       </ul>
     </td>
-    <td></td>
+    <td>
+      <ul>
+        <li>DeltaX (escala) y Efletex (arraigo local).</li>
+        <li>Nuevos entrantes móviles con UX simple y costos bajos.</li>
+      </ul>
+    </td>
   </tr>
 </table>
 
