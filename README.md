@@ -303,6 +303,259 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 ## 2.1. Competidores
 ### 2.1.1. Análisis competitivo
+
+<table>
+  <tr>
+    <th colspan="6">Competitive Analysis Landscape</th>
+  </tr>
+  <tr>
+    <td align="center">¿Por qué llevar a cabo este análisis?</td>
+    <td colspan="5" align="center">Escriba la pregunta u objetivo de este análisis</td>
+  </tr>
+
+  <tr>
+    <th colspan="2" align="center">Nombre y logo</th>
+    <th align="center">Su startup</th>
+    <th align="center">Efletex (Perú)</th>
+    <th align="center">DeltaX (LatAm)</th>
+    <th align="center">Competidor 3</th>
+  </tr>
+
+  <!-- PERFIL -->
+  <tr>
+    <th rowspan="2" align="center">Perfil</th>
+    <td align="center">Overview</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Marketplace peruano de carga pesada (2018).</li>
+        <li>Web &amp; app móvil; conecta generadores con transportistas.</li>
+        <li>~1.8k transportistas, ~2k usuarios; 21.6k envíos (&gt;≈600k t).</li>
+        <li>Foco Perú; inició B2B y extendió a pymes/particulares.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Plataforma logística B2B regional (2020, Bolivia).</li>
+        <li>SaaS TMS + Marketplace; presencia en BO, PE, CL, MX, PY.</li>
+        <li>&gt;200 clientes y 42k transportistas registrados.</li>
+        <li>Apoyo de VC (&gt;USD 1M) y expansión LatAm.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Ventaja competitiva ¿Qué valor ofrece a los clientes?</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Pionero local; conocimiento del mercado peruano.</li>
+        <li>Ahorro de tiempo/costos; comparación de ofertas.</li>
+        <li>Seguimiento GPS 24/7; verificación y reputación de transportistas.</li>
+        <li>Soporte con asesores; menos viajes en vacío.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Digitaliza procesos end-to-end (licitaciones, planificación, tracking).</li>
+        <li>Homologación/seguridad; alertas y documentación digital (OCR).</li>
+        <li>Gran red regional; cargas de retorno.</li>
+        <li>Fintech: anticipos de pago y beneficios a transportistas.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+
+  <!-- PERFIL DE MARKETING -->
+  <tr>
+    <th rowspan="2" align="center">Perfil de marketing</th>
+    <td align="center">Mercado objetivo</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Perú; carga pesada interprovincial (&ge;1 t).</li>
+        <li>Corporativos (minería, consumo, logística) → pymes y mudanzas.</li>
+        <li>No última milla/paquetería ligera.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Medianas y grandes empresas (bebidas, puertos, agro, construcción).</li>
+        <li>Región andina + México; proveedores: empresas y choferes independientes.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Estrategias de marketing</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>PR y estudios del mercado; prensa local.</li>
+        <li>RR. SS. (comunidad “amigos ruteros”, tutoriales, promos).</li>
+        <li>Activaciones B2B y testimonios de ahorros.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Ventas consultivas y demos; casos de éxito y logos.</li>
+        <li>PR en ecosistema startup; redes para captar transportistas.</li>
+        <li>Incentivos (anticipos/beneficios) y oficinas locales.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+
+  <!-- PERFIL DEL PRODUCTO -->
+  <tr>
+    <th rowspan="3" align="center">Perfil del producto</th>
+    <td align="center">Productos &amp; Servicios</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Marketplace de cargas: órdenes, chat/alertas, calificaciones.</li>
+        <li>Tracking en vivo.</li>
+        <li>GPS/Fleet management propio: reportes, cumplimiento SUTRAN/OSINERGMIN.</li>
+        <li>Vertical de mudanzas.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>SaaS TMS configurable (roles, dashboards, KPIs; ML para matching).</li>
+        <li>Marketplace por invitación; compartir cargas/rutas entre clientes.</li>
+        <li>APIs/integraciones.</li>
+        <li>Fintech: factoring/anticipos.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Precios &amp; Costos</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Registro/uso básico gratis.</li>
+        <li>Comisión al transportista por flete (≈5–10% estimado).</li>
+        <li>Ahorros reportados para clientes (millones en S/).</li>
+        <li>GPS con precio adicional competitivo.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>SaaS: suscripción/licenciamiento según tamaño/uso.</li>
+        <li>Marketplace: comisión por transacción.</li>
+        <li>Ingresos fintech (descuentos/intereses de anticipos).</li>
+        <li>ROI positivo para clientes; mercados rentables.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Canales de distribución (Web y/o Móvil)</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Web + apps Android/iOS (&gt;5k descargas Android).</li>
+        <li>Disponibilidad 24/7; notificaciones en tiempo real.</li>
+        <li>Soporte telefónico y oficina en Lima; números para MX/CO/AR.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Web SaaS para empresas; apps Android/iOS (&gt;10k descargas).</li>
+        <li>Tracking resiliente a conectividad; equipos locales por país.</li>
+        <li>Integraciones vía API con ERPs y sistemas de clientes.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+
+  <!-- SWOT -->
+  <tr>
+    <th rowspan="4" align="center">Análisis SWOT</th>
+    <td align="center">Fortalezas</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>First mover en Perú; red local validada por grandes clientes.</li>
+        <li>Funcionalidades adaptadas a normativa local.</li>
+        <li>Seguridad: verificación + GPS + reputación.</li>
+        <li>Soporte personalizado y servicios complementarios (GPS).</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Solución integral TMS + Marketplace.</li>
+        <li>&gt;200 empresas; 42k transportistas, 240k viajes monitoreados.</li>
+        <li>Seguridad/homologación y analítica avanzada.</li>
+        <li>Respaldo VC; beneficios y fintech para transportistas.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Debilidades</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Menor escala vs actores regionales.</li>
+        <li>Menor financiación; posible menor sofisticación analítica.</li>
+        <li>Foco amplio (B2B y mudanzas) puede diluir esfuerzos.</li>
+        <li>Limitada presencia internacional.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Menos accesible para pequeños/espóradicos.</li>
+        <li>Plataforma compleja; curva de aprendizaje.</li>
+        <li>Marketplace por invitación limita crecimiento.</li>
+        <li>Riesgos de adopción digital y operación multi-país.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Oportunidades</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Digitalización/guías electrónicas; captar transportistas independientes.</li>
+        <li>Verticales clave: minería, agro, retail.</li>
+        <li>Expansión andina y alianzas (seguros, combustible, MTC).</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Mercado LatAm enorme; expansión a nuevos países.</li>
+        <li>Profundizar fintech (seguros, leasing, puntos).</li>
+        <li>Alianzas gobierno/gremios; monetizar data/insights.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">Amenazas</td>
+    <td></td>
+    <td>
+      <ul>
+        <li>Competidores tecnológicos (DeltaX) y nuevos entrantes (p.ej., RedCarga 1%).</li>
+        <li>Actores tradicionales/soluciones internas de empresas.</li>
+        <li>Cambios regulatorios; resistencia de transportistas.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Competencia local ágil y nuevos jugadores globales.</li>
+        <li>Entornos regulatorios diversos por país.</li>
+        <li>Preferencia por soluciones locales; incidentes de seguridad dañarían reputación.</li>
+      </ul>
+    </td>
+    <td></td>
+  </tr>
+</table>
+
+
+
 ### 2.1.2. Estrategias y tácticas frente a competidores
 
 ## 2.2. Entrevistas
