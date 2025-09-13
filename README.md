@@ -245,6 +245,74 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 ## 1.2. Solution Profile
 ### 1.2.1. Antecedentes y problemática
+
+**What (Qué)**
+
+- ¿Cuál es el problema?<br>
+Los clientes que necesitan transportar carga entre provincias enfrentan procesos informales, poco transparentes y fragmentados para cotizar, pagar, documentar y rastrear sus envíos. En muchos casos, esto conlleva demoras, malos entendidos, falta de confianza, o pagos fuera de lo pactado.
+
+- ¿Cuál es la relación con la persona en cuestión?<br>
+El producto busca facilitar la vida de dos perfiles; el cliente que requiere enviar carga (sea empresa o persona natural), y el proveedor de transporte que quiere ofrecer su servicio de forma formal, eficiente, y con garantías de pago y cumplimiento.
+
+**When (Cuándo)**
+
+- ¿Cuándo sucede el problema?<br>
+Sucede cuando un cliente necesita enviar carga interprovincial, al momento de solicitar cotizaciones, coordinar rutas, verificar medidas y/o peso, asegurarse de la documentación, negociar cambios de último momento, hacer seguimiento del envío, etc.
+
+- ¿Cuándo utiliza el cliente el producto?<br>
+Al crear su cuenta, configurar sus datos, querer realizar una solicitud de envío, comparar cotizaciones, aceptar un trato y realiza el pago. Durante el transporte, para ver trazabilidad. Luego de la entrega, para calificar al proveedor.
+
+**Where (Dónde)**
+
+- ¿Dónde está el cliente cuando usa el producto?<br>
+Normalmente desde su teléfono móvil, desde donde se encuentre, como en casa, oficina, almacén, o mientras organiza logística. No necesariamente en los puntos de carga o descarga, aunque puede estar allí para revisar la carga o coordinar los detalles.
+
+- ¿A dónde se dirige?<br>
+Se dirige a completar el flujo que va desde solicitar envío hasta la entrega final de la carga, con todas las etapas intermedias funcionando bien: cotizaciones, aceptación, pago, documentación, seguimiento, entrega.
+
+- ¿Dónde surge el problema?<br>
+Surge en los momentos de coordinación, al enviar fotos y medidas, al negociar precio y ruta, al momento del pago, y sobre todo la falta de trazabilidad y documentación cuando el envio ya está en curso.
+
+**Who (Quién)**
+
+- ¿Quiénes están involucrados?<br>
+EL cliente (empresa o persona natural) que envía la carga, el proveedor de transporte, el personal de logística del proveedor (los que materialmente transportan).
+
+- ¿A quiénes les sucede el problema?<br>
+Clientes sin experiencia en transporte formal, que dependen de cotizaciones informales y proveedores que no tienen un sistema digital para gestionar rutas, pagos, documentación, seguimiento.
+
+- ¿Quién lo utilizará?<br>
+Clientes quienes necesitan transporte interprovincial y proveedores de transporte con flotas.
+
+**Why (Por qué)**
+
+- ¿Cuál es la causa del problema?<br>
+Falta de formalización en muchos servicios de transporte interprovincial, las cuales en su mayoría se coordinan por teléfono, WhatsApp, sin garantía de pagos y documentación. Además de la dificultad para estimar costos reales cuando datos de peso, volumen, rutas, puntos intermedios no están estandarizados. También la falta de transparencia sobre el estado del envío "¿dónde está mi carga?" o "¿cuándo llegará?.
+
+**How (Cómo)**
+
+- ¿En qué condiciones los clientes usan nuestro producto?<br>
+Los clientes usan el aplicativo cuando necesitan enviar carga de forma segura y rápida, desde oficina o móvil. Buscan trazabilidad, pagos documentados y coordinación confiable, evitando la informalidad en envíos puntuales o recurrentes.
+
+- ¿Cómo nos conocieron los compradores?<br>
+Los compradores llegan por recomendaciones, búsquedas en internet y redes sociales. También descubren la solución a través de transportistas asociados, asociaciones comerciales o campañas de publicidad que destacan seguridad, trazabilidad y pagos confiables.
+
+- ¿Cómo prefieren los lectores acceder a nuestro contenido?<br>
+Prefieren un aplicativo móvil fácil de usar, con notificaciones, formularios simples y chat integrado.
+
+- ¿Qué llevó a la persona a llegar a esta situación?<br>
+Necesitan resolver envíos urgentes y seguros tras experiencias negativas con fraudes o retrasos. La falta de alternativas digitales transparentes los empuja a buscar un canal formal que garantice seguridad y eficiencia.
+
+**How much (cuánto)**
+
+Según el Anuario Estadístico del MTC (2024), el número de empresas autorizadas para el transporte terrestre de carga por carretera registró una disminución del 1.5% respecto al 2023, equivalente a 1 907 unidades menos. Si bien esta reducción parece moderada, evidencia la inestabilidad en el sector, marcado por ciclos anuales de aumentos y descensos. Este comportamiento irregular refleja los desafíos de sostenibilidad en el transporte formal, especialmente para pequeñas empresas que enfrentan costos elevados y competencia con servicios informales.
+
+![Empresas de servicio de carga](./img/Chapter-1/Empresas-de-servicio-de-carga.png)
+
+Asimismo, en el año 2024 se realizaron 1 109 510 intervenciones a vehículos de carga. De estas, el 98.4% cumplió con los reglamentos vigentes, mientras que el 1.6% fue calificado como "No conforme". Aunque la cifra de incumplimiento parece mínima, representa 18 298 casos que ponen en riesgo la seguridad y la confianza en el sector. Cabe destacar que, en el período 2020–2024, estos incumplimientos descendieron significativamente, pasando de 41 476 a 18 298 casos, lo que indica un avance en fiscalización, pero también la persistencia de brechas que requieren soluciones tecnológicas y de control más efectivas.
+
+![Fiscalización a unidades de transporte de carga](./img/Chapter-1/Fiscalización-a-unidades-de-transporte-de-carga.png)
+
 ### 1.2.2. Lean UX Process
 #### 1.2.2.1. Lean UX Problem Statements
 
