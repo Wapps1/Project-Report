@@ -83,9 +83,12 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 # Contenido
 [Student Outcome](#student-outcome)
 
+- [Project Report](#project-report)
 - [Project Report Collaboration Insights](#project-report-collaboration-insights)
+  - [TB1](#tb1)
 - [Contenido](#contenido)
 - [Student Outcome](#student-outcome)
+- [Objetivos SMART](#objetivos-smart)
 - [Capítulo I: Presentación](#capítulo-i-presentación)
   - [1.1. Startup Profile](#11-startup-profile)
     - [1.1.1. Descripción de la Startup](#111-descripción-de-la-startup)
@@ -98,12 +101,22 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
       - [1.2.2.3. Lean UX Hypothesis Statements](#1223-lean-ux-hypothesis-statements)
       - [1.2.2.4. Lean UX Canvas](#1224-lean-ux-canvas)
   - [1.3. Segmentos objetivo](#13-segmentos-objetivo)
-- [Capítulo II: Requirements Elicitation & Analysis](#capítulo-ii-requirements-elicitation--analysis)
+    - [🎯 Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial](#-segmento-objetivo-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
+      - [📊 Aspectos Demográficos](#-aspectos-demográficos)
+      - [🌍 Aspectos Geográficos](#-aspectos-geográficos)
+      - [🧠 Aspectos Psicográficos](#-aspectos-psicográficos)
+    - [🚛 Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga](#-segmento-objetivo-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
+      - [📊 Aspectos Demográficos](#-aspectos-demográficos-1)
+      - [🌍 Aspectos Geográficos](#-aspectos-geográficos-1)
+      - [🧠 Aspectos Psicográficos](#-aspectos-psicográficos-1)
+- [Capítulo II: Requirements Elicitation \& Analysis](#capítulo-ii-requirements-elicitation--analysis)
   - [2.1. Competidores](#21-competidores)
     - [2.1.1. Análisis competitivo](#211-análisis-competitivo)
     - [2.1.2. Estrategias y tácticas frente a competidores](#212-estrategias-y-tácticas-frente-a-competidores)
   - [2.2. Entrevistas](#22-entrevistas)
     - [2.2.1. Diseño de entrevistas](#221-diseño-de-entrevistas)
+      - [**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**](#segmento-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
+      - [**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**](#segmento-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
     - [2.2.2. Registro de entrevistas](#222-registro-de-entrevistas)
     - [2.2.3. Análisis de entrevistas](#223-análisis-de-entrevistas)
   - [2.3. Needfinding](#23-needfinding)
@@ -234,11 +247,112 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ### 1.2.1. Antecedentes y problemática
 ### 1.2.2. Lean UX Process
 #### 1.2.2.1. Lean UX Problem Statements
+
+Nuestro servicio ofrece un aplicativo móvil que conecta a clientes que desean transportar carga interprovincial con proveedores que cuentan con flotas disponibles para realizar dicho servicio. La aplicación busca centralizar solicitudes, cotizaciones, pagos y trazabilidad en un solo espacio confiable.
+
+Hemos observado un factor crítico que afecta la confianza y satisfacción de los usuarios: actualmente, el proceso de solicitar transporte y coordinar con proveedores es informal, fragmentado y poco transparente. Los clientes enfrentan dificultades para obtener cotizaciones rápidas y confiables, mientras que los proveedores carecen de herramientas para gestionar sus flotas, pagos y documentación de manera eficiente. Esto genera demoras, desconfianza en los pagos y problemas en la trazabilidad de la carga.
+
+¿Cómo podemos mejorar la confianza, rapidez y transparencia en la gestión del transporte interprovincial, asegurando que tanto clientes como proveedores cumplan sus objetivos con una experiencia clara, segura y satisfactoria dentro del aplicativo móvil?
+
 #### 1.2.2.2. Lean UX Assumptions
+
+**Business Assumptions**
+
+- Creo que mis clientes necesitan una forma rápida, segura y confiable de coordinar el transporte de carga interprovincial con proveedores verificados.
+- Estas necesidades se pueden resolver con un aplicativo móvil que centralice solicitudes, cotizaciones en tiempo real, pagos seguros y trazabilidad mediante geolocalización.
+- Mis clientes iniciales serán pequeñas y medianas empresas, comerciantes y personas naturales que requieren enviar carga entre provincias.
+- El valor #1 que un cliente quiere de mi servicio es confianza y transparencia en el proceso de contratación y transporte.
+- El cliente también puede obtener beneficios adicionales como rapidez en recibir cotizaciones, facilidad de pago, gestión automatizada de documentos de transporte y soporte en disputas.
+- Voy a adquirir la mayoría de mis clientes a través de campañas digitales, asociaciones con cámaras de comercio, y marketing de boca a boca de los primeros usuarios satisfechos.
+- Haré dinero a través de una comisión del 1% sobre cada transacción pagada dentro de la app.
+- Mi competencia principal en el mercado serán servicios tradicionales de transporte y marketplaces informales de transporte.
+- Los venceremos debido a la seguridad en pagos, la trazabilidad de la carga, la facilidad de uso y la formalidad al emitir documentos automáticamente.
+- Mi mayor riesgo de producto es que los usuarios intenten realizar el pago fuera de la app para evitar la comisión.
+- Resolveremos esto a través de beneficios exclusivos solo disponibles con el pago en la app.
+
+**User Assumptions**
+
+- ¿Quién es el usuario?<br>
+Clientes que necesitan transportar carga interprovincial y proveedores.
+- ¿Dónde encaja nuestro producto en su trabajo o vida?<br>
+En la organización de sus envíos y operaciones logísticas, reemplazando la informalidad actual por un sistema digital confiable.
+- ¿Qué problemas tiene nuestro producto que resolver?<br>
+Falta de transparencia en precios, informalidad en la documentación, inseguridad en pagos y dificultad en el seguimiento de la carga.
+- ¿Cuándo y cómo es nuestro producto usado?<br>
+Los clientes lo usan al generar solicitudes de transporte y pagar servicios; los proveedores al responder cotizaciones, gestionar flotas y coordinar envíos. Ambos lo usan en tiempo real para chatear y dar seguimiento a cargas en tránsito.
+- ¿Qué características son importantes?<br>
+Cotizaciones en tiempo real, chat seguro, pasarela de pagos integrada, emisión automática de documentos, trazabilidad por geolocalización, calificaciones y reputación.
+- ¿Cómo debe verse nuestro producto y cómo comportarse?<br>
+Debe tener una interfaz móvil intuitiva, clara y confiable, con notificaciones oportunas, navegación sencilla y elementos visuales que transmitan seguridad y formalidad.
+
+**Feature Assumptions**
+
+- Creemos que la aplicación debe incluir una pasarela de pagos segura que incentive a los clientes a realizar transacciones dentro de la app, garantizando que se cobre la comisión.
+- Creemos que la aplicación debe contar con un sistema de geolocalización en tiempo real para que los clientes puedan seguir la trazabilidad de sus envíos.
+- Creemos que la aplicación debe generar documentos automáticos (guía de remisión y guía de transportista) tras el pago, lo que dará formalidad y confianza al servicio.
+- Creemos que la aplicación debe permitir chat en tiempo real entre cliente y proveedor para coordinar ajustes de última hora en sus envíos.
+- Creemos que la aplicación debe ofrecer un sistema de calificaciones y comentarios para aumentar la confianza entre usuarios.
+
 #### 1.2.2.3. Lean UX Hypothesis Statements
+
+- Creemos que los clientes usarán la pasarela de pagos dentro del aplicativo móvil cuando vean que al hacerlo obtienen automáticamente sus documentos de transporte.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando al menos el 80% de los pagos de tratos formales se realicen dentro de la app y recibamos comentarios positivos sobre la facilidad del trámite de documentos.
+- Creemos que los clientes valorarán la trazabilidad en tiempo real de su carga a través de geolocalización.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando al menos el 70% de los clientes consulte la vista de trazabilidad en cada envío y un 60% de ellos la califique como “muy útil”.
+- Creemos que el sistema de calificaciones aumentará la confianza entre clientes y proveedores.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando al menos el 50% de los usuarios califiquen después de un trato formal y observemos un incremento en la cantidad de solicitudes aceptadas sin necesidad de negociación extensa.
+- Creemos que el chat en tiempo real entre cliente y proveedor facilitará la coordinación y reducirá disputas.<br>
+Sabremos que hemos tenido éxito<br>
+Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin uso de chat activo y los usuarios lo reporten como una herramienta clave para coordinar detalles.
+
 #### 1.2.2.4. Lean UX Canvas
 
+![Lean UX Canvas](./img/Chapter-1/Lean-UX-Canvas.jpg)
+
 ## 1.3. Segmentos objetivo
+
+### 🎯 Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial
+
+#### 📊 Aspectos Demográficos
+- **Sexo:** Masculino y Femenino
+- **Edades:** 18 a 65+ años (personas naturales) y responsables de logística/administración en empresas
+- **Nivel socioeconómico:** Clases A, B, C, D y E
+
+#### 🌍 Aspectos Geográficos
+- **Nacionalidad:** Peruana
+- **Zona geográfica:** Urbana y rural
+- **Departamento:** Todos los departamentos del Perú (incluida Lima Metropolitana y Callao)
+
+#### 🧠 Aspectos Psicográficos
+- Valoran comparar precios y tiempos de entrega para optimizar costo/beneficio
+- Buscan formalidad (emisión de guía de remisión cuando corresponda) y trazabilidad en tiempo real
+- Prefieren procesos simples desde el móvil: solicitud → cotización → trato → pago en la app
+- Confían en proveedores con buena reputación, soporte en chat y políticas claras de cambios
+- **Perfil de uso:** envíos puntuales (personas) y recurrentes (pymes/empresas), con necesidades de plantilla para ítems frecuentes
+
+---
+
+### 🚛 Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga
+
+#### 📊 Aspectos Demográficos
+- **Sexo:** Masculino y Femenino
+- **Edades:** 21 a 65+ años (conductores y administradores/operadores de flota)
+- **Nivel socioeconómico:** Clases A, B, C, D y E (predominio de micro, pequeñas y medianas empresas; compatible con grandes flotas)
+
+#### 🌍 Aspectos Geográficos
+- **Nacionalidad:** Peruana
+- **Zona geográfica:** Urbana y rural
+- **Departamento:** Todos los departamentos del Perú (incluida Lima Metropolitana y Callao)
+
+#### 🧠 Aspectos Psicográficos
+- Quieren captar demanda formal y estable para mejorar ocupación y flujo de caja
+- Valoran una app que facilite cotizar rápido, chatear con el cliente y gestionar documentos (guía de transportista)
+- Necesitan activar geolocalización para generar confianza y cumplir con hitos operativos (recogido/en ruta/entregado)
+- Prefieren liquidaciones claras en la plataforma (99% al proveedor, 1% fee) y visibilidad de pagos
+- **Perfil operativo:** flotas pequeñas y medianas como núcleo, con soporte para grandes operadores y subcontratación controlada
 
 <br>
 <br>
@@ -252,7 +366,7 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ## 2.2. Entrevistas
 ### 2.2.1. Diseño de entrevistas
 
-#### **Segmento 1: Personas o empresas que quieres transportar carga de forma interprovincial**
+#### **Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
 
 **Dirigido a:** Personas o representantes de empresas que desean enviar carga interprovincial y buscan seleccionar entre distintas propuestas el servicio más adecuado.<br>
 **Objetivo:** Conocer las necesidades, prioridades y problemas de quienes desean transportar carga interprovincialmente, identificando los procesos más complicados o lentos, así como sus expectativas frente a una herramienta digital como Red Carga.<br>
@@ -305,10 +419,79 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ### 2.2.3. Análisis de entrevistas
 
 ## 2.3. Needfinding
+
+En el siguiente apartado, analizaremos a nuestros segmentos objetivos para identificar sus necesidades y en base a esto ofrecerles soluciones óptimas a sus problemas.
+
+<br>
+
 ### 2.3.1. User Personas
+**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
+<img src="img/Chapter-2/UserPersona1.png" alt="User persona - segmento 1" width="700"/>
+
+
+
+**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
+<img src="img/Chapter-2/UserPersona2.png" alt="User persona - segmento 2" width="700"/>
+
+
+
 ### 2.3.2. User Task Matrix
+
+**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
+
+| **Task Matrix**                                                                | **Frecuencia** | **Importancia** |
+| ------------------------------------------------------------------------------ | -------------- | --------------- |
+| Solicitar transporte para enviar electrodomésticos a provincias                | Alta           | Alta            |
+| Comparar precios y tiempos de entrega entre diferentes proveedores             | Alta           | Alta            |
+| Coordinar entregas con clientes finales                                        | Alta           | Alta            |
+| Empacar y preparar los electrodomésticos para el transporte                    | Media          | Alta            |
+| Hacer seguimiento de los envíos en tiempo real                                 | Alta           | Alta            |
+| Registrar ventas y costos en hojas de cálculo o aplicaciones simples           | Media          | Alta            |
+| Responder consultas y coordinar ventas en Facebook, WhatsApp e Instagram       | Alta           | Media           |
+| Negociar precios con clientes y proveedores de transporte                      | Alta           | Alta            |
+| Gestionar pagos y reembolsos a través de apps bancarias o billeteras digitales | Alta           | Alta            |
+| Resolver problemas con entregas dañadas, retrasos o pérdidas                   | Media          | Alta            |
+| Capacitarse en nuevas herramientas digitales para mejorar la gestión           | Baja           | Media           |
+
+<br>
+
+**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
+
+| **Task Matrix**                                                              | **Frecuencia** | **Importancia** |
+| ---------------------------------------------------------------------------- | -------------- | --------------- |
+| Coordinar y asignar rutas a los camiones                                     | Alta           | Alta            |
+| Cotizar precios y responder solicitudes de transporte                        | Alta           | Alta            |
+| Gestionar la documentación de envío (guías de remisión, contratos, facturas) | Alta           | Alta            |
+| Supervisar el estado y mantenimiento de los camiones                         | Media          | Alta            |
+| Contactar y negociar con nuevos clientes                                     | Alta           | Alta            |
+| Hacer seguimiento del transporte y ubicación de las unidades en tiempo real  | Alta           | Alta            |
+| Controlar pagos, ingresos y liquidaciones con clientes y transportistas      | Alta           | Alta            |
+| Publicar y responder mensajes en Facebook, WhatsApp y otras plataformas      | Alta           | Media           |
+| Registrar datos de viajes, pagos y clientes en hojas de cálculo o cuadernos  | Media          | Alta            |
+| Capacitarse en nuevas herramientas tecnológicas para optimizar procesos      | Baja           | Alta            |
+
+
+
 ### 2.3.3. User Journey Mapping
+**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
+<img src="img/Chapter-2/JourneyMap1.png" alt="Journey Map - segmento 1" width="750"/>
+
+<br>
+
+**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
+<img src="img/Chapter-2/JourneyMap2.png" alt="Journey Map - segmento 2" width="750"/>
+
+
 ### 2.3.4. Empathy Mapping
+**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
+<img src="img/Chapter-2/EmpathyMap1.png" alt="Empathy Map - segmento 1" width="700"/>
+
+<br>
+
+**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
+<img src="img/Chapter-2/EmpathyMap2.png" alt="Empathy Map - segmento 2" width="700"/>
+
+
 ### 2.3.5. Ubiquitous Language
 
 ## 2.4. Requirements Specification
