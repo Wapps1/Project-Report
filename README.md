@@ -111,34 +111,31 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
     - [2.3.2. User Task Matrix](#232-user-task-matrix)
     - [2.3.3. User Journey Mapping](#233-user-journey-mapping)
     - [2.3.4. Empathy Mapping](#234-empathy-mapping)
-    - [2.3.5. As-is Scenario Mapping](#235-as-is-scenario-mapping)
-  - [2.4. Ubiquitous Language](#24-ubiquitous-language)
-- [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
-  - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
-  - [3.2. User Stories](#32-user-stories)
-  - [3.3. Impact Mapping](#33-impact-mapping)
-  - [3.4. Product Backlog](#34-product-backlog)
-- [Capítulo IV: Solution Software Design](#capítulo-iv-solution-software-design)
-  - [4.1. Strategic-Level Domain-Driven Design](#41-strategic-level-domain-driven-design)
-    - [4.1.1. EventStorming](#411-eventstorming)
-      - [4.1.1.1. Candidate Context Discovery](#4111-candidate-context-discovery)
-      - [4.1.1.2. Domain Message Flows Modeling](#4112-domain-message-flows-modeling)
-      - [4.1.1.3. Bounded Context Canvases](#4113-bounded-context-canvases)
-    - [4.1.2. Context Mapping](#412-context-mapping)
-    - [4.1.3. Software Architecture](#413-software-architecture)
-      - [4.1.3.1. Software Architecture Context Level Diagrams](#4131-software-architecture-context-level-diagrams)
-      - [4.1.3.2. Software Architecture Container Level Diagrams](#4132-software-architecture-container-level-diagrams)
-      - [4.1.3.3. Software Architecture Deployment Diagrams](#4133-software-architecture-deployment-diagrams)
-  - [4.2. Tactical-Level Domain-Driven Design](#42-tactical-level-domain-driven-design)
-    - [4.2.X. Bounded Context: Nombre](#42x-bounded-context-nombre)
-      - [4.2.X.1. Domain Layer](#42x1-domain-layer)
-      - [4.2.X.2. Interface Layer](#42x2-interface-layer)
-      - [4.2.X.3. Application Layer](#42x3-application-layer)
-      - [4.2.X.4. Infrastructure Layer](#42x4-infrastructure-layer)
-      - [4.2.X.5. Bounded Context Software Architecture Component Level Diagrams](#42x5-bounded-context-software-architecture-component-level-diagrams)
-      - [4.2.X.6. Bounded Context Software Architecture Code Level Diagrams](#42x6-bounded-context-software-architecture-code-level-diagrams)
-        - [4.2.X.6.1. Bounded Context Domain Layer Class Diagrams](#42x61-bounded-context-domain-layer-class-diagrams)
-        - [4.2.X.6.2. Bounded Context Database Design Diagram](#42x62-bounded-context-database-design-diagram)
+    - [2.3.5. Ubiquitous Language](#235-ubiquitous-language)
+  - [2.4. Requirements Specification](#24-requirements-specification)
+    - [2.4.1. User Stories](#241-user-stories)
+    - [2.4.2. Impact Mapping](#242-impact-mapping)
+    - [2.4.3. Product Backlog](#243-product-backlog)
+  - [2.5. Strategic-Level Domain-Driven Design](#25-strategic-level-domain-driven-design)
+    - [2.5.1. EventStorming](#251-eventstorming)
+      - [2.5.1.1. Candidate Context Discovery](#2511-candidate-context-discovery)
+      - [2.5.1.2. Domain Message Flows Modeling](#2512-domain-message-flows-modeling)
+      - [2.5.1.3. Bounded Context Canvases](#2513-bounded-context-canvases)
+    - [2.5.2. Context Mapping](#252-context-mapping)
+    - [2.5.3. Software Architecture](#253-software-architecture)
+      - [2.5.3.1. Software Architecture Context Level Diagrams](#2531-software-architecture-context-level-diagrams)
+      - [2.5.3.2. Software Architecture Container Level Diagrams](#2532-software-architecture-container-level-diagrams)
+      - [2.5.3.3. Software Architecture Deployment Diagrams](#2533-software-architecture-deployment-diagrams)
+  - [2.6. Tactical-Level Domain-Driven Design](#26-tactical-level-domain-driven-design)
+    - [2.6.X. Bounded Context: Nombre](#26x-bounded-context-nombre)
+      - [2.6.X.1. Domain Layer](#26x1-domain-layer)
+      - [2.6.X.2. Interface Layer](#26x2-interface-layer)
+      - [2.6.X.3. Application Layer](#26x3-application-layer)
+      - [2.6.X.4. Infrastructure Layer](#26x4-infrastructure-layer)
+      - [2.6.X.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.X.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.X.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
+        - [2.6.X.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
 - [Bibliografía](#bibliografía)
@@ -312,46 +309,34 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ### 2.3.2. User Task Matrix
 ### 2.3.3. User Journey Mapping
 ### 2.3.4. Empathy Mapping
-### 2.3.5. As-is Scenario Mapping
+### 2.3.5. Ubiquitous Language
 
-## 2.4. Ubiquitous Language
+## 2.4. Requirements Specification
+### 2.4.1. User Stories
+### 2.4.2. Impact Mapping
+### 2.4.3. Product Backlog
 
-<br>
-<br>
+## 2.5. Strategic-Level Domain-Driven Design
+### 2.5.1. EventStorming
+#### 2.5.1.1. Candidate Context Discovery
+#### 2.5.1.2. Domain Message Flows Modeling
+#### 2.5.1.3. Bounded Context Canvases
+### 2.5.2. Context Mapping
+### 2.5.3. Software Architecture
+#### 2.5.3.1. Software Architecture Context Level Diagrams
+#### 2.5.3.2. Software Architecture Container Level Diagrams
+#### 2.5.3.3. Software Architecture Deployment Diagrams
 
-# Capítulo III: Requirements Specification
-
-## 3.1. To-Be Scenario Mapping
-## 3.2. User Stories
-## 3.3. Impact Mapping
-## 3.4. Product Backlog
-
-<br>
-<br>
-
-# Capítulo IV: Solution Software Design
-
-## 4.1. Strategic-Level Domain-Driven Design
-### 4.1.1. EventStorming
-#### 4.1.1.1. Candidate Context Discovery
-#### 4.1.1.2. Domain Message Flows Modeling
-#### 4.1.1.3. Bounded Context Canvases
-### 4.1.2. Context Mapping
-### 4.1.3. Software Architecture
-#### 4.1.3.1. Software Architecture Context Level Diagrams
-#### 4.1.3.2. Software Architecture Container Level Diagrams
-#### 4.1.3.3. Software Architecture Deployment Diagrams
-
-## 4.2. Tactical-Level Domain-Driven Design
-### 4.2.X. Bounded Context: Nombre
-#### 4.2.X.1. Domain Layer
-#### 4.2.X.2. Interface Layer
-#### 4.2.X.3. Application Layer
-#### 4.2.X.4. Infrastructure Layer
-#### 4.2.X.5. Bounded Context Software Architecture Component Level Diagrams
-#### 4.2.X.6. Bounded Context Software Architecture Code Level Diagrams
-##### 4.2.X.6.1. Bounded Context Domain Layer Class Diagrams
-##### 4.2.X.6.2. Bounded Context Database Design Diagram
+## 2.6. Tactical-Level Domain-Driven Design
+### 2.6.X. Bounded Context: Nombre
+#### 2.6.X.1. Domain Layer
+#### 2.6.X.2. Interface Layer
+#### 2.6.X.3. Application Layer
+#### 2.6.X.4. Infrastructure Layer
+#### 2.6.X.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.X.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.X.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.X.6.2. Bounded Context Database Design Diagram
 
 
 <br>
