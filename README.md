@@ -508,11 +508,11 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 ### 2.5.3. Software Architecture
 #### 2.5.3.1. Software Architecture Context Level Diagrams
 El siguiente diagrama presenta en una sola vista el sistema Red Carga, sus actores principales y los sistemas externos con los que se comunica:
-<img src="img/software-architecture/context-diagram.png" ></img>
+<img src="img/software-architecture/c1-diagram.png" ></img>
 
 #### 2.5.3.2. Software Architecture Container Level Diagrams
 El diagrama C2 hace “zoom” dentro del sistema y muestra la forma general de la arquitectura del software. Muestra las principales opciones tecnológicas y cómo se comunican.
-<img src="img/software-architecture/container-diagram.png" ></img>
+<img src="img/software-architecture/c2-diagram.png" ></img>
 
 <!--
 https://upcedupe-my.sharepoint.com/:f:/g/personal/u202315044_upc_edu_pe/Eh13yv6cNsJMk-mVsKuMM6sBjxdGjEBjXzRDaKtIm23woQ?e=xYPONX
