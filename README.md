@@ -160,6 +160,79 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 # Student Outcome
 
+ABET - EAC - Student Outcome 7: La capacidad de adquirir y aplicar nuevos
+conocimientos según sea necesario, utilizando estrategias de aprendizaje apropiadas.
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <thead>
+    <tr>
+      <th style="width:22%;">Criterio específico</th>
+      <th style="width:48%;">Acciones realizadas</th>
+      <th style="width:30%;">Conclusiones grupales</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software.</strong></td>
+      <td>
+        <strong>Ariana Cecilia Agreda Sobrino</strong> <br>
+        <strong>TB1: </strong><br>
+          Durante TB1, presenté y sustenté entregables clave: diseño y análisis de entrevistas, User Stories y Arquitectura de Software con diagramas del C4 Model. Para ello actualicé y apliqué conocimientos en         requisitos (planificación y codificación de hallazgos), redacción de historias con criterios de aceptación y modelado C4. Usé estrategias de aprendizaje como revisión de fuentes especializadas, práctica con herramientas (p. ej., Structurizr) y retroalimentación del equipo, evidenciando actualización continua para el proyecto y mi desarrollo profesional.
+        <br><br>
+        <strong>Claudia Valeria Belledonne Espinoza</strong> <br>
+        <strong>TB1: </strong><br>
+          Durante TB1, presenté y sustenté entregables clave: el análisis competitivo con estrategias y tácticas frente a competidores, la redacción de User Stories y el diseño táctico DDD mediante Bounded Contexts. Para ello actualicé y apliqué conocimientos en análisis comparativo de mercado y propuesta de valor, criterios de aceptación y trazabilidad, así como en delimitación de contextos y responsabilidades del dominio. Utilicé estrategias de aprendizaje como revisión de fuentes especializadas, contraste de casos, práctica con story/context mapping y retroalimentación del equipo, fortaleciendo mi desarrollo profesional y el avance del proyecto.
+        <br><br>
+        <strong>Mauricio Daniel Elera Rodríguez</strong> <br>
+        <strong>TB1: </strong><br>
+          Durante TB1, presenté y sustenté entregables clave como la Descripción de la Startup, los Perfiles del equipo, el registro de entrevistas, las User Stories y los artefactos de modelado (EventStorming, Context Mapping y diseño táctico DDD con Bounded Contexts). Para elaborarlos, actualicé y apliqué conocimientos en síntesis de propuesta de valor, investigación cualitativa, trazabilidad requisito–modelo y diseño dirigido por dominio, utilizando estrategias de aprendizaje como revisión de guías especializadas, práctica con plantillas y validación por retroalimentación.
+        <br><br>
+        <strong>María Patricia Hernández Uchuya</strong>  <br>
+        <strong>TB1: </strong><br>
+         En la práctica, sinteticé el problema y sus causas, definí hipótesis y métricas, caractericé segmentos, prioricé épicas y tareas en el backlog y redacté historias verificables alineadas al valor. Estas actividades revelaron áreas a profundizar (experimentación Lean, métricas de impacto, técnicas de priorización), que abordé con estudio sistemático, iteración y validación continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+        <br><br>
+        <strong>Fabiola Del Rocio Saldaña Ayala</strong> <br>
+        <strong>TB1: </strong><br>
+           Durante TB1, presenté y sustenté entregables clave: Needfinding (User Personas, User Task Mapping, Empathy Map, Impact Mapping) y User Stories. Para ello actualicé y apliqué conocimientos en investigación centrada en el usuario, mapeo de tareas, empatía e impacto, y redacción de historias con criterios de aceptación; utilicé revisión de fuentes, análisis de casos y práctica con plantillas, fortaleciendo capacidades necesarias para el proyecto y mi desarrollo profesional.
+      </td>
+      <td>
+        <strong>TB1: </strong><br>
+        Como equipo, durante TB1 actualizamos y aplicamos conocimientos clave en entrevistas, User Stories, arquitectura con C4 y diseño del dominio con DDD. Nos apoyamos en estrategias de aprendizaje concretas: revisión de fuentes, contraste de casos, práctica con herramientas y retroalimentación continua. Gracias a ello, convertimos hallazgos en historias priorizadas, una arquitectura coherente y límites contextuales claros, además de definir tácticas frente a competidores. Esto evidencia una actualización constante orientada tanto a nuestro desarrollo profesional como a elevar la calidad y viabilidad del proyecto de software.
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software.</strong></td>
+      <td>
+        <strong>TB1: </strong><br>
+        <strong>Ariana Cecilia Agreda Sobrino</strong>  <br>
+        <strong>TB1: </strong><br>
+        En la práctica, ejecuté entrevistas, sintetizándolas en funcionalidades priorizadas; redacté historias verificables y modelé la arquitectura para comunicar alcance y responsabilidades. Estas tareas expusieron brechas que abordé con estudio sistemático, experimentación y validación iterativa, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto.
+        <br><br>
+        <strong>Claudia Valeria Belledonne Espinoza</strong>  <br>
+        <strong>TB1: </strong><br>
+         En la práctica, estructuré el panorama competitivo, identifiqué oportunidades y riesgos, las traduje en tácticas priorizadas y epics, detallé historias verificables y definí contextos funcionales coherentes con los objetivos del producto. Estas tareas revelaron áreas de mejora que abordé con estudio sistemático, experimentación guiada y validación iterativa, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución sostenida de proyectos de software.
+        <br><br>
+        <strong>Mauricio Daniel Elera Rodríguez</strong>  <br>
+        <strong>TB1: </strong><br>
+          En la práctica, definí la visión y alcance del producto, caractericé roles y responsabilidades, documenté hallazgos de entrevistas y los convertí en historias verificables; además, mapeé eventos del dominio y establecí límites contextuales coherentes. Estas actividades evidenciaron brechas que abordé con estudio sistemático, experimentación con herramientas de modelado y ciclos de mejora continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional sólido y la evolución del proyecto de software.
+        <br><br>
+        <strong>María Patricia Hernández Uchuya</strong>  <br>
+        <strong>TB1: </strong><br>
+          En la práctica, sinteticé el problema y sus causas, definí hipótesis y métricas, caractericé segmentos, prioricé épicas y tareas en el backlog y redacté historias verificables alineadas al valor. Estas actividades revelaron áreas a profundizar (experimentación Lean, métricas de impacto, técnicas de priorización), que abordé con estudio sistemático, iteración y validación continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+        <br><br>
+        <strong>Fabiola Del Rocio Saldaña Ayala</strong>  <br>
+        <strong>TB1: </strong><br>
+          En la práctica, caractericé perfiles y tareas, modelé motivaciones/dolores y objetivos de impacto, y traduje los hallazgos en historias priorizadas y verificables. Este ciclo reveló áreas a profundizar que atendí con estudio sistemático, experimentación y validación continua, por lo que reconozco la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+      </td>
+      <td>
+        <strong>TB1: </strong><br>
+        En TB1 confirmamos que el progreso del proyecto exige aprendizaje continuo: perfeccionamos técnicas de entrevista y síntesis, formulación de historias verificables, arquitectura con C4 y límites contextuales con DDD, además de análisis competitivo, segmentación y métricas Lean. Detectamos brechas y las abordamos con estudio sistemático, experimentación y validación iterativa. Asumimos el aprendizaje permanente como práctica de equipo —lecturas focalizadas, pruebas con herramientas, revisión por pares y retroalimentación continua— para sostener un desempeño profesional competente y la evolución del proyecto de software.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
 <br>
 <br>
 
