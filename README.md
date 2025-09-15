@@ -564,6 +564,134 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 
 ## 2.4. Requirements Specification
 ### 2.4.1. User Stories
+
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US00</td>
+      <td>aca user </td>
+      <td>aca prioridad</td>
+      <td>aca epica</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">aca titulo</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">
+        aca descripcion
+      </td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: </strong><br>
+        <strong>Dado</strong> que <br>
+        <strong>Cuando</strong> nya<br>
+        <strong>Entonces</strong> zzz<br><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <!-- C1 -->
+  <tbody>
+    <tr>
+      <th style="width:20%;">Story ID</th>
+      <th style="width:20%;">User</th>
+      <th style="width:20%;">Priority</th>
+      <th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>C1</td>
+      <td>Cliente no registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Registro</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Verificar correo e iniciar registro</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">
+        Como cliente no registrado, quiero verificar mi correo y crear una cuenta,
+        para iniciar el proceso de registro de forma segura.
+      </td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Enlace de verificación enviado</strong><br>
+        <strong>Dado</strong> que ingreso un correo válido<br>
+        <strong>Cuando</strong> presiono “Enviar verificación”<br>
+        <strong>Entonces</strong> el sistema envía un correo con enlace/OTP y registra el intento.<br><br>
+        <strong>Escenario 2: Correo verificado</strong><br>
+        <strong>Dado</strong> que recibí el enlace/OTP<br>
+        <strong>Cuando</strong> lo valido dentro del tiempo límite<br>
+        <strong>Entonces</strong> mi correo queda <em>verificado</em> y puedo continuar el registro.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>C2</td>
+      <td>Cliente en registro</td>
+      <td>Alta</td>
+      <td>Cliente – Registro</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Verificar teléfono por SMS OTP</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">
+        Como cliente, quiero verificar mi teléfono con un código OTP por SMS,
+        para habilitar el segundo factor de autenticación y notificaciones.
+      </td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: OTP enviado</strong><br>
+        <strong>Dado</strong> que ingresé un número válido<br>
+        <strong>Cuando</strong> solicito el OTP<br>
+        <strong>Entonces</strong> recibo un SMS y se inicia un contador de expiración.<br><br>
+        <strong>Escenario 2: OTP validado</strong><br>
+        <strong>Dado</strong> que recibí el OTP<br>
+        <strong>Cuando</strong> lo ingreso correctamente antes de expirar<br>
+        <strong>Entonces</strong> el teléfono queda <em>verificado</em>.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 2.4.2. Impact Mapping
 ### 2.4.3. Product Backlog
 
