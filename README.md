@@ -362,7 +362,6 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
         <li><b>1% de comisión</b> (solo si el pago es in-app) → mejores tarifas netas y retención en la plataforma.</li>
         <li><b>Documentos obligatorios automáticos</b> (guía de remisión y de transportista) tras el pago.</li>
         <li><b>IA</b> para estimar medidas desde fotos + plantillas reutilizables.</li>
-        <li><b>Tracking obligatorio</b> y ratings “doble ciego” (7 días) para confianza.</li>
         <li>Enfoque <b>Perú</b> (adaptación rápida a normativa local).</li>
       </ul>
     </td>
@@ -465,7 +464,6 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
         <li>Marketplace móvil: solicitud por ítem (fotos→<b>IA</b>→medidas), ruta con puntos intermedios.</li>
         <li><b>Cotizaciones en tiempo real</b>, chat, estado <i>trato</i> y <i>trato formal</i> tras pagar.</li>
         <li><b>Documentos</b> automáticos (cliente/proveedor) y <b>tracking</b> obligatorio.</li>
-        <li>Plantillas de ítems, historial y <b>ratings</b> de doble ciego.</li>
         <li>Ajustes post-pago: top-ups, reembolsos, y recálculo del 1%.</li>
       </ul>
     </td>
@@ -689,6 +687,39 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 
 ### 2.1.2. Estrategias y tácticas frente a competidores
+
+<h4>1) Palancas de diferenciación (Producto, Precio, Plaza, Promoción)</h4>
+<ul>
+  <li><b>Producto:</b>
+    <ul>
+      <li><b>Documentos automáticos</b> (guía de remisión/transportista) <u>solo</u> al pagar en-app → reduce fricción y asegura uso del pago in-app.</li>
+      <li><b>IA en captura</b> (fotos → medidas sugeridas) + <b>plantillas reutilizables</b> por ítem/ruta para acelerar nuevas solicitudes.</li>
+      <li><b>Tracking obligatorio</b> pospago con alertas (salida, llegada a hitos, ETA) y tableros móviles simples para el cliente.</li>
+      <li><b>Antidesintermediación:</b> ocultar teléfono/email hasta pago; chat con detección de intento de compartir contacto; <i>beneficios</i> (docs, tracking, soporte) solo si pagan en la app.</li>
+    </ul>
+  </li>
+  <li><b>Precio:</b>
+    <ul>
+      <li><b>Comisión plana 1%</b> (solo in-app). Mensaje: “Mejor tarifa neta para ambos”.</li>
+      <li><b>Incentivos</b>: cantidad limitada de cotizaciones gratuitas de bienvenida para los clientes.</li>
+    </ul>
+  </li>
+  <li><b>Plaza (canales):</b>
+    <ul>
+      <li><b>Móvil-first</b> (Android). Panel web ligero para empresas (seguimiento y reportes) en fase 2.</li>
+      <li><b>Alianzas</b>: gremios/terminales, patios logísticos, cámaras regionales, aseguradoras (seguro básico ligado al pago in-app), pasarela local de bajo costo.</li>
+    </ul>
+  </li>
+  <li><b>Promoción:</b>
+    <ul>
+      <li><b>Hecho en Perú</b> + cumplimiento local (documentos automáticos) como narrativa central.</li>
+      <li><b>Onboarding asistido</b> a transportistas (WhatsApp/llamadas) + jornadas presenciales en terminales.</li>
+      <li>Contenido simple: “cómo cotizar”, “cómo activar GPS”, “cómo emitir guías en 1 toque”.</li>
+    </ul>
+  </li>
+</ul>
+
+<br>
 
 ## 2.2. Entrevistas
 ### 2.2.1. Diseño de entrevistas
