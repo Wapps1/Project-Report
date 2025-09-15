@@ -1023,10 +1023,142 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 
 #### 2.6.1.1. Domain Layer
 
+**Aggregates (Aggregate Roots)**
+
+---
+
+**Account (Aggregate Root)**  
+*Purpose:* Identidad de una persona en la aplicación (registro, precondiciones para autenticación, preparación para multi-factor, bloqueo por intentos).
+
+**Entities / Value Objects inside**
+- **Email** *(Value Object)*: dirección normalizada; `verified: boolean`.
+- **Phone** *(Value Object)*: número normalizado; `verified: boolean`.
+- **Credential** *(Value Object)*: `passwordHash`, `updatedAt`.
+- **AccessLock** *(Value Object)*: `failedCount`, `lastFailedAt`, `lockedUntil` (política de lockout).
+- **Pin** *(Value Object)*: `pinHash` (usado como *step-up* para operaciones sensibles).
+- **SystemRoles** *(Value Object Set)*: p. ej., `CLIENT`, `PROVIDER`.
+- **MfaFactor** *(Entity)*: factores enrolados y metadatos (p. ej., `SMS_OTP`, `TOTP`, `WebAuthn`).
+
+**Invariants**
+- `Phone.verified = true` requerido para completar autenticación cuando la política exige multi-factor.
+- El bloqueo se aplica después de *N* intentos fallidos según la política de **AccessLock**.
+
+**Behaviors (examples)**
+- `register(email, phone, rawPassword)` → emite `AccountRegistered`.
+- `markPhoneVerified()` → emite `PhoneVerified`.
+- `changePassword(newRawPassword)` → emite `PasswordChanged` y reinicia **AccessLock**.
+- `setPin(rawPin)` / `verifyPin(rawPin, CredentialVerifier)`.
+- `enrollMfa(factorType)` / `disableMfa(factorType)` → emite `MfaFactorEnrolled` / `MfaFactorDisabled`.
+- `recordFailedLoginAttempt(now)` → actualiza **AccessLock** (puede emitir `AccountLocked`).
+
+**Domain Events**  
+`AccountRegistered`, `PhoneVerified`, `PasswordChanged`, `PinSet`, `AccountLocked`, `MfaFactorEnrolled`, `MfaFactorDisabled`
+
+---
+
+**OtpChallenge (Aggregate Root, short-lived)**  
+*Purpose:* Gestionar el ciclo de vida de un One-Time Password (OTP) para un propósito como `PHONE_VERIFICATION`, `LOGIN_MFA` o `PIN_RESET`.
+
+**State (with Value Objects)**
+- `accountId`
+- `purpose: OtpPurpose`
+- `codeHash` (derivado de **OtpCode** VO; el código en claro nunca se almacena)
+- `expiresAt: ExpirationTime`
+- `attempts: AttemptsCounter`
+- `status (enum): ACTIVE | VERIFIED | EXPIRED`
+
+**Invariants**
+- A lo sumo un `ACTIVE` challenge por `(accountId, purpose)`.
+- Se hacen cumplir TTL y máximo de intentos; al llegar a 0 intentos o expirar → `EXPIRED`.
+
+**Behaviors**
+- `request(accountId, purpose, OtpGenerator, OtpDeliveryService)`  
+  Crea el challenge, hashea el **OtpCode** generado, agenda expiración y entrega el código por el canal elegido → emite `OtpRequested`.
+- `verify(inputCode, now)`  
+  Compara en tiempo constante contra `codeHash`, valida `expiresAt` e `attempts`.  
+  Válido → `VERIFIED` y emite `OtpVerified`.  
+  Inválido → decrementa intentos y emite `OtpFailed`.  
+  Expirado → emite `OtpExpired`.
+
+**Domain Services involved (stateless)**
+- **MfaPolicy** (decide si se requiere OTP según el contexto).
+- **OtpGenerator** (crea **OtpCode** con aleatoriedad y TTL).
+- **OtpDeliveryService** (envía el OTP por SMS u otro canal).
+
+**Domain Events**  
+`OtpRequested`, `OtpVerified`, `OtpFailed`, `OtpExpired`
+
+---
+
+**Session (Aggregate Root)**  
+*Purpose:* Representar la presencia autenticada de un **Account** en un dispositivo específico.
+
+**State**
+- `accountId`
+- `deviceFingerprint` *(Value Object)*: identificador estable del dispositivo (preservando privacidad).
+- `ipAddress` *(Value Object, optional)*: dirección IP normalizada.
+- `createdAt`, `lastSeenAt`
+- `state: ACTIVE | REVOKED | COMPROMISED`
+- **Child Entities:** `RefreshToken` (rotating, one-time use)
+
+**Invariants and Policies**
+- Tokens de refresh rotativos y de un solo uso. Cualquier reutilización de un token ya usado/rotado → `COMPROMISED` y revoca la cadena.
+- Una sesión activa por dispositivo (un nuevo login desde el mismo dispositivo re-usa la misma sesión).
+- Máximo `K` sesiones activas por cuenta (p. ej., `K = 3`), definido por **SessionPolicy**.
+
+**Behaviors**
+- `open(accountId, deviceFingerprint, ipAddress)`  
+  Inicializa la sesión y emite el primer refresh token → `SessionCreated`.
+- `refresh(presentedToken)`  
+  Valida que `presentedToken` sea el token actual sin usar; lo marca como usado y emite el siguiente → `SessionRefreshed`, `RefreshRotated`.
+- `detectReuse(presentedToken)`  
+  Si se presenta un token previamente usado → emite `RefreshReuseDetected`, marca la sesión `COMPROMISED` y revoca la cadena (`SessionMarkedCompromised`).
+- `revoke()` → emite `SessionRevoked`.
+- `touch(now)` actualiza `lastSeenAt`.
+
+**Domain Events**  
+`SessionCreated`, `SessionRefreshed`, `RefreshRotated`, `RefreshReuseDetected`, `SessionMarkedCompromised`, `SessionRevoked`
+
+---
+
+**RefreshToken (Child Entity of Session)**
+
+**State**
+- `refreshTokenId`
+- `tokenHash`
+- `issuedAt`
+- `usedAt` *(nullable hasta su uso)*
+- `replacedByTokenId` *(nullable hasta la rotación)*
+
+**Invariants**
+- Exactamente un token de la sesión es el *current, unused* token.
+- Una vez establecido `usedAt`, el token no puede volver a usarse (one-time use).
+- Cada rotación enlaza `old → new` vía `replacedByTokenId` para formar una cadena verificable.
+
+**Behaviors (within Session)**
+- `issueFirstRefreshToken()`
+- `markUsedAndIssueNext(currentToken)`
+- `markChainCompromisedOnReuse(reusedToken)`
+
+---
+
+**Domain Services (stateless, interfaces)**  
+*(Definidos como contratos; sus implementaciones pueden variar según infraestructura, pero su lógica de decisión es de dominio.)*
+- **MfaPolicy** — Decide qué factores se requieren según contexto y propósito (p. ej., *always MFA* vs. *adaptive MFA*).
+- **CredentialVerifier** — Compara contraseña o PIN en claro contra los hashes almacenados (comparación en tiempo constante).
+- **OtpGenerator** — Genera un **OtpCode** con aleatoriedad y tiempo de vida.
+- **OtpDeliveryService** — Entrega el OTP por SMS u otros canales.
+- **SessionPolicy** — Hace cumplir “one active per device” y el máximo `K` de sesiones activas.
+
+---
+
+**Repositories (Aggregate Roots only)**  
+`AccountRepository`, `OtpChallengeRepository`, `SessionRepository`
 
 
 
 <br/>
+
 #### 2.6.1.2. Interface Layer
 #### 2.6.1.3. Application Layer
 #### 2.6.1.4. Infrastructure Layer
