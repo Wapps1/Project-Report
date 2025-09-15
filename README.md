@@ -520,6 +520,14 @@ https://upcedupe-my.sharepoint.com/:f:/g/personal/u202315044_upc_edu_pe/Eh13yv6c
 
 #### 2.5.3.3. Software Architecture Deployment Diagrams
 
+El deployment diagram muestra cómo los contenedores del sistema Red Carga se despliegan en el entorno de producción. 
+Se representan los nodos principales en la nube, la base de datos, el almacenamiento de archivos, así como 
+los servicios externos (autenticación, pagos, mapas, notificaciones, correo electrónico y monitoreo) con los que interactúa la aplicación.
+
+<img src="img/software-architecture/deployment-diagram.png" ></img>
+
+
+
 ## 2.6. Tactical-Level Domain-Driven Design
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
