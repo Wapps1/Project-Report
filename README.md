@@ -574,9 +574,30 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 #### 2.5.1.3. Bounded Context Canvases
 ### 2.5.2. Context Mapping
 ### 2.5.3. Software Architecture
+En esta sección se describe la arquitectura de software de la solución Red Carga, siguiendo el enfoque del C4 Model. Para ello se presentan los diagramas de Contexto, Contenedores y Despliegue, que permiten visualizar las diferentes capas del sistema iniciando por un panorama hasta su implementación en un entorno de producción. Cada nivel muestra los actores, las tecnologías principales y las interacciones con servicios externos que forman parte del alcance del proyecto.
+
 #### 2.5.3.1. Software Architecture Context Level Diagrams
+
+El siguiente diagrama presenta en una sola vista el sistema Red Carga, sus actores principales y los sistemas externos con los que se comunica:
+<img src="img/software-architecture/c1-diagram.png" ></img>
+
 #### 2.5.3.2. Software Architecture Container Level Diagrams
+El diagrama C2 hace “zoom” dentro del sistema y muestra la forma general de la arquitectura del software. Muestra las principales opciones tecnológicas y cómo se comunican.
+<img src="img/software-architecture/c2-diagram.png" ></img>
+
+<!--
+https://upcedupe-my.sharepoint.com/:f:/g/personal/u202315044_upc_edu_pe/Eh13yv6cNsJMk-mVsKuMM6sBjxdGjEBjXzRDaKtIm23woQ?e=xYPONX
+-->
+
 #### 2.5.3.3. Software Architecture Deployment Diagrams
+
+El deployment diagram muestra cómo los contenedores del sistema Red Carga se despliegan en el entorno de producción. 
+Se representan los nodos principales en la nube, la base de datos, el almacenamiento de archivos, así como 
+los servicios externos (autenticación, pagos, mapas, notificaciones, correo electrónico y monitoreo) con los que interactúa la aplicación.
+
+<img src="img/software-architecture/deployment-diagram.png" ></img>
+
+
 
 ## 2.6. Tactical-Level Domain-Driven Design
 ### 2.6.X. Bounded Context: Nombre
