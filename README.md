@@ -1966,10 +1966,257 @@ No aplican (flujos locales, un AR por TX).
 <br/>
 
 ### 2.6.5. Bounded Context: Fleet
+
+- *Alta y ciclo de vida de vehículos, documentos del vehículo y estado habilitado/deshabilitado.*
+
+<br/>
+
 #### 2.6.5.1. Domain Layer
+# 2.6.x. Bounded Context: Fleet (Flota)
+
+**Propósito:** administrar vehículos de proveedores, sus **documentos** y el **estado operativo** (`ENABLED | DISABLED`) según cumplimiento documental y bloqueos explícitos.
+
+---
+
+# Domain Layer
+
+> Núcleo: vehículo, documentos, policy de cumplimiento y eventos de habilitación.
+
+**Aggregates (AR)**
+
+**1) Vehicle (Aggregate Root)**
+
+- **Estado clave**
+  - `vehicleId : UUID`
+  - `providerId : UUID`
+  - `plate : Plate` *(única global tras normalización)*
+  - `type : VehicleType` *(TRUCK|VAN|PLATFORM|…)*
+  - `capacity : Capacity` *(maxWeightKg, maxVolumeM3)*
+  - `dimensions : Dimensions` *(lengthCm,widthCm,heightCm)*
+  - `features : FeatureSet` *(refrigerated, tarp, ramp, sideDoor, …)*
+  - `photos : List<ImageRef>` *(opcional)*
+  - `opState : VehicleOpState = ENABLED | DISABLED`
+  - `disabledCause : DisabledCause? = MANUAL(reason) | DOCS_EXPIRED | PROVIDER_BLOCK | POLICY_GAP`
+  - `documents : Set<VehicleDocument>` *(entity interna, único por `docType` en estado activo)*
+  - `audit { createdAt, updatedAt, version }`
+
+- **Invariantes**
+  - `plate` única global **sobre placa normalizada**.
+  - Un `Vehicle` pertenece a **un** `providerId`.
+  - `opState == ENABLED` ⇒ `disabledCause == null`.
+  - `ENABLED` **solo** si: proveedor **habilitado** y **docs requeridos** por `type` en `VALID`.
+  - Máximo **1** doc activo por `docType` (los reemplazados pasan a `SUPERSEDED`).
+
+- **Comportamientos**
+  - `register(...)` · `updateProfile(...)` *(si cambia `type` ⇒ `recalculateOpState(policy)`)*  
+  - `addOrReplaceDocument(doc)` → el previo (mismo `docType`) pasa a `SUPERSEDED`
+  - `markDocumentVerified(docId)` / `rejectDocument(docId, reason)`
+  - `expireDocuments(now: Clock)` → marca `EXPIRED` si `now > validity.end`
+  - `recalculateOpState(policy)` → deriva `opState/disabledCause`
+  - `disable(manualReason)` / `enable()` *(respetando invariantes y policy)*
+
+**2) VehicleDocument (Entity dentro de `Vehicle`)**
+
+- **Miembros**
+  - `documentId : UUID`
+  - `docType : VehicleDocType` *(SOAT | REV_TEC | TITLE | MTC_PERMIT | …)*
+  - `number : DocumentNumber`
+  - `issuer : Issuer`
+  - `validity : DateRange { start, end }`
+  - `status : DocStatus = PENDING_VERIFICATION | VALID | EXPIRED | REJECTED | SUPERSEDED`
+  - `attachments : List<FileRef>` *(opcional)*
+  - `notes : String?`
+
+- **Reglas**
+  - `validity.start <= validity.end`.
+  - Transiciones válidas:  
+    `PENDING_VERIFICATION → VALID | REJECTED | SUPERSEDED`  
+    `VALID → EXPIRED | SUPERSEDED`  
+    `REJECTED` y `EXPIRED` son terminales.
+
+**Value Objects (validación breve)**
+
+- `Plate` *(normaliza mayúsculas/espacios/guiones; regex país)*  
+- `Capacity` *(>0; coherente con tipo)*  
+- `Dimensions` *(>0)*  
+- `DocumentNumber` *(no vacío)*  
+- `DateRange` *(start ≤ end)*  
+- `FeatureSet` *(flags)*
+
+**Domain Services**
+
+- `CompliancePolicy` *(qué `docTypes` requiere cada `VehicleType`)*  
+- `VehicleEligibilityService.recompute(vehicle, policy)` *(deriva `opState` y `disabledCause`)*
+
+**Domain Events (payload mínimo)**
+
+- `VehicleRegistered { vehicleId, providerId, plate }`
+- `VehicleUpdated { vehicleId }`
+- `VehicleDocumentAdded { vehicleId, docId, docType }`
+- `VehicleDocumentVerified { vehicleId, docId, docType }`
+- `VehicleDocumentRejected { vehicleId, docId, docType, reason }`
+- `VehicleDocumentExpired { vehicleId, docId, docType }`
+- `VehicleEnabled { vehicleId }`
+- `VehicleDisabled { vehicleId, cause }`
+
+**Repositories (interfaces)**
+
+- `VehicleRepository`
+  - `findById(vehicleId)`
+  - `save(vehicle)` *(optimistic locking; valida unicidad de `plate` normalizada)*
+  - `findByProvider(providerId, filters: { opState?, type? }, page)`
+  - **Restricción:** rechazo de `save` si rompe unicidad de `plate` normalizada.
+
+**Ubiquitous Language (breve)**
+
+Vehicle, Document, Compliance/Policy, Enabled/Disabled, DisabledCause, Verification, Expiry, Superseded.
+
+---
+
+<br/>
+
 #### 2.6.5.2. Interface Layer
+
+**Base path:** `/api/v1/companies/{companyId}/fleet`
+
+**Endpoints**
+
+- `POST   /vehicles` — Registrar vehículo
+- `PATCH  /vehicles/{vehicleId}` — Actualizar perfil
+- `POST   /vehicles/{vehicleId}/documents` — Agregar/Reemplazar documento *(multipart o JSON + presigned upload)*
+- `POST   /vehicles/{vehicleId}/documents/{documentId}/verify` — Verificar doc
+- `POST   /vehicles/{vehicleId}/documents/{documentId}/reject` — Rechazar doc `{ reason }`
+- `PUT    /vehicles/{vehicleId}/state` — Setear estado `{ opState, reason? }`
+- `GET    /vehicles` — Listar (filtros: `opState`, `type`)
+- `GET    /vehicles/{vehicleId}` — Detalle
+
+**Notas clave**
+
+- **Derivación de expiración:** en lecturas/commands se evalúa `now > validity.end`; si aplica, se persiste `EXPIRED` antes de responder.
+- Cambio de `plate` en `PATCH` valida unicidad sobre **placa normalizada**.
+
+**Contratos I/O y errores**
+
+- DTOs mínimos (IDs `UUID`, fechas `ISO-8601`, `docType` enum).  
+- Errores `RFC 7807` con extensiones: `code`, `correlationId`, `timestamp`.
+
+**Autenticación y ownership leak-proof**
+
+- `Authorization: Bearer <JWT>` (IAM).  
+- `companyId` del path debe pertenecer a las **membresías** del `subjectId`; si no ⇒ **404**.  
+- Vehículos fuera del `providerId` de `companyId` ⇒ **404**.  
+- Permiso faltante con scope correcto ⇒ **403**.
+
+**Versionado e Idempotency-Key**
+
+- Versión: **`/api/v1`**.  
+- `Idempotency-Key` **obligatoria** en `POST` mutantes (crear vehículo, agregar documento).
+
+**Webhooks (si hay verificación externa)**
+
+- Consumidor opcional: `/webhooks/doc-verification`.  
+- **Firma HMAC**, reintentos con backoff, **deduplicación** por `eventId`.
+
+---
+
+<br/>
+
 #### 2.6.5.3. Application Layer
+**Capabilities → casos de uso**
+
+1. Registrar vehículo  
+2. Actualizar perfil (y **recompute** si cambia `type`)  
+3. Agregar/Reemplazar documento  
+4. Verificar/Rechazar documento  
+5. Habilitar/Deshabilitar vehículo (manual/policy)  
+6. Expirar documentos (job + derivación en lectura)  
+7. Consultar vehículos del proveedor (filtros)
+
+**Command / Query Handlers (entradas, precondiciones, efectos)**
+
+- `RegisterVehicleCommand(companyId, providerId, plate, type, capacity, dimensions, features, photos?)`  
+  **Pre:** `ProviderStatusPort.isEnabled(providerId) == true`.  
+  **Efecto:** crea `Vehicle` → `VehicleRegistered`.
+
+- `UpdateVehicleProfileCommand(companyId, vehicleId, …)`  
+  **Pre:** ownership por `companyId/providerId`.  
+  **Efecto:** actualiza; si cambia `type` ⇒ `recalculateOpState(policy)` → `VehicleUpdated` (+ `VehicleEnabled/Disabled` si aplica).
+
+- `AddVehicleDocumentCommand(companyId, vehicleId, doc)`  
+  **Pre:** ownership + doc válido.  
+  **Efecto:** agrega/reemplaza (anterior ⇒ `SUPERSEDED`) → `VehicleDocumentAdded` *(queda `PENDING_VERIFICATION`)*.
+
+- `VerifyVehicleDocumentCommand(companyId, vehicleId, docId)`  
+  **Pre:** doc en `PENDING_VERIFICATION`.  
+  **Efecto:** `VALID`, `recalculateOpState(policy)` → `VehicleDocumentVerified` (+ posible `VehicleEnabled`).
+
+- `RejectVehicleDocumentCommand(companyId, vehicleId, docId, reason)`  
+  **Pre:** doc en `PENDING_VERIFICATION`.  
+  **Efecto:** `REJECTED`, `recalculateOpState(policy)` → `VehicleDocumentRejected` (+ posible `VehicleDisabled`).
+
+- `SetVehicleStateCommand(companyId, vehicleId, desiredState, reason?)`  
+  **Pre:** si `ENABLED` ⇒ cumplir policy; si `DISABLED` ⇒ motivo.  
+  **Efecto:** cambia estado → `VehicleEnabled | VehicleDisabled`.
+
+- `ListVehiclesQuery(companyId, providerId, filters, page)` → listado paginado.
+
+**Orquestadores / Sagas**
+
+- No aplica. Expiración por **job** y derivación inmediata en comandos/lecturas usando `Clock`.
+
+**Puertos (interfaces a Infra)**
+
+- `Clock`, `IdGenerator`, `TxManager`  
+- `VehicleRepository`  
+- `BinaryStoragePort` *(photos/attachments; retención configurable)*  
+- `DocVerificationPort` *(opcional)*  
+- `EventPublisher` *(Transactional Outbox)*  
+- `ProviderStatusPort` **(nuevo)**: `isEnabled(providerId): boolean`
+
+**Idempotencia y control transaccional**
+
+- `Idempotency-Key` en **POST** mutantes: `RegisterVehicle`, `AddVehicleDocument`.  
+- Transacciones por `TxManager` + **Optimistic Lock** en `save`.  
+- **Transactional Outbox** para publicar eventos de dominio.
+
+**Event Handlers (integración)**
+
+- **IN:** `ProviderEnabled/ProviderDisabled` (BC Providers) → `recalculateOpState` (`disabledCause = PROVIDER_BLOCK` cuando aplique); `MidnightTick/HourlyTick` → `expireDocuments(now)` + `recalculateOpState(policy)`.  
+- **OUT:** todos los eventos del Domain Layer.
+
+---
+
+<br/>
+
 #### 2.6.5.4. Infrastructure Layer
+
+**Repositorios**
+
+- `VehicleRepositoryJpa/MyBatis`  
+  - **Optimistic Lock** por `version`.  
+  - Verifica **unicidad** de `plate` **normalizada**.  
+  - Consultas por `(providerId, opState, type)` con paginación.
+
+**Adapters externos**
+
+- **DB**: persistencia de `vehicle` y `vehicle_document` (relación 1:N).  
+- **BinaryStorageAdapter** (S3/Blob/MinIO) para `photos` y `attachments`.  
+- **EventPublisher** con **Transactional Outbox** (worker y dedup).  
+- **DocVerificationAdapter** (opcional) para servicios de verificación.  
+- **ProviderStatusAdapter**: lee estado del proveedor (API/cola o proyección local).
+
+**Mensajería y reintentos**
+
+- Outbox con reintentos idempotentes (clave `eventId` o `aggregateId+version`).  
+- Suscriptores `ProviderEnabled/Disabled` con **at-least-once** y **dedup**.
+
+**Configuración y secretos**
+
+- Variables de entorno / secret manager (endpoints de storage/verificación, claves HMAC).  
+- Rotación de secretos; sin valores embebidos en código.
+
+<br/>
+
 #### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.5.6.1. Bounded Context Domain Layer Class Diagrams
