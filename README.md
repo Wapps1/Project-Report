@@ -1827,6 +1827,184 @@ No bloquea flujos si el directorio está caído.
 
 #### 2.6.2.2. Interface Layer
 
+# Interface/Presentation Layer — Identity Verification (KYC)
+
+Capa que expone **Controllers** (HTTP) y **Consumers** (webhooks) que orquestan los **Command/Query Handlers** de Application. Aplica **autenticación**, **ownership leak-proof**, **idempotencia**, **RFC 7807**, **API versioning** y **firma HMAC** en webhooks.
+
+---
+
+## 1) Convenciones generales
+
+**Base path y versión**
+- Todos los endpoints bajo `/api/v1`.
+
+**Autenticación y ownership (leak-proof)**
+- `Authorization: Bearer <JWT>` de **IAM**.
+- `subjectId` se toma siempre del `SecurityContext`.
+- En endpoints de usuario, verificar que `caseId` pertenece al sujeto del JWT; si no, **404** (no 403).
+
+**Idempotency-Key (alcance y comportamiento)**
+- Scope de dedupe: `(HTTP method + path + subjectId)`.
+- Ventana: 24 h. Repetición → eco de la misma respuesta (mismo body y código).
+- Usar en: `StartKycCase`, `SubmitDocument`, `SubmitBiometrics`, `ApplyManualDecision`.
+
+**Headers comunes (req/resp)**
+- `X-Correlation-Id` (si no viene, el gateway lo genera y siempre se reenvía).
+- En creaciones: `201` + `Location`.
+- `ETag` solo en `GET` (`ETag: W/"version-<n>"`). No se usa `If-Match` en writes.
+
+**Errores — RFC 7807 (Problem Details)**
+- `Content-Type: application/problem+json` con `type`, `title`, `detail`, `instance`, `correlationId`, `reasonCodes[]`.
+- Localización: `title/detail` en ES o EN según `Accept-Language`; `reasonCodes[]` son la referencia estable.
+
+**Rate limiting**
+- En `429` incluir `Retry-After: <segundos>` y opcional `X-RateLimit-Remaining`.
+
+**Validaciones de payload**
+- `type ∈ { NATIONAL_ID, PASSPORT }`
+- `country` = ISO-3166-1 alpha-2 (`"PE"`, `"CL"`, …)
+- `faceMatchScore ∈ [0, 1]` (cuando aplique)
+
+---
+
+## 2) Controllers (HTTP)
+
+### 2.1 KycCaseController (usuario autenticado)
+
+**POST `/api/v1/kyc/cases` — StartKycCase**
+- Usa solo `currentSubjectId()`; ignora `subjectId` entrante.
+- Headers: `Idempotency-Key`.
+- `201` + `Location: /api/v1/kyc/cases/{caseId}`
+- Body: `{ "caseId": "KC_123" }`
+- `409` si ya existe caso abierto.
+
+**POST `/api/v1/kyc/cases/{caseId}/uploads` — Issue upload session**
+- Body: `{ "kind":"DOCUMENT_FRONT|DOCUMENT_BACK|SELFIE", "contentType":"image/*", "maxBytes":5242880 }`
+- Contrato: `contentType` permitido = `image/*`; tamaño máx. = 5 MB; `ttlSec` se devuelve.
+- `200` `{ "sessionId":"...", "url":"...", "ttlSec":900 }`
+- `404` si `caseId` no pertenece (ownership).
+
+**POST `/api/v1/kyc/cases/{caseId}/document` — SubmitDocument**
+- Headers: `Idempotency-Key`
+- Body: `{ "frontUploadSessionId":"...", "backUploadSessionId":"...", "type":"NATIONAL_ID|PASSPORT", "country":"PE" }`
+- Regla: si `type=NATIONAL_ID` y falta `front` o `back` → `422` con `reasonCodes:["DOC_INVALID_FORMAT"]`.
+- `202` `{ "status":"IN_PROGRESS", "extractionConfidence":0.94 }`
+- `404` ownership · `429` con `Retry-After` si excede intentos.
+
+**POST `/api/v1/kyc/cases/{caseId}/biometrics` — SubmitBiometrics**
+- Headers: `Idempotency-Key`
+- Body: `{ "selfieUploadSessionId":"..." }`
+- Precondición: `409` si no existe `DocumentSnapshot` previo.
+- `202` `{ "status":"IN_PROGRESS", "liveness":"PASSED", "faceMatchScore":0.87 }`
+- `404` ownership · `429` con `Retry-After`.
+
+**POST `/api/v1/kyc/cases/{caseId}/decide` — AutoDecide**
+- `200` si la decisión se toma en el mismo request.
+- `202` si queda pendiente de callbacks externos.
+- Body: `{ "status":"VERIFIED|PENDING_REVIEW|REJECTED", "kycLevel":1? }`
+- `404` ownership.
+
+**GET `/api/v1/kyc/cases/{caseId}` — GetKycCaseById**
+- `200` `{ "caseId":"...", "status":"...", "signals":{...}, "version":7 }`
+- Header: `ETag: W/"version-7"`
+- `404` ownership.
+
+**GET `/api/v1/kyc/cases/open` — GetOpenKycCaseForMe**
+- `200` `{ "caseId":"...", "status":"..." }` · `204` si no hay.
+
+**GET `/api/v1/identity/profile/me` — GetMyIdentityProfile (CQRS)**
+- `200` con PII mínima; `docNumber` enmascarado.
+- Nunca retorna `docPhotoHash`, `selfieHash` ni blobs.
+
+### 2.2 AdminKycController (backoffice)
+
+**POST `/api/v1/admin/kyc/cases/{caseId}/review/open` — abrir ReviewTask**
+- Rol: `KYC_REVIEWER`/`KYC_ADMIN`.
+- `201` + `Location: /api/v1/admin/kyc/reviews/{taskId}`
+- Body: `{ "taskId":"RT_123" }`
+
+**POST `/api/v1/admin/kyc/reviews/{taskId}/decision` — ApplyManualDecision**
+- Headers: `Idempotency-Key`
+- Body: `{ "decision":"APPROVE|REJECT", "reasonCodes":["..."] }`
+- `200` `{ "caseStatus":"VERIFIED|REJECTED" }` · `409` si estado no permite.
+
+**POST `/api/v1/admin/kyc/cases/{caseId}/expire` — ExpireCase**
+- Body: `{ "reason":"DOC_EXPIRED|POLICY_REEVAL_TTL" }`
+- `200` `{ "caseStatus":"EXPIRED" }`
+
+**POST `/api/v1/admin/kyc/cases/{caseId}/revoke` — RevokeCase**
+- Body: `{ "reason":"FRAUD_SIGNAL|COMPLIANCE_HIT", "notes":"<justificación obligatoria>" }`
+- Nota: política opcional de second-approver (4-eyes).
+- `200` `{ "caseStatus":"REVOKED" }` · `409` si no estaba VERIFIED.
+
+---
+
+## 3) Consumers (Webhooks entrantes)
+
+### 3.1 `/api/v1/webhooks/iam` — IAM events
+- Headers: `X-Event-Name`, `X-Event-Version`, `X-Correlation-Id`, `X-Timestamp`, `X-Signature`.
+- Firma: `HMAC-SHA256(secret, timestamp + canonicalBody)`; canonicalBody = JSON canónico (claves ordenadas, sin espacios).
+- Clock skew: tolerancia ±5 min; fuera de ventana → rechazo.
+- Anti-replay: dedupe 24 h por `event_id` y `payload_hash`.
+- Respuestas: `202` aceptado · `401/403` firma inválida · `409` duplicado.
+
+### 3.2 `/api/v1/webhooks/vendors/{provider}` — callbacks proveedores (OCR/Liveness/Face)
+- Mismas reglas de firma, clock skew y canonical JSON.
+- `202` aceptado; entra a `EventInboxService` para idempotencia.
+
+---
+
+## 4) Mapeo Endpoints → Use Cases (Application)
+
+| Endpoint                                           | Handler/Orquestador                                                        |
+| -------------------------------------------------- | -------------------------------------------------------------------------- |
+| POST `/api/v1/kyc/cases`                           | `StartKycCaseHandler`                                                      |
+| POST `/api/v1/kyc/cases/{id}/uploads`              | `BlobStorageGateway.issueUploadUrl`                                        |
+| POST `/api/v1/kyc/cases/{id}/document`             | `SubmitDocumentHandler`                                                    |
+| POST `/api/v1/kyc/cases/{id}/biometrics`           | `SubmitBiometricsHandler`                                                  |
+| POST `/api/v1/kyc/cases/{id}/decide`               | `AutoDecideHandler`                                                        |
+| GET `/api/v1/kyc/cases/{id}`                       | `GetKycCaseByIdHandler`                                                    |
+| GET `/api/v1/kyc/cases/open`                       | `GetOpenKycCaseForMeHandler`                                               |
+| GET `/api/v1/identity/profile/me`                  | `GetMyIdentityProfileHandler`                                              |
+| POST `/api/v1/admin/kyc/cases/{id}/review/open`    | `HumanReviewOrchestrator`                                                  |
+| POST `/api/v1/admin/kyc/reviews/{taskId}/decision` | `ApplyManualDecisionHandler`                                               |
+| POST `/api/v1/admin/kyc/cases/{id}/expire`         | `ExpireCaseHandler`                                                        |
+| POST `/api/v1/admin/kyc/cases/{id}/revoke`         | `RevokeCaseHandler`                                                        |
+| POST `/api/v1/webhooks/iam`                        | `EventInboxService` → `OnAccountCreatedHandler` / `OnPhoneVerifiedHandler` |
+| POST `/api/v1/webhooks/vendors/{provider}`         | `EventInboxService` → `ProviderCallbackOrchestrator`                       |
+
+---
+
+## 5) Ejemplos de Problem Details (RFC 7807)
+
+**422 — Documento inválido (NATIONAL_ID sin back):**
+    {
+      "type": "https://errors.redcarga.com/kyc/document-invalid",
+      "title": "Document Not Valid",
+      "detail": "NATIONAL_ID requires front and back images.",
+      "instance": "/api/v1/kyc/cases/KC_123/document",
+      "correlationId": "7d9b8c...",
+      "reasonCodes": ["DOC_INVALID_FORMAT"]
+    }
+
+**429 — Límite de intentos:**
+    {
+      "type": "https://errors.redcarga.com/kyc/attempts-exceeded",
+      "title": "Too Many Attempts",
+      "detail": "Retry after the cooldown window.",
+      "instance": "/api/v1/kyc/cases/KC_123/document",
+      "correlationId": "7d9b8c...",
+      "reasonCodes": ["ATTEMPTS_EXCEEDED"]
+    }
+Headers: `Retry-After: 300`
+
+---
+
+## 6) Notas finales de privacidad y contenido
+- PII mínima en respuestas; nunca retornar `docPhotoHash`, `selfieHash` ni blobs.
+- `faceMatchScore` cuando aparezca debe cumplir `0 ≤ score ≤ 1`.
+- `country` siempre en ISO-3166-1 alpha-2.
+
 <br/>
 
 
