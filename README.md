@@ -1515,52 +1515,71 @@ No aplican (flujos locales, un AR por TX).
 
 #### 2.6.3.1. Domain Layer
 
-**Domain Layer**
+**Aggregates (AR): atributos clave, invariantes y comportamientos**
 
-**Aggregates (AR)**
+- **CustomerOperationalProfile (AR)**
+  - **Propósito.** Determina la *aptitud operativa* (readiness) del cliente y mantiene sus preferencias.
+  - **Estado.** `subjectId` (único = `AccountId` del IAM), `status: INCOMPLETE|ELIGIBLE|SUSPENDED|BANNED`, `reasons: Set<EligibilityReason>`, `preferences{language,units,notificationChannels,uxDefaults}`, `audit{createdAt,updatedAt,lastStatusChangeAt}`.
+  - **Invariantes.**
+    - Un perfil por `subjectId`.
+    - `status` es función determinista de `reasons` (precedencia fija).
+    - `BANNED` es terminal.
+    - PII mínima (se referencia IAM/KYC).
+  - **Precedencia (de mayor a menor).**
+    1. `FRAUD_BLOCKED` ⇒ `BANNED`
+    2. `DISPUTE_BLOCKED | ACCOUNT_DISABLED | COMPLIANCE_HOLD` ⇒ `SUSPENDED`
+    3. `KYC_MISSING | KYC_REJECTED | PHONE_NOT_VERIFIED | AGE_UNDER_MIN` ⇒ `INCOMPLETE`
+    4. Sin razones ⇒ `ELIGIBLE`
+  - **Ciclo de razones.** `AGE_UNDER_MIN` se limpia por evento externo `LegalAgeReached`; el resto por eventos explícitos (KYC/IAM/Disputas/Antifraude).
+  - **Comportamientos.** `ensureCreated(subjectId)` (inicial `{KYC_MISSING, PHONE_NOT_VERIFIED}`), `applyReason`, `clearReason`, `suspendFor`, `unsuspend` (solo razones bloqueantes), `banFor(FRAUD_BLOCKED)`, `updatePreferences` (normaliza a kg/cm).
 
-**`CustomerOperationalProfile` (Aggregate Root)**
-- **Estado:** `subjectId` (único), `status: INCOMPLETE|ELIGIBLE|SUSPENDED|BANNED`, `reasons: Set<EligibilityReason>`, `preferences{ language, units, notificationChannels, uxDefaults }`, `audit{ createdAt, updatedAt, lastStatusChangeAt }`.
-- **Invariantes:** 1 perfil por `subjectId`; `status` coherente con `reasons`; `BANNED` terminal; PII mínima.
-- **Precedencia:** 1) `FRAUD_BLOCKED`→`BANNED`; 2) `DISPUTE_BLOCKED|ACCOUNT_DISABLED|COMPLIANCE_HOLD`→`SUSPENDED`; 3) `KYC_MISSING|KYC_REJECTED|PHONE_NOT_VERIFIED|AGE_UNDER_MIN`→`INCOMPLETE`; 4) sin razones→`ELIGIBLE`.
-- **Ciclo de razones:** `AGE_UNDER_MIN` se limpia por **evento externo `LegalAgeReached`** (fuente de verdad). Resto por eventos explícitos (sin TTL genérico).
-- **Comportamientos:** `ensureCreated` (crea con `{KYC_MISSING, PHONE_NOT_VERIFIED}`), `applyReason/clearReason` (recalcula), `suspendFor/unsuspend` *(solo bloqueantes)*, `banFor(FRAUD_BLOCKED)`, `updatePreferences` *(normaliza a kg/cm)*.
-- **Domain Events (`Customers.*`):** `CustomerOperationalProfileEnsured`; `CustomerEligibilityUpdated{ oldStatus, newStatus, reasons }` *(solo si cambia `status`)*; `CustomerPreferencesUpdated`; `CustomerBanned`.
+- **ItemTemplate (AR)**
+  - **Propósito.** Reutilizar descripciones de ítems para acelerar solicitudes.
+  - **Estado.** `templateId`, `ownerId (=subjectId)`, `name`, `category`, `dimensions(cm)`, `weight(kg)`, `photos: PhotoRef[]` (inmutables), `notes?`, `favorite`, `usage{count,lastUsedAt}`, `status: ACTIVE|DELETED`, `version?`.
+  - **Invariantes.** Owner-only; `name/category` obligatorias; medidas/peso > 0 (canónico); `registerUse` rechaza `DELETED`.
+  - **Comportamientos.** CRUD, `markFavorite`, `registerUse(usageCorrelationId)` (idempotente).
 
-**`ItemTemplate` (Aggregate Root)**
-- **Estado:** `templateId`, `ownerId`, `name`, `category`, `dimensions` *(cm)*, `weight` *(kg)*, `photos: PhotoRef[]` *(inmutables)*, `notes?`, `favorite`, `usage{ count, lastUsedAt }`, `status: ACTIVE|DELETED`, `version?`.
-- **Reglas:** owner-only; `name/category` obligatorios; medidas/peso > 0; `registerUse` rechaza `DELETED`.
-- **Domain Events:** `ItemTemplateCreated|Updated|Deleted|Used|Favorited|Unfavorited`.
+- **RouteTemplate (AR)**
+  - **Propósito.** Reutilizar rutas completas.
+  - **Estado.** `templateId`, `ownerId`, `label`, `origin: Location`, `waypoints: Location[] (≤10)`, `destination: Location`, `favorite`, `usage{…}`, `status: ACTIVE|DELETED`, `version?`.
+  - **Validaciones.** `lat ∈ [-90,90]`, `lng ∈ [-180,180]`; `address?` opcional; límite de `waypoints` al mutar.
+  - **Comportamientos.** CRUD, `markFavorite`, `registerUse(usageCorrelationId)` (rechaza `DELETED`).
 
-**`RouteTemplate` (Aggregate Root)**
-- **Estado:** `templateId`, `ownerId`, `label`, `origin: Location`, `waypoints: Location[] (≤10)`, `destination: Location`, `favorite`, `usage`, `status`, `version?`.
-- **Validaciones:** `lat ∈ [-90,90]`, `lng ∈ [-180,180]`; `address?` opcional.
-- **Domain Events:** `RouteTemplateCreated|Updated|Deleted|Used|Favorited|Unfavorited`.
+**Entities y Value Objects (reglas de validación incluidas)**
 
-**Value Objects**
-- `SubjectId`, `TemplateId`, `EligibilityStatus`, `EligibilityReason`, `Language`, `Units(kg|lb; cm|in)` *(interno canónico kg/cm)*, `Dimensions{ l,w,h,unit }`, `Weight{ value,unit }`, `PhotoRef{ bucket,key,checksum,version }`, `Location{ lat,lng,address? }`, `UsageStats{ count,lastUsedAt }`.
+- `SubjectId`, `TemplateId` (identificadores opacos).
+- `EligibilityStatus`, `EligibilityReason` (enums).
+- `Language` (p. ej., `es-PE`).
+- `Units { mass: kg|lb, length: cm|in }` — **interno canónico: kg/cm** (entradas lb/in se convierten).
+- `Dimensions { length, width, height, unit }` — > 0; persiste en **cm**.
+- `Weight { value, unit }` — > 0; persiste en **kg**.
+- `PhotoRef { bucket, key, checksum, version }` — inmutable (cambio ⇒ nueva ref).
+- `Location { lat, lng, address? }` — lat/lng en rango.
+- `UsageStats { count, lastUsedAt }`.
+
+**Domain Events (payload mínimo, sin PII/blobs)**
+
+- `Customers.CustomerOperationalProfileEnsured { subjectId, occurredAt }`
+- `Customers.CustomerEligibilityUpdated { subjectId, oldStatus, newStatus, reasons[], occurredAt }` (solo si cambia `status`)
+- `Customers.CustomerPreferencesUpdated { subjectId, preferences, occurredAt }`
+- `Customers.CustomerBanned { subjectId, reason=FRAUD_BLOCKED, occurredAt }`
+- `Customers.ItemTemplate* / Customers.RouteTemplate* { ownerId, templateId, occurredAt, … }` (`Created/Updated/Deleted/Used/Favorited/Unfavorited`)
+
+**Repositories (interfaces) por AR**
+
+- `CustomerOperationalProfileRepository` — `findBySubjectId`, `save`, `lockForUpdate(subjectId)` (único por `subjectId`).
+- `ItemTemplateRepository` — `findById(owner,id, includeDeleted=false)`, `findAllByOwner(owner,paging, includeDeleted=false)`, `save`.
+- `RouteTemplateRepository` — misma API; por defecto solo `ACTIVE` (usar `includeDeleted=true` para administración).
 
 **Domain Services / Policies**
-- `EligibilityPolicy` (precedencia), `LegalAgePolicy` (edad mínima y zona horaria), `LocationValidator` (rangos/waypoints).
 
-**Repositories (interfaces)**
-- `CustomerOperationalProfileRepository`: `findBySubjectId`, `save`, `lockForUpdate` *(índice único por `subjectId`)*.
-- `ItemTemplateRepository`: `findById(owner,id, includeDeleted=false)`, `findAllByOwner(owner,paging, includeDeleted=false)`, `save`.
-- `RouteTemplateRepository`: igual que `ItemTemplateRepository`. *Por defecto solo `ACTIVE`; `includeDeleted=true` para administración.*
+- `EligibilityPolicy` (precedencia determinista de razones → status).
+- `LegalAgePolicy` (edad mínima por zona/jurisdicción).
+- `LocationValidator` (rangos y máximo de `waypoints`).
 
-**Idempotency (transversal)**
-- Scope `method+path+subjectId`; TTL **6–24h**; upserts hashean campos semánticos; reintentos → **misma respuesta**; cuerpo distinto → **409**.
+**Ubiquitous Language (breve)**
 
-**Interacciones (entrantes/salientes)**
-- **Entrantes:** `KycVerified`→`clear(KYC_MISSING|KYC_REJECTED)`; `KycRejected`→`apply(KYC_REJECTED)`; `PhoneVerified`→`clear(PHONE_NOT_VERIFIED)`; `PhoneChanged`→`apply(PHONE_NOT_VERIFIED)`; `AccountDisabled/Enabled`→`apply/clear(ACCOUNT_DISABLED)`; `DisputeOpened/Resolved`→`apply/clear(DISPUTE_BLOCKED)`; `FraudConfirmed`→`banFor(FRAUD_BLOCKED)`; `LegalAgeReached`→`clear(AGE_UNDER_MIN)`.  
-  **Auto-ensure:** si no hay perfil, `ensureCreated` antes de aplicar.
-- **Salientes:** `CustomerEligibilityUpdated`, `CustomerPreferencesUpdated`, `ItemTemplate*`, `RouteTemplate*`.
-
-**Mapa Razón → Status**
-- 1: `FRAUD_BLOCKED` → `BANNED`
-- 2: `DISPUTE_BLOCKED|ACCOUNT_DISABLED|COMPLIANCE_HOLD` → `SUSPENDED`
-- 3: `KYC_MISSING|KYC_REJECTED|PHONE_NOT_VERIFIED|AGE_UNDER_MIN` → `INCOMPLETE`
-- 4: sin razones → `ELIGIBLE`
+- *Readiness*, *Reasons*, *Template* (item/route), *Favorite*, *RegisterUse*, *UsageCorrelationId*, *OwnerId*, *PhotoRef*, *Waypoint*.
 
 ---
 
@@ -1568,45 +1587,61 @@ No aplican (flujos locales, un AR por TX).
 
 #### 2.6.3.2. Interface Layer
 
-**Interface/Presentation Layer — Customers**
+**Interface/Presentation Layer**
 
-**Convenciones**
-- **Base:** `/api/v1/customers` · **Auth:** `Bearer <JWT>` · **Ownership leak-proof:** **404** si el recurso no pertenece al `subjectId`.
-- **Idempotency-Key:** solo `POST|PUT|PATCH|DELETE` (scope `method+path+subjectId`); en `GET` se ignora.
-- **Errores (RFC 7807):** `type`, `title`, `status`, `detail`, `instance` + extensiones `code`, `correlationId`, `path`, `timestamp`.
-- **Unidades:** entrada `lb/in` → **kg/cm**.
-- **Paginación:** `page` (0-based), `size` (def.20, máx.100); headers `X-Total-Count` y `Link` (RFC 8288).
-- **Soft-delete:** colecciones solo `ACTIVE`.
-- **ETag:** en `GET /item-templates/{id}` y `GET /route-templates/{id}` devolver `ETag: W/"{version}"`; `If-None-Match` opcional → **304**.
-- **PATCH (semántica):** **JSON Merge Patch (RFC 7386)** con `Content-Type: application/merge-patch+json`; `null` borra; medidas/peso válidos tras normalización; **requiere `If-Match: W/"{version}"`** → **412** en mismatch.
+> ¿Qué es esta capa?  
+> Controllers HTTP (RFC 7807, ETag/If-Match, paginación) y Consumers. Aplica autenticación, ownership leak-proof e idempotencia.
 
-**Controllers**
-- **ProfileController**  
-  `GET /profile` → `status`, `reasons`, `preferences` *(auto-ensure si falta perfil)*.
-- **PreferencesController**  
-  `PUT /preferences` → actualiza preferencias; emite evento solo si cambió *(permitido incluso `BANNED`)*.
-- **ItemTemplatesController**  
-  `GET /item-templates?page&size&includeDeleted=false` (headers `X-Total-Count`,`Link`)  
-  `POST /item-templates` → **201** + `Location: /api/v1/customers/item-templates/{id}`  
-  `GET /item-templates/{id}` → incluye **ETag**  
-  `PATCH /item-templates/{id}` → **Merge Patch** + **If-Match** (**412** si no coincide)  
-  `POST /item-templates/{id}/photos` → body `PhotoRef{ bucket,objectKey,checksum?,versionTag? }`; `position` opcional (auto-append)  
-  `DELETE /item-templates/{id}/photos/{position}`  
-  `POST /item-templates/{id}/favorite` / `DELETE /item-templates/{id}/favorite`  
-  `DELETE /item-templates/{id}` *(soft-delete)*  
-  `POST /item-templates/{id}/use` → body `{ "usageCorrelationId": "^[A-Za-z0-9-_:.]{1,128}$" }`; reintento deduplicado → **200**.
-- **RouteTemplatesController**  
-  `GET /route-templates?page&size&includeDeleted=false`  
-  `POST /route-templates` → **201** + `Location`  
-  `GET /route-templates/{id}` → incluye **ETag**  
-  `PATCH /route-templates/{id}` → **Merge Patch** + **If-Match** (**412** si no coincide)  
-  `POST /route-templates/{id}/favorite` / `DELETE /route-templates/{id}/favorite`  
-  `DELETE /route-templates/{id}`  
-  `POST /route-templates/{id}/use` → body `{ "usageCorrelationId": "…" }`; **200** si deduplicado.
+**Base** `/api/v1/customers` · **Auth** `Authorization: Bearer <JWT>` (IAM) · **Ownership leak-proof**: `404` si el recurso no pertenece al `subjectId`.
 
-**Consumers (eventos entrantes)**
-- `identity.kyc.verified/rejected`, `iam.phone.verified/changed`, `iam.account.disabled/enabled`, `disputes.opened/resolved`, `fraud.confirmed`, `identity.legalAge.reached`.  
-  *Todos con Inbox idempotente, orden causal (`kyc,phone,account,dispute`) y `lockForUpdate(subjectId)` al modificar perfil.*
+**ProfileController**
+- `GET /profile` → `status`, `reasons[]`, `preferences` (auto-ensure si no existe).
+
+**PreferencesController**
+- `PUT /preferences` → actualiza preferencias (normaliza kg/cm); emite evento solo si cambió (permitido incluso `BANNED`).
+
+**ItemTemplatesController**
+- `GET /item-templates?page&size&includeDeleted=false` → lista (solo `ACTIVE`), headers `X-Total-Count` y `Link`.
+- `POST /item-templates` → `201` + `Location: /api/v1/customers/item-templates/{id}`.
+- `GET /item-templates/{id}` → `ETag: W/"{version}"` (opcional `If-None-Match` → `304`).
+- `PATCH /item-templates/{id}` → **JSON Merge Patch (RFC 7386)**, `Content-Type: application/merge-patch+json`, `null` borra; **`If-Match` requerido** (mismatch → `412`).
+- `POST /item-templates/{id}/photos` → body `PhotoRef{bucket,objectKey,checksum?,versionTag?}`; `position` opcional (auto-append).
+- `DELETE /item-templates/{id}/photos/{position}`.
+- `POST/DELETE /item-templates/{id}/favorite`.
+- `DELETE /item-templates/{id}` (soft-delete).
+- `POST /item-templates/{id}/use` → `{ "usageCorrelationId": "^[A-Za-z0-9-_:.]{1,128}$" }`; reintento deduplicado → `200`.
+
+**RouteTemplatesController**
+- `GET /route-templates?page&size&includeDeleted=false`
+- `POST /route-templates` → `201` + `Location`.
+- `GET /route-templates/{id}` → `ETag: W/"{version}"` (opcional `If-None-Match` → `304`).
+- `PATCH /route-templates/{id}` → Merge Patch + `If-Match` (412 si no coincide); valida rangos.
+- `POST/DELETE /route-templates/{id}/favorite`
+- `DELETE /route-templates/{id}`
+- `POST /route-templates/{id}/use` → `usageCorrelationId`; `200` si deduplicado.
+
+**Consumers (mensajería entrante)**
+- `identity.kyc.verified/rejected`, `iam.phone.verified/changed`, `iam.account.enabled/disabled`, `disputes.resolved/opened`, `fraud.confirmed`, `identity.legalAge.reached`.  
+  Con **Inbox** (idempotencia por `eventId`+`handler`), **orden causal** y `lockForUpdate(subjectId)` al modificar perfil.
+
+**Contratos I/O, errores y convenciones**
+- **Errores (RFC 7807):** `type`, `title`, `status`, `detail`, `instance` + `code`, `correlationId`, `path`, `timestamp`.
+- **Paginación:** `page` (0-based), `size` (def. 20, máx. 100), headers `X-Total-Count`, `Link` (RFC 8288).
+- **Condicionales:** `ETag` en GET detalle; `If-Match` en PATCH; `If-None-Match` opcional → `304`.
+- **Rate-limit (si aplica):** `429` con `Retry-After`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`.
+
+**Autenticación y ownership**
+- JWT validado en middleware (firma, `iss`, `aud`, revocación).  
+- `ownerId` siempre se compara con `subjectId`; si no coincide → `404`.
+
+**Versionado e Idempotency-Key**
+- Versión `v1` en la ruta base.  
+- `Idempotency-Key` solo en `POST|PUT|PATCH|DELETE` (alcance `method+path+subjectId`).  
+- Para `/use`, la idempotencia se garantiza con `usageCorrelationId`.
+
+**Webhooks**
+- MVP integra por eventos/cola.  
+- Si un proveedor usara webhook: firma HMAC (`timestamp` + `deliveryId`), ventana temporal, reintentos con backoff, dedupe por `deliveryId` (análogo a Inbox).
 
 ---
 
@@ -1614,50 +1649,96 @@ No aplican (flujos locales, un AR por TX).
 
 #### 2.6.3.3. Application Layer
 
+**Application Layer**
 
-**Convenciones**
-- Ownership leak-proof; **auto-ensure** + `lockForUpdate(subjectId)` en handlers que modifiquen perfil; idempotencia (`method+path+subjectId` / `eventId`); **Outbox** (post-commit) y **Inbox** (idempotencia por handler); orden causal por `lastExternalState.{ kyc, phone, account, dispute }`; normalización a **kg/cm** antes de validar; `CustomerEligibilityUpdated` solo si cambia `status`; *ban* idempotente (si ya `BANNED`, no emite).
+> ¿Qué es esta capa?  
+> Orquesta casos de uso del BC, coordina Aggregates/Policies/Repos, define Command/Query Handlers y Event Handlers de integración. Aplica idempotencia y control transaccional.
 
-**Command Handlers**
-- Perfil: `EnsureCustomerProfile`, `ApplyReason`, `ClearReason`, `SuspendCustomer`, `UnsuspendCustomer`, `BanCustomer`, `UpdatePreferences`.
-- Plantillas (ítems/rutas): `Create|Update|AttachPhoto|DetachPhoto|Favorite|Delete|RegisterUse(usageCorrelationId)`; `If-Match` opcional (**412** si mismatch); dedup por `usageCorrelationId`.
+**Capabilities del BC mapeadas a casos de uso**
 
-**Event Handlers (externos)**
-- `OnKycVerified|Rejected`, `OnPhoneVerified|Changed`, `OnAccountDisabled|Enabled`, `OnDisputeOpened|Resolved`, `OnFraudConfirmed`, `OnLegalAgeReached` *(auto-ensure, lock, orden causal)*.
+1) Readiness (perfil, razones, suspensión/ban, preferencias)  
+2) Plantillas (CRUD, fotos como referencias, favoritos, registrar uso deduplicado)  
+3) Sincronización externa (KYC/IAM/Disputas/Antifraude/LegalAge)  
+4) Consultas (perfil, preferencias, plantillas, sugerencias por uso)
 
-**Query Handlers**
-- `GetCustomerOperationalProfile`, `GetCustomerPreferences`, `List/Get ItemTemplates`, `List/Get RouteTemplates`, `GetTemplateSuggestions` *(en base a `UsageStats`)*.
+**Command/Query Handlers (entradas, precondiciones, efectos)**
 
-**Puertos**
-- Repos (3), `OutboxPublisher`, `InboxStore`, `ExternalStateStore`, `IdempotencyStore`, `UnitsNormalizer`, `LocationValidator`, `EligibilityPolicy`, `LegalAgePolicy`.
+- **Perfil operativo**
+  - `EnsureCustomerProfile` → crea con `{KYC_MISSING, PHONE_NOT_VERIFIED}`.
+  - `ApplyReason` / `ClearReason` → recalcula y emite `CustomerEligibilityUpdated` si cambia `status`.
+  - `SuspendCustomer` / `UnsuspendCustomer` (limpia/aplica razones bloqueantes) → reevalúa/emite si cambia.
+  - `BanCustomer(FRAUD_BLOCKED)` → idempotente; emite `CustomerBanned` + `CustomerEligibilityUpdated` si corresponde.
+  - `UpdatePreferences` → normaliza kg/cm; emite solo si cambió.
+
+- **Plantillas (Item/Route)**
+  - `Create*Template`, `Update*Template` (opcional `If-Match`; sin él: LWW), `AttachPhoto`/`DetachPhoto`, `Mark*TemplateFavorite`/`Unfavorite`, `Delete*Template` (soft-delete).
+  - `Register*TemplateUse(usageCorrelationId)` → dedup (`templateId`, `usageCorrelationId`) y aumenta `usage`.
+
+- **Queries**
+  - `GetCustomerOperationalProfile`, `GetCustomerPreferences`.
+  - `List/Get ItemTemplates`, `List/Get RouteTemplates` (solo `ACTIVE` por defecto, `updatedAt DESC`).
+  - `GetTemplateSuggestions` (recency/frequency desde `UsageStats`).
+
+- **Precondiciones transversales**
+  - Ownership por `subjectId` autenticado.
+  - Guards por `status`: `BANNED` solo permite `UpdatePreferences`; `SUSPENDED` permite plantillas y preferencias.
+
+**Orquestadores / Sagas**
+
+- No se requieren Sagas en MVP; sincronización vía event handlers idempotentes (inbox) con orden causal.
+
+**Puertos (interfaces a Infra)**
+
+- Repos: `CustomerOperationalProfileRepository`, `ItemTemplateRepository`, `RouteTemplateRepository`
+- Mensajería: `OutboxPublisher` (post-commit), `InboxStore` (dedupe por `eventId`+`handler`)
+- Stores: `ExternalStateStore`, `IdempotencyStore`
+- Servicios: `UnitsNormalizer`, `LocationValidator`, `EligibilityPolicy`, `LegalAgePolicy`
+- Otros: `Clock`, `IdGenerator`, `TxManager`, `CorrelationProvider`
+
+**Idempotencia y control transaccional**
+
+- API/commands: `Idempotency-Key` con alcance `method+path+subjectId` (TTL 6–24h); misma entrada ⇒ misma respuesta; distinto cuerpo ⇒ `409`.
+- Eventos externos: `Inbox` con idempotencia por (`eventId`, `handler`).
+- Transacciones: una tx por comando/evento; al modificar perfil ⇒ `lockForUpdate(subjectId)` en la misma tx.
+- Outbox: eventos de dominio guardados en tx y publicados post-commit.
+- Orden causal: `ExternalStateStore` mantiene última versión/`occurredAt` de `kyc|phone|account|dispute` para descartar atrasados.
+
+**Event Handlers**
+
+- **Entrantes (integración):**  
+  `OnKycVerified/Rejected`, `OnPhoneVerified/Changed`, `OnAccountEnabled/Disabled`, `OnDisputeResolved/Opened`, `OnFraudConfirmed`, `OnLegalAgeReached` (auto-ensure, lock, orden causal).
+- **Salientes (dominio):**  
+  `CustomerEligibilityUpdated` y `CustomerPreferencesUpdated` solo ante cambios reales; `ItemTemplate*`/`RouteTemplate*` según mutaciones y `Used` deduplicado.
 
 ---
-
 
 <b/>
 
 
 #### 2.6.3.4. Infrastructure Layer
 
-**Infrastructure Layer — Customers**
 
-**Persistencia (RDBMS)**
-- Tablas: `customer_profile`, `customer_profile_reason` *(único por `subject_id`)*; `item_template`, `item_template_photo` *(ON DELETE CASCADE, position≥0)*; `route_template` *(origin/destination persistidos)*, `route_waypoint` *(ON DELETE CASCADE, lat/lng NOT NULL, idx≥0)*; `template_usage_dedup` *(PK `template_type, template_id, usage_correlation_id`)*.
+**Repositorios (implementaciones) y mapeo**
+- `SqlCustomerOperationalProfileRepository` ↔ `customer_profile`, `customer_profile_reason` (único por `subject_id`; soporta `lockForUpdate`).
+- `SqlItemTemplateRepository` ↔ `item_template`, `item_template_photo` (CASCADE, `position ≥ 0`).
+- `SqlRouteTemplateRepository` ↔ `route_template` (persistiendo `origin/destination`), `route_waypoint` (CASCADE, `lat/lng NOT NULL`, `idx ≥ 0`).
+- `TemplateUsageDedupStore` ↔ `template_usage_dedup` (**PK** `template_type, template_id, usage_correlation_id`).
 
-**Tablas técnicas**
-- `outbox_event(event_id, aggregate_type/id, event_type, payload, occurred_at, published_at, publish_attempts?, last_error?)`
-- `inbox_event(event_id, source, handler, received_at, handled_at NULL, attempts)` — **PK** `(event_id, handler)`; insertar si no existe; procesar solo `handled_at IS NULL`; marcar `handled_at` al éxito.
-- `idempotency_key(key_hash, method, path, subject_id, body_hash, status_code, response_hash, headers_subset, created_at, ttl_expires_at)`
-- `external_state(subject_id, kyc_version/occurred_at, phone_version/occurred_at, account_version/occurred_at, dispute_version/occurred_at)`
+**Integraciones externas / Adapters**
+- **DB relacional**: índices por `ownerId` y `updatedAt DESC`; colecciones excluyen `DELETED` por defecto.
+- **Mensajería**: `OutboxPublisher` (publicación post-commit), `InboxAwareEventConsumer` (idempotencia por `eventId`+`handler`).
+- **Object Storage**: `ObjectStorageClient` guarda solo **referencias** (`PhotoRef`); los binarios viven fuera del BC.
 
-**Repos/Adapters**
-- `SqlCustomerOperationalProfileRepository` *(incluye `lockForUpdate`)*, `SqlItemTemplateRepository`, `SqlRouteTemplateRepository` *(mapea origin/destination + waypoints)*, `TemplateUsageDedupStore`, `OutboxPublisher`, `InboxAwareEventConsumer`, `IdempotencyStore`, `ExternalStateStore`, `RedisCacheAdapter` *(opcional)*, `ObjectStorageClient` *(solo `PhotoRef`, no binarios)*.
+**Transactional Outbox / Inbox**
+- **Outbox**: `outbox_event(event_id, aggregate_type/id, event_type, payload, occurred_at, published_at, publish_attempts?, last_error?)`.
+- **Inbox**: `inbox_event(event_id, source, handler, received_at, handled_at NULL, attempts)` con **PK (`event_id`,`handler`)**; flujo *insert if absent → procesar si `handled_at IS NULL` → marcar `handled_at`*.
+- **Orden causal**: `external_state(subject_id, kyc_version/occurred_at, phone_version/occurred_at, account_version/occurred_at, dispute_version/occurred_at)`.
 
-**Transaccionalidad y concurrencia**
-- 1 tx por comando/evento; `lockForUpdate(subject_id)` al modificar perfil; *optimistic locking* en plantillas (`version`); aislamiento ≥ `READ COMMITTED`.
+**Configuración y secretos**
+- Config vía variables de entorno/servicio de configuración; secretos en Secret Manager/KMS.  
+- Binding por entorno (dev/stage/prod); sin valores incrustados en código/artefactos.
 
-**Observabilidad**
-- Logs estructurados (`correlationId`, `eventId`, `subjectId`), métricas (repos, outbox/inbox, reintentos, cache hit), trazas de publicación/consumo.
+---
 
 <b/>
 
@@ -1676,13 +1757,223 @@ No aplican (flujos locales, un AR por TX).
 <br/>
 
 #### 2.6.4.1. Domain Layer
+
+**Aggregates (AR), Entities, Value Objects**
+
+- **Company (Aggregate Root)**
+  - **Estados**: `DRAFT → SUBMITTED → IN_REVIEW → ENABLED → SUSPENDED | REVOKED`
+    - `SUSPENDED` es reversible con `reinstate()`. `REVOKED` es terminal.
+  - **Atributos clave**: `companyId`, `ruc`, `legalName`, `tradeName`, `fiscalAddress{ubigeo,line1,line2}`, `contacts{email,phone}`, `status`, `legalDocs:Set<LegalDoc>`, `taxVerification{status=PENDING|VERIFIED|FAILED,provider,checkedAt,evidenceRef?}`, `enablementMeta{enabledAt?,enabledBy?,suspendedAt?,revokedAt?}`, `audit{createdAt/by,updatedAt/by,version}`.
+  - **LegalDoc (Entity interna)**: `docId`, `type(POWER_OF_ATTORNEY|RUC_CONSTANCY|…)`, `number`, `issuer`, `validFrom/validTo`, `fileRef`, `status(ACTIVE|EXPIRED|REVOKED)`.
+  - **Invariantes**
+    - `ruc` válido y único en el BC.
+    - `ENABLED` exige tax `VERIFIED` + documentos requeridos activos (según `LegalDocPolicy`).
+    - En `SUSPENDED|REVOKED` no se permiten acciones operativas downstream (expuesto por ACL).
+    - Cambios de `ruc` o `legalName` emiten evento de cambio legal.
+  - **Comportamientos**
+    - `register(...)` → `CompanyRegistered`
+    - `submit()` (`DRAFT→SUBMITTED`)
+    - `startReview()` (`SUBMITTED→IN_REVIEW`)
+    - `verifyTaxId(result)` → `CompanyTaxIdVerified` o `CompanyTaxIdVerificationFailed`
+    - `enable()` (`IN_REVIEW→ENABLED`, valida `EnablementPolicy`) → `CompanyEnabled`
+    - `reinstate(reason?)` (`SUSPENDED→ENABLED`, valida política) → `CompanyReinstated`
+    - `suspend(reason)` / `revoke(reason)` → `CompanySuspended` / `CompanyRevoked`
+    - `addOrUpdateLegalDoc(doc)` → `CompanyLegalDocUpdated` (re-evalúa habilitación)
+    - `expireDoc(docId)` → `CompanyLegalDocExpired` (re-evalúa habilitación)
+    - `updateContacts(...)`, `updateFiscalAddress(...)` (auditable)
+  - **Validaciones VO (ejemplos)**: `Ruc` (11 dígitos + checksum), `Email` (lower/trim + formato), `Phone` (E.164), `FiscalAddress` (ubigeo válido), `validFrom ≤ validTo` en `LegalDoc`.
+
+- **Membership (Aggregate Root)**
+  - **Clave natural**: (`companyId`, `accountId`)
+  - **Atributos**: `membershipId`, `companyId`, `accountId` (=`subjectId` IAM), `role(COMPANY_ADMIN|OPERATOR|FINANCE|LEGAL)`, `status(ACTIVE|REMOVED)`, `audit{createdAt/by,updatedAt/by,version}`.
+  - **Invariantes**: a lo sumo una `Membership ACTIVE` por (`companyId`,`accountId`).
+  - **Comportamientos**: `add(companyId,accountId,role)` → `MembershipAdded`; `changeRole(role)` → `MembershipRoleChanged` (quién puede cambiar se valida en Application); `remove()` → `MembershipRemoved`.
+
+**Domain Services (políticas)**
+- **EnablementPolicy**: decide si `Company` puede `enable()`/`reinstate()` (tax `VERIFIED` + docs requeridos activos).
+- **LegalDocPolicy**: define el set mínimo de tipos de documentos requeridos.
+- **MembershipRolePolicy**: transiciones permitidas de rol.
+
+**Repositories (interfaces)**
+- `CompanyRepository` — `findById`, `findByRuc`, `save`, `lockById` (para `If-Match`/versión)
+- `MembershipRepository` — `get(companyId,accountId)`, `save`, `remove`, `findByCompany`
+
+**Domain Events (payload mínimo)**
+- `CompanyRegistered{companyId,ruc}`
+- `CompanySubmitted{companyId}`
+- `CompanyInReviewStarted{companyId}`
+- `CompanyTaxIdVerified{companyId,provider,checkedAt,evidenceRef?}`
+- `CompanyTaxIdVerificationFailed{companyId,provider,checkedAt,reason}`
+- `CompanyEnabled{companyId,enabledAt,enabledBy}`
+- `CompanyReinstated{companyId,enabledAt,enabledBy}`
+- `CompanySuspended{companyId,reason,suspendedAt}`
+- `CompanyRevoked{companyId,reason,revokedAt}`
+- `CompanyLegalDocUpdated{companyId,docType,status,validTo?}`
+- `CompanyLegalDocExpired{companyId,docType}`
+- `MembershipAdded{companyId,accountId,role}`
+- `MembershipRemoved{companyId,accountId}`
+- `MembershipRoleChanged{companyId,accountId,role}`
+
+**Ubiquitous Language (breve)**
+- Company (proveedor), Membership (vínculo persona–empresa y rol), Enablement (habilitación), LegalDoc, RUC, Tax Verification.
+
+---
+
+<br/>
+
 #### 2.6.4.2. Interface Layer
+**Autenticación y ownership**
+- Auth: `Authorization: Bearer <JWT>` (IAM); `subjectId` desde SecurityContext.
+- Ownership leak-proof: si el `subjectId` no tiene `Membership ACTIVE` en `companyId` ⇒ **404** (no 403).
+- Versionado: base `/api/v1/providers`.
+- `Idempotency-Key`: `POST|PUT|PATCH|DELETE`, alcance `method+path+subjectId`.
+
+**Endpoints (esenciales)**
+
+- **Company**
+  - `POST /companies` — registra empresa (auto-crea Membership ADMIN del creador, misma TX).
+  - `POST /companies/{id}/submit`
+  - `POST /companies/{id}/start-review`
+  - `POST /companies/{id}/verify-tax`
+  - `POST /companies/{id}/enable`
+  - `POST /companies/{id}/reinstate`
+  - `POST /companies/{id}/suspend` — body `{reason}`
+  - `POST /companies/{id}/revoke` — body `{reason}`
+  - `PUT  /companies/{id}/contacts` — (*If-Match*)
+  - `PUT  /companies/{id}/fiscal-address` — (*If-Match*)
+  - `GET  /companies/{id}`
+  - `GET  /companies?status=&ruc=`
+
+- **Legal Docs**
+  - `PUT  /companies/{id}/legal-docs/{type}` — upsert archivo + metadatos (*If-Match*)
+  - `POST /companies/{id}/legal-docs/{type}/expire`
+
+- **Memberships**
+  - `POST   /companies/{id}/members` — `{accountId,role}` *(requiere `COMPANY_ADMIN`)*
+  - `PATCH  /companies/{id}/members/{accountId}` — `{role}` *(requiere `COMPANY_ADMIN`)*
+  - `DELETE /companies/{id}/members/{accountId}`
+  - `GET    /companies/{id}/members`
+  - `GET    /my/companies`
+
+- **ACL internos (intra-plataforma)**
+  - `GET /acl/providers/{id}` — `{status,ruc,legalName,enabledAt}`
+  - `GET /acl/providers/{id}/members` — miembros y roles
+
+**Contratos I/O (DTOs mínimos)**
+- `CompanyDTO { id, ruc, legalName, tradeName, fiscalAddress, contacts, status, taxVerification, requiredDocs[{type,status,validTo}], enablementMeta{enabledAt?,enabledBy?,suspendedAt?,revokedAt?}, createdAt, updatedAt }`
+- `MembershipDTO { companyId, accountId, role, status, createdAt }`
+
+**Errores (RFC 7807)**
+- `400 providers.validation_failed`
+- `401 auth.unauthorized`
+- `403 auth.forbidden` *(solo admin/backoffice; para usuario final preferir 404)*
+- `404 providers.company_not_found` / `providers.member_not_found`
+- `409 providers.company_conflict` / `providers.membership_conflict`
+- `412 common.precondition_failed` *(If-Match)*
+- `422 providers.enablement_failed`
+
+**Webhooks / Consumers**
+- `POST /webhooks/tax-verification` — firma HMAC (`X-Signature`), protección de replay (`timestamp+nonce`), deduplicación por `eventId`. Responder `2xx` solo tras persistir + outbox; reintentos idempotentes.
+
+---
+
+<br/>
+
 #### 2.6.4.3. Application Layer
+
+**Capacidades → Casos de uso**
+
+- **Company**
+  - `RegisterCompany` — input `{ruc,legalName,tradeName,contacts,fiscalAddress}`; pre `ruc` libre; efecto: crea `Company(DRAFT)` y **en la misma TX** crea `Membership(companyId,subjectId,COMPANY_ADMIN,ACTIVE)`; eventos `CompanyRegistered`, `MembershipAdded`.
+  - `SubmitCompany` (`DRAFT→SUBMITTED`) → `CompanySubmitted`.
+  - `StartCompanyReview` (`SUBMITTED→IN_REVIEW`) → `CompanyInReviewStarted`.
+  - `VerifyCompanyTaxId` (con `TaxIdVerificationPort`) → `…Verified` o `…Failed`.
+  - `EnableCompany` (`IN_REVIEW→ENABLED`, `EnablementPolicy`) → `CompanyEnabled`.
+  - `ReinstateCompany` (`SUSPENDED→ENABLED`, política) → `CompanyReinstated`.
+  - `SuspendCompany` / `RevokeCompany` → eventos respectivos.
+  - `UpsertLegalDoc` / `ExpireLegalDoc` → re-evalúa habilitación; si caduca requerido estando `ENABLED` ⇒ suspender.
+  - `UpdateContacts` / `UpdateFiscalAddress` → actualiza VO (con `If-Match`).
+
+- **Membership**
+  - `AddMembership` — pre: caller `COMPANY_ADMIN` en ese `companyId` (Authorization/ACL); evento `MembershipAdded`.
+  - `ChangeMembershipRole` — pre: `COMPANY_ADMIN` + `MembershipRolePolicy`; evento `MembershipRoleChanged`.
+  - `RemoveMembership` — pre: `COMPANY_ADMIN`; evento `MembershipRemoved`.
+
+- **Queries**
+  - `GetCompany`, `ListCompanies(filter)`, `GetEnablementStatus(companyId)`
+  - `ListCompanyMembers(companyId)`, `MyCompanies(subjectId)`
+
+**Orquestadores / Sagas**
+- **OnboardingSaga**: `RegisterCompany → SubmitCompany → StartCompanyReview → VerifyTaxId(async) → EnableCompany` si política ok → `CompanyEnabled`.  
+  Compensación: si verificación falla o faltan docs, queda `IN_REVIEW` y notifica.
+- **ComplianceWatcher**: escucha expiraciones de `LegalDoc` (evento/cron) → `ExpireLegalDoc`; si afecta a requeridos y estaba `ENABLED` ⇒ `SuspendCompany`.
+
+**Puertos (interfaces a Infra)**
+- `TaxIdVerificationPort`, `DocumentStoragePort`, `AuthorizationPublisherPort`
+- `OutboxPort` / `EventPublisherPort`, `Clock`, `IdGenerator`, `TxManager`, `ETagCalculator`, `DedupStore`
+
+**Idempotencia y control transaccional**
+- `Idempotency-Key` en `POST|PUT|PATCH|DELETE` con alcance `method+path+subjectId` (usa `DedupStore`).
+- **Una transacción por caso de uso**: AR + outbox en la misma TX.
+- **Concurrencia optimista**: `version` del AR → `ETag` `W/"<version>"` y `If-Match` en updates.
+
+**Event Handlers**
+- **De dominio**: persisten eventos en outbox para su publicación confiable.
+- **Integración (entrantes)**: `PersonVerified(KYC)` (si política lo requiere para roles), `PayoutMethodVerified(Pagos)` (si es gating), `DisputeRequestedSuspension(Disputas)` → evaluar `SuspendCompany`.
+- **Integración (salientes)**: `Membership*` y cambios de habilitación (`Enabled|Suspended|Revoked|Reinstated`) hacia **Authorization** (permisos por `Scope=COMPANY(companyId)`); `Company*` hacia Flota/Planificación/Solicitudes/Tratos/Guías/etc.
+
+---
+
+<br/>
+
 #### 2.6.4.4. Infrastructure Layer
+
+**Repositorios (implementaciones)**
+- `CompanyRepositoryJpa` / `CompanyRepositoryJdbc` — mapea `Company` y `legalDocs`; usa **concurrencia optimista** (campo `version`) y calcula **ETag** para `If-Match`.
+- `MembershipRepositoryJpa` / `MembershipRepositoryJdbc` — garantiza unicidad lógica (`companyId`,`accountId`) para `ACTIVE`.
+
+**Integraciones externas (Adapters)**
+- `TaxIdVerificationAdapter` (SUNAT/proveedor): REST/gRPC con timeouts, retries exponenciales, circuit breaker.
+- `DocumentStorageAdapter` (Blob/S3): subida segura, URLs firmadas, AV scan opcional.
+- `AuthorizationPublisherAdapter`: publica `Membership*` y cambios de habilitación (`Enabled|Suspended|Revoked|Reinstated`) a bus interno para que Authorization derive permisos por `Scope=COMPANY(companyId)`.
+- `OutboxPublisher` (Kafka/Redis Streams/Service Bus): publicación **idempotente** por `eventId`, con backoff y DLQ.
+
+**Transactional Outbox / mensajería**
+- Patrón Outbox: eventos se registran en outbox en la **misma transacción** que el AR.
+- Worker de publicación: hace *claim* seguro, publica al broker, confirma; reintenta con backoff; tras N fallos, DLQ.
+- Idempotencia extremo a extremo: productor y consumidores deduplican por `eventId`.
+
+**Configuración y secretos**
+- Inyección por variables de entorno / Key Vault (sin valores en código): credenciales verificador fiscal, storage, claves HMAC de webhooks, conexiones DB/broker.
+- Principio de **least-privilege** y **rotación** periódica.
+
+---
+
+**Coherencia con otros BCs**
+- **IAM**: provee `subjectId` (JWT). `RegisterCompany` auto-crea `Membership ADMIN` para el creador.
+- **Authorization**: consume `Membership*` y cambios de habilitación para permisos por `companyId`.
+- **KYC**: `PersonVerified` puede ser requisito para roles sensibles (según política).
+- **Flota/Planificación/Solicitudes/Tratos/Guías/Pagos**: reaccionan a `Company*` y consultan ACL; si `SUSPENDED|REVOKED`, bloquean operaciones.
+
+
+<br/>
+
 #### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.4.6.1. Bounded Context Domain Layer Class Diagrams
 ##### 2.6.4.6.2. Bounded Context Database Design Diagram
+
+<br/>
+
+### 2.6.5. Bounded Context: Fleet
+#### 2.6.5.1. Domain Layer
+#### 2.6.5.2. Interface Layer
+#### 2.6.5.3. Application Layer
+#### 2.6.5.4. Infrastructure Layer
+#### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.5.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.5.6.2. Bounded Context Database Design Diagram
 
 <br/>
 
