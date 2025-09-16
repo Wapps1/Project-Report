@@ -1683,10 +1683,156 @@ No bloquea flujos si el directorio está caído.
 <br/>
 
 ### 2.6.2. Bounded Context: Authorization
+
+- *KYC de persona: validación de documento, biometría/face-match, verificación de nombre y edad.*
+
 #### 2.6.2.1. Domain Layer
+
+**2) Aggregates & Entities**
+
+**2.1. Aggregate Root: KycCase**
+
+- *Propósito:* orquestar el proceso KYC de un sujeto y emitir una decisión vigente.
+
+- *Estado (mínimo y suficiente):*
+  - `caseId: CaseId`
+  - `subjectId: SubjectId`
+  - `status: KycStatus`
+  - `kycLevel?: KycLevel` *(solo cuando `VERIFIED`)*
+  - `document?: DocumentSnapshot`
+  - `biometrics?: BiometricSnapshot`
+  - `reasons: List<ReasonCode>` *(vacía si `VERIFIED`)*
+  - `decisionMeta?: DecisionMeta` *(policyVersion, thresholds, scores, decidedBy, decidedAt, correlationId)*
+  - `attempts: AttemptsCounter`
+  - `createdAt`, `expiresAt?`
+
+- *Comportamientos (métodos de dominio):*
+  - `start(subjectId)` → crea el caso en `IN_PROGRESS`.
+  - `submitDocument(docData)` → fija/actualiza `document`.
+  - `submitBiometrics(bioData)` → fija/actualiza `biometrics`.
+  - `autoDecide(policy: KycDecisionPolicy)` →  
+    • pasa umbrales → `VERIFIED` (+ `kycLevel`)  
+    • inconcluso → `PENDING_REVIEW`  
+    • falla clara → `REJECTED`
+  - `applyManualDecision(decision: ManualDecision, reasonCodes?)` → `VERIFIED | REJECTED` (coherente con reglas).
+  - `expire(reason)` → `EXPIRED`.
+  - `revoke(reason)` → `REVOKED` *(solo desde `VERIFIED`)*.
+
+- *Máquina de estados (FSM):*
+  - **Nacimiento:** `start()` ⇒ `IN_PROGRESS`
+  - `IN_PROGRESS` ⇒ `PENDING_REVIEW | VERIFIED | REJECTED | EXPIRED`
+  - `PENDING_REVIEW` ⇒ `VERIFIED | REJECTED | EXPIRED`
+  - `VERIFIED` ⇒ `EXPIRED | REVOKED`
+  - `REJECTED | EXPIRED | REVOKED` ⇒ finales (sin más transiciones)
+
+- *Invariants del AR:*
+  - **Un solo caso abierto por `subjectId`** (`status ∈ {IN_PROGRESS, PENDING_REVIEW}`).
+  - Para `VERIFIED` se requiere:
+    - `document` válido *(tipo/país, número válido, no vencido, `extractionConfidence ≥ minConfidence`)*,
+    - y `biometrics.liveness = PASSED` y `faceMatchScore ≥ threshold`,
+    - y **edad mínima** cumplida.
+  - `REVOKED` solo desde `VERIFIED`, con `reasonCodes` de fraude/compliance.
+  - `EXPIRED` por `DOC_EXPIRED` o `POLICY_REEVAL_TTL` (aplicable a `IN_PROGRESS | PENDING_REVIEW | VERIFIED`).
+  - **AttemptsExceeded:** `submitDocument/submitBiometrics` rechazan si `attempts` supera el máximo en ventana.
+  - **Estados finales no mutables:** un `KycCase` en `REJECTED | EXPIRED | REVOKED` no acepta `submit*` ni nuevas decisiones.
+
+---
+
+**2.2. Entity: DocumentSnapshot**
+
+- *Atributos:*  
+  `type: DocumentType (NATIONAL_ID | PASSPORT | …)` · `country: CountryCode (VO ISO-3166)` · `number: DocumentNumber (VO)` · `expirationDate` · `legalName: LegalName` · `dob: DateOfBirth` · `mrzData?` · `qualityScore?` · `extractionConfidence` · `docPhotoHash: EvidenceHash`.
+
+- *Reglas:*  
+  `expirationDate > now` · `extractionConfidence ≥ minConfidence` · `number` válido según `type/country`.
+
+---
+
+**2.3. Entity: BiometricSnapshot**
+
+- *Atributos:*  
+  `liveness: PASSED | FAILED | INCONCLUSIVE (+score)` · `faceMatchScore (0..1)` · `threshold (0..1)` · `selfieHash: EvidenceHash`.
+
+- *Reglas:*  
+  Para `VERIFIED`: `liveness = PASSED` y `faceMatchScore ≥ threshold`.
+
+---
+
+**2.4. Aggregate Root: ReviewTask**
+
+- *Propósito:* gestionar revisión humana sin contaminar `KycCase`.
+- *Estado:*  
+  `taskId: TaskId`, `caseId: CaseId`, `status: OPEN | ASSIGNED | DECIDED`, `assignee?`, `notes?`, `decision?: ManualDecision = APPROVE | REJECT`, `reasonCodes?: List<ReasonCode>`, `createdAt`, `decidedAt?`.
+- *Regla:* al pasar a `DECIDED`, la aplicación invoca `applyManualDecision(...)` en `KycCase`.
+
+---
+
+**3) Value Objects (VO)**
+
+`SubjectId`, `CaseId`, `TaskId` · `KycLevel` · `ReasonCode` *(p. ej.: `DOC_EXPIRED`, `POLICY_REEVAL_TTL`, `DOC_INVALID_FORMAT`, `OCR_LOW_CONFIDENCE`, `UNDER_AGE`, `FACE_MISMATCH`, `LIVENESS_FAILED`, `FRAUD_SIGNAL`, `COMPLIANCE_HIT`)* · `EvidenceHash` · `LegalName` · `DateOfBirth` *(incluye cálculo de edad)* · `AttemptsCounter` *(ventana y máximo)* · `DecisionMeta` *(policyVersion, thresholds, scores, decidedBy=`SYSTEM|HUMAN`, decidedAt, correlationId)* · `CountryCode (ISO-3166)` · `DocumentNumber` *(valida formato por `type+country`)*.
+
+---
+
+**4) Factories**
+
+- `KycCaseFactory.createNew(subjectId: SubjectId): KycCase` — nace en `IN_PROGRESS`, inicializa `attempts`.  
+- `ReviewTaskFactory.open(caseId: CaseId, notes?): ReviewTask` — nace en `OPEN`.
+
+---
+
+**5) Domain Services (políticas puras)**
+
+- `KycDecisionPolicy` → entrada: `DocumentSnapshot`, `BiometricSnapshot`, *thresholds*; salida: `DecisionOutcome { decision, kycLevel?, scores, reasonCodes[] }`.  
+- `AgeChecker` → valida edad mínima desde `DateOfBirth`.  
+- `NameNormalizer` → normaliza/valida `LegalName`.  
+*(Determinísticos; sin dependencias a infraestructura.)*
+
+---
+
+**6) Repositories (interfaces)**
+
+- `KycCaseRepository`: `save`, `findById`, `findOpenBySubject`.  
+- `ReviewTaskRepository`: `save`, `findById`, `findOpenByCase`.
+
+---
+
+**7) Domain Events (sin PII ni blobs)**
+
+- `KycStarted{ caseId, subjectId, startedAt }`  
+- `KycDocumentSubmitted{ caseId, subjectId, extractionConfidence, qualityScore?, evidenceHashes[] }`  
+- `KycBiometricsSubmitted{ caseId, subjectId, liveness, faceMatchScore, evidenceHashes[] }`  
+- `KycPendingReview{ caseId, subjectId, policyVersion, scores, correlationId }`  
+- `KycVerified{ caseId, subjectId, kycLevel, policyVersion, thresholds, scores, decidedBy, decidedAt, correlationId }`  
+- `KycRejected{ caseId, subjectId, reasonCodes[], policyVersion, scores, decidedBy, decidedAt, correlationId }`  
+- `KycExpired{ caseId, subjectId, reason: DOC_EXPIRED | POLICY_REEVAL_TTL, at }`  
+- `KycRevoked{ caseId, subjectId, reason: FRAUD_SIGNAL | COMPLIANCE_HIT, at }`  
+- `ReviewTaskOpened{ taskId, caseId, openedAt }`  
+- `ReviewTaskDecided{ taskId, caseId, decision, reasonCodes[], decidedAt }`
+
+*Si IAM requiere PII para claims (p. ej., `legalName`, `dob`), eso se envía como **Integration Event** en la capa de aplicación, no en Domain Events.*
+
+---
+
+**8) Errores de dominio (semánticos)**
+
+`OpenCaseAlreadyExists`, `InvalidStateTransition`, `DocumentNotValid`, `BiometricsNotValid`, `UnderAgeNotAllowed`, `HumanReviewRequired`, `RevocationRequiresVerifiedCase`, `AttemptsExceeded`
+
+<br>
+
 #### 2.6.2.2. Interface Layer
+
+<br/>
+
+
 #### 2.6.2.3. Application Layer
+
+<br/>
+
 #### 2.6.2.4. Infrastructure Layer
+
+<br/>
+
+
 #### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
