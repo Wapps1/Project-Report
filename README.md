@@ -2330,6 +2330,45 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 <b/>
 
 #### 2.6.3.2. Interface Layer
+
+# Interface/Presentation Layer — Customers (actualizada)
+
+> **Propósito:** exponer **Controllers HTTP** para perfil, preferencias y plantillas, y **Consumers** de eventos externos.  
+> **Base path:** `/api/v1/customers` · **Auth:** `Authorization: Bearer <JWT>` (IAM).  
+> **Ownership leak-proof:** toda operación se valida contra el `subjectId` del contexto; si el recurso no pertenece al sujeto ⇒ **404**.
+
+---
+
+## Convenciones transversales
+
+- **Idempotency-Key:** solo en `POST|PUT|PATCH|DELETE` (alcance `method + path + subjectId`). En `GET` se ignora.
+- **Errores (RFC 7807):** `type`, `title`, `status`, `detail`, `instance` + extensiones `code`, `correlationId`, `path`, `timestamp`.
+- **Unidades:** entradas en `lb/in` se normalizan a **kg/cm** antes de Application.
+- **Paginación:** `page` (0-based), `size` (def. 20, máx. 100). Respuesta con `X-Total-Count` y `Link` (RFC 8288).
+- **Soft-delete:** colecciones retornan **solo `ACTIVE`** por defecto.
+- **ETag/condicionales:** `GET` puede responder `ETag: W/"{version}"`; `PATCH` requiere `If-Match: W/"{version}"`.
+
+---
+
+## Controllers
+
+### ProfileController
+- **GET `/api/v1/customers/profile`**  
+  Devuelve `status`, `reasons` (snapshot) y `preferences`. **Auto-ensure** si no existe.
+
+### PreferencesController
+- **PUT `/api/v1/customers/preferences`**  
+  Actualiza `language`, `units`, `notificationChannels`, `uxDefaults`.  
+  Emite `Customers.CustomerPreferencesUpdated` **solo si hubo cambios**. Permitido incluso si `status = BANNED`.
+
+### ItemTemplatesController
+- **GET `/api/v1/customers/item-templates?page&size&includeDeleted=false`**  
+  Lista paginada (solo `ACTIVE` por defecto). Headers: `X-Total-Count`, `Link`.
+- **POST `/api/v1/customers/item-templates`**  
+  Crea plantilla. **201**
+
+<b/>
+
 #### 2.6.3.3. Application Layer
 
 # Application Layer — Customers
