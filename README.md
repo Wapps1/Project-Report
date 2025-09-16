@@ -1355,7 +1355,637 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<!--helloo-->
+<!-- US21 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US21</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Registrar medidas por IA o manual con edición</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero elegir entre estimar medidas desde fotos con IA o ingresarlas manualmente, y poder ajustarlas, para completar mis solicitudes con precisión y rapidez.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Selección de método</strong><br>
+        <strong>Dado que</strong> estoy creando una solicitud<br>
+        <strong>Cuando</strong> elijo “IA” o “Manual”<br>
+        <strong>Entonces</strong> la app ajusta el flujo según el método elegido <strong>Y</strong> registra mi elección.<br><br>
+        <strong>Escenario 2: Modo IA</strong><br>
+        <strong>Dado que</strong> subo fotos válidas y suficientes<br>
+        <strong>Cuando</strong> el sistema procesa las imágenes<br>
+        <strong>Entonces</strong> sugiere largo, ancho, alto, volumen y peso volumétrico <strong>Y</strong> puedo ajustarlos antes de guardar.<br><br>
+        <strong>Escenario 3: Modo manual</strong><br>
+        <strong>Dado que</strong> elijo “Manual”<br>
+        <strong>Cuando</strong> ingreso largo, ancho y alto<br>
+        <strong>Entonces</strong> la app valida rangos <strong>Y</strong> calcula automáticamente el peso volumétrico.<br><br>
+        <strong>Escenario 4: Falla o baja confianza de IA</strong><br>
+        <strong>Dado que</strong> la IA falla o su confianza es baja<br>
+        <strong>Cuando</strong> se detecta esa condición<br>
+        <strong>Entonces</strong> la app me ofrece continuar en modo manual <strong>Y</strong> conserva las fotos capturadas.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<!-- US22 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US22</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Capturar fotos de ítems con reglas de calidad</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero que la app me guíe para tomar fotos con ángulos y formatos mínimos, para mejorar la precisión de la estimación y la confianza del proveedor.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Reglas mínimas</strong><br>
+        <strong>Dado que</strong> inicio la captura<br>
+        <strong>Cuando</strong> intento continuar sin cumplir el mínimo de fotos/ángulos/formatos<br>
+        <strong>Entonces</strong> la app bloquea el avance <strong>Y</strong> muestra qué falta.<br><br>
+        <strong>Escenario 2: Validación de calidad</strong><br>
+        <strong>Dado que</strong> subo fotos borrosas u oscuras<br>
+        <strong>Cuando</strong> la app evalúa la calidad<br>
+        <strong>Entonces</strong> me avisa <strong>Y</strong> sugiere repetir la captura.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US23 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US23</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Definir ruta (origen y destino)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero definir origen y destino, para que los proveedores coticen con base realista de distancia y tiempos.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Ruta válida</strong><br>
+        <strong>Dado que</strong> completo origen y destino válidos<br>
+        <strong>Cuando</strong> guardo la ruta<br>
+        <strong>Entonces</strong> la app calcula la distancia estimada <strong>Y</strong> valida coherencia.<br><br>
+        <strong>Escenario 2: Edición previa a publicación</strong><br>
+        <strong>Dado que</strong> aún no publico la solicitud<br>
+        <strong>Cuando</strong> edito la ruta<br>
+        <strong>Entonces</strong> puedo modificar origen o destino <strong>Y</strong> guardar cambios.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US24 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US24</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Registrar peso declarado y cálculo automático del peso volumétrico</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero declarar el peso real y ver el peso volumétrico automático, para entender el peso cobrable antes de publicar.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Cálculo automático</strong><br>
+        <strong>Dado que</strong> existen medidas válidas<br>
+        <strong>Cuando</strong> se calculan los volúmenes<br>
+        <strong>Entonces</strong> la app muestra peso volumétrico <strong>Y</strong> el peso cobrable (máximo entre real y volumétrico) con breve explicación.<br><br>
+        <strong>Escenario 2: Aviso de discrepancias</strong><br>
+        <strong>Dado que</strong> el peso real difiere mucho del volumétrico<br>
+        <strong>Cuando</strong> intento publicar<br>
+        <strong>Entonces</strong> la app muestra una advertencia <strong>Y</strong> enlace a la política de diferencias <strong>Y</strong> me permite continuar consciente.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US25 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US25</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Publicar solicitud y confirmar exactitud de medidas y peso</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero publicar mi solicitud y confirmar que medidas y peso son correctos, para que los proveedores la vean en tiempo real con información fiable.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Confirmación de exactitud</strong><br>
+        <strong>Dado que</strong> voy a publicar<br>
+        <strong>Cuando</strong> reviso el resumen<br>
+        <strong>Entonces</strong> debo marcar que confirmo que las medidas y el peso son correctos para continuar.<br><br>
+        <strong>Escenario 2: Publicación exitosa</strong><br>
+        <strong>Dado que</strong> completé ítems, peso y ruta<br>
+        <strong>Cuando</strong> confirmo publicar<br>
+        <strong>Entonces</strong> la solicitud pasa a “Publicada” <strong>Y</strong> queda disponible para cotización.<br><br>
+        <strong>Escenario 3: Validaciones</strong><br>
+        <strong>Dado que</strong> faltan datos obligatorios<br>
+        <strong>Cuando</strong> intento publicar<br>
+        <strong>Entonces</strong> la app bloquea la acción <strong>Y</strong> muestra los campos por corregir.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US26 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US26</td>
+      <td>Cliente con solicitud publicada</td>
+      <td>Media</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Actualizar solicitud publicada con notificación de cambios / cancelar / expirar</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero poder actualizar mi solicitud ya publicada, y que se notifique su actualización; además, cancelarla o dejar que expire por vigencia.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Edición posterior a publicación con notificación</strong><br>
+        <strong>Dado que</strong> la solicitud está “Publicada”<br>
+        <strong>Cuando</strong> edito un campo permitido<br>
+        <strong>Entonces</strong> el cambio se guarda con auditoría <strong>Y</strong> se emite el evento “Solicitud actualizada” para notificar a los interesados.<br><br>
+        <strong>Escenario 2: Cancelación por el cliente</strong><br>
+        <strong>Dado que</strong> no hay trato iniciado<br>
+        <strong>Cuando</strong> cancelo<br>
+        <strong>Entonces</strong> la solicitud pasa a “Cancelada por el cliente” <strong>Y</strong> deja de estar visible.<br><br>
+        <strong>Escenario 3: Cierre por inicio de trato</strong><br>
+        <strong>Dado que</strong> inicio un trato desde una cotización<br>
+        <strong>Cuando</strong> se crea el trato<br>
+        <strong>Entonces</strong> la solicitud se marca “Cerrada por inicio de trato” de forma idempotente.<br><br>
+        <strong>Escenario 4: Expiración automática por vigencia</strong><br>
+        <strong>Dado que</strong> se cumple el tiempo de vigencia configurado sin actividad<br>
+        <strong>Cuando</strong> el sistema ejecuta el proceso de expiración<br>
+        <strong>Entonces</strong> la solicitud pasa a “Expirada”.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US27 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US27</td>
+      <td>Cliente registrado</td>
+      <td>Media</td>
+      <td>Cliente – Solicitudes</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Seleccionar objetos genéricos y personalizar</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero poder elegir objetos genéricos (p. ej., caja, pallet, electrodoméstico) con medidas sugeridas y poder personalizarlas, para agilizar la creación de solicitudes.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Selección de objeto genérico</strong><br>
+        <strong>Dado que</strong> estoy creando una solicitud<br>
+        <strong>Cuando</strong> elijo un objeto genérico<br>
+        <strong>Entonces</strong> la app precarga nombre, categoría y medidas sugeridas.<br><br>
+        <strong>Escenario 2: Personalización</strong><br>
+        <strong>Dado que</strong> seleccioné un objeto genérico<br>
+        <strong>Cuando</strong> edito sus medidas o peso<br>
+        <strong>Entonces</strong> la app recalcula el peso volumétrico <strong>Y</strong> guarda la versión personalizada en mis ítems.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US28 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US28</td>
+      <td>Cliente con cotizaciones</td>
+      <td>Alta</td>
+      <td>Cliente/Proveedor – Tratos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Iniciar trato desde una cotización y habilitar chat contextual</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero iniciar un trato a partir de una cotización y abrir un chat con el proveedor, para negociar detalles antes de acordar.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Creación de trato</strong><br>
+        <strong>Dado que</strong> selecciono una cotización<br>
+        <strong>Cuando</strong> presiono “Iniciar trato”<br>
+        <strong>Entonces</strong> se crea el trato con referencia a solicitud y cotización <strong>Y</strong> se habilita el chat del trato.<br><br>
+        <strong>Escenario 2: Reserva temporal</strong><br>
+        <strong>Dado que</strong> el trato se crea<br>
+        <strong>Cuando</strong> se confirman condiciones iniciales<br>
+        <strong>Entonces</strong> se reserva capacidad/tarifa por una ventana configurable <strong>Y</strong> se muestra el vencimiento.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US29 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US29</td>
+      <td>Cliente o Proveedor en chat</td>
+      <td>Media</td>
+      <td>Cliente/Proveedor – Tratos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Mensajería del trato: enviar y leer mensajes</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como participante del trato, quiero enviar y leer mensajes del chat para coordinar y negociar de forma contextual.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Envío y lectura</strong><br>
+        <strong>Dado</strong> un chat habilitado<br>
+        <strong>Cuando</strong> envío un mensaje<br>
+        <strong>Entonces</strong> se entrega al receptor <strong>Y</strong> se muestra confirmación de lectura cuando el receptor lo visualiza.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US30 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US30</td>
+      <td>Cliente y Proveedor</td>
+      <td>Alta</td>
+      <td>Cliente/Proveedor – Tratos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Acordar trato, congelar negociación y mantener chat operativo hasta entrega confirmada</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como partes del trato, queremos confirmar la última versión de condiciones para bloquear cambios y pasar a pago, manteniendo el chat abierto para coordinación hasta la confirmación final de recepción por ambas partes.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Cierre de negociación</strong><br>
+        <strong>Dado que</strong> existe una versión propuesta<br>
+        <strong>Cuando</strong> ambos aceptan<br>
+        <strong>Entonces</strong> el trato pasa a “Acordado” <strong>Y</strong> las condiciones quedan bloqueadas; cualquier cambio posterior requiere reiniciar la negociación.<br><br>
+        <strong>Escenario 2: Chat operativo hasta cierre logístico</strong><br>
+        <strong>Dado que</strong> el trato está “Acordado” o en etapas posteriores<br>
+        <strong>Cuando</strong> usamos el chat<br>
+        <strong>Entonces</strong> podemos seguir coordinando por chat hasta que cliente y proveedor confirmen la recepción del paquete <strong>Y</strong> recién entonces el chat queda solo lectura.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US31 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US31</td>
+      <td>Cliente</td>
+      <td>Alta</td>
+      <td>Cliente/Proveedor – Tratos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Marcar trato “Listo para pago” con resumen y comisión</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero ver el total acordado, impuestos y la comisión del 1% para proceder al pago informado.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Resumen correcto</strong><br>
+        <strong>Dado que</strong> el trato está “Acordado”<br>
+        <strong>Cuando</strong> abro el resumen<br>
+        <strong>Entonces</strong> veo el desglose <strong>Y</strong> puedo continuar al pago.<br><br>
+        <strong>Escenario 2: Vencimiento de reserva</strong><br>
+        <strong>Dado que</strong> expira la reserva de capacidad/tarifa<br>
+        <strong>Cuando</strong> intento pagar fuera de tiempo<br>
+        <strong>Entonces</strong> el sistema pide revalidar condiciones <strong>O</strong> retorna a “Iniciado”.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US32 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US32</td>
+      <td>Cliente o Proveedor</td>
+      <td>Media</td>
+      <td>Cliente/Proveedor – Tratos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Cancelar trato con causa y reglas de reputación</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como participante, quiero cancelar un trato indicando motivo, para cerrar el proceso respetando políticas de reputación y reabrir la solicitud si aplica.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Cancelación del cliente</strong><br>
+        <strong>Dado que</strong> hay un trato activo sin pago<br>
+        <strong>Cuando</strong> el cliente cancela con motivo<br>
+        <strong>Entonces</strong> el sistema registra el motivo <strong>Y</strong> actualiza reputación si corresponde.<br><br>
+        <strong>Escenario 2: Cancelación del proveedor</strong><br>
+        <strong>Dado que</strong> hay un trato activo<br>
+        <strong>Cuando</strong> el proveedor cancela con motivo<br>
+        <strong>Entonces</strong> la solicitud puede volver a “Publicada” <strong>Y</strong> se registra el impacto en reputación.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US33 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US33</td>
+      <td>Sistema de Notificaciones</td>
+      <td>Alta</td>
+      <td>Todos – Notificaciones</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Notificar nuevo mensaje de chat</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como sistema, quiero enviar una notificación cuando llega un nuevo mensaje de chat, para que el destinatario responda a tiempo.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Envío básico</strong><br>
+        <strong>Dado que</strong> se crea un mensaje en el chat del trato<br>
+        <strong>Y</strong> el destinatario no está en la pantalla del chat<br>
+        <strong>Cuando</strong> se confirma el mensaje<br>
+        <strong>Entonces</strong> se envía una notificación <strong>Y</strong> se incrementa el contador de no leídos.<br><br>
+        <strong>Escenario 2: Abrir desde la notificación</strong><br>
+        <strong>Dado que</strong> recibo la notificación<br>
+        <strong>Cuando</strong> toco la notificación<br>
+        <strong>Entonces</strong> se abre el hilo del chat <strong>Y</strong> los mensajes visibles se marcan como leídos.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US34 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US34</td>
+      <td>Sistema de Notificaciones</td>
+      <td>Alta</td>
+      <td>Todos – Notificaciones</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Notificar a proveedores sobre nueva solicitud publicada</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como sistema, quiero notificar a los proveedores cuando un cliente publica una solicitud compatible, para que puedan cotizar rápidamente.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Envío a compatibles</strong><br>
+        <strong>Dado que</strong> una solicitud pasa a “Publicada”<br>
+        <strong>Y</strong> coincide con criterios del proveedor<br>
+        <strong>Cuando</strong> se procesa el evento<br>
+        <strong>Entonces</strong> se envía una notificación al proveedor con acceso directo a la solicitud.<br><br>
+        <strong>Escenario 2: Evitar duplicados</strong><br>
+        <strong>Dado que</strong> ya se notificó una solicitud a un proveedor<br>
+        <strong>Cuando</strong> no hay cambios relevantes<br>
+        <strong>Entonces</strong> no se envían notificaciones duplicadas.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US35 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US35</td>
+      <td>Sistema de Notificaciones</td>
+      <td>Alta</td>
+      <td>Todos – Notificaciones</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Notificar al cliente por cotización recibida</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como sistema, quiero notificar al cliente cuando llega una nueva cotización, para que la revise y pueda iniciar un trato.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Envío básico</strong><br>
+        <strong>Dado que</strong> un proveedor registra una cotización sobre una solicitud del cliente<br>
+        <strong>Cuando</strong> se confirma el registro<br>
+        <strong>Entonces</strong> se envía una notificación al cliente con acceso directo al listado de cotizaciones.<br><br>
+        <strong>Escenario 2: Agrupación simple</strong><br>
+        <strong>Dado que</strong> llegan varias cotizaciones en poco tiempo<br>
+        <strong>Cuando</strong> ya existe una notificación reciente<br>
+        <strong>Entonces</strong> se muestra un único aviso con el total actualizado de cotizaciones nuevas.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US36 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US36</td>
+      <td>Sistema de Notificaciones</td>
+      <td>Alta</td>
+      <td>Todos – Notificaciones</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Notificar actualizaciones de seguimiento del envío</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como sistema, quiero notificar al cliente y al proveedor los hitos principales del seguimiento (salida, en ruta, incidente, llegada y entrega), para mantenerlos informados.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Hitos estándar</strong><br>
+        <strong>Dado que</strong> se registra un hito de tracking (salida, en ruta, llegada a destino o entregado)<br>
+        <strong>Cuando</strong> se actualiza el estado<br>
+        <strong>Entonces</strong> se envía la notificación correspondiente a las partes involucradas.<br><br>
+        <strong>Escenario 2: Incidente</strong><br>
+        <strong>Dado que</strong> se registra un incidente durante el transporte<br>
+        <strong>Cuando</strong> se confirma el evento<br>
+        <strong>Entonces</strong> se envía una notificación prioritaria con el detalle básico <strong>Y</strong> un enlace al chat del trato.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US37 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US37</td>
+      <td>Usuario (cliente o proveedor)</td>
+      <td>Media</td>
+      <td>Todos – Notificaciones</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Ver centro de notificaciones y marcar como leído</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como usuario, quiero ver un listado de mis notificaciones y poder marcarlas como leídas, para organizar mi bandeja.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Listado</strong><br>
+        <strong>Dado que</strong> abro el centro de notificaciones<br>
+        <strong>Cuando</strong> hay notificaciones pendientes<br>
+        <strong>Entonces</strong> se muestran en orden cronológico con su estado (leída/no leída) <strong>Y</strong> un enlace a la acción (chat, solicitud, cotización o tracking).<br><br>
+
+        <strong>Escenario 2: Marcar como leído</strong><br>
+        <strong>Dado que</strong> selecciono una notificación<br>
+        <strong>Cuando</strong> la abro o presiono “Marcar como leído”<br>
+        <strong>Entonces</strong> su estado cambia a leído <strong>Y</strong> el contador se actualiza.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- US38 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US38</td>
+      <td>Usuario (cliente o proveedor)</td>
+      <td>Baja</td>
+      <td>Todos – Notificaciones</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Silenciar notificaciones de un trato o solicitud</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como usuario, quiero silenciar temporalmente las notificaciones de un trato o solicitud, para reducir distracciones.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Silenciar</strong><br>
+        <strong>Dado que</strong> estoy en el detalle de un trato o solicitud<br>
+        <strong>Cuando</strong> activo “Silenciar”<br>
+        <strong>Entonces</strong> dejo de recibir notificaciones de ese hilo durante el periodo seleccionado.<br><br>
+        <strong>Escenario 2: Reactivar</strong><br>
+        <strong>Dado que</strong> el hilo está silenciado<br>
+        <strong>Cuando</strong> desactivo “Silenciar”<br>
+        <strong>Entonces</strong> vuelvo a recibir notificaciones normalmente.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 
