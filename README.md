@@ -1832,9 +1832,294 @@ No bloquea flujos si el directorio está caído.
 
 #### 2.6.2.3. Application Layer
 
+# Application Layer — Identity Verification (KYC)
+
+---
+
+## 1) Capabilities (alineadas al BC)
+- **Inicio y unicidad de caso:** abrir un `KycCase` por sujeto (a lo sumo **un caso abierto**).
+- **Ingesta de documento:** sesión de carga → OCR/MRZ → `DocumentSnapshot`.
+- **Ingesta biométrica:** liveness + face-match → `BiometricSnapshot`.
+- **Decisión automática:** aplica `KycDecisionPolicy` (dominio).
+- **Revisión humana:** abre/consume `ReviewTask` y aplica decisión manual.
+- **Expiración y revocación:** por documento vencido/reevaluación; y por fraude/compliance.
+- **Proyecciones:** `IdentityProfile` (solo lectura) y vista del caso.
+- **Eventos de integración** versionados (`.vN`), **Outbox**, **Idempotency-Key** y `correlationId`.
+
+---
+
+## 2) Command Handlers
+- `StartKycCaseHandler`  
+  Toma `subjectId` de `SecurityContext.currentSubjectId()`; ignora el que venga en el comando.  
+  Si el comando trae `subjectId` distinto → `403`/`409`. Soporta **Idempotency-Key**.
+- `SubmitDocumentHandler`  
+  Resuelve upload sessions → **[ACL]** `DocumentOcrGateway.extract` → arma `DocumentSnapshot` → `KycCase.submitDocument`.
+- `SubmitBiometricsHandler`  
+  **[ACL]** `LivenessGateway.check` + `FaceMatchGateway.compare(selfieRef, docPhotoRef)` → `BiometricSnapshot` → `KycCase.submitBiometrics`.
+- `AutoDecideHandler`  
+  Obtiene umbrales de `PolicyProvider` → ejecuta `KycDecisionPolicy` → `KycCase.autoDecide`.
+- `ApplyManualDecisionHandler`  
+  Aplica `APPROVE|REJECT` sobre `KycCase`. Soporta **Idempotency-Key**.
+- `ExpireCaseHandler`  
+  `KycCase.expire(DOC_EXPIRED | POLICY_REEVAL_TTL)`.
+- `RevokeCaseHandler`  
+  `KycCase.revoke(FRAUD_SIGNAL | COMPLIANCE_HIT)`.
+
+**Precondiciones (reflejan invariantes de dominio)**
+- `submitDocument`/`submitBiometrics`: solo si `status == IN_PROGRESS` y **Attempts** no excedido.
+- Para `NATIONAL_ID`: `submitDocument` **exige** **front + back**; si falta uno → `DocumentNotValid(DOC_INVALID_FORMAT)`.
+- `SubmitBiometrics` requiere `DocumentSnapshot` existente (para `docPhotoRef`).
+- `applyManualDecision`: solo si `status == PENDING_REVIEW`.
+- `expire`/`revoke`: prohibidos en estados finales.
+
+---
+
+## 3) Event Handlers (entrantes)
+- `OnAccountCreatedHandler` — input `AccountCreated.v1 { accountId, createdAt }` → registra onboarding marker / no-op (según política).
+- `OnPhoneVerifiedHandler` — input `PhoneVerified.v1 { accountId, at }` → opcionalmente dispara `StartKycCaseCommand` o notifica (según política).
+
+---
+
+## 4) Orchestrators / Process Managers
+- `DocumentUploadOrchestrator` — coordina: **upload session → OCR → persistencia → integración**.
+- `ProviderCallbackOrchestrator` — procesa **webhooks** de proveedores (**idempotente** por `providerTxnId`).
+- `HumanReviewOrchestrator` — abre `ReviewTask`, notifica y, al decidirse, ejecuta `ApplyManualDecision`.
+
+---
+
+## 5) Application Services (transversales)
+- `UnitOfWork` — transacciones por caso de uso.
+- `IdempotencyService` — `checkAndPut` / `getStoredResponse`.
+- `EventInboxService` — **inbox/idempotencia por `eventId`** para `OnAccountCreated`, `OnPhoneVerified` y webhooks (dedupe de eventos entrantes).
+- `Clock` — tiempo determinístico.
+- `PolicyProvider` — umbrales/versionado de política.
+- `EventMapper` — domain → **integration events**.
+- `OutboxService` — persistencia/publicación confiable.
+- `KycExpirationScheduler` — programa `ExpireCaseCommand` según `DOC_EXPIRED | POLICY_REEVAL_TTL`.
+
+---
+
+## 6) Ports / Gateways [ACL]
+- `DocumentOcrGateway.extract(frontRef, backRef): OcrResult { legalName, dob, number, country, type, expirationDate, extractionConfidence, docPhotoRef, docPhotoHash, providerTxnId }`
+- `LivenessGateway.check(selfieRef): LivenessResult { status, score, providerTxnId }`
+- `FaceMatchGateway.compare(selfieRef, docPhotoRef): FaceMatchResult { score, providerTxnId }`
+- `BlobStorageGateway.issueUploadUrl(kind, caseId): UploadSession { sessionId, url, ttl }`
+- `BlobStorageGateway.resolveUploadSession(sessionId): BlobRef`
+- `SchedulerGateway.schedule(command, at|cronExpr)`
+- `EventBus.publish(integrationEvent)` *(usado **solo** por `OutboxService`; los handlers no publican directo)*.
+- `IdempotencyStore.checkAndPut(key, fingerprint)` / `getStoredResponse(key)`
+- `SecurityContext.currentSubjectId(): SubjectId`
+
+**[ACL] Anti-Corruption Layer:** traduce/normaliza contratos externos, aplica redacción de PII, mapea errores a `ReasonCode`, implementa retries/circuit y mantiene versionado.
+
+---
+
+## 7) Contratos (DTOs)
+**Commands**
+- `StartKycCaseCommand { subjectId?, idempotencyKey? }` *(el handler usa `SecurityContext`)*  
+- `SubmitDocumentCommand { caseId, uploadSessionIdFront, uploadSessionIdBack }`  
+- `SubmitBiometricsCommand { caseId, selfieUploadSessionId }`  
+- `AutoDecideCommand { caseId }`  
+- `ApplyManualDecisionCommand { caseId, decision: APPROVE|REJECT, reasonCodes?[], idempotencyKey? }`  
+- `ExpireCaseCommand { caseId, reason: DOC_EXPIRED|POLICY_REEVAL_TTL }`  
+- `RevokeCaseCommand { caseId, reason: FRAUD_SIGNAL|COMPLIANCE_HIT, notes? }`
+
+**Queries**
+- `GetKycCaseByIdQuery { caseId }`
+- `GetOpenKycCaseForMeQuery {}` *(usa `SecurityContext`)*
+- `GetMyIdentityProfileQuery {}` *(CQRS read model)*
+
+---
+
+## 8) Integration Events (Outbox, `.vN`)
+- `KycStarted.v1 { caseId, subjectId, startedAt }`
+- `KycPendingReview.v1 { caseId, subjectId, policyVersion, scores, correlationId }`
+- `KycVerified.v1 { caseId, subjectId, kycLevel, policyVersion, thresholds, scores, decidedAt, correlationId }`
+- `KycRejected.v1 { caseId, subjectId, reasonCodes[], policyVersion, scores, decidedAt, correlationId }`
+- `KycExpired.v1 { caseId, subjectId, reason, at }`
+- `KycRevoked.v1 { caseId, subjectId, reason, at }`
+
+*PII no se publica por defecto. Si IAM necesita claims, emitir variante dirigida:*  
+`KycVerifiedForIAM.v1 { subjectId, kycLevel, legalName, dob, decidedAt, policyVersion }`.
+
+---
+
+## 9) Relación BC↔BC y ACL
+- **Entrantes (IAM):** `OnAccountCreatedHandler`, `OnPhoneVerifiedHandler` (pasando por `EventInboxService`).
+- **Salientes:** Integration Events para IAM/Payments/Notifications/Compliance (mapeados por `EventMapper` + Outbox).
+- **Síncrono BC↔BC:** no aplica por ahora; se declarará `AuthorizationClientGateway` si fuera necesario.
+
+---
+
+## 10) Reglas operativas de aplicación
+- **Idempotencia** en `StartKycCase`, `Submit*`, `ApplyManualDecision`.
+- **Transacción + Outbox** en cada handler.
+- **Emisión ordenada por `caseId`** desde Outbox (consumidores procesan `Started → Submitted → … → Verified` en orden).
+- **Resiliencia:** timeouts/reintentos a gateways; señal inconclusa → `PENDING_REVIEW` (no “REJECTED” automático).
+- **Privacidad:** PII fuera de domain events; solo en integration events dirigidos si política lo autoriza.
+- **Observabilidad:** `correlationId` fluye en comandos, gateways y eventos.
+- **Versionado:** eventos `.vN` con compatibilidad hacia atrás.
+
+
 <br/>
 
 #### 2.6.2.4. Infrastructure Layer
+
+## 1) Persistencia (DB) — Repositories e implementación
+
+**Motor:** SQL relacional (PostgreSQL o SQL Server)  
+**Patrón:** Aggregate + **Unit of Work** + **Optimistic Concurrency** (`version`)
+
+**Repos concretos**
+- `SqlKycCaseRepository` (implements `KycCaseRepository`) — persiste `KycCase` (incluye `DocumentSnapshot`, `BiometricSnapshot`, `AttemptsCounter`).
+- `SqlReviewTaskRepository` (implements `ReviewTaskRepository`) — persiste `ReviewTask`.
+
+**Esquema (resumen)**
+    KycCase(
+      case_id PK, subject_id, status, kyc_level?, reasons JSON,
+      decision_meta JSON, attempts, created_at, expires_at?, version
+    )
+
+    KycDocument(
+      case_id PK/FK→KycCase, type, country, number_enc, number_tok?,
+      expiration_date, legal_name, dob, extraction_confidence,
+      quality_score?, doc_photo_hash, mrz JSON
+    )
+
+    KycBiometrics(
+      case_id PK/FK→KycCase, liveness, liveness_score?,
+      face_match_score, threshold, selfie_hash
+    )
+
+    ReviewTask(
+      task_id PK, case_id FK→KycCase, status, assignee?, notes?,
+      decision?, reason_codes JSON, created_at, decided_at?
+    )
+
+**Constraints/índices (consistencia dura)**
+- Único parcial/filtrado: `UNIQUE(subject_id) WHERE status IN ('IN_PROGRESS','PENDING_REVIEW')`.
+- CHECK: `face_match_score BETWEEN 0 AND 1`, `threshold BETWEEN 0 AND 1`, `expiration_date > created_at`.
+- FKs 1–1: `KycDocument.case_id` y `KycBiometrics.case_id` como PK/FK a `KycCase`.
+- Optimistic locking: `UPDATE … WHERE case_id = ? AND version = ?`.
+
+**PII en DB**
+- `number_enc`: cifrado con KMS (rotación).
+- `number_tok` (opcional): tokenización determinística (hash + salt + pepper en KMS) para búsquedas.
+- En lecturas/proyecciones: enmascarar el número; nunca exponer `number_enc`.
+
+---
+
+## 2) Integración entre BCs (Webhooks HTTP)
+
+**Publicación (saliente) — Outbox HTTP**
+- `OutboxRepository` + `OutboxHttpPublisher` (worker).
+- Tabla `Outbox(id, aggregate, event_name, version, payload, partition_key, subscriber_id, created_at, status NEW|PUBLISHED|FAILED, attempts, last_error)`.
+- Orden garantizado por (`caseId`, `subscriberId`) con colas por suscriptor (evita head-of-line blocking).
+- Reintentos exponenciales y DLQ tras N fallos.
+- Los handlers no publican directo; siempre vía Outbox.
+
+**Recepción (entrante) — Inbox HTTP**
+- `WebhookInboxController` + `EventInboxService` + `InboxRepository`.
+- Tabla `Inbox(event_id PK, handler, received_at, status NEW|PROCESSED|FAILED, attempts, last_error, payload_hash)`.
+- Idempotencia robusta: si el productor no envía `event_id`, calcular fingerprint canónico (JSON ordenado, sin whitespace) y almacenar también `payload_hash`.
+- DLQ para fallidos.
+
+**Seguridad de webhooks**
+- Headers: `X-Event-Name`, `X-Event-Version`, `X-Correlation-Id`, `X-Timestamp`, `X-Signature`.
+- Firma: `X-Signature = HMAC-SHA256(secret, X-Timestamp + body)`; rechazar si `|now - X-Timestamp| > 5 min`.
+- Anti-replay: almacenar `(event_id | payload_hash, timestamp)` por 24h en Inbox; rechazar repetidos/demorados.
+
+---
+
+## 3) Gateways [ACL] a proveedores (OCR/Liveness/Face/Storage/Scheduler)
+
+Implementan Ports de Application con timeouts (3–5s), retries con backoff, circuit breaker (abre ~50% fallos / ≥20 req; cooldown 60s), idempotencia por `providerTxnId` (o fingerprint) y redacción de PII.
+
+- `OcrVendorGateway` (DocumentOcrGateway)  
+  Devuelve `OcrResult { legalName, dob, number, country, type, expirationDate, extractionConfidence, docPhotoRef, docPhotoHash, providerTxnId }`.  
+  Regla: para `NATIONAL_ID` es obligatorio `frontRef + backRef`; si falta → `DOC_INVALID_FORMAT` → `DocumentNotValid`.
+- `LivenessVendorGateway` (LivenessGateway) — `PASSED | FAILED | INCONCLUSIVE` (+score).
+- `FaceMatchVendorGateway` (FaceMatchGateway) — compara `selfieRef` vs `docPhotoRef` y retorna `score`.
+- `ObjectStorageAdapter` (BlobStorageGateway)  
+  - `issueUploadUrl(kind, caseId) → UploadSession{ sessionId, url, ttl }`  
+  - `resolveUploadSession(sessionId) → BlobRef`  
+    TTL “by policy”: lifecycle del bucket (S3/GCS/Azure) elimina blobs; el worker no borra, audita (ver §6).
+- `CronSchedulerAdapter` (SchedulerGateway) — agenda `ExpireCaseCommand` (`DOC_EXPIRED | POLICY_REEVAL_TTL`).
+
+---
+
+## 4) Outbox / Inbox (detalle operativo)
+
+- Outbox: publicación ordenada por (`caseId`, `subscriberId`), reintentos exponenciales, DLQ, métricas (intentos, latencia, tasa a DLQ por suscriptor).
+- Inbox: dedupe por `event_id` y `payload_hash`, DLQ, claim de reintentos, trazabilidad vía `correlationId`.
+
+---
+
+## 5) Proyecciones CQRS (lectura)
+
+- `SqlIdentityProfileProjection` — materializa `IdentityProfile` al oír `KycVerified` (según ruteo). Sin blobs; `docNumber` enmascarado.
+- `SqlKycCaseViewProjection` — vista de timeline/estado (`Started/Document/Biometrics/Pending/Verified/Rejected/Expired/Revoked`).
+
+**Conexiones separadas RO/RW**
+- Proyecciones: pool/usuario RO (sin UPDATE/DELETE, GRANT mínimos).
+- Comandos: pool/usuario RW.
+
+---
+
+## 6) Evidencias / TTL (purga fuera del dominio)
+
+- Lifecycle/TTL en el bucket (S3/GCS/Azure) ejecuta borrado automático.
+- `EvidencePurgeWorker` actúa como auditor: registra `EvidencePurgeLog(case_id, blob_ref, purged_at, policy_version, actor='SYSTEM')` y reintenta marcado si el proveedor falló.
+- No se emiten domain events; si Compliance lo exige, emitir integration event de auditoría.
+
+---
+
+## 7) Idempotencia, rate-limit y reloj
+
+- `RedisIdempotencyStore` (IdempotencyStore) — guarda `Idempotency-Key` → fingerprint + respuesta (TTL corto).
+- (Recomendado) `RedisRateLimiter` — refuerzo de ventana para `AttemptsCounter`.
+- `ClockSystem` (Clock) — fuente única de tiempo.
+
+---
+
+## 8) Observabilidad y seguridad
+
+- Logs estructurados con `correlationId`, `caseId`, `subjectId`, `policyVersion`; scrubbing PII (no blobs / `number_enc`).
+- Métricas clave:
+  - Lead time `KycStarted → (KycVerified | KycRejected)`.
+  - Latencia y error-rate por gateway (OCR/Liveness/Face).
+  - Entrega webhooks: intentos, latencia, tasa a DLQ por suscriptor.
+  - Backlog Outbox/Inbox.
+- Alertas: fallos de gateways, crecimiento de DLQ/backlog, expiraciones no ejecutadas.
+- Secrets: KMS/Secret Manager; TLS en adapters; egress restringido a dominios de vendors; DB en red privada.
+
+---
+
+## 9) Esquema de despliegue (alto nivel)
+
+- DB relacional con índices filtrados, CHECK y `version`.
+- Object Storage con cifrado y TTL por política.
+- Redis para IdempotencyStore (y RateLimiter si se activa).
+- Workers/servicios: `OutboxHttpPublisher`, `EventInboxProcessor`, `KycExpirationScheduler`, `EvidencePurgeWorker`.
+
+---
+
+## 10) PII y ruteo de eventos (coherencia con Application)
+
+- `EventMapper` con allow-list por consumidor: por defecto PII OFF.
+- Solo IAM recibe variante ForIAM con PII mínima; el resto recibe eventos sin PII.
+
+---
+
+## 11) Checklist de coherencia (Domain & Application)
+
+- Repos `SqlKycCaseRepository` / `SqlReviewTaskRepository` ↔ interfaces de dominio.
+- Webhooks HTTP con Outbox/Inbox y orden por (`caseId`, `subscriberId`); handlers no publican directo.
+- OCR exige front+back para `NATIONAL_ID`; faltante → `DOC_INVALID_FORMAT`.
+- Proyecciones sin PII cruda; números enmascarados.
+- TTL de evidencias por política del bucket; worker audita.
+
+
 
 <br/>
 
