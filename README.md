@@ -2297,18 +2297,43 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 - Proyecciones sin PII cruda; números enmascarados.
 - TTL de evidencias por política del bucket; worker audita.
 
+<br/>
 
+#### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
+- *KYC API — Component View*
+<img width="3820" height="7427" alt="image" src="https://github.com/user-attachments/assets/8cfb9f8e-ecfa-48cb-bd88-f6cd19641458" />
 
 <br/>
 
+- *KYC Workers — Component View*
 
-#### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
+<br/>
+ 
 #### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
+
+<br/>
+
 ##### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
+
+<br/>
+
 ##### 2.6.2.6.2. Bounded Context Database Design Diagram
 
 
 <br/>
+
+### 2.6.3. Bounded Context: Clients
+#### 2.6.3.1. Domain Layer
+#### 2.6.3.2. Interface Layer
+#### 2.6.3.3. Application Layer
+#### 2.6.3.4. Infrastructure Layer
+#### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.3.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.3.6.2. Bounded Context Database Design Diagram
+
+<br/>
+
 
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
@@ -2321,8 +2346,7 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 ##### 2.6.X.6.2. Bounded Context Database Design Diagram
 
 
-<br>
-<br>
+<br/>
 
 # Conclusiones
 
