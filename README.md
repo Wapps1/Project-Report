@@ -2224,6 +2224,204 @@ Vehicle, Document, Compliance/Policy, Enabled/Disabled, DisabledCause, Verificat
 
 <br/>
 
+### 2.6.6. Bounded Context: Planning
+#### 2.6.6.1. Domain Layer
+**Aggregates (AR)**
+
+**1) OperationalRoute (Aggregate Root)**
+
+- **Estado**
+  - `routeId : UUID`, `providerId : UUID`
+  - `segments : List<RouteSegment>` *(O → [I…] → D)*
+  - `acceptance : AcceptanceFlags`
+  - `status : ACTIVE | INACTIVE`
+  - `metadata : RouteMeta` *(name/label, notes?)*
+- **Invariantes**
+  - `segments` no vacío; `origin != destination`.
+  - **Continuidad:** `segments[i].to == segments[i+1].from`.
+  - **Ownership:** `providerId` es el dueño de la ruta.
+- **Comportamientos**
+  - `activate()` · `deactivate()` · `updateAcceptance(flags)` · `rename(meta)`
+
+**Entities / Value Objects**
+
+- **RouteSegment (Entity)**  
+  `from : Place`, `to : Place` *(sin ciclos triviales)*
+
+- **Place (VO)**  
+  `code : GeoCode`, `name : String`, `kind : CITY | DISTRICT | PROVINCE | DEPARTMENT | POINT`  
+  *Nota:* para `POINT`, usar geocódigo estable (H3/geohash/PlaceId propio). UBIGEO aplica a niveles administrativos.
+
+- **AcceptanceFlags (VO)**  
+  `refrigerated`, `fragile`, `hazardous`, `oversized`, `notes?` *(valida consistencia interna)*
+
+- **RouteKey (VO)**  
+  Representación canónica del corredor **O→…→D** por `code/kind` (estable para búsquedas).
+
+- **NormalizedRequest (VO)**  
+  `routeKey`, `places`, `flags` *(siempre en términos canónicos)*
+
+- **EligibilityResult (VO)**  
+  `eligible : boolean`, `reasons : List<String>`, `normalizedRequest`  
+  *Razones típicas:* `PROVIDER_DISABLED`, `ROUTE_INACTIVE`, `ROUTE_NOT_COVERING_CORRIDOR`, `FLAGS_NOT_SUPPORTED`, `PLACE_UNRESOLVED`.
+
+- **ServiceWindowEstimate (VO, orientativo)**  
+  `pickupWindow? : TimeWindow`, `deliveryWindow? : TimeWindow`, `notes?`
+
+- **TimeWindow (VO)**  
+  `start : Instant`, `end : Instant`
+
+**Domain Services**
+
+- **RouteMatchingService**  
+  Matchea si:  
+  1) **Cobertura jerárquica y direccional** del corredor (lugares solicitados **iguales o descendientes** del segmento correspondiente y **en orden**).  
+  2) **Superset** de `acceptance` de la ruta vs flags solicitados.  
+  3) `status == ACTIVE`.
+
+- **PlaceNormalizer**  
+  Texto → `Place` canónico.
+
+- **WindowEstimator** *(orientativo)*  
+  Heurística simple para ventanas de servicio.
+
+**Domain Events (internos, payload mínimo)**
+
+- `OperationalRouteDefined { routeId, providerId }`
+- `OperationalRouteUpdated { routeId, providerId, fieldsChanged }`
+- `OperationalRouteDeactivated { routeId, providerId }`
+
+**Repositories (interfaces)**
+
+- `OperationalRouteRepository`  
+  `save`, `findById`, `findActiveByProvider(providerId, page)`, `findCandidatesByCorridor(routeKey | places)` *(soporta jerarquía por `code/kind`)*
+
+**Ubiquitous Language**
+
+Ruta operativa, corredor, flags de aceptación, normalización, elegibilidad, estimación operativa.
+
+---
+
+<br/>
+
+#### 2.6.6.2. Interface Layer
+**Base path:** `/api/v1/planning` · **Auth:** `Authorization: Bearer <JWT>` (IAM)
+
+**Ownership:** `providerId` proviene del JWT; si no pertenece ⇒ **404**.
+
+**Errores:** `RFC 7807` + `code`, `correlationId`, `timestamp`.
+
+**Endpoints**
+
+- **Proveedor (CRUD rutas)**
+  - `POST /providers/me/routes` — crear *(Headers: Idempotency-Key)*  
+    **Body:** `{ segments:[{ from:{code|text}, to:{code|text} }...], acceptance:{...}, meta? }`  
+    **201 →** `{ routeId }`
+  - `PUT /providers/me/routes/{routeId}` — actualizar *(Headers: Idempotency-Key)*  
+    **200 →** `{ routeId }`
+  - `PATCH /providers/me/routes/{routeId}/deactivate` — desactivar *(Headers: Idempotency-Key)*  
+    **200**
+  - `GET /providers/me/routes` — listar (paginado)  
+    **200 →** `[ { routeId, segments, acceptance, status, meta } ]`
+
+- **Matching / Elegibilidad / Estimación**
+  - `POST /match/providers` — `{ route:[text|code], flags }`  
+    **200 →** `{ providers:[{ providerId, matched | reasons }], normalizedRoute }`
+  - `POST /eligibility/providers/{providerId}` — veredicto  
+    **200 →** `{ eligible, reasons, normalizedRequest }`
+  - `POST /estimate/providers/{providerId}` *(opcional)*  
+    **200 →** `{ pickupWindow?, deliveryWindow?, notes? }`
+
+**DTOs / reglas de entrada**
+
+- Requests aceptan **text o code**; siempre se **normaliza** a `Place`.
+- Códigos de error: `INVALID_PLACE`, `UNSUPPORTED_FLAGS_COMBINATION`, `PROVIDER_DISABLED`, `ROUTE_INACTIVE`.
+
+---
+<br/>
+
+#### 2.6.6.3. Application Layer
+**Capabilities / Casos de uso**
+
+- Crear / actualizar / desactivar `OperationalRoute`
+- `MatchProviders` (ruta+flags)
+- `CheckRouteEligibility` (explicable)
+- `EstimateServiceWindow` (orientativo)
+
+**Command / Query Handlers**
+
+- **CreateOperationalRouteHandler (Command)**  
+  **Input:** `{ providerId?, segments[], acceptance, meta? }`  
+  **Pre:** ownership (`subjectId ↔ providerId`); `ProvidersStatusPort.isEnabled(providerId) == true`; normalización OK.  
+  **Efectos:** crea AR; emite `OperationalRouteDefined`.
+
+- **UpdateOperationalRouteHandler (Command)**  
+  **Input:** `{ routeId, acceptance?, segments?, meta? }`  
+  **Pre:** ownership; ruta existente; normalización OK.  
+  **Efectos:** actualiza; `OperationalRouteUpdated`.
+
+- **DeactivateOperationalRouteHandler (Command)**  
+  **Input:** `{ routeId }`  
+  **Pre:** ownership.  
+  **Efectos:** `status = INACTIVE`; `OperationalRouteDeactivated`.
+
+- **MatchProvidersHandler (Query)**  
+  **Input:** `{ route:[places], flags }`  
+  **Flujo:** normaliza → `findCandidatesByCorridor` → consulta `ProvidersStatusPort` y `FleetHealthPort` → `RouteMatchingService` → razones.  
+  **Output:** `{ providers:[{ providerId, matched | reasons }], normalizedRoute }`.
+
+- **CheckRouteEligibilityHandler (Query)**  
+  **Input:** `{ providerId, route:[places], flags }` → `EligibilityResult`.
+
+- **EstimateServiceWindowHandler (Query, opcional)**  
+  **Output:** `ServiceWindowEstimate`.
+
+**Puertos (interfaces a Infra)**
+
+- `Clock`, `IdGenerator`, `TxManager`
+- `GeoCodingPort`
+- `ProvidersStatusPort` *(enabled/disabled)*
+- `FleetHealthPort` *(health/capabilities: BASIC|DEGRADED|BLOCKED)*
+- `EventBus` *(si se publican eventos)*
+
+**Idempotencia y transacciones**
+
+- `Idempotency-Key` en mutaciones *(scope: `subjectId + method + path + bodyHash`)*.  
+- Dedupe de eventos por `eventId`.  
+- **Transactional Outbox** para publicar.
+
+---
+<br/>
+
+#### 2.6.6.4. Infrastructure Layer
+
+**Repositorios**
+
+- `OperationalRouteRepositoryJdbc | Jpa` *(proyecciones para corredor jerárquico y búsqueda por `RouteKey`)*
+
+**Adapters / Integraciones**
+
+- `GeoCodingAdapter` *(GeoCodingPort)*: `normalize(text) -> Place`
+- `ProvidersStatusAdapter` *(ProvidersStatusPort)*: `isEnabled(providerId): boolean`
+- `FleetHealthAdapter` *(FleetHealthPort)*: `getHealth(providerId): BASIC | DEGRADED | BLOCKED`
+- `EventBusPublisher` *(EventBus)* para publicar `OperationalRoute*` vía **Transactional Outbox**
+- `AuthContextAdapter`: obtiene `subjectId/providerId` desde el JWT (IAM)
+
+**Mensajería**
+
+- **Transactional Outbox** + reintentos/backoff + **dedupe** por `messageId`.
+
+<br/>
+
+#### 2.6.6.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.6.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.6.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.6.6.2. Bounded Context Database Design Diagram
+
+
+<br/>
+
+
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
 #### 2.6.X.2. Interface Layer
