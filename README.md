@@ -2422,6 +2422,146 @@ Ruta operativa, corredor, flags de aceptación, normalización, elegibilidad, es
 <br/>
 
 
+### 2.6.7. Bounded Context: Requests
+
+- *Creación y publicación de solicitudes de envío (ítems, medidas IA, peso, ruta) y su lifecycle.*
+
+#### 2.6.7.1. Domain Layer
+
+**Aggregate Root — `Request`**
+
+- **Estado**
+  - `requestId : UUID` · `ownerId : SubjectId` · `version : Int ≥ 1`
+  - `status : DRAFT | PUBLISHED | SUPERSEDED | ARCHIVED | CANCELLED | EXPIRED`
+  - `items : List<RequestItem>` · `route : Route`
+  - `totals : Totals`
+  - `publishedAt?` · `expiredAt?` · `audit { createdAt, updatedAt }`
+- **Invariantes**
+  - Solo `ownerId` puede mutar.
+  - Para **publicar**: `items ≥ 1`, `totals.weightKg > 0`, `route` válida, **ninguna medida pendiente de aceptación**.
+  - Cada **publicación** congela snapshot de `version`.
+  - `route` sin ciclos; continuidad **O→…→D**.
+  - Nueva **publicación** ⇒ **nueva versión** y la anterior pasa a `SUPERSEDED`.
+- **Comportamientos**
+  - `addItem / updateItem / removeItem`
+  - `setRoute()` · `recomputeTotals()`
+  - `applyAIEstimates(itemId, suggestion)` *(no pisa valores `USER`)*
+  - `acceptMeasurements(itemId)`
+  - `publish()` *(DRAFT→PUBLISHED; crea vN)*
+  - `revise(changeSet)` *(PUBLISHED→nueva vN; la anterior = `SUPERSEDED`)*
+  - `cancel(reason)` *(si no hay Deal formal)*
+  - `archive(cause)` *(Deal formalizado o decisión del usuario)*
+  - `expire()` *(scheduler)*
+
+**Entities / Value Objects**
+
+- **`RequestItem` (Entity)**  
+  `itemId`, `name`, `frequency : ONE_TIME | RECURRING`, `categoryId`,  
+  `photos : List<ImageRef>`,  
+  `measurements : Measurements { l, w, h, source: USER | AI }`,  
+  `weightKg : Decimal (>0)`  
+  → **Regla:** si `source = AI`, requiere `acceptMeasurements()`.
+
+- **`Route` (VO)**  
+  `origin : Place`, `stops : List<Place>`, `destination : Place`  
+  → Validado con `GeoNormalizerPort`.
+
+- **`Measurements` (VO)**  
+  Valores **positivos**; `volumeM3` **derivado**.
+
+- **`Totals` (VO)**  
+  Agregados de **ítems confirmados**.
+
+- **`ImageRef` (VO)**  
+  `fileId`, `mime`, `sizeBytes`, `checksum`.
+
+- **`MeasurementsSuggestion` (VO efímero)**  
+  `dims { l, w, h }`, `confidence [0..1]`, `modelId`, `latencyMs`, `limitsNote?`.
+
+**Domain Services**
+
+- `RouteValidator`
+- `TotalsCalculator`
+- `VersioningPolicy`
+
+**Domain Events**
+
+- `RequestCreated(requestId, ownerId, v1)`
+- `ItemAdded/Updated/Removed(requestId, itemId, vN)`
+- `MeasurementsSuggested(requestId, itemId, vN, confidence)`
+- `MeasurementsAccepted(requestId, itemId, vN)`
+- `RequestPublished(requestId, vN, summary { route, totals })`
+- `RequestRevised(requestId, fromV, toV, changeSet)`
+- `RequestSuperseded(requestId, fromV)`
+- `RequestCancelled(requestId, reason)`
+- `RequestArchived(requestId, cause)`
+- `RequestExpired(requestId)`
+
+**Repository (interface)**
+
+- `RequestRepository` — `findById`, `save`, `lockForUpdate`  
+  **Reglas:** idempotencia y **optimistic concurrency**.
+
+**Ubiquitous Language**
+
+Request, Item, Measurements (**AI|USER**), Suggestion, Publish, Version, Supersede, Route, Totals, Archive, Expire.
+
+---
+
+<b/>
+
+#### 2.6.7.2. Interface Layer
+#### 2.6.7.3. Application Layer
+
+**Casos de uso ↔ Handlers**
+
+- `CreateRequestHandler`
+- `UpsertItemHandler`
+- `SuggestMeasurementsHandler`
+- `AcceptMeasurementsHandler`
+- `SetRouteHandler`
+- `PublishRequestHandler`
+- `ReviseRequestHandler`
+- `CancelRequestHandler`
+- `ArchiveRequestHandler`
+- `ExpireRequestJob`
+
+**Ejemplo — `PublishRequestHandler`**
+
+- **Pre:** `owner == subject`, `status ∈ { DRAFT, PUBLISHED }`, `items ≥ 1`, `totals` válidos, `route` normalizada, **todas** las medidas **confirmadas**.  
+- **Efecto:** crea **nueva versión `PUBLISHED`**, marca la anterior como `SUPERSEDED`, emite `RequestPublished` + `RequestSuperseded`.
+
+**Orquestación / Integraciones**
+
+- **Deals:** `onDealFormalized(requestId, version)` → `archive(cause = FORMALIZED_DEAL)` **solo** de esa versión.  
+- **Scheduler:** ejecuta `ExpireRequestJob`.
+
+**Puertos**
+
+`MeasurementPort.estimate(photos) → MeasurementsSuggestion` · `ImageStoragePort.getUploadUrl()` ·  
+`GeoNormalizerPort.normalize(route) → Route` · `AuthContextPort.getSubjectId()` ·  
+`IdGenerator`, `Clock`, `TxManager`, `OutboxPublisher`, `EventBus`, `IdempotencyStore`.
+
+**Idempotencia / Transacciones**
+
+- `Idempotency-Key` en **todo comando mutable**.  
+  **Scope:** `subjectId + command + argsHash`.
+- **1 comando = 1 transacción**.  
+- Eventos se publican **post-commit** vía **Outbox**.
+
+---
+
+<b/>
+#### 2.6.7.4. Infrastructure Layer
+#### 2.6.7.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.7.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.7.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.7.6.2. Bounded Context Database Design Diagram
+
+
+<br/>
+
+
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
 #### 2.6.X.2. Interface Layer
@@ -2431,6 +2571,7 @@ Ruta operativa, corredor, flags de aceptación, normalización, elegibilidad, es
 #### 2.6.X.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.X.6.1. Bounded Context Domain Layer Class Diagrams
 ##### 2.6.X.6.2. Bounded Context Database Design Diagram
+
 
 
 <br/>
