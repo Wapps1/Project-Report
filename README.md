@@ -565,51 +565,14 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 ## 2.4. Requirements Specification
 ### 2.4.1. User Stories
 
+<!-- ======================= CLIENTES ======================= -->
 
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
+    <!-- US01 -->
+    <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
     <tr>
-      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
-    </tr>
-    <tr>
-      <td>US00</td>
-      <td>aca user </td>
-      <td>aca prioridad</td>
-      <td>aca epica</td>
-    </tr>
-    <tr><th colspan="4">Title</th></tr>
-    <tr><td colspan="4">aca titulo</td></tr>
-    <tr><th colspan="4">Description</th></tr>
-    <tr>
-      <td colspan="4">
-        aca descripcion
-      </td>
-    </tr>
-    <tr><th colspan="4">Acceptance Criteria</th></tr>
-    <tr>
-      <td colspan="4">
-        <strong>Escenario 1: </strong><br>
-        <strong>Dado</strong> que <br>
-        <strong>Cuando</strong> nya<br>
-        <strong>Entonces</strong> zzz<br><br>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
-<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
-  <!-- C1 -->
-  <tbody>
-    <tr>
-      <th style="width:20%;">Story ID</th>
-      <th style="width:20%;">User</th>
-      <th style="width:20%;">Priority</th>
-      <th style="width:40%;">Epic</th>
-    </tr>
-    <tr>
-      <td>C1</td>
+      <td>US01</td>
       <td>Cliente no registrado</td>
       <td>Alta</td>
       <td>Cliente – Registro</td>
@@ -618,22 +581,23 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
     <tr><td colspan="4">Verificar correo e iniciar registro</td></tr>
     <tr><th colspan="4">Description</th></tr>
     <tr>
-      <td colspan="4">
-        Como cliente no registrado, quiero verificar mi correo y crear una cuenta,
-        para iniciar el proceso de registro de forma segura.
-      </td>
+      <td colspan="4">Como cliente no registrado, quiero verificar mi correo y crear una cuenta, para iniciar el proceso de registro de forma segura.</td>
     </tr>
     <tr><th colspan="4">Acceptance Criteria</th></tr>
     <tr>
       <td colspan="4">
         <strong>Escenario 1: Enlace de verificación enviado</strong><br>
-        <strong>Dado</strong> que ingreso un correo válido<br>
+        <strong>Dado que</strong> ingreso un correo válido<br>
+        <strong>Y</strong> no existe una cuenta activa con ese correo<br>
         <strong>Cuando</strong> presiono “Enviar verificación”<br>
-        <strong>Entonces</strong> el sistema envía un correo con enlace/OTP y registra el intento.<br><br>
+        <strong>Entonces</strong> el sistema envía un enlace/OTP y registra el intento<br>
+        <strong>Y</strong> muestra el tiempo de expiración y la opción “Reenviar” con límite.<br><br>
         <strong>Escenario 2: Correo verificado</strong><br>
-        <strong>Dado</strong> que recibí el enlace/OTP<br>
-        <strong>Cuando</strong> lo valido dentro del tiempo límite<br>
-        <strong>Entonces</strong> mi correo queda <em>verificado</em> y puedo continuar el registro.
+        <strong>Dado que</strong> recibí el enlace/OTP<br>
+        <strong>Y</strong> estoy dentro del tiempo de validez<br>
+        <strong>Cuando</strong> hago clic en el enlace o ingreso el OTP correcto<br>
+        <strong>Entonces</strong> el correo queda <em>verificado</em><br>
+        <strong>Y</strong> el sistema me redirige al siguiente paso del registro.
       </td>
     </tr>
   </tbody>
@@ -643,11 +607,12 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
+    <!-- US02 -->
     <tr>
-      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
     </tr>
     <tr>
-      <td>C2</td>
+      <td>US02</td>
       <td>Cliente en registro</td>
       <td>Alta</td>
       <td>Cliente – Registro</td>
@@ -656,36 +621,739 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
     <tr><td colspan="4">Verificar teléfono por SMS OTP</td></tr>
     <tr><th colspan="4">Description</th></tr>
     <tr>
-      <td colspan="4">
-        Como cliente, quiero verificar mi teléfono con un código OTP por SMS,
-        para habilitar el segundo factor de autenticación y notificaciones.
-      </td>
+      <td colspan="4">Como cliente, quiero verificar mi teléfono con un código OTP por SMS, para habilitar el segundo factor de autenticación y notificaciones.</td>
     </tr>
     <tr><th colspan="4">Acceptance Criteria</th></tr>
     <tr>
       <td colspan="4">
         <strong>Escenario 1: OTP enviado</strong><br>
-        <strong>Dado</strong> que ingresé un número válido<br>
+        <strong>Dado que</strong> ingreso un número válido<br>
+        <strong>Y</strong> acepto recibir SMS<br>
         <strong>Cuando</strong> solicito el OTP<br>
-        <strong>Entonces</strong> recibo un SMS y se inicia un contador de expiración.<br><br>
+        <strong>Entonces</strong> el sistema envía el código y muestra un contador de expiración<br>
+        <strong>Y</strong> limita reenvíos para evitar abuso.<br><br>
         <strong>Escenario 2: OTP validado</strong><br>
-        <strong>Dado</strong> que recibí el OTP<br>
-        <strong>Cuando</strong> lo ingreso correctamente antes de expirar<br>
-        <strong>Entonces</strong> el teléfono queda <em>verificado</em>.
+        <strong>Dado que</strong> recibí el OTP<br>
+        <strong>Y</strong> no ha expirado<br>
+        <strong>Cuando</strong> lo ingreso correctamente<br>
+        <strong>Entonces</strong> el teléfono queda <em>verificado</em><br>
+        <strong>Y</strong> el sistema registra auditoría del evento.
       </td>
     </tr>
   </tbody>
 </table>
 
+<br>
 
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US03 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US03</td>
+      <td>Cliente en registro</td>
+      <td>Alta</td>
+      <td>Cliente – Registro</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Validar documento de identidad y coincidencia de nombre</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero validar mi documento (DNI/CE) y que mi nombre coincida, para asegurar mi identidad antes de usar la plataforma.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Documento validado</strong><br>
+        <strong>Dado que</strong> ingreso tipo y número de documento<br>
+        <strong>Y</strong> adjunto evidencia si se solicita<br>
+        <strong>Cuando</strong> el sistema consulta/valida con la fuente correspondiente<br>
+        <strong>Entonces</strong> se marca “Documento validado”<br>
+        <strong>Y</strong> se guarda evidencia y timestamp de la verificación.<br><br>
+        <strong>Escenario 2: Coincidencia de nombre</strong><br>
+        <strong>Dado que</strong> el documento está validado<br>
+        <strong>Y</strong> declaré un nombre de perfil<br>
+        <strong>Cuando</strong> el sistema compara contra la fuente<br>
+        <strong>Entonces</strong> aprueba si coincide<br>
+        <strong>Y</strong> muestra correcciones si hay discrepancias.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
 
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US04 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US04</td>
+      <td>Cliente en registro</td>
+      <td>Media</td>
+      <td>Cliente – Registro</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Validar edad mínima y configurar PIN</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero validar que cumplo la edad mínima y definir un PIN, para operar de forma segura dentro de la app.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Edad validada</strong><br>
+        <strong>Dado que</strong> ingresé mi fecha de nacimiento<br>
+        <strong>Y</strong> completé pasos previos<br>
+        <strong>Cuando</strong> el sistema calcula mi edad<br>
+        <strong>Entonces</strong> si cumplo la mínima avanzo<br>
+        <strong>Y</strong> si no cumplo se bloquea el registro con mensaje claro.<br><br>
+        <strong>Escenario 2: PIN configurado</strong><br>
+        <strong>Dado que</strong> superé las validaciones previas<br>
+        <strong>Y</strong> el PIN cumple la política (longitud/complejidad)<br>
+        <strong>Cuando</strong> confirmo el PIN<br>
+        <strong>Entonces</strong> se almacena en hash y queda activo<br>
+        <strong>Y</strong> se registra auditoría.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
 
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US05 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US05</td>
+      <td>Cliente en registro</td>
+      <td>Media</td>
+      <td>Cliente – Registro</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Registrar datos fiscales (RUC opcional) y completar perfil</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero registrar mis datos fiscales (RUC si aplica) y completar mi perfil, para que la emisión de documentos sea correcta.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: RUC validado</strong><br>
+        <strong>Dado que</strong> ingreso mi RUC (si corresponde)<br>
+        <strong>Y</strong> la razón social declarada<br>
+        <strong>Cuando</strong> el sistema consulta el estado y razón social<br>
+        <strong>Entonces</strong> se marca “RUC validado” si coincide<br>
+        <strong>Y</strong> queda asociado al perfil.<br><br>
+        <strong>Escenario 2: Perfil validado</strong><br>
+        <strong>Dado que</strong> completé los campos obligatorios<br>
+        <strong>Y</strong> acepté términos y política de privacidad<br>
+        <strong>Cuando</strong> guardo la información<br>
+        <strong>Entonces</strong> el perfil queda “Validado”<br>
+        <strong>Y</strong> la cuenta se habilita para operar.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
 
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US06 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US06</td>
+      <td>Cliente registrado</td>
+      <td>Media</td>
+      <td>Cliente – Preferencias</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Configurar preferencias de notificación y horarios</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero elegir canales (push/email/SMS) y horarios de contacto, para recibir alertas relevantes cuando me conviene.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Guardar preferencias</strong><br>
+        <strong>Dado que</strong> selecciono canales y ventanas horarias<br>
+        <strong>Y</strong> confirmo la zona horaria<br>
+        <strong>Cuando</strong> guardo la configuración<br>
+        <strong>Entonces</strong> el sistema la aplica a futuras notificaciones<br>
+        <strong>Y</strong> puedo modificarla en cualquier momento.<br><br>
+        <strong>Escenario 2: Silencio programado</strong><br>
+        <strong>Dado que</strong> activo un periodo “No molestar”<br>
+        <strong>Y</strong> defino una excepción para alertas críticas<br>
+        <strong>Cuando</strong> ocurre un evento durante el periodo<br>
+        <strong>Entonces</strong> solo se envían alertas marcadas como críticas<br>
+        <strong>Y</strong> las demás se encolan para el fin del periodo.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
 
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US07 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US07</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Plantillas</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Gestionar plantillas de ítems (crear, reutilizar, eliminar)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero guardar mis ítems frecuentes (fotos, medidas, peso, categoría, frecuencia), para reutilizarlos en nuevas solicitudes en menos tiempo.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Creación automática tras solicitud</strong><br>
+        <strong>Dado que</strong> envío una solicitud con un ítem nuevo<br>
+        <strong>Y</strong> marco “Guardar como plantilla”<br>
+        <strong>Cuando</strong> se publica la solicitud<br>
+        <strong>Entonces</strong> el sistema crea la plantilla<br>
+        <strong>Y</strong> queda disponible para futuros usos.<br><br>
+        <strong>Escenario 2: Reutilización y edición</strong><br>
+        <strong>Dado que</strong> tengo plantillas guardadas<br>
+        <strong>Y</strong> elijo “Usar plantilla” al crear una solicitud<br>
+        <strong>Cuando</strong> se autocompletan los campos<br>
+        <strong>Entonces</strong> puedo editar cualquier valor antes de enviar<br>
+        <strong>Y</strong> los cambios no alteran la plantilla original.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US08 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US08</td>
+      <td>Cliente registrado</td>
+      <td>Alta</td>
+      <td>Cliente – Plantillas</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Gestionar plantillas de rutas (crear, actualizar, eliminar)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero guardar mis rutas frecuentes (origen, puntos intermedios, destino), para crear solicitudes más rápido.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Crear plantilla de ruta</strong><br>
+        <strong>Dado que</strong> defino una ruta completa<br>
+        <strong>Y</strong> le asigno un nombre único<br>
+        <strong>Cuando</strong> guardo la plantilla<br>
+        <strong>Entonces</strong> queda registrada y visible en “Mis plantillas”<br>
+        <strong>Y</strong> muestra resumen (origen, paradas, destino).<br><br>
+        <strong>Escenario 2: Actualizar/Eliminar con bloqueo</strong><br>
+        <strong>Dado que</strong> la plantilla está referenciada por una solicitud en curso<br>
+        <strong>Y</strong> deseo editarla o eliminarla<br>
+        <strong>Cuando</strong> intento guardar cambios<br>
+        <strong>Entonces</strong> el sistema bloquea la operación<br>
+        <strong>Y</strong> sugiere duplicar la plantilla para no afectar solicitudes activas.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- Nueva Clientes: US18 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US18</td>
+      <td>Cliente registrado</td>
+      <td>Baja</td>
+      <td>Cliente – Plantillas</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Duplicar plantilla de ítem o ruta</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero duplicar una plantilla existente para crear una variante sin afectar la original.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Duplicado exitoso</strong><br>
+        <strong>Dado que</strong> selecciono una plantilla<br>
+        <strong>Y</strong> asigno un nuevo nombre<br>
+        <strong>Cuando</strong> confirmo la duplicación<br>
+        <strong>Entonces</strong> se crea una copia editable<br>
+        <strong>Y</strong> la original permanece intacta.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- ======================= PROVEEDORES – ONBOARDING ======================= -->
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US09 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US09</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Proveedores – Onboarding</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Registrar empresa transportista y validar RUC</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor administrador, quiero registrar la razón social y validar el RUC, para habilitar a mi empresa y operar conforme a la normativa.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: RUC válido</strong><br>
+        <strong>Dado que</strong> ingreso RUC y razón social<br>
+        <strong>Y</strong> los datos coinciden con la fuente oficial<br>
+        <strong>Cuando</strong> envío el formulario<br>
+        <strong>Entonces</strong> el estado del RUC queda “Validado”<br>
+        <strong>Y</strong> se habilita el siguiente paso del onboarding.<br><br>
+        <strong>Escenario 2: RUC observado</strong><br>
+        <strong>Dado que</strong> el RUC está inactivo o no coincide<br>
+        <strong>Y</strong> la fuente devuelve un estado no operativo<br>
+        <strong>Cuando</strong> intento avanzar<br>
+        <strong>Entonces</strong> el sistema bloquea el avance<br>
+        <strong>Y</strong> muestra el motivo de observación y acciones sugeridas.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US10 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US10</td>
+      <td>Proveedor (representante legal)</td>
+      <td>Alta</td>
+      <td>Proveedores – Onboarding</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Cargar y validar poderes y documentación legal</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como representante legal, quiero subir poderes/vigencia y otros documentos legales requeridos, para que la plataforma verifique mi capacidad de representación.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Carga correcta</strong><br>
+        <strong>Dado que</strong> adjunto archivos legibles (PDF/imagen)<br>
+        <strong>Y</strong> indico tipo y fecha de vencimiento<br>
+        <strong>Cuando</strong> envío el documento<br>
+        <strong>Entonces</strong> queda en estado “En revisión”<br>
+        <strong>Y</strong> se extraen metadatos básicos para auditoría.<br><br>
+        <strong>Escenario 2: Aprobación/Observación</strong><br>
+        <strong>Dado que</strong> el revisor valida vigencia y coincidencia de datos<br>
+        <strong>Y</strong> existe consistencia con el RUC<br>
+        <strong>Cuando</strong> emite el dictamen<br>
+        <strong>Entonces</strong> el documento pasa a “Aprobado” o “Observado”<br>
+        <strong>Y</strong> en caso de observación se publica un comentario de subsanación.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US11 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US11</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Proveedores – Onboarding</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Solicitar habilitación de la empresa y dictamen</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor, quiero enviar mi expediente para revisión y obtener un dictamen, para comenzar a operar en la plataforma.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Estados del expediente</strong><br>
+        <strong>Dado que</strong> completé los requisitos<br>
+        <strong>Y</strong> todos los documentos obligatorios están “Aprobados”<br>
+        <strong>Cuando</strong> envío a revisión<br>
+        <strong>Entonces</strong> el expediente queda “Pendiente” hasta dictamen<br>
+        <strong>Y</strong> puede resultar “Aprobada”, “Observada” o “Rechazada”.<br><br>
+        <strong>Escenario 2: Gating operativo</strong><br>
+        <strong>Dado que</strong> la empresa no está “Aprobada”<br>
+        <strong>Y</strong> intento asignar unidades o tomar viajes<br>
+        <strong>Cuando</strong> ejecuto la acción<br>
+        <strong>Entonces</strong> el sistema lo impide<br>
+        <strong>Y</strong> muestra que debo completar la habilitación.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US12 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US12</td>
+      <td>Proveedor (administrador)</td>
+      <td>Media</td>
+      <td>Proveedores – Onboarding</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Alertas de vencimiento y renovación de documentos</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor, quiero recibir alertas por documentos próximos a vencer, para renovarlos y evitar la suspensión operativa.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Notificaciones preventivas</strong><br>
+        <strong>Dado que</strong> un documento vencerá en ≤30 días<br>
+        <strong>Y</strong> la empresa está habilitada<br>
+        <strong>Cuando</strong> se cumpla el umbral<br>
+        <strong>Entonces</strong> recibo alertas (email/push) con instrucciones de renovación<br>
+        <strong>Y</strong> el panel muestra estado de advertencia.<br><br>
+        <strong>Escenario 2: Bloqueo por vencimiento</strong><br>
+        <strong>Dado que</strong> un documento crítico está vencido<br>
+        <strong>Y</strong> no se ha cargado uno vigente<br>
+        <strong>Cuando</strong> intento operar<br>
+        <strong>Entonces</strong> la operación se bloquea temporalmente<br>
+        <strong>Y</strong> se solicita actualizar documentación.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- Nueva Proveedores: US19 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US19</td>
+      <td>Proveedor (administrador)</td>
+      <td>Media</td>
+      <td>Proveedores – Onboarding</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Checklist de requisitos y progreso de habilitación</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como administrador, quiero visualizar un checklist con porcentaje de avance del onboarding, para saber qué falta completar.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Vista de progreso</strong><br>
+        <strong>Dado que</strong> ingreso al módulo de habilitación<br>
+        <strong>Y</strong> tengo documentos cargados y pendientes<br>
+        <strong>Cuando</strong> se calcula el avance<br>
+        <strong>Entonces</strong> veo un porcentaje y los requisitos con estado<br>
+        <strong>Y</strong> accesos directos para completar cada pendiente.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- ======================= VIAJES – ASIGNACIÓN Y EJECUCIÓN ======================= -->
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US13 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US13</td>
+      <td>Proveedor (operador)</td>
+      <td>Alta</td>
+      <td>Viajes – Ejecución</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Asignar unidad/placa a un trato formal</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor operador, quiero asignar la unidad (placa) a un trato formal, para iniciar el viaje con un vehículo habilitado y sin conflictos.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Validaciones de asignación</strong><br>
+        <strong>Dado que</strong> existe un trato formal<br>
+        <strong>Y</strong> la unidad pertenece a mi empresa y está habilitada<br>
+        <strong>Cuando</strong> intento asignarla<br>
+        <strong>Entonces</strong> el sistema valida solapes de horario<br>
+        <strong>Y</strong> registra la asignación con timestamp y usuario.<br><br>
+        <strong>Escenario 2: Reasignación previa al tracking</strong><br>
+        <strong>Dado que</strong> la unidad asignada tiene incidencia antes de iniciar<br>
+        <strong>Y</strong> aún no se activó el tracking<br>
+        <strong>Cuando</strong> reasigno a otra unidad habilitada<br>
+        <strong>Entonces</strong> se actualiza la asignación<br>
+        <strong>Y</strong> queda la trazabilidad del cambio.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US14 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US14</td>
+      <td>Proveedor (operador)</td>
+      <td>Alta</td>
+      <td>Viajes – Ejecución</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Activar tracking del viaje y enviar posición</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor, quiero activar el tracking para compartir la ubicación en tiempo real, para que el cliente pueda seguir el estado del envío.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Activación del tracking</strong><br>
+        <strong>Dado que</strong> el trato formal tiene unidad asignada<br>
+        <strong>Y</strong> hay conectividad mínima<br>
+        <strong>Cuando</strong> activo el tracking<br>
+        <strong>Entonces</strong> el sistema comienza a registrar posiciones (lat/long, velocidad, hora)<br>
+        <strong>Y</strong> expone el tracking al cliente en su app.<br><br>
+        <strong>Escenario 2: Buffer offline</strong><br>
+        <strong>Dado que</strong> se pierde señal durante el viaje<br>
+        <strong>Y</strong> el dispositivo almacena puntos localmente<br>
+        <strong>Cuando</strong> se recupera la conectividad<br>
+        <strong>Entonces</strong> se reenvían los puntos pendientes en orden<br>
+        <strong>Y</strong> el mapa se actualiza sin saltos.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US15 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US15</td>
+      <td>Proveedor (operador)</td>
+      <td>Alta</td>
+      <td>Viajes – Ejecución</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Registrar eventos operativos en ruta</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor, quiero registrar eventos del viaje (Recojo iniciado/completado, Salida en ruta, Arribo a punto intermedio, Desvío, Parada no planificada, Incidencia), para mantener trazabilidad operacional.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Recojo y salida</strong><br>
+        <strong>Dado que</strong> el tracking está activo<br>
+        <strong>Y</strong> me encuentro en el punto de recojo<br>
+        <strong>Cuando</strong> registro “Recojo iniciado/completado” y “Salida en ruta”<br>
+        <strong>Entonces</strong> se guardan eventos con geolocalización y hora<br>
+        <strong>Y</strong> se notifica al cliente.<br><br>
+        <strong>Escenario 2: Desvío o parada</strong><br>
+        <strong>Dado que</strong> el GPS detecta desvío significativo o detención prolongada<br>
+        <strong>Y</strong> el operador confirma la condición<br>
+        <strong>Cuando</strong> se registra el evento<br>
+        <strong>Entonces</strong> se calcula una nueva ETA<br>
+        <strong>Y</strong> se notifica al cliente con el motivo (nota/foto opcional).
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US16 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US16</td>
+      <td>Proveedor (operador)</td>
+      <td>Alta</td>
+      <td>Viajes – Ejecución</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Confirmar entrega y adjuntar prueba de entrega (POD)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor, quiero confirmar la entrega en destino y adjuntar POD (firma/foto/documento), para cerrar el viaje con evidencia.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Confirmación y POD obligatoria</strong><br>
+        <strong>Dado que</strong> arribo a destino<br>
+        <strong>Y</strong> tengo evidencia de entrega<br>
+        <strong>Cuando</strong> confirmo la entrega<br>
+        <strong>Entonces</strong> el sistema exige adjuntar POD válido (formato/tamaño)<br>
+        <strong>Y</strong> registra geo y hora del arribo.<br><br>
+        <strong>Escenario 2: Doble confirmación</strong><br>
+        <strong>Dado que</strong> el proveedor confirmó entrega<br>
+        <strong>Y</strong> el cliente recibe notificación<br>
+        <strong>Cuando</strong> el cliente confirma en su app<br>
+        <strong>Entonces</strong> se completa el cierre operativo<br>
+        <strong>Y</strong> se libera el estado “Entregado”.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <!-- US17 -->
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US17</td>
+      <td>Proveedor (operador)</td>
+      <td>Media</td>
+      <td>Viajes – Ejecución</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Cerrar viaje y desactivar tracking</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como proveedor, quiero cerrar el viaje una vez entregado, para desactivar tracking y generar el resumen operativo.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Reglas de cierre</strong><br>
+        <strong>Dado que</strong> existe entrega confirmada y POD almacenado<br>
+        <strong>Y</strong> no hay eventos críticos abiertos<br>
+        <strong>Cuando</strong> cierro el viaje<br>
+        <strong>Entonces</strong> el tracking se desactiva<br>
+        <strong>Y</strong> se genera un resumen con tiempos, eventos y recorrido.<br><br>
+        <strong>Escenario 2: Corrección de POD</strong><br>
+        <strong>Dado que</strong> se detectó error en el POD<br>
+        <strong>Y</strong> estoy dentro de una ventana de corrección<br>
+        <strong>Cuando</strong> cargo un nuevo POD<br>
+        <strong>Entonces</strong> se versiona el documento<br>
+        <strong>Y</strong> el sistema mantiene la trazabilidad de cambios.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- Nueva Viajes: US20 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US20</td>
+      <td>Cliente</td>
+      <td>Media</td>
+      <td>Viajes – Ejecución</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Recibir notificaciones de eventos de viaje</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como cliente, quiero recibir notificaciones ante eventos relevantes del viaje, para mantenerme informado en tiempo real.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Eventos estándar</strong><br>
+        <strong>Dado que</strong> el proveedor registra un evento (recojo, salida, arribo)<br>
+        <strong>Y</strong> tengo preferencias de notificación configuradas<br>
+        <strong>Cuando</strong> ocurre el evento<br>
+        <strong>Entonces</strong> recibo notificación por el canal configurado<br>
+        <strong>Y</strong> veo el detalle en la app.<br><br>
+        <strong>Escenario 2: Eventos críticos</strong><br>
+        <strong>Dado que</strong> se detecta desvío o incidencia<br>
+        <strong>Y</strong> mi perfil tiene “críticas siempre activas”<br>
+        <strong>Cuando</strong> se genera el evento<br>
+        <strong>Entonces</strong> recibo alerta inmediata aunque esté en “No molestar”<br>
+        <strong>Y</strong> se recalcula y muestra la ETA.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 
