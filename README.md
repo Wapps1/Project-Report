@@ -1943,7 +1943,6 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
         <strong>Dado que</strong> abro el centro de notificaciones<br>
         <strong>Cuando</strong> hay notificaciones pendientes<br>
         <strong>Entonces</strong> se muestran en orden cronológico con su estado (leída/no leída) <strong>Y</strong> un enlace a la acción (chat, solicitud, cotización o tracking).<br><br>
-
         <strong>Escenario 2: Marcar como leído</strong><br>
         <strong>Dado que</strong> selecciono una notificación<br>
         <strong>Cuando</strong> la abro o presiono “Marcar como leído”<br>
