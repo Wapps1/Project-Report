@@ -1678,6 +1678,12 @@ No bloquea flujos si el directorio está caído.
 
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
+
+
+
+
+<br/>
+
 ##### 2.6.1.6.2. Bounded Context Database Design Diagram
 
 <br/>
