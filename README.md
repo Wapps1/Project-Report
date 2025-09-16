@@ -1022,521 +1022,160 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 - *Autenticación, MFA, emisión/rotación de tokens y control de sesiones concurrentes.*
 
 **Propósito del BC**  
-Confirmar quién es la persona que interactúa con **Red Carga** cuando la capa de aplicación ya verificó un token del **IdP**, y mantener una cuenta local con:
-- Enlace inequívoco a la identidad externa (`issuer/subject`).
-- Email y teléfono normalizados con sus banderas de verificación.
-- PIN como refuerzo local para operaciones sensibles.
-- Estado de cuenta (incluye suspensión de negocio).
+Autenticar identidad en modo **IdP-only** y mantener la **cuenta local** enlazada 1:1 con el IdP: `(issuer, subject)`, email/phone normalizados con banderas `verified`, `PIN` para operaciones sensibles y **estado** de cuenta (`ACTIVE|SUSPENDED|DELETED`). No gestiona contraseñas, OTP ni sesiones propias.
 
 <br/>
 
 #### 2.6.1.1. Domain Layer
 
-**Domain Layer — Aggregate Root**
-
 ---
 
-**Account (Aggregate Root)**  
-*Propósito:* Representar la identidad local de una persona en **Red Carga**, enlazada 1:1 con su identidad externa emitida por el **IdP**.
+**Domain Layer**
 
-**Componentes internos (Entities / Value Objects)**
-- **ExternalIdentity** *(Value Object)*
-  - `issuer`: identificador del emisor externo.
-  - `subject`: identificador único del sujeto en ese emisor.
-  - La pareja `(issuer, subject)` identifica globalmente a la persona.
-- **Email** *(Value Object)*
-  - `value`: dirección normalizada (minúsculas + *trim*).
-  - `verified`: bandera de verificación proveniente del IdP.
-- **Phone** *(Value Object)*
-  - `value`: número normalizado al formato **E.164**.
-  - `verified`: bandera de verificación proveniente del IdP.
-- **Pin** *(Value Object)*
-  - `pinHash`: huella no reversible del PIN.
-  - `updatedAt`: marca temporal de última actualización.
-  - Se usa como refuerzo local para autorizar operaciones sensibles.
-- **AccountStatus** *(enum)*
-  - `ACTIVE | SUSPENDED | DELETED`.
+**Aggregates (AR)**
 
-**Invariants**
-- **Enlace externo obligatorio:** todo `Account` posee `ExternalIdentity` válido.
-- **Unicidad:** una pareja `(issuer, subject)` pertenece a un solo `Account`.
-- **Fuente verificada:** `email.verified` y `phone.verified` se actualizan únicamente por sincronización desde el directorio del **IdP** (API administrativa), **no** desde *claims* del token de petición.
-- **Refuerzo con PIN:** cualquier operación marcada como sensible requiere `Pin` establecido y verificado en el momento de ejecución.
-- **Estados coherentes:**
-  - `DELETED` implica inhabilitar el uso operativo de la cuenta.
-  - `SUSPENDED` bloquea operaciones de negocio aunque el IdP permita autenticación.
+**`Account` (Aggregate Root)**
+- **VO/Entities internas**
+  - `ExternalIdentity{ issuer, subject }`
+  - `Email{ value, verified }` *(value normalizado a lower+trim)*
+  - `Phone{ value, verified }` *(E.164)*
+  - `Pin{ pinHash, updatedAt }`
+  - `AccountStatus = ACTIVE|SUSPENDED|DELETED`
+- **Invariantes**
+  - `(issuer, subject)` único y obligatorio.
+  - Banderas `verified` provienen solo de `IdpDirectory`.
+  - Operaciones sensibles requieren `Pin` verificado.
+  - `DELETED` es *tombstone*; `SUSPENDED` bloquea negocio.
+- **Comportamientos**
+  - `linkToIdp`, `syncVerifiedContacts`, `setPin`, `verifyPin`, `clearPin`, `activate`, `suspend`, `reactivate`, `delete`.
 
-**Comportamientos (métodos de dominio)**
-- `linkToIdp(externalIdentity)` → emite `AccountLinkedToIdp`.
-- `syncVerifiedContacts(emailVerified, phoneVerified)`  
-  Aplica cambios idempotentes a banderas verificadas según el directorio del IdP → emite `ContactsVerifiedSynced` si hay cambios.
-- `setPin(rawPin, PinHasher)` → calcula `pinHash` y guarda → emite `PinSet`.
-- `verifyPin(rawPin, PinVerifier)` → comprueba contra `pinHash` (comparación en tiempo constante).
-- `clearPin()` → elimina el PIN → emite `PinCleared`.
-- `activate()` → cambia estado a `ACTIVE` → emite `AccountActivated`.
-- `suspend()` → cambia estado a `SUSPENDED` → emite `AccountSuspended`.
-- `reactivate()` → de `SUSPENDED` a `ACTIVE` → emite `AccountReactivated`.
-- `delete()` → cambia estado a `DELETED` → emite `AccountDeleted`.
+**Domain Events**
+- `AccountLinkedToIdp`
+- `ContactsVerifiedSynced`
+- `PinSet`
+- `PinCleared`
+- `AccountActivated`
+- `AccountSuspended`
+- `AccountReactivated`
+- `AccountDeleted`
 
-**Domain Events**  
-`AccountLinkedToIdp`, `ContactsVerifiedSynced`, `PinSet`, `PinCleared`, `AccountActivated`, `AccountSuspended`, `AccountReactivated`, `AccountDeleted`
+**Repositories (interfaces)**
+- `AccountRepository`
 
-**Repository**  
-`AccountRepository` *(único repositorio del BC; gestiona `Account` como Aggregate Root)*
+**Domain Services**
+- `PinHasher`, `PinVerifier`
+
+**Ubiquitous Language**
+- *Account, ExternalIdentity, Pin, AccountStatus, VerifiedContacts*
+
+**Relación clave**
+El agregado `Account` es la única puerta para modificar identidad local y publicar eventos. Los handlers de Application invocan estos métodos; las implementaciones de repositorio en Infra garantizan unicidad `(issuer, subject)` y control de concurrencia.
 
 ---
-
-**Value Objects (definiciones)**
-- **ExternalIdentity:** `(issuer, subject)`; igualdad por valor; base del enlace IdP↔Account.
-- **Email:** dirección normalizada a minúsculas/*trim* + bandera `verified`.
-- **Phone:** número normalizado a **E.164** + bandera `verified`.
-- **Pin:** encapsula `pinHash` y `updatedAt`; nunca expone el PIN en claro.
-- **AccountStatus (enum):** `ACTIVE | SUSPENDED | DELETED`.
-
----
-
-**Domain Services (stateless)**
-- **PinHasher:** calcula `pinHash` para `setPin(...)`.
-- **PinVerifier:** compara un PIN presentado con `pinHash` mediante comparación en tiempo constante.
-
----
-
-**Reglas de integración (límites explícitos)**
-- **Identity Provider**  
-  La verificación del token y la verificación de contacto (email/phone) ocurren **fuera** del dominio.  
-  `syncVerifiedContacts(...)` se alimenta exclusivamente de datos del directorio del IdP (API administrativa), asegurando consistencia con la fuente de verdad; **no** usa *claims* parciales del *ID token*.
-- **Authorization (otro BC)**  
-  Las decisiones de acceso (roles/permisos, alcance por *tenant*) **no** residen en IAM.
-
 
 <br/>
 
 #### 2.6.1.2. Interface Layer
 
-# IAM — Interface/Presentation Layer (IdP-only) · versión final para informe
 
-La **Interface/Presentation Layer** expone los **endpoints HTTP** del BC **IAM** y conecta con los **Command/Query Handlers** de la Application Layer. Todo request autenticado llega con `Authorization: Bearer <ID_TOKEN>` verificado en **middleware**; los handlers reciben `issuer` y `subject` desde el **SecurityContext**.  
-Se incorporan los 6 ajustes solicitados: **path sin URL del issuer**, **consistencia de códigos/cuerpos**, **auto-ensure en interceptor**, **formato de error y headers**, **validaciones de entrada**, y **chequeo de autorización para backoffice**.
+**Interface/Presentation Layer**
 
----
+**Autenticación y ownership**
+- `Authorization: Bearer <ID_TOKEN>` verificado en middleware; coloca `issuer` y `subject` en `SecurityContext`.
+- Endpoints **Self** operan sobre el **propio** sujeto del token.
+- Endpoints **Admin** requieren autorización mediante el BC `Authorization` (RBAC).
 
-## 1) Componentes de la capa
+**Versionado & contratos**
+- Base path: `/api/iam/v1`
+- DTOs request/response; errores `RFC 7807`
+- Códigos: `200|204`, `401|403|404|409|410|423|429`
 
-### 1.1. AuthMiddleware
-- Verifica el ID token (firma, `iss`, `aud`, revocación).
-- Pone en `SecurityContext`: `issuer` y `subject` del usuario autenticado.
-- Los controllers **no** re-verifican el token.
-
-### 1.2. AutoEnsureInterceptor
-- En la **primera** request autenticada de una sesión (o cada 10 min de caché), ejecuta **EnsureAccountFromIdpCommand** de forma transparente.
-- Evita que el cliente “olvide” llamar a `/me/ensure`.
-- Si el **IdpDirectory** está caído, marca “sync pendiente” y no bloquea el request.
-
-### 1.3. SelfController (`/api/iam/v1/me/**`)
-Opera sobre la **propia** cuenta del usuario autenticado:
+**Endpoints — Self (`/me/**`)**
 - `POST /me/ensure`
 - `GET /me`
 - `PUT /me/pin`
 - `DELETE /me/pin`
 - `POST /me/pin/verify`
 
-### 1.4. AdminAccountsController (`/api/iam/v1/accounts/**`)
-Operaciones **administrativas/backoffice** sobre **cualquier** cuenta.  
-**Path multi-IdP sin URLs**: se usa `issuerId` corto (p. ej., `firebase`, `keycloak`) en la ruta y se mapea a la URL real del issuer en configuración.
-- `GET /accounts/{issuerId}/{subject}`
-- `POST /accounts/{issuerId}/{subject}/sync-contacts`
-- `POST /accounts/{issuerId}/{subject}/activate`
-- `POST /accounts/{issuerId}/{subject}/suspend`
-- `POST /accounts/{issuerId}/{subject}/reactivate`
-- `POST /accounts/{issuerId}/{subject}/delete`
+**Endpoints — Admin (`/accounts/{issuerId}/{subject}` …)**
+*(`issuerId` es un alias corto que se resuelve al `issuer` real en configuración).*
+- `GET`
+- `POST /sync-contacts`
+- `POST /activate`
+- `POST /suspend`
+- `POST /reactivate`
+- `POST /delete`
 
-> **Autorización obligatoria** en estos endpoints: antes de ejecutar, se invoca `Authorization.RbacService.check(...)` con acciones sugeridas:  
-> `iam.account.read`, `iam.account.sync`, `iam.account.activate`, `iam.account.suspend`, `iam.account.reactivate`, `iam.account.delete`.
+**Idempotency-Key**
+- Aceptada en `POST|PUT|DELETE` donde aplique.
 
----
-
-## 2) Contratos de los endpoints
-
-### 2.1. SelfController
-
-**POST `/me/ensure`**  
-Garantiza que exista `Account` para `(issuer, subject)` y sincroniza verificados con el directorio del IdP.
-- Handler: `EnsureAccountFromIdpCommand`.
-- **200 OK** (si IdpDirectory cayó: se marca “sync pendiente” y también 200).
-- **410 Gone** si la cuenta está `DELETED`.
-- **Headers**: `Cache-Control: no-store`.
-
-**GET `/me`**  
-Devuelve la identidad local (`Account`) y banderas de verificación.
-- Handler: `GetOwnAccountQuery`.
-- **200 OK** · **410 Gone** si `DELETED`.
-- **Headers**: `Cache-Control: no-store`.
-
-**PUT `/me/pin`**  
-Crea o actualiza el PIN de refuerzo.
-- Handler: `SetPinCommand`.
-- **200 OK** con metadatos (incluye `updatedAt`).
-- **422 Unprocessable Entity** si no cumple política de PIN.
-- **410 Gone** si `DELETED`.
-- Idempotente (mismo PIN no cambia estado).
-
-**DELETE `/me/pin`**  
-Elimina el PIN.
-- Handler: `ClearPinCommand`.
-- **204 No Content** · **410 Gone** si `DELETED`.
-- Idempotente.
-
-**POST `/me/pin/verify`**  
-Verifica el PIN **justo antes** de una operación sensible.
-- Handler: `VerifyPinCommand`.
-- **204 No Content** (éxito).
-- **403 Forbidden** si `PinMismatch`.
-- **429 Too Many Requests** si rate-limit (cooldown o máximo de intentos).
-- **423 Locked** si `SUSPENDED` · **410 Gone** si `DELETED`.
-- **Headers (429)**: `Retry-After: <segundos>`.
+**Relación clave**
+Los controllers traducen HTTP ↔ comandos/queries y **no contienen** reglas de negocio. El middleware verifica el token y abastece el contexto; los handlers usan ese contexto y devuelven **DTOs** limpios (no exponen objetos de dominio).
 
 ---
-
-### 2.2. AdminAccountsController (con `issuerId`)
-`issuerId` se valida contra configuración y se resuelve al `issuer` real.  
-`subject` se normaliza con `trim` en Interface.
-
-**GET `/accounts/{issuerId}/{subject}`**  
-Consulta una cuenta por identidad externa.
-- Handler: `GetAccountByExternalIdentityQuery`.
-- **200 OK** · **404 Not Found** si no existe · **410 Gone** si `DELETED`.
-
-**POST `/accounts/{issuerId}/{subject}/sync-contacts`**  
-Reconcilia `email.verified` y `phone.verified` con el directorio del IdP.
-- Handler: `SyncVerifiedContactsCommand`.
-- **204 No Content** · **404 Not Found** si no existe · **410 Gone** si `DELETED`.
-
-**POST `/accounts/{issuerId}/{subject}/activate`**  
-Activa la cuenta.
-- Handler: `ActivateAccountCommand`.
-- **204 No Content** · **404 Not Found** · **409 Conflict** si transición inválida.
-
-**POST `/accounts/{issuerId}/{subject}/suspend`**  
-Suspende la cuenta.
-- Handler: `SuspendAccountCommand`.
-- **204 No Content** · **404 Not Found** · **409 Conflict** según corresponda.
-
-**POST `/accounts/{issuerId}/{subject}/reactivate`**  
-Reactiva desde `SUSPENDED` a `ACTIVE`.
-- Handler: `ReactivateAccountCommand`.
-- **204 No Content** · **404 Not Found** · **409 Conflict** según corresponda.
-
-**POST `/accounts/{issuerId}/{subject}/delete`**  
-Elimina de forma **tombstone** (irreversible).
-- Handler: `DeleteAccountCommand`.
-- **204 No Content** · **404 Not Found** · **409 Conflict** si ya estaba `DELETED`.
-
----
-
-## 3) Formato de error y headers
-- **Envelope de error (uniforme):**  
-  `{ "error": "<CodigoDominio>", "message": "<texto legible>" }`
-- **Códigos estándar (alineados con Application):**  
-  `401` (token inválido o revocado, capturado por middleware) · `403` (PinMismatch) · `404` (no existe) · `409` (conflicto/versión/transición) · `410` (AccountDeleted) · `423` (AccountSuspended en operaciones sensibles) · `429` (rate-limit PIN).
-- **Headers:**  
-  `Retry-After` en `429`.  
-  `Cache-Control: no-store` en respuestas con identidad (`/me`, `/me/ensure`).
-
----
-
-## 4) Validaciones de entrada en Interface
-- **`issuerId`**: debe existir en el mapa de configuración (`issuerId → issuerURL`). Si no existe → **400 Bad Request**.
-- **`subject`**: `trim` estricto; si queda vacío → **400 Bad Request**.
-- **No** se aceptan valores de `email`/`phone` por estos endpoints (se obtienen del IdP Directory). Si en el futuro algún endpoint recibe valores, validar **E.164** para `phone` y devolver **422** si no cumple.
-
----
-
-## 5) Consumers (mensajería de entrada)
-- En modo **IdP-only**, **IAM no tiene consumers de entrada**.
-- La publicación de **Domain Events** hacia otros BCs se realiza por **Outbox + Redis Streams** (capa de Infraestructura). Los otros BCs consumen con **consumer groups** y deduplican por `event_id`.
-
----
-
-## 6) Mapeo endpoint → caso de uso (referencia)
-- `POST /me/ensure` → EnsureAccountFromIdpCommand
-- `GET /me` → GetOwnAccountQuery
-- `PUT /me/pin` → SetPinCommand
-- `DELETE /me/pin` → ClearPinCommand
-- `POST /me/pin/verify` → VerifyPinCommand
-- `GET /accounts/{issuerId}/{subject}` → GetAccountByExternalIdentityQuery
-- `POST /accounts/{issuerId}/{subject}/sync-contacts` → SyncVerifiedContactsCommand
-- `POST /accounts/{issuerId}/{subject}/activate` → ActivateAccountCommand
-- `POST /accounts/{issuerId}/{subject}/suspend` → SuspendAccountCommand
-- `POST /accounts/{issuerId}/{subject}/reactivate` → ReactivateAccountCommand
-- `POST /accounts/{issuerId}/{subject}/delete` → DeleteAccountCommand
-
----
-
-## 7) Comportamientos transversales de la capa
-- **Idempotencia**: `/me/ensure`, `/me/pin` (mismo PIN), `/me/pin` DELETE y `/accounts/*/sync-contacts` no generan efectos si el estado ya es el esperado.
-- **Observabilidad**: trazas y logs sin PII; correlación por `X-Request-Id`.
-- **Autorización en backoffice**: `RbacService.check(...)` **siempre** antes de ejecutar `/accounts/**`.
 
 <br/>
 
 #### 2.6.1.3. Application Layer
-La capa de aplicación **no maneja** contraseñas, OTP ni sesiones propias.  
-Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middleware*, asegura la existencia de `Account`, sincroniza banderas verificadas desde el directorio administrativo del IdP y gestiona **PIN** y **estado** de la cuenta.
+
+**Application Layer**
+
+**Capabilities → Casos de uso**
+- Asegurar cuenta y sincronizar verificados: `EnsureAccountFromIdp`, `SyncVerifiedContacts`
+- Gestionar PIN: `SetPin`, `ClearPin`, `VerifyPin`
+- Gestionar estado: `ActivateAccount`, `SuspendAccount`, `ReactivateAccount`, `DeleteAccount`
+- Lectura: `GetOwnAccount`, `GetAccountByExternalIdentity`
+
+**Handlers**
+- **Commands:** *(nombres iguales a los casos de uso anteriores)*
+- **Queries:** `GetOwnAccountQuery`, `GetAccountByExternalIdentityQuery`
+
+**Ports (interfaces hacia Infra)**
+- `IdpDirectory`, `PinHasher`, `PinVerifier`, `RateLimiterStore`, `AuditLogger`, `AccountRepository`
+
+**Reglas transversales**
+- Idempotencia en `EnsureAccount`, `SetPin`, `ClearPin`, `SyncVerifiedContacts`
+- Concurrencia: *optimistic locking* + índice único `(issuer, subject)`
+- Estados: `DELETED` bloquea cambios; `SUSPENDED` bloquea negocio y `VerifyPin`
+
+**Relación clave**
+Application **orquesta**: toma `issuer/subject` del `SecurityContext`, consulta `IdpDirectory` cuando corresponde, llama a métodos del AR y **persiste** con `AccountRepository`. Los **Domain Events** que emite el AR se registran para publicación mediante **Outbox** en Infra.
 
 ---
-
-**1) Authentication Pipeline (middleware)**
-
-- El *middleware* verifica el **ID token** usando `IdpTokenVerifier` y coloca en el `SecurityContext`:
-  - `issuer`, `subject` (sujeto autenticado).
-  - `authTime` (opcional).
-- Los *Command Handlers* **siempre** reciben `issuer` y `subject` desde el contexto y **no** vuelven a verificar el token.
-
-**Contrato de `IdpTokenVerifier`**
-- Verifica firma y ancla al proyecto:
-  - `iss == https://securetoken.google.com/<projectId>`
-  - `aud == <projectId>`
-  - `checkRevoked = true` en **todas** las verificaciones.
-- Devuelve al menos: `{ issuer, subject }` (y opcional `authTime`).
-
----
-
-**2) Ports (interfaces) usados por la capa**
-
-- `IdpDirectory` — Fuente de verdad para contactos y verificación.  
-  `getUser(issuer, subject) -> { email?: string, emailVerified: boolean, phoneNumber?: string, phoneVerified: boolean }`
-- `PinHasher` — `hash(rawPin) -> pinHash`
-- `PinVerifier` — `verify(rawPin, pinHash) -> boolean` (tiempo constante)
-- `RateLimiterStore` — Contadores/cooldown de intentos de PIN por `accountId` (persistente: Redis/Cache).
-- `Clock` — `now()`
-- `AuditLogger` — `log(eventName, issuer, subject, accountId, result, reason?)`
-- `AccountRepository`
-  - `findByExternalIdentity(issuer, subject)`
-  - `save(account)` — control optimista; lanza `ConcurrencyConflict` si cambia la versión.
-
----
-
-**3) Reglas transversales**
-
-- **Valores de contacto al crear:** inicializar solo `email.value` y `phone.value` con lo devuelto por `IdpDirectory` (previamente normalizados).
-- **Banderas verificadas:** **siempre** se sincronizan desde `IdpDirectory`, **no** desde el token del request.
-- **Normalización previa:** `email` → lower+trim; `phone` → E.164 **antes** de construir los VOs.
-- **Estados:**
-  - `DELETED` → bloquea toda modificación. Irreversible (*tombstone*).
-  - `SUSPENDED` → permite lectura/sincronización; bloquea operaciones de negocio y `VerifyPin`.
-- **Fallback si falla `IdpDirectory`:** no se bloquea el flujo; se crea/usa `Account` con `(issuer, subject)` y se marca **sincronización pendiente** a nivel aplicación (cola/flag). Se ejecutará `SyncVerifiedContactsCommand` cuando el IdP esté disponible.
-- **Concurrencia alta:** para doble creación simultánea, el índice único `(issuer, subject)` garantiza idempotencia. Capturar `UniqueViolation`, releer `Account` y continuar.
-- **Auditoría (mínima):** no registrar tokens, PIN ni PII innecesaria (no email/phone). Registrar solo `issuer`, `subject`, `accountId`, `event`, `result`, `reason`.
-
----
-
-**4) Commands & Handlers**
-
-**`EnsureAccountFromIdpCommand`**  
-*Propósito:* asegurar `Account` y alinear verificación con el directorio del IdP.  
-*Entradas:* `issuer`, `subject` (desde `SecurityContext`).  
-*Flujo:*
-1. `du = IdpDirectory.getUser(issuer, subject)`.
-2. Si falla el IdP → activar **fallback** (omitir *sync* y marcar “sync pendiente”).
-3. `acc = AccountRepository.findByExternalIdentity(issuer, subject)`.
-4. Si no existe:
-   - Crear `Account` enlazado a `ExternalIdentity(issuer, subject)`.
-   - Inicializar `email.value` y `phone.value` con `du` (normalizados), si se obtuvo `du`.
-5. Si hubo `du` → `acc.syncVerifiedContacts(du.emailVerified, du.phoneVerified)`.
-6. Validar estado:
-   - `DELETED` → rechazar (`AccountDeleted`).
-   - `SUSPENDED` → permitir retorno (no es operación de negocio).
-7. `AccountRepository.save(acc)` (control optimista).
-8. `AuditLogger.log("AccountEnsured", issuer, subject, acc.id, "OK" | "ERROR", reason?)`.
-
-**Efecto:** `Account` existe y, si hubo `du`, quedó alineado con el IdP.
-
----
-
-**`SyncVerifiedContactsCommand`**  
-*Propósito:* reconciliar `email.verified` y `phone.verified` con el directorio del IdP.  
-*Entradas:* `issuer`, `subject`.  
-*Flujo:*
-1. `du = IdpDirectory.getUser(issuer, subject)`.
-2. Cargar `acc`; si `DELETED` → `AccountDeleted`.
-3. `acc.syncVerifiedContacts(du.emailVerified, du.phoneVerified)`.
-4. Guardar (control optimista); auditar `ContactsVerifiedSynced`.
-
----
-
-**`SetPinCommand`**  
-*Propósito:* establecer/actualizar PIN de refuerzo.  
-*Entradas:* `issuer`, `subject`, `rawPin`.  
-*Flujo:*
-1. Cargar `acc`; si `DELETED` → error.
-2. Validar política mínima de PIN (longitud, dígitos, etc.).
-3. `acc.setPin(rawPin, PinHasher)` (el agregado calcula/guarda el hash).
-4. Guardar; auditar `PinSet`.
-
----
-
-**`ClearPinCommand`**  
-*Propósito:* eliminar PIN.  
-*Entradas:* `issuer`, `subject`.  
-*Flujo:*
-1. Cargar `acc`; si `DELETED` → error.
-2. `acc.clearPin()`.
-3. Guardar; auditar `PinCleared`.
-
----
-
-**`VerifyPinCommand`**  
-*Propósito:* verificar PIN inmediatamente antes de autorizar una operación sensible.  
-*Entradas:* `issuer`, `subject`, `rawPin`.  
-*Flujo:*
-1. Cargar `acc`; si `DELETED` → error; si `SUSPENDED` → `AccountSuspended`.
-2. Aplicar *rate limit* persistente en `RateLimiterStore` por `accountId` (ventana/cooldown).
-3. `ok = acc.verifyPin(rawPin, PinVerifier)`. Si `false` → `PinMismatch`.
-4. Auditar `PinVerified` (éxito/fracaso).
-
----
-
-**`ActivateAccountCommand` / `SuspendAccountCommand` / `ReactivateAccountCommand` / `DeleteAccountCommand`**  
-*Propósito:* gestionar estado de `Account`.  
-*Entradas:* `issuer`, `subject` (o backoffice).  
-*Flujo:* cargar `acc`; invocar `activate()` / `suspend()` / `reactivate()` / `delete()`; guardar; auditar.  
-**Regla irreversible:** una vez `DELETED`, no puede volver a `ACTIVE/SUSPENDED`. Reintentos de crear el mismo `(issuer, subject)` devuelven **410** (o **409**, uno solo globalmente) y se auditan.
-
----
-
-**`GetOwnAccountQuery` / `GetAccountByExternalIdentityQuery`**  
-*Propósito:* lectura coherente del estado de `Account`.  
-*Entradas:* por contexto (`issuer`, `subject`) o parámetros (backoffice).  
-*Flujo:* cargar `acc`; devolver vista (sin secretos). `SUSPENDED/DELETED` no bloquean la **lectura** (según política), pero no cambian el dominio.
-
----
-
-**5) Concurrencia e idempotencia**
-
-- **Creación concurrente:** confiar en índice único `(issuer, subject)`; si `UniqueViolation`, releer y continuar (idempotente).
-- **`save` con versión:** ante `ConcurrencyConflict`, reintentar **una vez** según política.
-- **Idempotencia por operación:**
-  - `EnsureAccountFromIdpCommand` → si no hay cambios, no emite eventos adicionales.
-  - `SetPin` / `ClearPin` → si ya está en el estado objetivo, no hace nada.
-  - `SyncVerifiedContacts` → solo emite evento si hubo cambios.
-
----
-
-**6) Pruebas de contrato (mínimas imprescindibles)**
-
-- `EnsureAccountFromIdp`: creación vs. existente; `IdpDirectory` caído con fallback; `DELETED` → **410**.
-- `Set/Clear/Verify PIN`: política de PIN, *rate limit* persistente; `SUSPENDED` bloquea `VerifyPin`.
-- **Concurrencia:** doble creación (índice único) y `ConcurrencyConflict` en `save`.
 
 <br/>
 
 #### 2.6.1.4. Infrastructure Layer
 
-# Infrastructure Layer — IAM 
+**Infrastructure Layer**
 
-**Alcance:** implementar los **ports** definidos por Domain/Application y conectar con **PostgreSQL**, **Redis (Streams)** y **Firebase**.
+**Repositorios (implementaciones)**
+- `AccountRepositoryPostgres` *(índice único `(issuer, subject)`, optimistic locking)*
 
----
+**Adapters externos**
+- `IdpDirectoryFirebase`
+- `RateLimiterStoreRedis` *(intentos/cooldown de `VerifyPin`)*
+- `PinHasherArgon2id` / `PinVerifierConstantTime`
+- `AuditLoggerPostgres` *(append-only)*
 
-## 1) Repositories (Database adapters)
+**Mensajería / Outbox**
+- `OutboxRepositoryPostgres` + dispatcher (p. ej., `Redis Streams`) para publicar **Domain Events**
 
-### 1.1 AccountRepositoryPostgres ← implements `AccountRepository`
-- **Servicio externo:** PostgreSQL  
-- **Responsabilidad:** persistir y cargar el **Aggregate Root `Account`** (identidad local enlazada al IdP).  
-- **Tabla lógica:** `iam_account` (email/phone verificados y PIN si existe).  
-- **Notas técnicas:**
-  - **Optimistic concurrency**: `UPDATE … WHERE id = ? AND version = ?` (si 0 filas → `ConcurrencyConflict`).
-  - **Unicidad**: índice único `(issuer, subject)`.
-  - **Normalización**: `issuer = lower(btrim(issuer))`, `subject = btrim(subject)`, `email_value = lower(btrim(email_value))` (si no nulo), `phone_value` en **E.164**.
-  - **Tombstone**: `DELETED` irreversible (trigger/constraint).
+**Configuración y secretos**
+- Inyección por entorno/secret store
 
-### 1.2 AuditLoggerPostgres ← implements `AuditLogger`
-- **Servicio externo:** PostgreSQL  
-- **Responsabilidad:** registrar eventos de seguridad (**append-only**) para trazabilidad del BC IAM.  
-- **Tabla lógica:** `security_audit_log`.  
-- **Notas técnicas:**
-  - Campos mínimos: `issuer`, `subject`, `account_id`, `event_name`, `result (OK|DENY|ERROR)`, `reason?`, `occurred_at`.
-  - **Sin PII sensible**: no almacenar tokens, PIN ni contactos (email/phone).
-
-### 1.3 OutboxRepositoryPostgres ← port interno para publicación diferida
-- **Servicio externo:** PostgreSQL  
-- **Responsabilidad:** almacenar **Domain Events** pendientes (Transactional Outbox).  
-- **Tabla lógica:** `outbox_event (event_id, aggregate_type, aggregate_id, event_type, payload, occurred_at, published_at NULL)`.
-
----
-
-## 2) Adapters a servicios externos (IdP / Directorio / Rate limit / Crypto)
-
-### 2.1 IdpDirectoryFirebase ← implements `IdpDirectory`
-- **Servicio externo:** Firebase **Admin Directory**  
-- **Responsabilidad:** obtener **email/phone actuales** y banderas **verified** del sujeto `(issuer, subject)` para crear/sincronizar `Account`.  
-- **Contrato:** `getUser(issuer, subject) -> { email?, emailVerified, phoneNumber?, phoneVerified }`.
-
-### 2.2 RateLimiterStoreRedis ← implements `RateLimiterStore`
-- **Servicio externo:** **Redis**  
-- **Responsabilidad:** contadores/TTL del **rate-limit** de `VerifyPin` (intentos y cooldown).  
-- **Claves típicas:**  
-  `iam:pin:attempts:{accountId}` (contador con TTL) · `iam:pin:cooldown:{accountId}` (TTL).  
-- **Semántica:** si `cooldown` activo → `429`; `403` solo para `PinMismatch`.
-
-### 2.3 PinHasherArgon2id ← implements `PinHasher`
-- **Servicio externo:** librería criptográfica local  
-- **Responsabilidad:** generar **hash de PIN** (formato **PHC** `$argon2id$…`) con parámetros endurecidos (memoria/iteraciones/salt por registro).  
-- **Rehash** transparente en siguiente `setPin` si cambian parámetros.
-
-### 2.4 PinVerifierConstantTime ← implements `PinVerifier`
-- **Servicio externo:** librería criptográfica local  
-- **Responsabilidad:** comparar PIN **en tiempo constante** contra el hash almacenado.
-
-### (Middleware en Interface) IdpTokenVerifierFirebase
-- **Capa:** Interface/Presentation (técnicamente Infra)  
-- **Servicio externo:** **Firebase Authentication**  
-- **Responsabilidad:** verificar el **ID Token** y colocar `(issuer, subject)` en `SecurityContext`.  
-- **Checks:** firma (JWKS), `iss == https://securetoken.google.com/<projectId>`, `aud == <projectId>`, `checkRevoked = true`.
-
----
-
-## 3) Message Broker (publicación de Domain Events)
-
-### OutboxDispatcherRedisStreams — adapter de mensajería
-- **Servicios externos:** PostgreSQL (lee `outbox
-
+**Relación clave**
+Infra implementa los **ports** de Application. El **Outbox** desacopla la escritura de dominio de la publicación de eventos, garantizando **entrega eventual** sin romper la transacción del agregado.
 
 <br/>
 
 #### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
-
-- *IAM Service — Component View*
-<img width="3870" height="8520" alt="image" src="https://github.com/user-attachments/assets/355ebc6c-d074-42ca-a068-8afcc09968e8" />
-
-<br/>
-
-- *PostgreSQL — Component View*
-<img width="890" height="3211" alt="image" src="https://github.com/user-attachments/assets/75ac337a-1f86-42f3-a525-905f6bc0da81" />
-
-<br/>
-
-- *Redis — Component View*
-
-<img width="890" height="2611" alt="image" src="https://github.com/user-attachments/assets/4307a593-094c-439f-885d-55be2f7af2cd" />
-
-<br/>
-
-- *Firebase Authentication — Component View*
-
-<img width="890" height="811" alt="image" src="https://github.com/user-attachments/assets/f99f4801-1755-455a-abaa-6e7a6c938f4f" />
-
-<br/>
-
-- *Firebase Admin Directory — Component View*
-<img width="890" height="811" alt="image" src="https://github.com/user-attachments/assets/703176d0-4a37-412d-a005-ba67f6bd9f6b" />
 
 <br/>
 
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
 
-<img src="img/class-diagram/IAM-CLASSDIAGRAM.svg" ></img>
 
 
 <br/>
@@ -1551,588 +1190,163 @@ Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middl
 
 #### 2.6.2.1. Domain Layer
 
-**2) Aggregates & Entities**
+**Domain Layer**
 
-**2.1. Aggregate Root: KycCase**
+**Aggregates (AR): atributos clave, invariantes y comportamientos**
 
-- *Propósito:* orquestar el proceso KYC de un sujeto y emitir una decisión vigente.
+**`KycCase` (Aggregate Root)**
+- **Propósito:** Orquestar el proceso KYC de un sujeto y mantener **una decisión vigente** (`verified|rejected`) con su traza y política aplicada.
+- **Atributos clave:** `caseId: CaseId`, `subjectId: SubjectId` *(hoy = `AccountId` de IAM; abrimos la puerta a PersonId en el futuro)*, `status: KycStatus`, `kycLevel?: KycLevel`, `document?: DocumentSnapshot`, `biometrics?: BiometricSnapshot`, `reasons: List<ReasonCode>` *(vacía si `VERIFIED`)*, `decisionMeta?: DecisionMeta` *(policyVersion, thresholds, scores, decidedBy=`SYSTEM|HUMAN`, decidedAt, correlationId)*, `attempts: AttemptsCounter` *(ventana/TTL + máximo por submit)*, `createdAt: Instant`, `expiresAt?: Instant`.
+- **FSM (nacimiento y transiciones):** `start()` ⇒ `IN_PROGRESS`.  
+  `IN_PROGRESS → PENDING_REVIEW | VERIFIED | REJECTED | EXPIRED` · `PENDING_REVIEW → VERIFIED | REJECTED | EXPIRED` · `VERIFIED → EXPIRED | REVOKED` · finales: `REJECTED|EXPIRED|REVOKED`.
+- **Invariantes:**
+  1. **Un solo caso abierto por sujeto** (`IN_PROGRESS|PENDING_REVIEW`).
+  2. Para `VERIFIED`: doc válido *(tipo/país, `DocumentNumber` válido, **no vencido**, `extractionConfidence ≥ minConfidence`)* **y** `liveness=PASSED` **y** `faceMatchScore ≥ threshold` **y** **edad mínima** cumplida.
+  3. `REVOKED` solo desde `VERIFIED` (fraude/compliance).
+  4. `EXPIRED` por `DOC_EXPIRED` o `POLICY_REEVAL_TTL`.
+  5. **AttemptsExceeded**: `submit*` rechaza si supera ventana.
+  6. **Estados finales no mutables**.
+- **Comportamientos:** `start(subjectId)` · `submitDocument(doc)` · `submitBiometrics(bio)` · `autoDecide(policy)` ⇒ `VERIFIED|PENDING_REVIEW|REJECTED` · `applyManualDecision(decision, reasonCodes?)` ⇒ `VERIFIED|REJECTED` · `expire(reason)` ⇒ `EXPIRED` · `revoke(reason)` ⇒ `REVOKED`.
 
-- *Estado (mínimo y suficiente):*
-  - `caseId: CaseId`
-  - `subjectId: SubjectId`
-  - `status: KycStatus`
-  - `kycLevel?: KycLevel` *(solo cuando `VERIFIED`)*
-  - `document?: DocumentSnapshot`
-  - `biometrics?: BiometricSnapshot`
-  - `reasons: List<ReasonCode>` *(vacía si `VERIFIED`)*
-  - `decisionMeta?: DecisionMeta` *(policyVersion, thresholds, scores, decidedBy, decidedAt, correlationId)*
-  - `attempts: AttemptsCounter`
-  - `createdAt`, `expiresAt?`
+**`ReviewTask` (Aggregate Root)**
+- **Propósito:** Gestionar la **revisión humana** sin contaminar el ciclo de `KycCase`.
+- **Estado:** `taskId: TaskId`, `caseId: CaseId`, `status: OPEN|ASSIGNED|DECIDED`, `assignee?`, `notes?`, `decision?: APPROVE|REJECT`, `reasonCodes?: List<ReasonCode>`, `createdAt`, `decidedAt?`.
+- **Regla:** al pasar a `DECIDED`, la Application llama `applyManualDecision(...)` en `KycCase`.
 
-- *Comportamientos (métodos de dominio):*
-  - `start(subjectId)` → crea el caso en `IN_PROGRESS`.
-  - `submitDocument(docData)` → fija/actualiza `document`.
-  - `submitBiometrics(bioData)` → fija/actualiza `biometrics`.
-  - `autoDecide(policy: KycDecisionPolicy)` →  
-    • pasa umbrales → `VERIFIED` (+ `kycLevel`)  
-    • inconcluso → `PENDING_REVIEW`  
-    • falla clara → `REJECTED`
-  - `applyManualDecision(decision: ManualDecision, reasonCodes?)` → `VERIFIED | REJECTED` (coherente con reglas).
-  - `expire(reason)` → `EXPIRED`.
-  - `revoke(reason)` → `REVOKED` *(solo desde `VERIFIED`)*.
+**Entities y Value Objects: miembros y validaciones**
+- **`DocumentSnapshot` (Entity)** — `type: DocumentType (NATIONAL_ID|PASSPORT)`, `country: CountryCode (ISO-3166)`, `number: DocumentNumber(VO)`, `expirationDate: LocalDate`, `legalName: LegalName`, `dob: DateOfBirth`, `mrzData?`, `qualityScore?`, `extractionConfidence: double`, `docPhotoHash: EvidenceHash`.  
+  **Reglas:** `expirationDate > now`, `extractionConfidence ≥ minConfidence`, `DocumentNumber` válido por `type+country`.
+- **`BiometricSnapshot` (Entity)** — `liveness: PASSED|FAILED|INCONCLUSIVE (+score?)`, `faceMatchScore ∈ [0,1]`, `threshold ∈ [0,1]`, `selfieHash: EvidenceHash`.  
+  **Regla:** para `VERIFIED` → `PASSED` y `faceMatchScore ≥ threshold`.
+- **VOs principales:** `SubjectId`, `CaseId`, `TaskId`, `KycLevel`, `ReasonCode` *(ej.: `DOC_EXPIRED`, `POLICY_REEVAL_TTL`, `DOC_INVALID_FORMAT`, `OCR_LOW_CONFIDENCE`, `UNDER_AGE`, `FACE_MISMATCH`, `LIVENESS_FAILED`, `FRAUD_SIGNAL`, `COMPLIANCE_HIT`)*, `EvidenceHash`, `LegalName` *(normalizada)*, `DateOfBirth(age())`, `CountryCode`, `DocumentNumber`, `AttemptsCounter(window,max)`, `DecisionMeta(policyVersion, thresholds, scores, decidedBy, decidedAt, correlationId)`.
 
-- *Máquina de estados (FSM):*
-  - **Nacimiento:** `start()` ⇒ `IN_PROGRESS`
-  - `IN_PROGRESS` ⇒ `PENDING_REVIEW | VERIFIED | REJECTED | EXPIRED`
-  - `PENDING_REVIEW` ⇒ `VERIFIED | REJECTED | EXPIRED`
-  - `VERIFIED` ⇒ `EXPIRED | REVOKED`
-  - `REJECTED | EXPIRED | REVOKED` ⇒ finales (sin más transiciones)
+**Domain Events: cuándo y payload mínimo (sin PII/blobs)**
+- `KycStarted{ caseId, subjectId, startedAt }`
+- `KycDocumentSubmitted{ caseId, subjectId, extractionConfidence, qualityScore?, evidenceHashes[] }`
+- `KycBiometricsSubmitted{ caseId, subjectId, liveness, faceMatchScore, evidenceHashes[] }`
+- `KycPendingReview{ caseId, subjectId, policyVersion, scores, correlationId }`
+- `KycVerified{ caseId, subjectId, kycLevel, policyVersion, thresholds, scores, decidedBy, decidedAt, correlationId }`
+- `KycRejected{ caseId, subjectId, reasonCodes[], policyVersion, scores, decidedBy, decidedAt, correlationId }`
+- `KycExpired{ caseId, subjectId, reason, at }`
+- `KycRevoked{ caseId, subjectId, reason, at }`
+- `ReviewTaskOpened{ taskId, caseId, openedAt }` · `ReviewTaskDecided{ taskId, caseId, decision, reasonCodes[], decidedAt }`
 
-- *Invariants del AR:*
-  - **Un solo caso abierto por `subjectId`** (`status ∈ {IN_PROGRESS, PENDING_REVIEW}`).
-  - Para `VERIFIED` se requiere:
-    - `document` válido *(tipo/país, número válido, no vencido, `extractionConfidence ≥ minConfidence`)*,
-    - y `biometrics.liveness = PASSED` y `faceMatchScore ≥ threshold`,
-    - y **edad mínima** cumplida.
-  - `REVOKED` solo desde `VERIFIED`, con `reasonCodes` de fraude/compliance.
-  - `EXPIRED` por `DOC_EXPIRED` o `POLICY_REEVAL_TTL` (aplicable a `IN_PROGRESS | PENDING_REVIEW | VERIFIED`).
-  - **AttemptsExceeded:** `submitDocument/submitBiometrics` rechazan si `attempts` supera el máximo en ventana.
-  - **Estados finales no mutables:** un `KycCase` en `REJECTED | EXPIRED | REVOKED` no acepta `submit*` ni nuevas decisiones.
+**Repositories (interfaces) por Aggregate**
+- **`KycCaseRepository`** — `save`, `findById`, `findOpenBySubject` *(garantiza **un caso abierto** por sujeto)*.
+- **`ReviewTaskRepository`** — `save`, `findById`, `findOpenByCase`.
 
----
+**Domain Services (solo si no encaja en AR/VO)**
+- `KycDecisionPolicy(doc,bio,policy) → DecisionOutcome`
+- `AgeChecker(dob,minAge) → boolean` · `NameNormalizer(name) → LegalName`
 
-**2.2. Entity: DocumentSnapshot**
-
-- *Atributos:*  
-  `type: DocumentType (NATIONAL_ID | PASSPORT | …)` · `country: CountryCode (VO ISO-3166)` · `number: DocumentNumber (VO)` · `expirationDate` · `legalName: LegalName` · `dob: DateOfBirth` · `mrzData?` · `qualityScore?` · `extractionConfidence` · `docPhotoHash: EvidenceHash`.
-
-- *Reglas:*  
-  `expirationDate > now` · `extractionConfidence ≥ minConfidence` · `number` válido según `type/country`.
+**Ubiquitous Language (breve)**
+- **KycCase**, **ReviewTask**, **DocumentSnapshot**, **BiometricSnapshot**, **Verified/Rejected/Expired/Revoked**, **ReasonCode**, **PolicyVersion**, **EvidenceHash**, **AttemptsCounter**.
 
 ---
 
-**2.3. Entity: BiometricSnapshot**
-
-- *Atributos:*  
-  `liveness: PASSED | FAILED | INCONCLUSIVE (+score)` · `faceMatchScore (0..1)` · `threshold (0..1)` · `selfieHash: EvidenceHash`.
-
-- *Reglas:*  
-  Para `VERIFIED`: `liveness = PASSED` y `faceMatchScore ≥ threshold`.
-
----
-
-**2.4. Aggregate Root: ReviewTask**
-
-- *Propósito:* gestionar revisión humana sin contaminar `KycCase`.
-- *Estado:*  
-  `taskId: TaskId`, `caseId: CaseId`, `status: OPEN | ASSIGNED | DECIDED`, `assignee?`, `notes?`, `decision?: ManualDecision = APPROVE | REJECT`, `reasonCodes?: List<ReasonCode>`, `createdAt`, `decidedAt?`.
-- *Regla:* al pasar a `DECIDED`, la aplicación invoca `applyManualDecision(...)` en `KycCase`.
-
----
-
-**3) Value Objects (VO)**
-
-`SubjectId`, `CaseId`, `TaskId` · `KycLevel` · `ReasonCode` *(p. ej.: `DOC_EXPIRED`, `POLICY_REEVAL_TTL`, `DOC_INVALID_FORMAT`, `OCR_LOW_CONFIDENCE`, `UNDER_AGE`, `FACE_MISMATCH`, `LIVENESS_FAILED`, `FRAUD_SIGNAL`, `COMPLIANCE_HIT`)* · `EvidenceHash` · `LegalName` · `DateOfBirth` *(incluye cálculo de edad)* · `AttemptsCounter` *(ventana y máximo)* · `DecisionMeta` *(policyVersion, thresholds, scores, decidedBy=`SYSTEM|HUMAN`, decidedAt, correlationId)* · `CountryCode (ISO-3166)` · `DocumentNumber` *(valida formato por `type+country`)*.
-
----
-
-**4) Factories**
-
-- `KycCaseFactory.createNew(subjectId: SubjectId): KycCase` — nace en `IN_PROGRESS`, inicializa `attempts`.  
-- `ReviewTaskFactory.open(caseId: CaseId, notes?): ReviewTask` — nace en `OPEN`.
-
----
-
-**5) Domain Services (políticas puras)**
-
-- `KycDecisionPolicy` → entrada: `DocumentSnapshot`, `BiometricSnapshot`, *thresholds*; salida: `DecisionOutcome { decision, kycLevel?, scores, reasonCodes[] }`.  
-- `AgeChecker` → valida edad mínima desde `DateOfBirth`.  
-- `NameNormalizer` → normaliza/valida `LegalName`.  
-*(Determinísticos; sin dependencias a infraestructura.)*
-
----
-
-**6) Repositories (interfaces)**
-
-- `KycCaseRepository`: `save`, `findById`, `findOpenBySubject`.  
-- `ReviewTaskRepository`: `save`, `findById`, `findOpenByCase`.
-
----
-
-**7) Domain Events (sin PII ni blobs)**
-
-- `KycStarted{ caseId, subjectId, startedAt }`  
-- `KycDocumentSubmitted{ caseId, subjectId, extractionConfidence, qualityScore?, evidenceHashes[] }`  
-- `KycBiometricsSubmitted{ caseId, subjectId, liveness, faceMatchScore, evidenceHashes[] }`  
-- `KycPendingReview{ caseId, subjectId, policyVersion, scores, correlationId }`  
-- `KycVerified{ caseId, subjectId, kycLevel, policyVersion, thresholds, scores, decidedBy, decidedAt, correlationId }`  
-- `KycRejected{ caseId, subjectId, reasonCodes[], policyVersion, scores, decidedBy, decidedAt, correlationId }`  
-- `KycExpired{ caseId, subjectId, reason: DOC_EXPIRED | POLICY_REEVAL_TTL, at }`  
-- `KycRevoked{ caseId, subjectId, reason: FRAUD_SIGNAL | COMPLIANCE_HIT, at }`  
-- `ReviewTaskOpened{ taskId, caseId, openedAt }`  
-- `ReviewTaskDecided{ taskId, caseId, decision, reasonCodes[], decidedAt }`
-
----
 
 <br>
 
 #### 2.6.2.2. Interface Layer
 
-# Interface/Presentation Layer — Identity Verification (KYC)
+**Interface/Presentation Layer**
 
-Capa que expone **Controllers** (HTTP) y **Consumers** (webhooks) que orquestan los **Command/Query Handlers** de Application. Aplica **autenticación**, **ownership leak-proof**, **idempotencia**, **RFC 7807**, **API versioning** y **firma HMAC** en webhooks.
+**Endpoints / Controllers / Consumers**
+- **User:** `POST /api/v1/kyc/cases` (start) · `POST /api/v1/kyc/cases/{id}/uploads` (issue upload) · `POST /api/v1/kyc/cases/{id}/document` · `POST /api/v1/kyc/cases/{id}/biometrics` · `POST /api/v1/kyc/cases/{id}/decide` · `GET /api/v1/kyc/cases/{id}` · `GET /api/v1/kyc/cases/open` · `GET /api/v1/identity/profile/me`.
+- **Admin:** `POST /api/v1/admin/kyc/cases/{id}/review/open` · `POST /api/v1/admin/kyc/reviews/{taskId}/decision` · `POST /api/v1/admin/kyc/cases/{id}/expire` · `POST /api/v1/admin/kyc/cases/{id}/revoke` *(notes obligatorias; 4-eyes opcional)*.
+- **Webhooks:** `POST /api/v1/webhooks/iam` · `POST /api/v1/webhooks/vendors/{provider}`.
 
----
+**Contratos I/O**
+- **Creaciones:** `201 + Location`. **Uploads:** `image/*`, **maxBytes=5MB**, `ttlSec`.
+- **AutoDecide:** `200` si decide; `202` si queda a callbacks.
+- **RFC 7807:** `application/problem+json` con `type`, `title`, `detail`, `instance`, `correlationId`, `reasonCodes[]` *(i18n ES/EN por `Accept-Language`; `reasonCodes[]` es estable)*.
 
-## 1) Convenciones generales
+**Autenticación & ownership**
+- `Bearer JWT` de IAM; `subjectId` del `SecurityContext`.  
+  **Ownership:** si `caseId` no pertenece ⇒ **404** (no **403**).
 
-**Base path y versión**
-- Todos los endpoints bajo `/api/v1`.
+**Versionado e Idempotency-Key**
+- Prefijo `/api/v1`; `Idempotency-Key` con **scope `(method+path+subjectId)`** (24h).
 
-**Autenticación y ownership (leak-proof)**
-- `Authorization: Bearer <JWT>` de **IAM**.
-- `subjectId` se toma siempre del `SecurityContext`.
-- En endpoints de usuario, verificar que `caseId` pertenece al sujeto del JWT; si no, **404** (no 403).
-
-**Idempotency-Key (alcance y comportamiento)**
-- Scope de dedupe: `(HTTP method + path + subjectId)`.
-- Ventana: 24 h. Repetición → eco de la misma respuesta (mismo body y código).
-- Usar en: `StartKycCase`, `SubmitDocument`, `SubmitBiometrics`, `ApplyManualDecision`.
-
-**Headers comunes (req/resp)**
-- `X-Correlation-Id` (si no viene, el gateway lo genera y siempre se reenvía).
-- En creaciones: `201` + `Location`.
-- `ETag` solo en `GET` (`ETag: W/"version-<n>"`). No se usa `If-Match` en writes.
-
-**Errores — RFC 7807 (Problem Details)**
-- `Content-Type: application/problem+json` con `type`, `title`, `detail`, `instance`, `correlationId`, `reasonCodes[]`.
-- Localización: `title/detail` en ES o EN según `Accept-Language`; `reasonCodes[]` son la referencia estable.
-
-**Rate limiting**
-- En `429` incluir `Retry-After: <segundos>` y opcional `X-RateLimit-Remaining`.
-
-**Validaciones de payload**
-- `type ∈ { NATIONAL_ID, PASSPORT }`
-- `country` = ISO-3166-1 alpha-2 (`"PE"`, `"CL"`, …)
-- `faceMatchScore ∈ [0, 1]` (cuando aplique)
+**Webhooks: firma, reintentos, dedupe**
+- Headers: `X-Event-Name`, `X-Event-Version`, `X-Correlation-Id`, `X-Timestamp`, `X-Signature(HMAC-SHA256(secret, timestamp + canonicalBody))`.  
+  **JSON canónico**, skew ±5min, **dedupe 24h** por `eventId/payload_hash`, `202` ACK.
 
 ---
 
-## 2) Controllers (HTTP)
-
-### 2.1 KycCaseController (usuario autenticado)
-
-**POST `/api/v1/kyc/cases` — StartKycCase**
-- Usa solo `currentSubjectId()`; ignora `subjectId` entrante.
-- Headers: `Idempotency-Key`.
-- `201` + `Location: /api/v1/kyc/cases/{caseId}`
-- Body: `{ "caseId": "KC_123" }`
-- `409` si ya existe caso abierto.
-
-**POST `/api/v1/kyc/cases/{caseId}/uploads` — Issue upload session**
-- Body: `{ "kind":"DOCUMENT_FRONT|DOCUMENT_BACK|SELFIE", "contentType":"image/*", "maxBytes":5242880 }`
-- Contrato: `contentType` permitido = `image/*`; tamaño máx. = 5 MB; `ttlSec` se devuelve.
-- `200` `{ "sessionId":"...", "url":"...", "ttlSec":900 }`
-- `404` si `caseId` no pertenece (ownership).
-
-**POST `/api/v1/kyc/cases/{caseId}/document` — SubmitDocument**
-- Headers: `Idempotency-Key`
-- Body: `{ "frontUploadSessionId":"...", "backUploadSessionId":"...", "type":"NATIONAL_ID|PASSPORT", "country":"PE" }`
-- Regla: si `type=NATIONAL_ID` y falta `front` o `back` → `422` con `reasonCodes:["DOC_INVALID_FORMAT"]`.
-- `202` `{ "status":"IN_PROGRESS", "extractionConfidence":0.94 }`
-- `404` ownership · `429` con `Retry-After` si excede intentos.
-
-**POST `/api/v1/kyc/cases/{caseId}/biometrics` — SubmitBiometrics**
-- Headers: `Idempotency-Key`
-- Body: `{ "selfieUploadSessionId":"..." }`
-- Precondición: `409` si no existe `DocumentSnapshot` previo.
-- `202` `{ "status":"IN_PROGRESS", "liveness":"PASSED", "faceMatchScore":0.87 }`
-- `404` ownership · `429` con `Retry-After`.
-
-**POST `/api/v1/kyc/cases/{caseId}/decide` — AutoDecide**
-- `200` si la decisión se toma en el mismo request.
-- `202` si queda pendiente de callbacks externos.
-- Body: `{ "status":"VERIFIED|PENDING_REVIEW|REJECTED", "kycLevel":1? }`
-- `404` ownership.
-
-**GET `/api/v1/kyc/cases/{caseId}` — GetKycCaseById**
-- `200` `{ "caseId":"...", "status":"...", "signals":{...}, "version":7 }`
-- Header: `ETag: W/"version-7"`
-- `404` ownership.
-
-**GET `/api/v1/kyc/cases/open` — GetOpenKycCaseForMe**
-- `200` `{ "caseId":"...", "status":"..." }` · `204` si no hay.
-
-**GET `/api/v1/identity/profile/me` — GetMyIdentityProfile (CQRS)**
-- `200` con PII mínima; `docNumber` enmascarado.
-- Nunca retorna `docPhotoHash`, `selfieHash` ni blobs.
-
-### 2.2 AdminKycController (backoffice)
-
-**POST `/api/v1/admin/kyc/cases/{caseId}/review/open` — abrir ReviewTask**
-- Rol: `KYC_REVIEWER`/`KYC_ADMIN`.
-- `201` + `Location: /api/v1/admin/kyc/reviews/{taskId}`
-- Body: `{ "taskId":"RT_123" }`
-
-**POST `/api/v1/admin/kyc/reviews/{taskId}/decision` — ApplyManualDecision**
-- Headers: `Idempotency-Key`
-- Body: `{ "decision":"APPROVE|REJECT", "reasonCodes":["..."] }`
-- `200` `{ "caseStatus":"VERIFIED|REJECTED" }` · `409` si estado no permite.
-
-**POST `/api/v1/admin/kyc/cases/{caseId}/expire` — ExpireCase**
-- Body: `{ "reason":"DOC_EXPIRED|POLICY_REEVAL_TTL" }`
-- `200` `{ "caseStatus":"EXPIRED" }`
-
-**POST `/api/v1/admin/kyc/cases/{caseId}/revoke` — RevokeCase**
-- Body: `{ "reason":"FRAUD_SIGNAL|COMPLIANCE_HIT", "notes":"<justificación obligatoria>" }`
-- Nota: política opcional de second-approver (4-eyes).
-- `200` `{ "caseStatus":"REVOKED" }` · `409` si no estaba VERIFIED.
-
----
-
-## 3) Consumers (Webhooks entrantes)
-
-### 3.1 `/api/v1/webhooks/iam` — IAM events
-- Headers: `X-Event-Name`, `X-Event-Version`, `X-Correlation-Id`, `X-Timestamp`, `X-Signature`.
-- Firma: `HMAC-SHA256(secret, timestamp + canonicalBody)`; canonicalBody = JSON canónico (claves ordenadas, sin espacios).
-- Clock skew: tolerancia ±5 min; fuera de ventana → rechazo.
-- Anti-replay: dedupe 24 h por `event_id` y `payload_hash`.
-- Respuestas: `202` aceptado · `401/403` firma inválida · `409` duplicado.
-
-### 3.2 `/api/v1/webhooks/vendors/{provider}` — callbacks proveedores (OCR/Liveness/Face)
-- Mismas reglas de firma, clock skew y canonical JSON.
-- `202` aceptado; entra a `EventInboxService` para idempotencia.
-
----
-
-## 4) Mapeo Endpoints → Use Cases (Application)
-
-| Endpoint                                           | Handler/Orquestador                                                        |
-| -------------------------------------------------- | -------------------------------------------------------------------------- |
-| POST `/api/v1/kyc/cases`                           | `StartKycCaseHandler`                                                      |
-| POST `/api/v1/kyc/cases/{id}/uploads`              | `BlobStorageGateway.issueUploadUrl`                                        |
-| POST `/api/v1/kyc/cases/{id}/document`             | `SubmitDocumentHandler`                                                    |
-| POST `/api/v1/kyc/cases/{id}/biometrics`           | `SubmitBiometricsHandler`                                                  |
-| POST `/api/v1/kyc/cases/{id}/decide`               | `AutoDecideHandler`                                                        |
-| GET `/api/v1/kyc/cases/{id}`                       | `GetKycCaseByIdHandler`                                                    |
-| GET `/api/v1/kyc/cases/open`                       | `GetOpenKycCaseForMeHandler`                                               |
-| GET `/api/v1/identity/profile/me`                  | `GetMyIdentityProfileHandler`                                              |
-| POST `/api/v1/admin/kyc/cases/{id}/review/open`    | `HumanReviewOrchestrator`                                                  |
-| POST `/api/v1/admin/kyc/reviews/{taskId}/decision` | `ApplyManualDecisionHandler`                                               |
-| POST `/api/v1/admin/kyc/cases/{id}/expire`         | `ExpireCaseHandler`                                                        |
-| POST `/api/v1/admin/kyc/cases/{id}/revoke`         | `RevokeCaseHandler`                                                        |
-| POST `/api/v1/webhooks/iam`                        | `EventInboxService` → `OnAccountCreatedHandler` / `OnPhoneVerifiedHandler` |
-| POST `/api/v1/webhooks/vendors/{provider}`         | `EventInboxService` → `ProviderCallbackOrchestrator`                       |
-
----
 
 <br/>
 
 
 #### 2.6.2.3. Application Layer
 
-# Application Layer — Identity Verification (KYC)
+**Application Layer**
+
+**Capabilities del BC (→ casos de uso)**
+- Inicio único de caso · Ingesta doc · Ingesta biométrica · Decisión automática · Revisión humana · Expirar/Revocar · Proyecciones CQRS · Eventos de integración.
+
+**Command/Query Handlers (entradas, precondiciones, efectos)**
+- **`StartKycCase`** — *Entrada:* usa `SecurityContext.currentSubjectId()`; *Pre:* si ya hay abierto ⇒ `409`; *Efecto:* crea `IN_PROGRESS` + `KycStarted` *(Idempotency-Key)*.
+- **`SubmitDocument`** — *Entrada:* `{ caseId, frontUploadSessionId, backUploadSessionId, type, country }`; *Pre:* `IN_PROGRESS`, `NATIONAL_ID` requiere `front+back`, attempts válidos; *Efecto:* OCR/MRZ → `DocumentSnapshot` + evento.
+- **`SubmitBiometrics`** — *Entrada:* `{ caseId, selfieUploadSessionId }`; *Pre:* doc previo, attempts válidos; *Efecto:* Liveness+FaceMatch → `BiometricSnapshot` + evento.
+- **`AutoDecide`** — *Efecto:* `PolicyProvider + KycDecisionPolicy`; *Resp:* `200` si decide ahora, `202` si queda pendiente; emite `KycVerified|KycRejected|KycPendingReview`.
+- **`ApplyManualDecision`** — *Pre:* `PENDING_REVIEW`; *Efecto:* `VERIFIED|REJECTED` + evento *(Idempotency-Key)*.
+- **`ExpireCase`** — *Entrada:* `{ reason: DOC_EXPIRED|POLICY_REEVAL_TTL }`; *Efecto:* `KycExpired`.
+- **`RevokeCase`** — *Entrada:* `{ reason: FRAUD_SIGNAL|COMPLIANCE_HIT, notes }`; *Pre:* desde `VERIFIED`; *Efecto:* `KycRevoked` *(4-eyes opcional)*.
+- **Queries:** `GetKycCaseById`, `GetOpenKycCaseForMe`, `GetMyIdentityProfile (CQRS)`.
+
+**Orquestadores/Sagas (pasos esenciales)**
+- **`DocumentUploadOrchestrator`** — issue upload (`image/*`, **≤5MB**, `ttlSec`) → OCR/MRZ → `DocumentSnapshot`.
+- **`ProviderCallbackOrchestrator`** — procesa webhooks de vendors **idempotente** por `providerTxnId`.
+- **`HumanReviewOrchestrator`** — abre `ReviewTask` y aplica decisión manual.
+
+**Puertos (interfaces) a Infra**
+- `DocumentOcrGateway.extract(frontRef,backRef)`, `LivenessGateway.check(selfieRef)`, `FaceMatchGateway.compare(selfieRef,docPhotoRef)`, `BlobStorageGateway.issueUploadUrl/resolveUploadSession`, `SchedulerGateway.scheduleExpire`, `IdempotencyStore.putIfAbsent/get`, `UnitOfWork/TxManager`, `Clock.now`, `SecurityContext.currentSubjectId`.  
+  **EventBus** lo usa **solo** `OutboxService`.
+
+**Idempotencia y control transaccional**
+- **Scope Idempotency-Key:** `(HTTP method + path + subjectId)`, ventana **24h**, reintentos ⇒ **eco**.
+- **Tx + Outbox:** UoW por handler; publicación **ordenada** por (`caseId`,`subscriberId`).
+
+**Event Handlers**
+- **Integración (entrantes IAM):** `OnAccountCreated`, `OnPhoneVerified` via `EventInboxService` (dedupe `eventId/payload_hash`).
+- **De dominio:** proyectores CQRS + mapper → Integration Events `.vN` (sin PII; variante **ForIAM** con PII mínima si política lo exige).
 
 ---
 
-## 1) Capabilities (alineadas al BC)
-- **Inicio y unicidad de caso:** abrir un `KycCase` por sujeto (a lo sumo **un caso abierto**).
-- **Ingesta de documento:** sesión de carga → OCR/MRZ → `DocumentSnapshot`.
-- **Ingesta biométrica:** liveness + face-match → `BiometricSnapshot`.
-- **Decisión automática:** aplica `KycDecisionPolicy` (dominio).
-- **Revisión humana:** abre/consume `ReviewTask` y aplica decisión manual.
-- **Expiración y revocación:** por documento vencido/reevaluación; y por fraude/compliance.
-- **Proyecciones:** `IdentityProfile` (solo lectura) y vista del caso.
-- **Eventos de integración** versionados (`.vN`), **Outbox**, **Idempotency-Key** y `correlationId`.
 
----
-
-## 2) Command Handlers
-- `StartKycCaseHandler`  
-  Toma `subjectId` de `SecurityContext.currentSubjectId()`; ignora el que venga en el comando.  
-  Si el comando trae `subjectId` distinto → `403`/`409`. Soporta **Idempotency-Key**.
-- `SubmitDocumentHandler`  
-  Resuelve upload sessions → **[ACL]** `DocumentOcrGateway.extract` → arma `DocumentSnapshot` → `KycCase.submitDocument`.
-- `SubmitBiometricsHandler`  
-  **[ACL]** `LivenessGateway.check` + `FaceMatchGateway.compare(selfieRef, docPhotoRef)` → `BiometricSnapshot` → `KycCase.submitBiometrics`.
-- `AutoDecideHandler`  
-  Obtiene umbrales de `PolicyProvider` → ejecuta `KycDecisionPolicy` → `KycCase.autoDecide`.
-- `ApplyManualDecisionHandler`  
-  Aplica `APPROVE|REJECT` sobre `KycCase`. Soporta **Idempotency-Key**.
-- `ExpireCaseHandler`  
-  `KycCase.expire(DOC_EXPIRED | POLICY_REEVAL_TTL)`.
-- `RevokeCaseHandler`  
-  `KycCase.revoke(FRAUD_SIGNAL | COMPLIANCE_HIT)`.
-
-**Precondiciones (reflejan invariantes de dominio)**
-- `submitDocument`/`submitBiometrics`: solo si `status == IN_PROGRESS` y **Attempts** no excedido.
-- Para `NATIONAL_ID`: `submitDocument` **exige** **front + back**; si falta uno → `DocumentNotValid(DOC_INVALID_FORMAT)`.
-- `SubmitBiometrics` requiere `DocumentSnapshot` existente (para `docPhotoRef`).
-- `applyManualDecision`: solo si `status == PENDING_REVIEW`.
-- `expire`/`revoke`: prohibidos en estados finales.
-
----
-
-## 3) Event Handlers (entrantes)
-- `OnAccountCreatedHandler` — input `AccountCreated.v1 { accountId, createdAt }` → registra onboarding marker / no-op (según política).
-- `OnPhoneVerifiedHandler` — input `PhoneVerified.v1 { accountId, at }` → opcionalmente dispara `StartKycCaseCommand` o notifica (según política).
-
----
-
-## 4) Orchestrators / Process Managers
-- `DocumentUploadOrchestrator` — coordina: **upload session → OCR → persistencia → integración**.
-- `ProviderCallbackOrchestrator` — procesa **webhooks** de proveedores (**idempotente** por `providerTxnId`).
-- `HumanReviewOrchestrator` — abre `ReviewTask`, notifica y, al decidirse, ejecuta `ApplyManualDecision`.
-
----
-
-## 5) Application Services (transversales)
-- `UnitOfWork` — transacciones por caso de uso.
-- `IdempotencyService` — `checkAndPut` / `getStoredResponse`.
-- `EventInboxService` — **inbox/idempotencia por `eventId`** para `OnAccountCreated`, `OnPhoneVerified` y webhooks (dedupe de eventos entrantes).
-- `Clock` — tiempo determinístico.
-- `PolicyProvider` — umbrales/versionado de política.
-- `EventMapper` — domain → **integration events**.
-- `OutboxService` — persistencia/publicación confiable.
-- `KycExpirationScheduler` — programa `ExpireCaseCommand` según `DOC_EXPIRED | POLICY_REEVAL_TTL`.
-
----
-
-## 6) Ports / Gateways [ACL]
-- `DocumentOcrGateway.extract(frontRef, backRef): OcrResult { legalName, dob, number, country, type, expirationDate, extractionConfidence, docPhotoRef, docPhotoHash, providerTxnId }`
-- `LivenessGateway.check(selfieRef): LivenessResult { status, score, providerTxnId }`
-- `FaceMatchGateway.compare(selfieRef, docPhotoRef): FaceMatchResult { score, providerTxnId }`
-- `BlobStorageGateway.issueUploadUrl(kind, caseId): UploadSession { sessionId, url, ttl }`
-- `BlobStorageGateway.resolveUploadSession(sessionId): BlobRef`
-- `SchedulerGateway.schedule(command, at|cronExpr)`
-- `EventBus.publish(integrationEvent)` *(usado **solo** por `OutboxService`; los handlers no publican directo)*.
-- `IdempotencyStore.checkAndPut(key, fingerprint)` / `getStoredResponse(key)`
-- `SecurityContext.currentSubjectId(): SubjectId`
-
-**[ACL] Anti-Corruption Layer:** traduce/normaliza contratos externos, aplica redacción de PII, mapea errores a `ReasonCode`, implementa retries/circuit y mantiene versionado.
-
----
-
-## 7) Contratos (DTOs)
-**Commands**
-- `StartKycCaseCommand { subjectId?, idempotencyKey? }` *(el handler usa `SecurityContext`)*  
-- `SubmitDocumentCommand { caseId, uploadSessionIdFront, uploadSessionIdBack }`  
-- `SubmitBiometricsCommand { caseId, selfieUploadSessionId }`  
-- `AutoDecideCommand { caseId }`  
-- `ApplyManualDecisionCommand { caseId, decision: APPROVE|REJECT, reasonCodes?[], idempotencyKey? }`  
-- `ExpireCaseCommand { caseId, reason: DOC_EXPIRED|POLICY_REEVAL_TTL }`  
-- `RevokeCaseCommand { caseId, reason: FRAUD_SIGNAL|COMPLIANCE_HIT, notes? }`
-
-**Queries**
-- `GetKycCaseByIdQuery { caseId }`
-- `GetOpenKycCaseForMeQuery {}` *(usa `SecurityContext`)*
-- `GetMyIdentityProfileQuery {}` *(CQRS read model)*
-
----
-
-## 8) Integration Events (Outbox, `.vN`)
-- `KycStarted.v1 { caseId, subjectId, startedAt }`
-- `KycPendingReview.v1 { caseId, subjectId, policyVersion, scores, correlationId }`
-- `KycVerified.v1 { caseId, subjectId, kycLevel, policyVersion, thresholds, scores, decidedAt, correlationId }`
-- `KycRejected.v1 { caseId, subjectId, reasonCodes[], policyVersion, scores, decidedAt, correlationId }`
-- `KycExpired.v1 { caseId, subjectId, reason, at }`
-- `KycRevoked.v1 { caseId, subjectId, reason, at }`
-
-*PII no se publica por defecto. Si IAM necesita claims, emitir variante dirigida:*  
-`KycVerifiedForIAM.v1 { subjectId, kycLevel, legalName, dob, decidedAt, policyVersion }`.
-
----
-
-## 9) Relación BC↔BC y ACL
-- **Entrantes (IAM):** `OnAccountCreatedHandler`, `OnPhoneVerifiedHandler` (pasando por `EventInboxService`).
-- **Salientes:** Integration Events para IAM/Payments/Notifications/Compliance (mapeados por `EventMapper` + Outbox).
-- **Síncrono BC↔BC:** no aplica por ahora; se declarará `AuthorizationClientGateway` si fuera necesario.
-
----
-
-## 10) Reglas operativas de aplicación
-- **Idempotencia** en `StartKycCase`, `Submit*`, `ApplyManualDecision`.
-- **Transacción + Outbox** en cada handler.
-- **Emisión ordenada por `caseId`** desde Outbox (consumidores procesan `Started → Submitted → … → Verified` en orden).
-- **Resiliencia:** timeouts/reintentos a gateways; señal inconclusa → `PENDING_REVIEW` (no “REJECTED” automático).
-- **Privacidad:** PII fuera de domain events; solo en integration events dirigidos si política lo autoriza.
-- **Observabilidad:** `correlationId` fluye en comandos, gateways y eventos.
-- **Versionado:** eventos `.vN` con compatibilidad hacia atrás.
-
-
-<br/>
+<b/>
 
 #### 2.6.2.4. Infrastructure Layer
 
-## 1) Persistencia (DB) — Repositories e implementación
+**Infrastructure Layer**
 
-**Motor:** SQL relacional (PostgreSQL o SQL Server)  
-**Patrón:** Aggregate + **Unit of Work** + **Optimistic Concurrency** (`version`)
+**Repositorios (implementaciones)**
+- `SqlKycCaseRepository` · `SqlReviewTaskRepository` *(ORM/JDBC, **optimistic locking `version`**)*.
+- **Esquema clave (resumen en línea):**  
+  `KycCase(case_id PK, subject_id, status, kyc_level?, reasons JSON, decision_meta JSON, attempts, created_at, expires_at?, version)` ·  
+  `KycDocument(case_id PK/FK, type, country, number_enc(KMS), number_tok?, expiration_date, legal_name, dob, extraction_confidence, quality_score?, doc_photo_hash, mrz JSON)` ·  
+  `KycBiometrics(case_id PK/FK, liveness, liveness_score?, face_match_score, threshold, selfie_hash)` ·  
+  `ReviewTask(task_id PK, case_id FK, status, assignee?, notes?, decision?, reason_codes JSON, created_at, decided_at?)` ·  
+  **Constraints:** único `subject_id` para `IN_PROGRESS|PENDING_REVIEW`; `CHECK` `[0,1]`; `expiration_date > created_at`. **PII:** `number_enc` con **KMS**; `number_tok` opcional.
 
-**Repos concretos**
-- `SqlKycCaseRepository` (implements `KycCaseRepository`) — persiste `KycCase` (incluye `DocumentSnapshot`, `BiometricSnapshot`, `AttemptsCounter`).
-- `SqlReviewTaskRepository` (implements `ReviewTaskRepository`) — persiste `ReviewTask`.
+**Integraciones externas (Adapters)**
+- `[ACL]` `OcrVendorGateway`, `LivenessVendorGateway`, `FaceMatchVendorGateway`, `ObjectStorageAdapter`, `CronSchedulerAdapter`.  
+  **Resiliencia:** timeouts 3–5s, retries/backoff, circuit breaker, idempotencia por `providerTxnId`/fingerprint.  
+  **Storage:** `issueUploadUrl/resolveUploadSession` (`image/*`, ≤5MB, `ttlSec`); lifecycle/TTL; `EvidencePurgeWorker` audita.
 
-**Esquema (resumen)**
-    KycCase(
-      case_id PK, subject_id, status, kyc_level?, reasons JSON,
-      decision_meta JSON, attempts, created_at, expires_at?, version
-    )
+**Transactional Outbox / mensajería**
+- **Outbox** + `OutboxHttpPublisher` ⇒ webhooks firmados **en orden** (`caseId`,`subscriberId`), retries exponenciales, **DLQ**.
+- **Inbox** + `EventInboxService` ⇒ dedupe `eventId`/`payload_hash`, retries, **DLQ**.  
+  **Regla:** handlers **no** publican directo; solo `OutboxService`.
 
-    KycDocument(
-      case_id PK/FK→KycCase, type, country, number_enc, number_tok?,
-      expiration_date, legal_name, dob, extraction_confidence,
-      quality_score?, doc_photo_hash, mrz JSON
-    )
-
-    KycBiometrics(
-      case_id PK/FK→KycCase, liveness, liveness_score?,
-      face_match_score, threshold, selfie_hash
-    )
-
-    ReviewTask(
-      task_id PK, case_id FK→KycCase, status, assignee?, notes?,
-      decision?, reason_codes JSON, created_at, decided_at?
-    )
-
-**Constraints/índices (consistencia dura)**
-- Único parcial/filtrado: `UNIQUE(subject_id) WHERE status IN ('IN_PROGRESS','PENDING_REVIEW')`.
-- CHECK: `face_match_score BETWEEN 0 AND 1`, `threshold BETWEEN 0 AND 1`, `expiration_date > created_at`.
-- FKs 1–1: `KycDocument.case_id` y `KycBiometrics.case_id` como PK/FK a `KycCase`.
-- Optimistic locking: `UPDATE … WHERE case_id = ? AND version = ?`.
-
-**PII en DB**
-- `number_enc`: cifrado con KMS (rotación).
-- `number_tok` (opcional): tokenización determinística (hash + salt + pepper en KMS) para búsquedas.
-- En lecturas/proyecciones: enmascarar el número; nunca exponer `number_enc`.
-
----
-
-## 2) Integración entre BCs (Webhooks HTTP)
-
-**Publicación (saliente) — Outbox HTTP**
-- `OutboxRepository` + `OutboxHttpPublisher` (worker).
-- Tabla `Outbox(id, aggregate, event_name, version, payload, partition_key, subscriber_id, created_at, status NEW|PUBLISHED|FAILED, attempts, last_error)`.
-- Orden garantizado por (`caseId`, `subscriberId`) con colas por suscriptor (evita head-of-line blocking).
-- Reintentos exponenciales y DLQ tras N fallos.
-- Los handlers no publican directo; siempre vía Outbox.
-
-**Recepción (entrante) — Inbox HTTP**
-- `WebhookInboxController` + `EventInboxService` + `InboxRepository`.
-- Tabla `Inbox(event_id PK, handler, received_at, status NEW|PROCESSED|FAILED, attempts, last_error, payload_hash)`.
-- Idempotencia robusta: si el productor no envía `event_id`, calcular fingerprint canónico (JSON ordenado, sin whitespace) y almacenar también `payload_hash`.
-- DLQ para fallidos.
-
-**Seguridad de webhooks**
-- Headers: `X-Event-Name`, `X-Event-Version`, `X-Correlation-Id`, `X-Timestamp`, `X-Signature`.
-- Firma: `X-Signature = HMAC-SHA256(secret, X-Timestamp + body)`; rechazar si `|now - X-Timestamp| > 5 min`.
-- Anti-replay: almacenar `(event_id | payload_hash, timestamp)` por 24h en Inbox; rechazar repetidos/demorados.
-
----
-
-## 3) Gateways [ACL] a proveedores (OCR/Liveness/Face/Storage/Scheduler)
-
-Implementan Ports de Application con timeouts (3–5s), retries con backoff, circuit breaker (abre ~50% fallos / ≥20 req; cooldown 60s), idempotencia por `providerTxnId` (o fingerprint) y redacción de PII.
-
-- `OcrVendorGateway` (DocumentOcrGateway)  
-  Devuelve `OcrResult { legalName, dob, number, country, type, expirationDate, extractionConfidence, docPhotoRef, docPhotoHash, providerTxnId }`.  
-  Regla: para `NATIONAL_ID` es obligatorio `frontRef + backRef`; si falta → `DOC_INVALID_FORMAT` → `DocumentNotValid`.
-- `LivenessVendorGateway` (LivenessGateway) — `PASSED | FAILED | INCONCLUSIVE` (+score).
-- `FaceMatchVendorGateway` (FaceMatchGateway) — compara `selfieRef` vs `docPhotoRef` y retorna `score`.
-- `ObjectStorageAdapter` (BlobStorageGateway)  
-  - `issueUploadUrl(kind, caseId) → UploadSession{ sessionId, url, ttl }`  
-  - `resolveUploadSession(sessionId) → BlobRef`  
-    TTL “by policy”: lifecycle del bucket (S3/GCS/Azure) elimina blobs; el worker no borra, audita (ver §6).
-- `CronSchedulerAdapter` (SchedulerGateway) — agenda `ExpireCaseCommand` (`DOC_EXPIRED | POLICY_REEVAL_TTL`).
-
----
-
-## 4) Outbox / Inbox (detalle operativo)
-
-- Outbox: publicación ordenada por (`caseId`, `subscriberId`), reintentos exponenciales, DLQ, métricas (intentos, latencia, tasa a DLQ por suscriptor).
-- Inbox: dedupe por `event_id` y `payload_hash`, DLQ, claim de reintentos, trazabilidad vía `correlationId`.
-
----
-
-## 5) Proyecciones CQRS (lectura)
-
-- `SqlIdentityProfileProjection` — materializa `IdentityProfile` al oír `KycVerified` (según ruteo). Sin blobs; `docNumber` enmascarado.
-- `SqlKycCaseViewProjection` — vista de timeline/estado (`Started/Document/Biometrics/Pending/Verified/Rejected/Expired/Revoked`).
-
-**Conexiones separadas RO/RW**
-- Proyecciones: pool/usuario RO (sin UPDATE/DELETE, GRANT mínimos).
-- Comandos: pool/usuario RW.
-
----
-
-## 6) Evidencias / TTL (purga fuera del dominio)
-
-- Lifecycle/TTL en el bucket (S3/GCS/Azure) ejecuta borrado automático.
-- `EvidencePurgeWorker` actúa como auditor: registra `EvidencePurgeLog(case_id, blob_ref, purged_at, policy_version, actor='SYSTEM')` y reintenta marcado si el proveedor falló.
-- No se emiten domain events; si Compliance lo exige, emitir integration event de auditoría.
-
----
-
-## 7) Idempotencia, rate-limit y reloj
-
-- `RedisIdempotencyStore` (IdempotencyStore) — guarda `Idempotency-Key` → fingerprint + respuesta (TTL corto).
-- (Recomendado) `RedisRateLimiter` — refuerzo de ventana para `AttemptsCounter`.
-- `ClockSystem` (Clock) — fuente única de tiempo.
-
----
-
-## 8) Observabilidad y seguridad
-
-- Logs estructurados con `correlationId`, `caseId`, `subjectId`, `policyVersion`; scrubbing PII (no blobs / `number_enc`).
-- Métricas clave:
-  - Lead time `KycStarted → (KycVerified | KycRejected)`.
-  - Latencia y error-rate por gateway (OCR/Liveness/Face).
-  - Entrega webhooks: intentos, latencia, tasa a DLQ por suscriptor.
-  - Backlog Outbox/Inbox.
-- Alertas: fallos de gateways, crecimiento de DLQ/backlog, expiraciones no ejecutadas.
-- Secrets: KMS/Secret Manager; TLS en adapters; egress restringido a dominios de vendors; DB en red privada.
-
----
-
-## 9) Esquema de despliegue (alto nivel)
-
-- DB relacional con índices filtrados, CHECK y `version`.
-- Object Storage con cifrado y TTL por política.
-- Redis para IdempotencyStore (y RateLimiter si se activa).
-- Workers/servicios: `OutboxHttpPublisher`, `EventInboxProcessor`, `KycExpirationScheduler`, `EvidencePurgeWorker`.
-
----
-
-## 10) PII y ruteo de eventos (coherencia con Application)
-
-- `EventMapper` con allow-list por consumidor: por defecto PII OFF.
-- Solo IAM recibe variante ForIAM con PII mínima; el resto recibe eventos sin PII.
-
----
-
-## 11) Checklist de coherencia (Domain & Application)
-
-- Repos `SqlKycCaseRepository` / `SqlReviewTaskRepository` ↔ interfaces de dominio.
-- Webhooks HTTP con Outbox/Inbox y orden por (`caseId`, `subscriberId`); handlers no publican directo.
-- OCR exige front+back para `NATIONAL_ID`; faltante → `DOC_INVALID_FORMAT`.
-- Proyecciones sin PII cruda; números enmascarados.
-- TTL de evidencias por política del bucket; worker audita.
+**Configuración y secretos**
+- Secrets/keys via **Secret Manager/KMS**; **TLS**; egress restringido; DB privada.  
+- **Observabilidad:** logs estructurados (`correlationId`, `caseId`, `subjectId`, `policyVersion`); métricas (lead time, latencias/errores gateways, backlog Outbox/Inbox).
 
 <br/>
 
 #### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
-- *KYC API — Component View*
-<img width="3820" height="7427" alt="image" src="https://github.com/user-attachments/assets/8cfb9f8e-ecfa-48cb-bd88-f6cd19641458" />
-
-<br/>
-
-- *KYC Workers — Component View*
-<img width="3100" height="7320" alt="image" src="https://github.com/user-attachments/assets/4ece5c2d-b963-48db-9ded-e01d7d605861" />
-
-<br/>
-
-- *Data Stores (SQL) — Component Diagram*
-<img width="2350" height="7411" alt="image" src="https://github.com/user-attachments/assets/9fc60a03-04ac-4090-9435-1cf46af84d1b" />
 
 
 <br/>
@@ -2151,521 +1365,156 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 <br/>
 
 ### 2.6.3. Bounded Context: Customers
+
+- *Perfil operativo del cliente apto para usar la app, preferencias y plantillas de ítems/rutas.*
+
+<b/>
+
 #### 2.6.3.1. Domain Layer
 
-**Domain Layer — Customers**
+**Domain Layer**
 
-> **Scope:** aptitud operativa del cliente (*readiness*), preferencias y plantillas reutilizables (ítems y rutas).  
-> **Identidad:** `subjectId = AccountId` (IAM).  
-> **Ownership leak-proof:** toda mutación exige `ownerId == subjectId` del JWT.
+**Aggregates (AR)**
 
----
+**`CustomerOperationalProfile` (Aggregate Root)**
+- **Estado:** `subjectId` (único), `status: INCOMPLETE|ELIGIBLE|SUSPENDED|BANNED`, `reasons: Set<EligibilityReason>`, `preferences{ language, units, notificationChannels, uxDefaults }`, `audit{ createdAt, updatedAt, lastStatusChangeAt }`.
+- **Invariantes:** 1 perfil por `subjectId`; `status` coherente con `reasons`; `BANNED` terminal; PII mínima.
+- **Precedencia:** 1) `FRAUD_BLOCKED`→`BANNED`; 2) `DISPUTE_BLOCKED|ACCOUNT_DISABLED|COMPLIANCE_HOLD`→`SUSPENDED`; 3) `KYC_MISSING|KYC_REJECTED|PHONE_NOT_VERIFIED|AGE_UNDER_MIN`→`INCOMPLETE`; 4) sin razones→`ELIGIBLE`.
+- **Ciclo de razones:** `AGE_UNDER_MIN` se limpia por **evento externo `LegalAgeReached`** (fuente de verdad). Resto por eventos explícitos (sin TTL genérico).
+- **Comportamientos:** `ensureCreated` (crea con `{KYC_MISSING, PHONE_NOT_VERIFIED}`), `applyReason/clearReason` (recalcula), `suspendFor/unsuspend` *(solo bloqueantes)*, `banFor(FRAUD_BLOCKED)`, `updatePreferences` *(normaliza a kg/cm)*.
+- **Domain Events (`Customers.*`):** `CustomerOperationalProfileEnsured`; `CustomerEligibilityUpdated{ oldStatus, newStatus, reasons }` *(solo si cambia `status`)*; `CustomerPreferencesUpdated`; `CustomerBanned`.
 
-**1) Aggregates**
+**`ItemTemplate` (Aggregate Root)**
+- **Estado:** `templateId`, `ownerId`, `name`, `category`, `dimensions` *(cm)*, `weight` *(kg)*, `photos: PhotoRef[]` *(inmutables)*, `notes?`, `favorite`, `usage{ count, lastUsedAt }`, `status: ACTIVE|DELETED`, `version?`.
+- **Reglas:** owner-only; `name/category` obligatorios; medidas/peso > 0; `registerUse` rechaza `DELETED`.
+- **Domain Events:** `ItemTemplateCreated|Updated|Deleted|Used|Favorited|Unfavorited`.
 
-**1.1. CustomerOperationalProfile (Aggregate Root)**
+**`RouteTemplate` (Aggregate Root)**
+- **Estado:** `templateId`, `ownerId`, `label`, `origin: Location`, `waypoints: Location[] (≤10)`, `destination: Location`, `favorite`, `usage`, `status`, `version?`.
+- **Validaciones:** `lat ∈ [-90,90]`, `lng ∈ [-180,180]`; `address?` opcional.
+- **Domain Events:** `RouteTemplateCreated|Updated|Deleted|Used|Favorited|Unfavorited`.
 
-- **Propósito:** decidir y exponer la **aptitud** del cliente y gestionar sus **preferencias**.
-- **Estado**
-  - `subjectId` (único)
-  - `status: EligibilityStatus = INCOMPLETE | ELIGIBLE | SUSPENDED | BANNED`
-  - `reasons: Set<EligibilityReason>` (vigentes)
-  - `preferences`: `language`, `units`, `notificationChannels`, `uxDefaults`
-  - `audit`: `createdAt`, `updatedAt`, `lastStatusChangeAt`
-- **Invariantes**
-  - Un perfil por `subjectId`.
-  - `status` coherente con `reasons` según política de precedencia.
-  - `BANNED` es **terminal**.
-  - Mínima PII: no duplica email/teléfono/nombre ni documento.
-- **Política de elegibilidad (precedencia)**
-  1. `FRAUD_BLOCKED` ⇒ **BANNED**
-  2. Bloqueantes: `DISPUTE_BLOCKED`, `ACCOUNT_DISABLED`, `COMPLIANCE_HOLD` ⇒ **SUSPENDED**
-  3. Prerrequisitos: `KYC_MISSING`, `KYC_REJECTED`, `PHONE_NOT_VERIFIED`, `AGE_UNDER_MIN` ⇒ **INCOMPLETE**
-  4. Sin razones ⇒ **ELIGIBLE**
-- **Ciclo de vida de razones**
-  - `AGE_UNDER_MIN` se **auto-limpia** al cumplir edad (job diario o evento).
-  - Resto: se limpia/aplica mediante eventos explícitos (sin TTL genérico en MVP).
-- **Comportamientos**
-  - `ensureCreated(subjectId)` → crea con razones iniciales `{KYC_MISSING, PHONE_NOT_VERIFIED}`
-  - `applyReason(reason)` / `clearReason(reason)` → recalcula `status`
-  - `suspendFor(reason)` / `unsuspend(reason)` *(solo limpia razones bloqueantes: `DISPUTE_BLOCKED`, `ACCOUNT_DISABLED`, `COMPLIANCE_HOLD`)*
-  - `banFor(reason = FRAUD_BLOCKED)`
-  - `updatePreferences(prefs)` *(normaliza unidades a canónico: kg/cm)*
-- **Domain Events** *(prefijo `Customers.*`, incluyen `correlationId` y **snapshot** de `reasons`)*
-  - `Customers.CustomerOperationalProfileEnsured`
-  - `Customers.CustomerEligibilityUpdated { oldStatus, newStatus, reasons }` *(solo si cambia `status`)*
-  - `Customers.CustomerPreferencesUpdated`
-  - `Customers.CustomerBanned`
-  - `Customers.CustomerSuspended` / `Customers.CustomerUnsuspended`
+**Value Objects**
+- `SubjectId`, `TemplateId`, `EligibilityStatus`, `EligibilityReason`, `Language`, `Units(kg|lb; cm|in)` *(interno canónico kg/cm)*, `Dimensions{ l,w,h,unit }`, `Weight{ value,unit }`, `PhotoRef{ bucket,key,checksum,version }`, `Location{ lat,lng,address? }`, `UsageStats{ count,lastUsedAt }`.
 
----
+**Domain Services / Policies**
+- `EligibilityPolicy` (precedencia), `LegalAgePolicy` (edad mínima y zona horaria), `LocationValidator` (rangos/waypoints).
 
-**1.2. ItemTemplate (Aggregate Root)**
+**Repositories (interfaces)**
+- `CustomerOperationalProfileRepository`: `findBySubjectId`, `save`, `lockForUpdate` *(índice único por `subjectId`)*.
+- `ItemTemplateRepository`: `findById(owner,id, includeDeleted=false)`, `findAllByOwner(owner,paging, includeDeleted=false)`, `save`.
+- `RouteTemplateRepository`: igual que `ItemTemplateRepository`. *Por defecto solo `ACTIVE`; `includeDeleted=true` para administración.*
 
-- **Propósito:** acelerar la creación de solicitudes con descripciones de **ítems** reutilizables.
-- **Estado**
-  - `templateId`, `ownerId (= subjectId)`
-  - `name`, `category`
-  - `dimensions: Dimensions`, `weight: Weight` *(internamente en cm/kg)*
-  - `photos: List<PhotoRef>` *(referencias inmutables)*
-  - `notes?`, `favorite: boolean`
-  - `usage: UsageStats { count, lastUsedAt }`
-  - `status: ACTIVE | DELETED`
-  - `version?` *(optimistic locking opcional)*
-- **Invariantes**
-  - Solo el **owner** modifica.
-  - `name` y `category` obligatorios; dimensiones/peso > 0 y unidades coherentes.
-  - **Soft-delete:** `registerUse()` **rechaza** `DELETED`.
-- **Comportamientos y eventos**
-  - CRUD, `markFavorite`, `registerUse` →
-  - `Customers.ItemTemplateCreated/Updated/Deleted/Used/Favorited/Unfavorited`
+**Idempotency (transversal)**
+- Scope `method+path+subjectId`; TTL **6–24h**; upserts hashean campos semánticos; reintentos → **misma respuesta**; cuerpo distinto → **409**.
+
+**Interacciones (entrantes/salientes)**
+- **Entrantes:** `KycVerified`→`clear(KYC_MISSING|KYC_REJECTED)`; `KycRejected`→`apply(KYC_REJECTED)`; `PhoneVerified`→`clear(PHONE_NOT_VERIFIED)`; `PhoneChanged`→`apply(PHONE_NOT_VERIFIED)`; `AccountDisabled/Enabled`→`apply/clear(ACCOUNT_DISABLED)`; `DisputeOpened/Resolved`→`apply/clear(DISPUTE_BLOCKED)`; `FraudConfirmed`→`banFor(FRAUD_BLOCKED)`; `LegalAgeReached`→`clear(AGE_UNDER_MIN)`.  
+  **Auto-ensure:** si no hay perfil, `ensureCreated` antes de aplicar.
+- **Salientes:** `CustomerEligibilityUpdated`, `CustomerPreferencesUpdated`, `ItemTemplate*`, `RouteTemplate*`.
+
+**Mapa Razón → Status**
+- 1: `FRAUD_BLOCKED` → `BANNED`
+- 2: `DISPUTE_BLOCKED|ACCOUNT_DISABLED|COMPLIANCE_HOLD` → `SUSPENDED`
+- 3: `KYC_MISSING|KYC_REJECTED|PHONE_NOT_VERIFIED|AGE_UNDER_MIN` → `INCOMPLETE`
+- 4: sin razones → `ELIGIBLE`
 
 ---
-
-**1.3. RouteTemplate (Aggregate Root)**
-
-- **Propósito:** reutilizar **rutas**.
-- **Estado**
-  - `templateId`, `ownerId`, `label`
-  - `origin: Location`, `waypoints: List<Location> (≤ 10)`, `destination: Location`
-  - `favorite`, `usage: UsageStats`
-  - `status: ACTIVE | DELETED`
-  - `version?` *(opcional)*
-- **Validaciones de `Location` (MVP)**
-  - `lat ∈ [-90, 90]`, `lng ∈ [-180, 180]`
-  - `waypoints` dentro del límite
-  - `address?` opcional (sin normalización canónica en MVP)
-- **Comportamientos y eventos**
-  - CRUD, `markFavorite`, `registerUse` *(rechaza `DELETED`)* →
-  - `Customers.RouteTemplateCreated/Updated/Deleted/Used/Favorited/Unfavorited`
-
----
-
-**2) Value Objects**
-
-- `SubjectId`, `TemplateId`
-- `EligibilityStatus`, `EligibilityReason`
-- `Language` (p. ej., `es-PE`)
-- `Units` (masa: `kg|lb`; longitud: `cm|in`)  
-  - **Interno canónico:** **kg/cm**. Entradas aceptan `lb/in` y se convierten a canónico; salidas formateables a la preferida.
-- `Dimensions { length, width, height, unit }` *(> 0; convierte a cm)*
-- `Weight { value, unit }` *(> 0; convierte a kg)*
-- `PhotoRef { bucket, key, checksum, version }` *(**inmutable**)*
-- `Location { lat, lng, address? }`
-- `UsageStats { count, lastUsedAt }`
-
----
-
-**3) Domain Services / Policies**
-
-- **EligibilityPolicy:** calcula `status` desde `reasons` aplicando la precedencia fija.
-- **LegalAgePolicy:** edad mínima y zona horaria para `AGE_UNDER_MIN`.
-- **LocationValidator:** valida rangos y límite de `waypoints`.
-
----
-
-**4) Factories**
-
-- **CustomerOperationalProfileFactory**
-  - `ensure(subjectId)` → crea perfil con razones `{KYC_MISSING, PHONE_NOT_VERIFIED}`
-- **ItemTemplateFactory / RouteTemplateFactory**
-  - Construyen ARs válidos; convierten unidades a canónico (kg/cm).
-
----
-
-**5) Repositories (interfaces)**
-
-- `CustomerOperationalProfileRepository`
-  - `findBySubjectId(subjectId)`, `save(profile)`, `lockForUpdate(subjectId)`  
-  - Índice **único** por `subjectId`.
-- `ItemTemplateRepository`
-  - `findById(ownerId, templateId, includeDeleted=false)`
-  - `findAllByOwner(ownerId, paging, includeDeleted=false)`
-  - `save(template)`
-- `RouteTemplateRepository`
-  - `findById(ownerId, templateId, includeDeleted=false)`
-  - `findAllByOwner(ownerId, paging, includeDeleted=false)`
-  - `save(template)`
-> Por defecto, repos de plantillas retornan **solo `ACTIVE`**; `includeDeleted=true` habilita consultas administrativas.
-
----
-
-**6) Idempotency (regla transversal)**
-
-- **Scope:** `method + path + subjectId`.
-- **TTL recomendado:** 6–24 h.
-- En upserts, el hash incluye **campos semánticos** del cuerpo (excluye metadata volátil).
-- Reintentos con la misma clave → **misma respuesta**; si el cuerpo difiere → **409**.
-
----
-
-**7) Interacciones de dominio (entrantes/salientes)**
-
-- **Entrantes (eventos externos → comandos)**
-  - `KycVerified` → `clearReason(KYC_MISSING)` y `clearReason(KYC_REJECTED)`
-  - `KycRejected` → `applyReason(KYC_REJECTED)`
-  - `PhoneVerified` → `clearReason(PHONE_NOT_VERIFIED)`
-  - `PhoneChanged` → `applyReason(PHONE_NOT_VERIFIED)`
-  - `AccountDisabled` / `AccountEnabled` → `applyReason(ACCOUNT_DISABLED)` / `clearReason(ACCOUNT_DISABLED)`
-  - `DisputeOpened` / `DisputeResolved` → `applyReason(DISPUTE_BLOCKED)` / `clearReason(DISPUTE_BLOCKED)`
-  - Antifraude confirmado → `banFor(FRAUD_BLOCKED)`
-- **Auto-ensure en consumo de eventos:** si llega un evento para `subjectId` sin perfil previo ⇒ `ensureCreated(subjectId)` y luego aplicar/limpiar razones.
-- **Salientes (domain events)**
-  - Cambios de `status` ⇒ `Customers.CustomerEligibilityUpdated { oldStatus, newStatus, reasons }`
-  - Cambios de preferencias ⇒ `Customers.CustomerPreferencesUpdated`
-  - Mutaciones de plantillas ⇒ eventos `Customers.ItemTemplate*` / `Customers.RouteTemplate*`
-
----
-
-**8) Mapeo Razón → Status (precedencia)**
-
-| Prioridad | Razones                                                              | Status       |
-|-----------|-----------------------------------------------------------------------|--------------|
-| 1         | `FRAUD_BLOCKED`                                                       | `BANNED`     |
-| 2         | `DISPUTE_BLOCKED`, `ACCOUNT_DISABLED`, `COMPLIANCE_HOLD`             | `SUSPENDED`  |
-| 3         | `KYC_MISSING`, `KYC_REJECTED`, `PHONE_NOT_VERIFIED`, `AGE_UNDER_MIN` | `INCOMPLETE` |
-| 4         | *(sin razones)*                                                       | `ELIGIBLE`   |
-
 
 <b/>
 
 #### 2.6.3.2. Interface Layer
 
-# Interface/Presentation Layer — Customers (actualizada)
+**Interface/Presentation Layer — Customers**
 
-> **Propósito:** exponer **Controllers HTTP** para perfil, preferencias y plantillas, y **Consumers** de eventos externos.  
-> **Base path:** `/api/v1/customers` · **Auth:** `Authorization: Bearer <JWT>` (IAM).  
-> **Ownership leak-proof:** toda operación se valida contra el `subjectId` del contexto; si el recurso no pertenece al sujeto ⇒ **404**.
-
----
-
-## Convenciones transversales
-
-- **Idempotency-Key:** solo en `POST|PUT|PATCH|DELETE` (alcance `method + path + subjectId`). En `GET` se ignora.
+**Convenciones**
+- **Base:** `/api/v1/customers` · **Auth:** `Bearer <JWT>` · **Ownership leak-proof:** **404** si el recurso no pertenece al `subjectId`.
+- **Idempotency-Key:** solo `POST|PUT|PATCH|DELETE` (scope `method+path+subjectId`); en `GET` se ignora.
 - **Errores (RFC 7807):** `type`, `title`, `status`, `detail`, `instance` + extensiones `code`, `correlationId`, `path`, `timestamp`.
-- **Unidades:** entradas en `lb/in` se normalizan a **kg/cm** antes de Application.
-- **Paginación:** `page` (0-based), `size` (def. 20, máx. 100). Respuesta con `X-Total-Count` y `Link` (RFC 8288).
-- **Soft-delete:** colecciones retornan **solo `ACTIVE`** por defecto.
-- **ETag/condicionales:** `GET` puede responder `ETag: W/"{version}"`; `PATCH` requiere `If-Match: W/"{version}"`.
+- **Unidades:** entrada `lb/in` → **kg/cm**.
+- **Paginación:** `page` (0-based), `size` (def.20, máx.100); headers `X-Total-Count` y `Link` (RFC 8288).
+- **Soft-delete:** colecciones solo `ACTIVE`.
+- **ETag:** en `GET /item-templates/{id}` y `GET /route-templates/{id}` devolver `ETag: W/"{version}"`; `If-None-Match` opcional → **304**.
+- **PATCH (semántica):** **JSON Merge Patch (RFC 7386)** con `Content-Type: application/merge-patch+json`; `null` borra; medidas/peso válidos tras normalización; **requiere `If-Match: W/"{version}"`** → **412** en mismatch.
+
+**Controllers**
+- **ProfileController**  
+  `GET /profile` → `status`, `reasons`, `preferences` *(auto-ensure si falta perfil)*.
+- **PreferencesController**  
+  `PUT /preferences` → actualiza preferencias; emite evento solo si cambió *(permitido incluso `BANNED`)*.
+- **ItemTemplatesController**  
+  `GET /item-templates?page&size&includeDeleted=false` (headers `X-Total-Count`,`Link`)  
+  `POST /item-templates` → **201** + `Location: /api/v1/customers/item-templates/{id}`  
+  `GET /item-templates/{id}` → incluye **ETag**  
+  `PATCH /item-templates/{id}` → **Merge Patch** + **If-Match** (**412** si no coincide)  
+  `POST /item-templates/{id}/photos` → body `PhotoRef{ bucket,objectKey,checksum?,versionTag? }`; `position` opcional (auto-append)  
+  `DELETE /item-templates/{id}/photos/{position}`  
+  `POST /item-templates/{id}/favorite` / `DELETE /item-templates/{id}/favorite`  
+  `DELETE /item-templates/{id}` *(soft-delete)*  
+  `POST /item-templates/{id}/use` → body `{ "usageCorrelationId": "^[A-Za-z0-9-_:.]{1,128}$" }`; reintento deduplicado → **200**.
+- **RouteTemplatesController**  
+  `GET /route-templates?page&size&includeDeleted=false`  
+  `POST /route-templates` → **201** + `Location`  
+  `GET /route-templates/{id}` → incluye **ETag**  
+  `PATCH /route-templates/{id}` → **Merge Patch** + **If-Match** (**412** si no coincide)  
+  `POST /route-templates/{id}/favorite` / `DELETE /route-templates/{id}/favorite`  
+  `DELETE /route-templates/{id}`  
+  `POST /route-templates/{id}/use` → body `{ "usageCorrelationId": "…" }`; **200** si deduplicado.
+
+**Consumers (eventos entrantes)**
+- `identity.kyc.verified/rejected`, `iam.phone.verified/changed`, `iam.account.disabled/enabled`, `disputes.opened/resolved`, `fraud.confirmed`, `identity.legalAge.reached`.  
+  *Todos con Inbox idempotente, orden causal (`kyc,phone,account,dispute`) y `lockForUpdate(subjectId)` al modificar perfil.*
 
 ---
-
-## Controllers
-
-### ProfileController
-- **GET `/api/v1/customers/profile`**  
-  Devuelve `status`, `reasons` (snapshot) y `preferences`. **Auto-ensure** si no existe.
-
-### PreferencesController
-- **PUT `/api/v1/customers/preferences`**  
-  Actualiza `language`, `units`, `notificationChannels`, `uxDefaults`.  
-  Emite `Customers.CustomerPreferencesUpdated` **solo si hubo cambios**. Permitido incluso si `status = BANNED`.
-
-### ItemTemplatesController
-- **GET `/api/v1/customers/item-templates?page&size&includeDeleted=false`**  
-  Lista paginada (solo `ACTIVE` por defecto). Headers: `X-Total-Count`, `Link`.
-- **POST `/api/v1/customers/item-templates`**  
-  Crea plantilla. **201**
 
 <b/>
 
 #### 2.6.3.3. Application Layer
 
-# Application Layer — Customers
 
-> **Propósito:** orquestar flujos de *Customers* (aptitud, preferencias y plantillas) coordinando **Aggregates**, **Policies** y **Repositories**.  
-> **Capacidades:** (a) perfil operativo (*readiness*), (b) preferencias, (c) plantillas (ítems/rutas), (d) consumo de eventos externos (KYC/IAM/Disputas/Antifraude/Legal Age), (e) consultas para UI.
+**Convenciones**
+- Ownership leak-proof; **auto-ensure** + `lockForUpdate(subjectId)` en handlers que modifiquen perfil; idempotencia (`method+path+subjectId` / `eventId`); **Outbox** (post-commit) y **Inbox** (idempotencia por handler); orden causal por `lastExternalState.{ kyc, phone, account, dispute }`; normalización a **kg/cm** antes de validar; `CustomerEligibilityUpdated` solo si cambia `status`; *ban* idempotente (si ya `BANNED`, no emite).
 
----
+**Command Handlers**
+- Perfil: `EnsureCustomerProfile`, `ApplyReason`, `ClearReason`, `SuspendCustomer`, `UnsuspendCustomer`, `BanCustomer`, `UpdatePreferences`.
+- Plantillas (ítems/rutas): `Create|Update|AttachPhoto|DetachPhoto|Favorite|Delete|RegisterUse(usageCorrelationId)`; `If-Match` opcional (**412** si mismatch); dedup por `usageCorrelationId`.
 
-## 1) Convenciones transversales
+**Event Handlers (externos)**
+- `OnKycVerified|Rejected`, `OnPhoneVerified|Changed`, `OnAccountDisabled|Enabled`, `OnDisputeOpened|Resolved`, `OnFraudConfirmed`, `OnLegalAgeReached` *(auto-ensure, lock, orden causal)*.
 
-- **Ownership leak-proof:** `subjectId` del `SecurityContext`; no se aceptan `ownerId` externos.
-- **Auto-ensure:** todo flujo que usa perfil ejecuta `ensure(subjectId)` **en la misma transacción** antes de mutar.
-- **Bloqueo de perfil:** cualquier handler (command/event) que **modifique** `CustomerOperationalProfile` hace `lockForUpdate(subjectId)` **en la misma tx** para evitar *write skew*.
-- **Idempotency:**
-  - **API/commands:** `method + path + subjectId` (TTL 6–24 h).
-  - **Eventos externos:** clave `eventId` para consumo idempotente.
-- **Entrega confiable:**
-  - **Transactional Outbox:** persistir eventos en la tx y publicar **post-commit**.
-  - **Inbox:** registrar `eventId` procesados para “exactly-once” lógico.
-- **Orden causal (eventos externos):** mantener `lastExternalState.{kyc, phone, account, dispute}` por `subjectId` (con `version/occurredAt`) y **ignorar** eventos atrasados.
-- **Normalización de unidades:** convertir a **kg/cm** **antes** de validar/invocar dominio.
-- **Emisión de eventos:**
-  - `Customers.CustomerEligibilityUpdated` **solo** si cambia `status` (incluye snapshot de `reasons`).
-  - `Customers.CustomerPreferencesUpdated`, `Customers.ItemTemplateUpdated`, `Customers.RouteTemplateUpdated` **solo si hubo cambios efectivos** (comparar antes/después).
-  - No emitir `CustomerSuspended/Unsuspended`.
-  - Para *ban*: si ya está `BANNED`, **no** re-emitir `CustomerBanned` ni `CustomerEligibilityUpdated`.
-- **Consultas por defecto:** `findAllByOwner` ordena por `updatedAt DESC`.
-- **Correlation:** si falta `correlationId` entrante, se genera y se propaga.
+**Query Handlers**
+- `GetCustomerOperationalProfile`, `GetCustomerPreferences`, `List/Get ItemTemplates`, `List/Get RouteTemplates`, `GetTemplateSuggestions` *(en base a `UsageStats`)*.
+
+**Puertos**
+- Repos (3), `OutboxPublisher`, `InboxStore`, `ExternalStateStore`, `IdempotencyStore`, `UnitsNormalizer`, `LocationValidator`, `EligibilityPolicy`, `LegalAgePolicy`.
 
 ---
 
-## 2) Command Handlers (sincrónicos)
 
-> Todos validan **guards por status** y ownership; ejecutan **auto-ensure**; bloquean perfil con **lockForUpdate** si modifican el AR; publican eventos vía **Outbox**.
-
-### 2.1. Perfil operativo (readiness)
-
-- **EnsureCustomerProfileCommandHandler** → crea si no existe con `{KYC_MISSING, PHONE_NOT_VERIFIED}` → `CustomerOperationalProfileEnsured`.
-- **ApplyReasonCommandHandler** → `ensure + lockForUpdate → applyReason → reevaluate` → si cambia `status` → `CustomerEligibilityUpdated`.
-- **ClearReasonCommandHandler** → `ensure + lockForUpdate → clearReason → reevaluate` → si cambia `status` → `CustomerEligibilityUpdated`.
-- **SuspendCustomerCommandHandler** (`DISPUTE_BLOCKED | ACCOUNT_DISABLED | COMPLIANCE_HOLD`) → si cambia `status` → `CustomerEligibilityUpdated`.
-- **UnsuspendCustomerCommandHandler** (solo razones **bloqueantes**) → si cambia `status` → `CustomerEligibilityUpdated`.
-- **BanCustomerCommandHandler** (`FRAUD_BLOCKED`) → si `status != BANNED` → `CustomerBanned` + `CustomerEligibilityUpdated`.
-- **UpdatePreferencesCommandHandler** → normaliza, actualiza; **emitir solo si cambió** → `CustomerPreferencesUpdated`.
-
-**Guards por `status`:**
-- `BANNED`: solo `UpdatePreferences`. Mutaciones de plantillas **bloqueadas**.
-- `SUSPENDED`: lectura y edición de preferencias **permitidas**; mutaciones de plantillas **permitidas**.
-
-### 2.2. Plantillas de ítems
-
-- **Create/Update/Attach/Detach/Favorite/Delete/RegisterUse**
-  - Updates con `version?`: si llega, **If-Match**; si no, **last-write-wins**.
-  - `RegisterUse(usageCorrelationId)` deduplica por (`templateId`,`usageCorrelationId`).
-  - Eventos `ItemTemplate*` **solo si hubo cambios efectivos**; `registerUse` siempre emite `Used`.
-  - Rechazar `registerUse` si `DELETED`.
-
-### 2.3. Plantillas de rutas
-
-- **Create/Update/Favorite/Delete/RegisterUse**
-  - Validar `Location` (rangos; `waypoints ≤ 10`).
-  - Misma semántica de `version?`, `usageCorrelationId` y emisión **solo si cambió**.
-
----
-
-## 3) Event Handlers (asíncronos)
-
-> **Inbox** para idempotencia, **auto-ensure** si falta perfil, **lockForUpdate** cuando modifica perfil, **orden causal** con `lastExternalState`.
-
-- **OnKycVerified** → `clear(KYC_MISSING)` y `clear(KYC_REJECTED)` → reevaluate → si cambia `status` → `CustomerEligibilityUpdated`.
-- **OnKycRejected** → `apply(KYC_REJECTED)` → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnPhoneVerified** → `clear(PHONE_NOT_VERIFIED)` → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnPhoneChanged** → `apply(PHONE_NOT_VERIFIED)` → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnAccountDisabled** → `apply(ACCOUNT_DISABLED)` → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnAccountEnabled** → `clear(ACCOUNT_DISABLED)` → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnDisputeOpened** → `apply(DISPUTE_BLOCKED)` respetando **orden causal (dispute)** → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnDisputeResolved** → `clear(DISPUTE_BLOCKED)` respetando **orden causal (dispute)** → reevaluate → posible `CustomerEligibilityUpdated`.
-- **OnFraudConfirmed** → si `status != BANNED` → `banFor(FRAUD_BLOCKED)` → `CustomerBanned` + `CustomerEligibilityUpdated`.
-- **OnLegalAgeReached** → `clear(AGE_UNDER_MIN)` → reevaluate → posible `CustomerEligibilityUpdated`.
-
-> **Fuente de verdad de mayoría de edad:** evento externo `OnLegalAgeReached` (Identidad/KYC). No se usa job.
-
----
-
-## 4) Query Handlers (lecturas)
-
-- **GetCustomerOperationalProfileQueryHandler** → `status`, `reasons`, `preferences`.
-- **GetCustomerPreferencesQueryHandler** → `language`, `units`, `notificationChannels`, `uxDefaults` (formateo a unidad preferida).
-- **ListItemTemplatesQueryHandler** → `paging`, filtros; **solo `ACTIVE`** por defecto; `updatedAt DESC`.
-- **GetItemTemplateByIdQueryHandler** (`includeDeleted?`).
-- **ListRouteTemplatesQueryHandler** → mismas reglas.
-- **GetRouteTemplateByIdQueryHandler** (`includeDeleted?`).
-- **GetTemplateSuggestionsQueryHandler** → ranking simple a partir de `UsageStats`.
-
----
-
-## 5) Adaptadores / Puertos
-
-- **Repositories:** `CustomerOperationalProfileRepository` (incluye `lockForUpdate(subjectId)`), `ItemTemplateRepository`, `RouteTemplateRepository`.
-- **Mensajería:** `OutboxPublisher` (post-commit), `InboxStore` (dedupe), `CorrelationProvider`.
-- **Stores auxiliares:** `ExternalStateStore` con `lastExternalState.{kyc, phone, account, dispute}` por `subjectId`; `IdempotencyStore`.
-- **Servicios de apoyo:** `UnitsNormalizer`, `LocationValidator`, `EligibilityPolicy`, `LegalAgePolicy`.
-
----
-
-## 6) Flujos de referencia
-
-1. **Primer inicio** → `EnsureCustomerProfile` (auto-ensure + lock si aplica) → perfil `INCOMPLETE` con razones iniciales → respuesta.
-2. **Aprobación KYC** → `OnKycVerified` (Inbox + orden causal) → limpiar razones → reevaluate → `CustomerEligibilityUpdated` (Outbox).
-3. **Legal age** → `OnLegalAgeReached` → `clear(AGE_UNDER_MIN)` → reevaluate → posible `CustomerEligibilityUpdated`.
-4. **Uso de plantillas** → `List*Templates` → al confirmar solicitud, `Register*TemplateUse(usageCorrelationId=requestId)` (dedupe) → `*TemplateUsed`.
+<b/>
 
 
 #### 2.6.3.4. Infrastructure Layer
 
-# Infrastructure Layer — Customers (actualizada)
+**Infrastructure Layer — Customers**
 
-> Implementa acceso a **DB relacional**, **mensajería confiable** (Outbox/Inbox), **idempotencia**, **orden causal**, **caché** opcional y **referencias** a almacenamiento de objetos. Contiene los **Repositories** del dominio y adaptadores técnicos.
+**Persistencia (RDBMS)**
+- Tablas: `customer_profile`, `customer_profile_reason` *(único por `subject_id`)*; `item_template`, `item_template_photo` *(ON DELETE CASCADE, position≥0)*; `route_template` *(origin/destination persistidos)*, `route_waypoint` *(ON DELETE CASCADE, lat/lng NOT NULL, idx≥0)*; `template_usage_dedup` *(PK `template_type, template_id, usage_correlation_id`)*.
 
----
+**Tablas técnicas**
+- `outbox_event(event_id, aggregate_type/id, event_type, payload, occurred_at, published_at, publish_attempts?, last_error?)`
+- `inbox_event(event_id, source, handler, received_at, handled_at NULL, attempts)` — **PK** `(event_id, handler)`; insertar si no existe; procesar solo `handled_at IS NULL`; marcar `handled_at` al éxito.
+- `idempotency_key(key_hash, method, path, subject_id, body_hash, status_code, response_hash, headers_subset, created_at, ttl_expires_at)`
+- `external_state(subject_id, kyc_version/occurred_at, phone_version/occurred_at, account_version/occurred_at, dispute_version/occurred_at)`
 
-## 1) Persistencia (RDBMS)
+**Repos/Adapters**
+- `SqlCustomerOperationalProfileRepository` *(incluye `lockForUpdate`)*, `SqlItemTemplateRepository`, `SqlRouteTemplateRepository` *(mapea origin/destination + waypoints)*, `TemplateUsageDedupStore`, `OutboxPublisher`, `InboxAwareEventConsumer`, `IdempotencyStore`, `ExternalStateStore`, `RedisCacheAdapter` *(opcional)*, `ObjectStorageClient` *(solo `PhotoRef`, no binarios)*.
 
-**Modelo relacional** con `snake_case`, `created_at/updated_at` y `status` para soft-delete cuando aplique.
+**Transaccionalidad y concurrencia**
+- 1 tx por comando/evento; `lockForUpdate(subject_id)` al modificar perfil; *optimistic locking* en plantillas (`version`); aislamiento ≥ `READ COMMITTED`.
 
-### 1.1. Tablas de dominio
-
-**`customer_profile`** (1:1 por `subject_id`)
-- `subject_id` (PK, UNIQUE)
-- `status` (`INCOMPLETE|ELIGIBLE|SUSPENDED|BANNED`)
-- `language`, `units_mass` (`kg|lb`), `units_length` (`cm|in`)
-- `notification_channels` (JSON), `ux_defaults` (JSON)
-- `last_status_change_at`, `created_at`, `updated_at`
-
-**`customer_profile_reason`** (N:1 con `customer_profile`)
-- `subject_id` (FK)
-- `reason_code` (PK compuesta con `subject_id`)
-- `added_at`  
-  **UNIQUE**(`subject_id`,`reason_code`)
-
-**`item_template`**
-- `template_id` (PK) · `owner_id`
-- `name`, `category`
-- `length_cm`, `width_cm`, `height_cm`, `weight_kg` *(NULL si no definidos; > 0 si no NULL)*
-- `notes` (NULL), `favorite` (BOOL)
-- `status` (`ACTIVE|DELETED`)
-- `version` (INT, para optimistic locking opcional)
-- `created_at`, `updated_at`  
-  **Índice por defecto:** (`owner_id`,`updated_at DESC`). Consultas devuelven **solo `ACTIVE`**.
-
-**`item_template_photo`**
-- `template_id` (FK → `item_template`, **ON DELETE CASCADE**)
-- `position` (INT, **≥ 0**)
-- `bucket`, `object_key`, `checksum`, `version_tag`  
-  **UNIQUE**(`template_id`,`position`) — `PhotoRef` es **inmutable**.
-
-**`route_template`** *(con origin/destination persistidos, consistente con dominio)*
-- `template_id` (PK) · `owner_id`
-- `label`
-- `origin_lat` (DECIMAL(9,6), **NOT NULL**, CHECK −90..90)
-- `origin_lng` (DECIMAL(9,6), **NOT NULL**, CHECK −180..180)
-- `origin_address` (TEXT, NULL)
-- `destination_lat` (DECIMAL(9,6), **NOT NULL**, CHECK −90..90)
-- `destination_lng` (DECIMAL(9,6), **NOT NULL**, CHECK −180..180)
-- `destination_address` (TEXT, NULL)
-- `favorite` (BOOL)
-- `status` (`ACTIVE|DELETED`)
-- `version` (INT opcional)
-- `created_at`, `updated_at`  
-  **Índice:** (`owner_id`,`updated_at DESC`). Por defecto **solo `ACTIVE`**.
-
-**`route_waypoint`**
-- `template_id` (FK → `route_template`, **ON DELETE CASCADE**)
-- `idx` (INT, PK compuesta con `template_id`, **≥ 0**)
-- `lat` (DECIMAL(9,6), **NOT NULL**, CHECK −90..90)
-- `lng` (DECIMAL(9,6), **NOT NULL**, CHECK −180..180)
-- `address` (TEXT, NULL)  
-  *(Máx. waypoints p. ej., 10, validado en Application.)*
-
-**`template_usage_dedup`** *(deduplicación sin colisiones entre tipos de plantilla)*
-- `template_type` (ENUM: `ITEM` | `ROUTE`)
-- `template_id`
-- `usage_correlation_id`
-- `used_at`  
-  **PK**(`template_type`,`template_id`,`usage_correlation_id`)
-
-### 1.2. Tablas técnicas
-
-**`outbox_event`**
-- `event_id` (PK UUID) · `aggregate_type` · `aggregate_id`
-- `event_type` (ej.: `Customers.CustomerEligibilityUpdated`)
-- `payload` (JSON) · `occurred_at` · `published_at` (NULL)
-- *(opcional)* `publish_attempts` (INT) · `last_error` (TEXT)
-
-**`inbox_event`** *(patrón a prueba de fallos, sin pérdidas silenciosas)*
-- `event_id`
-- `source`
-- `handler` *(identifica al consumidor/handler lógico)*
-- `received_at`
-- `handled_at` (NULL al inicio)
-- `attempts` (INT, DEFAULT 0)  
-  **PK**(`event_id`,`handler`).  
-  **Flujo por intento:**
-  1. `INSERT … ON CONFLICT DO NOTHING`
-  2. Procesar **solo si** `handled_at IS NULL`
-  3. Éxito → `UPDATE … SET handled_at = now()`
-  4. Falla → rollback (queda `handled_at = NULL`) → reintentos
-
-**`idempotency_key`**
-- `key_hash` (PK) · `method` · `path` · `subject_id` · `body_hash`
-- `status_code` · `response_hash` · `headers_subset` (JSON)
-- `created_at` · `ttl_expires_at`
-
-**`external_state`**
-- `subject_id` (PK)
-- `kyc_version` (INT), `kyc_occurred_at` (TIMESTAMP)
-- `phone_version` (INT), `phone_occurred_at` (TIMESTAMP)
-- `account_version` (INT), `account_occurred_at` (TIMESTAMP)
-- `dispute_version` (INT), `dispute_occurred_at` (TIMESTAMP)
-
----
-
-## 2) Repositories (implementaciones previstas)
-
-- **SqlCustomerOperationalProfileRepository**  
-  `findBySubjectId`, `lockForUpdate(subjectId)`, `save`  
-  (opera sobre `customer_profile` + `customer_profile_reason`).
-
-- **SqlItemTemplateRepository**  
-  `findById(owner,id, includeDeleted=false)`, `findAllByOwner(owner,paging, includeDeleted=false)`, `save`  
-  (opera sobre `item_template` + `item_template_photo`).
-
-- **SqlRouteTemplateRepository**  
-  Igual patrón; **mapea origin/destination** y gestiona `route_waypoint` con reemplazo seguro en la misma transacción.
-
-- **TemplateUsageDedupStore**  
-  Dedup por (`template_type`,`template_id`,`usage_correlation_id`) en `template_usage_dedup`.
-
-**Reglas en los mappers**
-- Persistencia en **kg/cm** (valores canónicos).
-- Consultas por defecto excluyen `DELETED` (flag `includeDeleted` cuando aplique).
-
----
-
-## 3) Mensajería
-
-- **OutboxPublisher**  
-  Lee `outbox_event` no publicados (ordenados por `occurred_at`), publica al broker y marca `published_at`. Puede usar *lock* cooperativo (*SKIP LOCKED*) si hay varios workers.
-
-- **InboxAwareEventConsumer**  
-  Usa el patrón de `inbox_event` (PK por `event_id` y `handler`) para **idempotencia por handler** y reintentos seguros sin pérdidas.
-
-- **Formato de eventos**  
-  JSON con `event_type`, `correlation_id`, `occurred_at`, `subject_id`, `reasons?` cuando aplique.
-
----
-
-## 4) Almacenamiento de objetos
-
-- **ObjectStorageClient** (S3/MinIO/GCS): este BC **no** guarda binarios; solo **referencias** (`PhotoRef`: bucket/key/checksum/version).
-- Verificación de existencia: puede ser síncrona (HEAD) o diferida.
-
----
-
-## 5) Transaccionalidad y concurrencia
-
-- **Una transacción por comando/evento** (unidad de trabajo por Aggregate).
-- **`lockForUpdate(subject_id)`** al modificar **CustomerOperationalProfile** (commands y event handlers).
-- **Optimistic locking** en plantillas con `version` (If-Match).
-- Nivel de aislamiento mínimo: **READ COMMITTED**; elevar si hay contención.
-
----
-
-## 6) Observabilidad
-
-- Logs estructurados (incluyen `correlation_id`, `event_id`, `subject_id`).
-- Métricas: latencia de repos, tamaño outbox/inbox, reintentos, *cache hit ratio*.
-- Trazabilidad de publicación/consumo (contadores de `publish_attempts` y `attempts`).
-
----
-
-## 7) Mapeo Dominio ↔ Infra (resumen)
-
-| Dominio                     | Adaptador/Repo Infra                    | Almacenamiento                                                   |
-|----------------------------|-----------------------------------------|------------------------------------------------------------------|
-| CustomerOperationalProfile | SqlCustomerOperationalProfileRepository | `customer_profile`, `customer_profile_reason`                    |
-| ItemTemplate               | SqlItemTemplateRepository               | `item_template`, `item_template_photo`                           |
-| RouteTemplate (origin/dest)| SqlRouteTemplateRepository              | `route_template`, `route_waypoint`                               |
-| Register\*Use (dedup)      | TemplateUsageDedupStore                 | `template_usage_dedup (template_type, template_id, correlation)` |
-| Eventos (salida)           | OutboxPublisher                         | `outbox_event` + broker                                          |
-| Eventos (entrada)          | InboxAwareEventConsumer                 | `inbox_event`, `external_state`                                  |
-| Idempotencia API           | IdempotencyStore                        | `idempotency_key`                                                |
-| Caché de plantillas        | RedisCacheAdapter                       | Redis                                                            |
-| PhotoRef                   | ObjectStorageClient                     | S3/MinIO/GCS (externo al BC)                                     |
-
----
+**Observabilidad**
+- Logs estructurados (`correlationId`, `eventId`, `subjectId`), métricas (repos, outbox/inbox, reintentos, cache hit), trazas de publicación/consumo.
 
 <b/>
 
