@@ -1648,9 +1648,50 @@ No bloquea flujos si el directorio está caído.
 <br/>
 
 #### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *IAM Service — Component View*
+<img width="3870" height="8520" alt="image" src="https://github.com/user-attachments/assets/355ebc6c-d074-42ca-a068-8afcc09968e8" />
+
+<br/>
+
+- *PostgreSQL — Component View*
+<img width="890" height="3211" alt="image" src="https://github.com/user-attachments/assets/75ac337a-1f86-42f3-a525-905f6bc0da81" />
+
+<br/>
+
+- *Redis — Component View*
+
+<img width="890" height="2611" alt="image" src="https://github.com/user-attachments/assets/4307a593-094c-439f-885d-55be2f7af2cd" />
+
+<br/>
+
+- *Firebase Authentication — Component View*
+
+<img width="890" height="811" alt="image" src="https://github.com/user-attachments/assets/f99f4801-1755-455a-abaa-6e7a6c938f4f" />
+
+<br/>
+
+- *Firebase Admin Directory — Component View*
+<img width="890" height="811" alt="image" src="https://github.com/user-attachments/assets/703176d0-4a37-412d-a005-ba67f6bd9f6b" />
+
+<br/>
+
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
 ##### 2.6.1.6.2. Bounded Context Database Design Diagram
+
+<br/>
+
+### 2.6.2. Bounded Context: Authorization
+#### 2.6.2.1. Domain Layer
+#### 2.6.2.2. Interface Layer
+#### 2.6.2.3. Application Layer
+#### 2.6.2.4. Infrastructure Layer
+#### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.2.6.2. Bounded Context Database Design Diagram
+
 
 <br/>
 
