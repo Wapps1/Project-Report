@@ -1112,6 +1112,173 @@ Confirmar quién es la persona que interactúa con **Red Carga** cuando la capa 
 <br/>
 
 #### 2.6.1.2. Interface Layer
+
+# IAM — Interface/Presentation Layer (IdP-only) · versión final para informe
+
+La **Interface/Presentation Layer** expone los **endpoints HTTP** del BC **IAM** y conecta con los **Command/Query Handlers** de la Application Layer. Todo request autenticado llega con `Authorization: Bearer <ID_TOKEN>` verificado en **middleware**; los handlers reciben `issuer` y `subject` desde el **SecurityContext**.  
+Se incorporan los 6 ajustes solicitados: **path sin URL del issuer**, **consistencia de códigos/cuerpos**, **auto-ensure en interceptor**, **formato de error y headers**, **validaciones de entrada**, y **chequeo de autorización para backoffice**.
+
+---
+
+## 1) Componentes de la capa
+
+### 1.1. AuthMiddleware
+- Verifica el ID token (firma, `iss`, `aud`, revocación).
+- Pone en `SecurityContext`: `issuer` y `subject` del usuario autenticado.
+- Los controllers **no** re-verifican el token.
+
+### 1.2. AutoEnsureInterceptor
+- En la **primera** request autenticada de una sesión (o cada 10 min de caché), ejecuta **EnsureAccountFromIdpCommand** de forma transparente.
+- Evita que el cliente “olvide” llamar a `/me/ensure`.
+- Si el **IdpDirectory** está caído, marca “sync pendiente” y no bloquea el request.
+
+### 1.3. SelfController (`/api/iam/v1/me/**`)
+Opera sobre la **propia** cuenta del usuario autenticado:
+- `POST /me/ensure`
+- `GET /me`
+- `PUT /me/pin`
+- `DELETE /me/pin`
+- `POST /me/pin/verify`
+
+### 1.4. AdminAccountsController (`/api/iam/v1/accounts/**`)
+Operaciones **administrativas/backoffice** sobre **cualquier** cuenta.  
+**Path multi-IdP sin URLs**: se usa `issuerId` corto (p. ej., `firebase`, `keycloak`) en la ruta y se mapea a la URL real del issuer en configuración.
+- `GET /accounts/{issuerId}/{subject}`
+- `POST /accounts/{issuerId}/{subject}/sync-contacts`
+- `POST /accounts/{issuerId}/{subject}/activate`
+- `POST /accounts/{issuerId}/{subject}/suspend`
+- `POST /accounts/{issuerId}/{subject}/reactivate`
+- `POST /accounts/{issuerId}/{subject}/delete`
+
+> **Autorización obligatoria** en estos endpoints: antes de ejecutar, se invoca `Authorization.RbacService.check(...)` con acciones sugeridas:  
+> `iam.account.read`, `iam.account.sync`, `iam.account.activate`, `iam.account.suspend`, `iam.account.reactivate`, `iam.account.delete`.
+
+---
+
+## 2) Contratos de los endpoints
+
+### 2.1. SelfController
+
+**POST `/me/ensure`**  
+Garantiza que exista `Account` para `(issuer, subject)` y sincroniza verificados con el directorio del IdP.
+- Handler: `EnsureAccountFromIdpCommand`.
+- **200 OK** (si IdpDirectory cayó: se marca “sync pendiente” y también 200).
+- **410 Gone** si la cuenta está `DELETED`.
+- **Headers**: `Cache-Control: no-store`.
+
+**GET `/me`**  
+Devuelve la identidad local (`Account`) y banderas de verificación.
+- Handler: `GetOwnAccountQuery`.
+- **200 OK** · **410 Gone** si `DELETED`.
+- **Headers**: `Cache-Control: no-store`.
+
+**PUT `/me/pin`**  
+Crea o actualiza el PIN de refuerzo.
+- Handler: `SetPinCommand`.
+- **200 OK** con metadatos (incluye `updatedAt`).
+- **422 Unprocessable Entity** si no cumple política de PIN.
+- **410 Gone** si `DELETED`.
+- Idempotente (mismo PIN no cambia estado).
+
+**DELETE `/me/pin`**  
+Elimina el PIN.
+- Handler: `ClearPinCommand`.
+- **204 No Content** · **410 Gone** si `DELETED`.
+- Idempotente.
+
+**POST `/me/pin/verify`**  
+Verifica el PIN **justo antes** de una operación sensible.
+- Handler: `VerifyPinCommand`.
+- **204 No Content** (éxito).
+- **403 Forbidden** si `PinMismatch`.
+- **429 Too Many Requests** si rate-limit (cooldown o máximo de intentos).
+- **423 Locked** si `SUSPENDED` · **410 Gone** si `DELETED`.
+- **Headers (429)**: `Retry-After: <segundos>`.
+
+---
+
+### 2.2. AdminAccountsController (con `issuerId`)
+`issuerId` se valida contra configuración y se resuelve al `issuer` real.  
+`subject` se normaliza con `trim` en Interface.
+
+**GET `/accounts/{issuerId}/{subject}`**  
+Consulta una cuenta por identidad externa.
+- Handler: `GetAccountByExternalIdentityQuery`.
+- **200 OK** · **404 Not Found** si no existe · **410 Gone** si `DELETED`.
+
+**POST `/accounts/{issuerId}/{subject}/sync-contacts`**  
+Reconcilia `email.verified` y `phone.verified` con el directorio del IdP.
+- Handler: `SyncVerifiedContactsCommand`.
+- **204 No Content** · **404 Not Found** si no existe · **410 Gone** si `DELETED`.
+
+**POST `/accounts/{issuerId}/{subject}/activate`**  
+Activa la cuenta.
+- Handler: `ActivateAccountCommand`.
+- **204 No Content** · **404 Not Found** · **409 Conflict** si transición inválida.
+
+**POST `/accounts/{issuerId}/{subject}/suspend`**  
+Suspende la cuenta.
+- Handler: `SuspendAccountCommand`.
+- **204 No Content** · **404 Not Found** · **409 Conflict** según corresponda.
+
+**POST `/accounts/{issuerId}/{subject}/reactivate`**  
+Reactiva desde `SUSPENDED` a `ACTIVE`.
+- Handler: `ReactivateAccountCommand`.
+- **204 No Content** · **404 Not Found** · **409 Conflict** según corresponda.
+
+**POST `/accounts/{issuerId}/{subject}/delete`**  
+Elimina de forma **tombstone** (irreversible).
+- Handler: `DeleteAccountCommand`.
+- **204 No Content** · **404 Not Found** · **409 Conflict** si ya estaba `DELETED`.
+
+---
+
+## 3) Formato de error y headers
+- **Envelope de error (uniforme):**  
+  `{ "error": "<CodigoDominio>", "message": "<texto legible>" }`
+- **Códigos estándar (alineados con Application):**  
+  `401` (token inválido o revocado, capturado por middleware) · `403` (PinMismatch) · `404` (no existe) · `409` (conflicto/versión/transición) · `410` (AccountDeleted) · `423` (AccountSuspended en operaciones sensibles) · `429` (rate-limit PIN).
+- **Headers:**  
+  `Retry-After` en `429`.  
+  `Cache-Control: no-store` en respuestas con identidad (`/me`, `/me/ensure`).
+
+---
+
+## 4) Validaciones de entrada en Interface
+- **`issuerId`**: debe existir en el mapa de configuración (`issuerId → issuerURL`). Si no existe → **400 Bad Request**.
+- **`subject`**: `trim` estricto; si queda vacío → **400 Bad Request**.
+- **No** se aceptan valores de `email`/`phone` por estos endpoints (se obtienen del IdP Directory). Si en el futuro algún endpoint recibe valores, validar **E.164** para `phone` y devolver **422** si no cumple.
+
+---
+
+## 5) Consumers (mensajería de entrada)
+- En modo **IdP-only**, **IAM no tiene consumers de entrada**.
+- La publicación de **Domain Events** hacia otros BCs se realiza por **Outbox + Redis Streams** (capa de Infraestructura). Los otros BCs consumen con **consumer groups** y deduplican por `event_id`.
+
+---
+
+## 6) Mapeo endpoint → caso de uso (referencia)
+- `POST /me/ensure` → EnsureAccountFromIdpCommand
+- `GET /me` → GetOwnAccountQuery
+- `PUT /me/pin` → SetPinCommand
+- `DELETE /me/pin` → ClearPinCommand
+- `POST /me/pin/verify` → VerifyPinCommand
+- `GET /accounts/{issuerId}/{subject}` → GetAccountByExternalIdentityQuery
+- `POST /accounts/{issuerId}/{subject}/sync-contacts` → SyncVerifiedContactsCommand
+- `POST /accounts/{issuerId}/{subject}/activate` → ActivateAccountCommand
+- `POST /accounts/{issuerId}/{subject}/suspend` → SuspendAccountCommand
+- `POST /accounts/{issuerId}/{subject}/reactivate` → ReactivateAccountCommand
+- `POST /accounts/{issuerId}/{subject}/delete` → DeleteAccountCommand
+
+---
+
+## 7) Comportamientos transversales de la capa
+- **Idempotencia**: `/me/ensure`, `/me/pin` (mismo PIN), `/me/pin` DELETE y `/accounts/*/sync-contacts` no generan efectos si el estado ya es el esperado.
+- **Observabilidad**: trazas y logs sin PII; correlación por `X-Request-Id`.
+- **Autorización en backoffice**: `RbacService.check(...)` **siempre** antes de ejecutar `/accounts/**`.
+
+<br/>
+
 #### 2.6.1.3. Application Layer
 La capa de aplicación **no maneja** contraseñas, OTP ni sesiones propias.  
 Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middleware*, asegura la existencia de `Account`, sincroniza banderas verificadas desde el directorio administrativo del IdP y gestiona **PIN** y **estado** de la cuenta.
@@ -1285,6 +1452,201 @@ Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middl
 <br/>
 
 #### 2.6.1.4. Infrastructure Layer
+
+Implementa los **ports** definidos por Domain/Application y accede a servicios externos.  
+Alineado al modelo **IdP-only con Firebase**: el dominio no maneja contraseñas/OTP/sesiones propias; la infraestructura:
+- Verifica tokens (middleware).
+- Persiste `Account`.
+- Ejecuta rate-limit de **PIN**.
+- Registra auditoría.
+- Publica **Domain Events** con **Transactional Outbox**.
+
+**Toques finales (hardening):**
+- Outbox con “claim” seguro.
+- Retención y consumer groups en **Redis Streams**.
+- Defensas adicionales en **DB** (CHECK/trigger/índices).
+- Tipificación de `result` en auditoría.
+
+---
+
+**1) Repositorios y adaptadores (implementaciones de ports)**
+
+**1.1 `AccountRepositoryPostgres`**  
+*Persistencia del Aggregate Root `Account` en PostgreSQL.*
+
+- **Tabla:** `iam_account`
+
+  | Columna          | Tipo         | Notas                                                  |
+  |------------------|--------------|--------------------------------------------------------|
+  | `id`             | `UUID` (PK)  | Identificador del aggregate                           |
+  | `issuer`         | `TEXT`       | Normalizado a minúsculas y `btrim`                     |
+  | `subject`        | `TEXT`       | `btrim` (sin espacios extremos)                        |
+  | `email_value`    | `TEXT`       | Minúsculas + `btrim` (nullable)                        |
+  | `email_verified` | `BOOLEAN`    | `NOT NULL DEFAULT false`                               |
+  | `phone_value`    | `TEXT`       | Formato **E.164** (nullable)                           |
+  | `phone_verified` | `BOOLEAN`    | `NOT NULL DEFAULT false`                               |
+  | `pin_hash`       | `TEXT`       | Formato PHC (`$argon2id$…`)                            |
+  | `pin_updated_at` | `TIMESTAMPTZ`| Última actualización de PIN                            |
+  | `status`         | `ENUM`       | `ACTIVE | SUSPENDED | DELETED`                         |
+  | `version`        | `INTEGER`    | Control optimista                                      |
+  | `created_at`     | `TIMESTAMPTZ`|                                                        |
+  | `updated_at`     | `TIMESTAMPTZ`| Actualizada por trigger                                |
+
+- **Índices y constraints**
+  - **Único:** (`issuer`, `subject`) → invariante de unicidad.
+  - **Índice auxiliar:** en `subject` (si hay consultas frecuentes).
+  - **CHECKs de normalización:**
+    - `issuer = lower(btrim(issuer))`
+    - `subject = btrim(subject)`
+    - `email_value IS NULL OR email_value = lower(btrim(email_value))`
+    - `phone_value IS NULL OR phone_value ~ '^\+?[1-9]\d{1,14}$'` *(E.164)*
+  - **Trigger**: auto-actualización de `updated_at` en `UPDATE`.
+  - **Regla tombstone (irreversible):** `BEFORE UPDATE` rechaza cambios de `status` si `OLD.status = 'DELETED'`.
+
+- **Control optimista**
+  - `save(account)` incrementa `version`.
+  - `UPDATE … WHERE id = ? AND version = ?` → si no afecta filas → `ConcurrencyConflict`.
+
+---
+
+**1.2 `IdpTokenVerifierFirebase` (middleware)**  
+*Verifica ID token y fija identidad en el `SecurityContext`.*
+
+- **Validaciones estrictas**
+  - Firma contra JWKS del proyecto.
+  - `iss == https://securetoken.google.com/<projectId>`
+  - `aud == <projectId>`
+  - `checkRevoked = true` en **todas** las verificaciones.
+- **Salida al contexto**
+  - `issuer`, `subject` (y `authTime` opcional para “fresh auth”).
+  - Los handlers **no** re-verifican el token; leen `(issuer, subject)` del contexto.
+
+---
+
+**1.3 `IdpDirectoryFirebase`**  
+*Consulta el directorio administrativo del IdP (fuente de verdad de contactos/verificación).*
+
+- **Contrato devuelto**
+  - `email`, `emailVerified`
+  - `phoneNumber`, `phoneVerified`
+- **Uso**
+  - **Creación** de `Account`: tomar `email/phoneNumber`, **normalizar** y persistir.
+  - **Sincronización**: aplicar **solo** banderas `emailVerified/phoneVerified`.
+- **Fallo del directorio**
+  - Marcar **“sync pendiente”** (ver §3.3); **no** bloquear flujo.
+  - Auditar indisponibilidad de directorio.
+
+---
+
+**1.4 `PinHasherArgon2id` / `PinVerifierConstantTime`**  
+- **Hash** en formato PHC (`$argon2id$…`) con parámetros endurecidos (memoria/iteraciones/salt por registro).
+- **Verificación** en tiempo constante (mitiga *timing leaks*).
+- **Rehash transparente:** al cambiar parámetros, el siguiente `setPin` reescribe `pin_hash`.
+
+---
+
+**1.5 `RateLimiterStoreRedis`**  
+*Almacén persistente para intentos y cooldown de `VerifyPin`.*
+
+- **Tecnología:** Redis gestionado, autenticado y con TLS.
+- **Claves por `accountId`:**
+  - Intentos: `iam:pin:attempts:{accountId}` (contador con TTL de ventana).
+  - Cooldown: `iam:pin:cooldown:{accountId}` (TTL de enfriamiento).
+- **Semántica determinista:**
+  - Si existe **cooldown** → **429**.
+  - `INCR attempts`; si supera umbral → set cooldown → **429**.
+  - En otro caso, permitir verificación.
+- **Códigos:** **429** para rate-limit; **403** solo para PIN incorrecto.
+
+---
+
+**1.6 `AuditLoggerPostgres`**  
+*Registro append-only de eventos de seguridad.*
+
+- **Tabla:** `security_audit_log`
+  - `issuer`, `subject`, `account_id`, `event_name`, `result`, `reason`, `occurred_at`.
+- **Tipificación de `result`:** `ENUM` o `CHECK` con `OK | DENY | ERROR`.
+- **PII:** nunca almacenar tokens, PIN ni contactos (email/phone).
+
+---
+
+**1.7 `DomainEventsOutboxPostgres` + `OutboxDispatcherRedisStreams`**  
+*Transactional Outbox + Redis Streams, con claim seguro y deduplicación.*
+
+- **Tabla:** `outbox_event`
+  - `event_id (UUID)`, `aggregate_type`, `aggregate_id`, `event_type`, `payload` *(sin datos sensibles)*, `occurred_at`, `locked_at`, `published_at`.
+- **Recolección segura (claiming)**
+  - En una misma transacción:
+    - Seleccionar **no publicados** y **no bloqueados** (o lock vencido) `ORDER BY occurred_at FOR UPDATE SKIP LOCKED`.
+    - Marcar `locked_at = now()` para reclamarlos.
+    - Tras publicar, `published_at = now()`.
+- **Publicación en Streams**
+  - Stream: `iam.domain-events` con **retención** (p. ej., `MAXLEN ~ 1e6`).
+  - **Consumer groups** por servicio suscriptor.
+  - Cada mensaje incluye `event_id`; consumidores **deduplican** por `event_id` y confirman con `XACK`.
+
+---
+
+**2) Seguridad operativa y secretos**
+- TLS extremo a extremo (Postgres, Redis, Firebase).
+- Secretos en gestor seguro (service account IdP, credenciales DB/Redis).
+- Principio de **menor privilegio** para cuentas de servicio.
+- **Rotación** periódica de secretos y claves.
+
+---
+
+**3) Procesos de fondo y colas técnicas**
+
+**3.1 `OutboxDispatcher`**  
+Lee `outbox_event` con claim seguro (`locked_at`), publica en `iam.domain-events` y marca `published_at`.  
+Reintentos **idempotentes** (consumidores deduplican por `event_id`).
+
+**3.2 Consumers de dominio (otros BCs)**  
+Se suscriben con **consumer groups**, procesan, deduplican por `event_id` y hacen `XACK`.  
+La **retención** del stream permite recuperación controlada.
+
+**3.3 `ContactsReconciler`**  
+Fuente “sync pendiente” en `Redis Set`: `iam:contacts:pending`.  
+Reintenta sincronización con el IdP; al completar, remueve la cuenta del set.  
+No bloquea flujos si el directorio está caído.
+
+---
+
+**4) Observabilidad, backups y endurecimiento**
+- **Métricas (Prometheus):**
+  - `iam_account_ensured_total{result}`
+  - `iam_contacts_sync_total{changed}`
+  - `iam_pin_verify_total{status="ok|mismatch|ratelimit"}`
+  - `iam_outbox_pending`
+  - `iam_directory_unavailable_total`
+- **Trazas (OpenTelemetry):** verificación de token, repos, IdP Directory, Redis (rate-limit/streams), outbox dispatcher.
+- **Logs estructurados:** JSON sin PII.
+- **Backups:** snapshots + **PITR** en Postgres; snapshots gestionados en Redis; restauración ensayada.
+
+---
+
+**5) Manejo de errores (alineado con Application)**
+- Token inválido/revocado → **401** (middleware).
+- `AccountDeleted` al asegurar → **410** (política única).
+- `AccountSuspended` en negocio/`VerifyPin` → **423**.
+- `PinMismatch` → **403**.
+- Rate-limit de PIN → **429** (cooldown/umbral).
+- Concurrencia (optimista) → **409**.
+- IdP Directory caído en *ensure* → **sin error**; marcar sync pendiente y auditar `DirectoryUnavailable`.
+
+---
+
+**6) Pruebas de infraestructura (contratos mínimos)**
+- `AccountRepositoryPostgres`: control optimista, unicidad `(issuer,subject)`, CHECKs/normalización y **tombstone**.
+- `IdpTokenVerifierFirebase`: `iss/aud` exactos, revocación activa, contexto poblado.
+- `IdpDirectoryFirebase`: entrega valores y banderas; caída → “sync pendiente” sin bloquear.
+- `RateLimiterStoreRedis`: intentos/TTL/cooldown deterministas y **persistentes**.
+- **Outbox**: claim con `locked_at`, publicación, marca `published_at`, retención de stream, consumer groups, deduplicación por `event_id`.
+- `AuditLoggerPostgres`: inserción, `result` tipificado, consultas por `account_id/fecha`.
+
+
+<br/>
+
 #### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
