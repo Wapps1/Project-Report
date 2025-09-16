@@ -1021,146 +1021,269 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 
 - *Autenticación, MFA, emisión/rotación de tokens y control de sesiones concurrentes.*
 
+**Propósito del BC**  
+Confirmar quién es la persona que interactúa con **Red Carga** cuando la capa de aplicación ya verificó un token del **IdP**, y mantener una cuenta local con:
+- Enlace inequívoco a la identidad externa (`issuer/subject`).
+- Email y teléfono normalizados con sus banderas de verificación.
+- PIN como refuerzo local para operaciones sensibles.
+- Estado de cuenta (incluye suspensión de negocio).
+
+<br/>
+
 #### 2.6.1.1. Domain Layer
 
-**Aggregates (Aggregate Roots)**
+**Domain Layer — Aggregate Root**
 
 ---
 
 **Account (Aggregate Root)**  
-*Purpose:* Identidad de una persona en la aplicación (registro, precondiciones para autenticación, preparación para multi-factor, bloqueo por intentos).
+*Propósito:* Representar la identidad local de una persona en **Red Carga**, enlazada 1:1 con su identidad externa emitida por el **IdP**.
 
-**Entities / Value Objects inside**
-- **Email** *(Value Object)*: dirección normalizada; `verified: boolean`.
-- **Phone** *(Value Object)*: número normalizado; `verified: boolean`.
-- **Credential** *(Value Object)*: `passwordHash`, `updatedAt`.
-- **AccessLock** *(Value Object)*: `failedCount`, `lastFailedAt`, `lockedUntil` (política de lockout).
-- **Pin** *(Value Object)*: `pinHash` (usado como *step-up* para operaciones sensibles).
-- **SystemRoles** *(Value Object Set)*: p. ej., `CLIENT`, `PROVIDER`.
-- **MfaFactor** *(Entity)*: factores enrolados y metadatos (p. ej., `SMS_OTP`, `TOTP`, `WebAuthn`).
-
-**Invariants**
-- `Phone.verified = true` requerido para completar autenticación cuando la política exige multi-factor.
-- El bloqueo se aplica después de *N* intentos fallidos según la política de **AccessLock**.
-
-**Behaviors (examples)**
-- `register(email, phone, rawPassword)` → emite `AccountRegistered`.
-- `markPhoneVerified()` → emite `PhoneVerified`.
-- `changePassword(newRawPassword)` → emite `PasswordChanged` y reinicia **AccessLock**.
-- `setPin(rawPin)` / `verifyPin(rawPin, CredentialVerifier)`.
-- `enrollMfa(factorType)` / `disableMfa(factorType)` → emite `MfaFactorEnrolled` / `MfaFactorDisabled`.
-- `recordFailedLoginAttempt(now)` → actualiza **AccessLock** (puede emitir `AccountLocked`).
-
-**Domain Events**  
-`AccountRegistered`, `PhoneVerified`, `PasswordChanged`, `PinSet`, `AccountLocked`, `MfaFactorEnrolled`, `MfaFactorDisabled`
-
----
-
-**OtpChallenge (Aggregate Root, short-lived)**  
-*Purpose:* Gestionar el ciclo de vida de un One-Time Password (OTP) para un propósito como `PHONE_VERIFICATION`, `LOGIN_MFA` o `PIN_RESET`.
-
-**State (with Value Objects)**
-- `accountId`
-- `purpose: OtpPurpose`
-- `codeHash` (derivado de **OtpCode** VO; el código en claro nunca se almacena)
-- `expiresAt: ExpirationTime`
-- `attempts: AttemptsCounter`
-- `status (enum): ACTIVE | VERIFIED | EXPIRED`
+**Componentes internos (Entities / Value Objects)**
+- **ExternalIdentity** *(Value Object)*
+  - `issuer`: identificador del emisor externo.
+  - `subject`: identificador único del sujeto en ese emisor.
+  - La pareja `(issuer, subject)` identifica globalmente a la persona.
+- **Email** *(Value Object)*
+  - `value`: dirección normalizada (minúsculas + *trim*).
+  - `verified`: bandera de verificación proveniente del IdP.
+- **Phone** *(Value Object)*
+  - `value`: número normalizado al formato **E.164**.
+  - `verified`: bandera de verificación proveniente del IdP.
+- **Pin** *(Value Object)*
+  - `pinHash`: huella no reversible del PIN.
+  - `updatedAt`: marca temporal de última actualización.
+  - Se usa como refuerzo local para autorizar operaciones sensibles.
+- **AccountStatus** *(enum)*
+  - `ACTIVE | SUSPENDED | DELETED`.
 
 **Invariants**
-- A lo sumo un `ACTIVE` challenge por `(accountId, purpose)`.
-- Se hacen cumplir TTL y máximo de intentos; al llegar a 0 intentos o expirar → `EXPIRED`.
+- **Enlace externo obligatorio:** todo `Account` posee `ExternalIdentity` válido.
+- **Unicidad:** una pareja `(issuer, subject)` pertenece a un solo `Account`.
+- **Fuente verificada:** `email.verified` y `phone.verified` se actualizan únicamente por sincronización desde el directorio del **IdP** (API administrativa), **no** desde *claims* del token de petición.
+- **Refuerzo con PIN:** cualquier operación marcada como sensible requiere `Pin` establecido y verificado en el momento de ejecución.
+- **Estados coherentes:**
+  - `DELETED` implica inhabilitar el uso operativo de la cuenta.
+  - `SUSPENDED` bloquea operaciones de negocio aunque el IdP permita autenticación.
 
-**Behaviors**
-- `request(accountId, purpose, OtpGenerator, OtpDeliveryService)`  
-  Crea el challenge, hashea el **OtpCode** generado, agenda expiración y entrega el código por el canal elegido → emite `OtpRequested`.
-- `verify(inputCode, now)`  
-  Compara en tiempo constante contra `codeHash`, valida `expiresAt` e `attempts`.  
-  Válido → `VERIFIED` y emite `OtpVerified`.  
-  Inválido → decrementa intentos y emite `OtpFailed`.  
-  Expirado → emite `OtpExpired`.
-
-**Domain Services involved (stateless)**
-- **MfaPolicy** (decide si se requiere OTP según el contexto).
-- **OtpGenerator** (crea **OtpCode** con aleatoriedad y TTL).
-- **OtpDeliveryService** (envía el OTP por SMS u otro canal).
-
-**Domain Events**  
-`OtpRequested`, `OtpVerified`, `OtpFailed`, `OtpExpired`
-
----
-
-**Session (Aggregate Root)**  
-*Purpose:* Representar la presencia autenticada de un **Account** en un dispositivo específico.
-
-**State**
-- `accountId`
-- `deviceFingerprint` *(Value Object)*: identificador estable del dispositivo (preservando privacidad).
-- `ipAddress` *(Value Object, optional)*: dirección IP normalizada.
-- `createdAt`, `lastSeenAt`
-- `state: ACTIVE | REVOKED | COMPROMISED`
-- **Child Entities:** `RefreshToken` (rotating, one-time use)
-
-**Invariants and Policies**
-- Tokens de refresh rotativos y de un solo uso. Cualquier reutilización de un token ya usado/rotado → `COMPROMISED` y revoca la cadena.
-- Una sesión activa por dispositivo (un nuevo login desde el mismo dispositivo re-usa la misma sesión).
-- Máximo `K` sesiones activas por cuenta (p. ej., `K = 3`), definido por **SessionPolicy**.
-
-**Behaviors**
-- `open(accountId, deviceFingerprint, ipAddress)`  
-  Inicializa la sesión y emite el primer refresh token → `SessionCreated`.
-- `refresh(presentedToken)`  
-  Valida que `presentedToken` sea el token actual sin usar; lo marca como usado y emite el siguiente → `SessionRefreshed`, `RefreshRotated`.
-- `detectReuse(presentedToken)`  
-  Si se presenta un token previamente usado → emite `RefreshReuseDetected`, marca la sesión `COMPROMISED` y revoca la cadena (`SessionMarkedCompromised`).
-- `revoke()` → emite `SessionRevoked`.
-- `touch(now)` actualiza `lastSeenAt`.
+**Comportamientos (métodos de dominio)**
+- `linkToIdp(externalIdentity)` → emite `AccountLinkedToIdp`.
+- `syncVerifiedContacts(emailVerified, phoneVerified)`  
+  Aplica cambios idempotentes a banderas verificadas según el directorio del IdP → emite `ContactsVerifiedSynced` si hay cambios.
+- `setPin(rawPin, PinHasher)` → calcula `pinHash` y guarda → emite `PinSet`.
+- `verifyPin(rawPin, PinVerifier)` → comprueba contra `pinHash` (comparación en tiempo constante).
+- `clearPin()` → elimina el PIN → emite `PinCleared`.
+- `activate()` → cambia estado a `ACTIVE` → emite `AccountActivated`.
+- `suspend()` → cambia estado a `SUSPENDED` → emite `AccountSuspended`.
+- `reactivate()` → de `SUSPENDED` a `ACTIVE` → emite `AccountReactivated`.
+- `delete()` → cambia estado a `DELETED` → emite `AccountDeleted`.
 
 **Domain Events**  
-`SessionCreated`, `SessionRefreshed`, `RefreshRotated`, `RefreshReuseDetected`, `SessionMarkedCompromised`, `SessionRevoked`
+`AccountLinkedToIdp`, `ContactsVerifiedSynced`, `PinSet`, `PinCleared`, `AccountActivated`, `AccountSuspended`, `AccountReactivated`, `AccountDeleted`
+
+**Repository**  
+`AccountRepository` *(único repositorio del BC; gestiona `Account` como Aggregate Root)*
 
 ---
 
-**RefreshToken (Child Entity of Session)**
-
-**State**
-- `refreshTokenId`
-- `tokenHash`
-- `issuedAt`
-- `usedAt` *(nullable hasta su uso)*
-- `replacedByTokenId` *(nullable hasta la rotación)*
-
-**Invariants**
-- Exactamente un token de la sesión es el *current, unused* token.
-- Una vez establecido `usedAt`, el token no puede volver a usarse (one-time use).
-- Cada rotación enlaza `old → new` vía `replacedByTokenId` para formar una cadena verificable.
-
-**Behaviors (within Session)**
-- `issueFirstRefreshToken()`
-- `markUsedAndIssueNext(currentToken)`
-- `markChainCompromisedOnReuse(reusedToken)`
+**Value Objects (definiciones)**
+- **ExternalIdentity:** `(issuer, subject)`; igualdad por valor; base del enlace IdP↔Account.
+- **Email:** dirección normalizada a minúsculas/*trim* + bandera `verified`.
+- **Phone:** número normalizado a **E.164** + bandera `verified`.
+- **Pin:** encapsula `pinHash` y `updatedAt`; nunca expone el PIN en claro.
+- **AccountStatus (enum):** `ACTIVE | SUSPENDED | DELETED`.
 
 ---
 
-**Domain Services (stateless, interfaces)**  
-*(Definidos como contratos; sus implementaciones pueden variar según infraestructura, pero su lógica de decisión es de dominio.)*
-- **MfaPolicy** — Decide qué factores se requieren según contexto y propósito (p. ej., *always MFA* vs. *adaptive MFA*).
-- **CredentialVerifier** — Compara contraseña o PIN en claro contra los hashes almacenados (comparación en tiempo constante).
-- **OtpGenerator** — Genera un **OtpCode** con aleatoriedad y tiempo de vida.
-- **OtpDeliveryService** — Entrega el OTP por SMS u otros canales.
-- **SessionPolicy** — Hace cumplir “one active per device” y el máximo `K` de sesiones activas.
+**Domain Services (stateless)**
+- **PinHasher:** calcula `pinHash` para `setPin(...)`.
+- **PinVerifier:** compara un PIN presentado con `pinHash` mediante comparación en tiempo constante.
 
 ---
 
-**Repositories (Aggregate Roots only)**  
-`AccountRepository`, `OtpChallengeRepository`, `SessionRepository`
-
+**Reglas de integración (límites explícitos)**
+- **Identity Provider**  
+  La verificación del token y la verificación de contacto (email/phone) ocurren **fuera** del dominio.  
+  `syncVerifiedContacts(...)` se alimenta exclusivamente de datos del directorio del IdP (API administrativa), asegurando consistencia con la fuente de verdad; **no** usa *claims* parciales del *ID token*.
+- **Authorization (otro BC)**  
+  Las decisiones de acceso (roles/permisos, alcance por *tenant*) **no** residen en IAM.
 
 
 <br/>
 
 #### 2.6.1.2. Interface Layer
 #### 2.6.1.3. Application Layer
+La capa de aplicación **no maneja** contraseñas, OTP ni sesiones propias.  
+Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middleware*, asegura la existencia de `Account`, sincroniza banderas verificadas desde el directorio administrativo del IdP y gestiona **PIN** y **estado** de la cuenta.
+
+---
+
+**1) Authentication Pipeline (middleware)**
+
+- El *middleware* verifica el **ID token** usando `IdpTokenVerifier` y coloca en el `SecurityContext`:
+  - `issuer`, `subject` (sujeto autenticado).
+  - `authTime` (opcional).
+- Los *Command Handlers* **siempre** reciben `issuer` y `subject` desde el contexto y **no** vuelven a verificar el token.
+
+**Contrato de `IdpTokenVerifier`**
+- Verifica firma y ancla al proyecto:
+  - `iss == https://securetoken.google.com/<projectId>`
+  - `aud == <projectId>`
+  - `checkRevoked = true` en **todas** las verificaciones.
+- Devuelve al menos: `{ issuer, subject }` (y opcional `authTime`).
+
+---
+
+**2) Ports (interfaces) usados por la capa**
+
+- `IdpDirectory` — Fuente de verdad para contactos y verificación.  
+  `getUser(issuer, subject) -> { email?: string, emailVerified: boolean, phoneNumber?: string, phoneVerified: boolean }`
+- `PinHasher` — `hash(rawPin) -> pinHash`
+- `PinVerifier` — `verify(rawPin, pinHash) -> boolean` (tiempo constante)
+- `RateLimiterStore` — Contadores/cooldown de intentos de PIN por `accountId` (persistente: Redis/Cache).
+- `Clock` — `now()`
+- `AuditLogger` — `log(eventName, issuer, subject, accountId, result, reason?)`
+- `AccountRepository`
+  - `findByExternalIdentity(issuer, subject)`
+  - `save(account)` — control optimista; lanza `ConcurrencyConflict` si cambia la versión.
+
+---
+
+**3) Reglas transversales**
+
+- **Valores de contacto al crear:** inicializar solo `email.value` y `phone.value` con lo devuelto por `IdpDirectory` (previamente normalizados).
+- **Banderas verificadas:** **siempre** se sincronizan desde `IdpDirectory`, **no** desde el token del request.
+- **Normalización previa:** `email` → lower+trim; `phone` → E.164 **antes** de construir los VOs.
+- **Estados:**
+  - `DELETED` → bloquea toda modificación. Irreversible (*tombstone*).
+  - `SUSPENDED` → permite lectura/sincronización; bloquea operaciones de negocio y `VerifyPin`.
+- **Fallback si falla `IdpDirectory`:** no se bloquea el flujo; se crea/usa `Account` con `(issuer, subject)` y se marca **sincronización pendiente** a nivel aplicación (cola/flag). Se ejecutará `SyncVerifiedContactsCommand` cuando el IdP esté disponible.
+- **Concurrencia alta:** para doble creación simultánea, el índice único `(issuer, subject)` garantiza idempotencia. Capturar `UniqueViolation`, releer `Account` y continuar.
+- **Auditoría (mínima):** no registrar tokens, PIN ni PII innecesaria (no email/phone). Registrar solo `issuer`, `subject`, `accountId`, `event`, `result`, `reason`.
+
+---
+
+**4) Commands & Handlers**
+
+**`EnsureAccountFromIdpCommand`**  
+*Propósito:* asegurar `Account` y alinear verificación con el directorio del IdP.  
+*Entradas:* `issuer`, `subject` (desde `SecurityContext`).  
+*Flujo:*
+1. `du = IdpDirectory.getUser(issuer, subject)`.
+2. Si falla el IdP → activar **fallback** (omitir *sync* y marcar “sync pendiente”).
+3. `acc = AccountRepository.findByExternalIdentity(issuer, subject)`.
+4. Si no existe:
+   - Crear `Account` enlazado a `ExternalIdentity(issuer, subject)`.
+   - Inicializar `email.value` y `phone.value` con `du` (normalizados), si se obtuvo `du`.
+5. Si hubo `du` → `acc.syncVerifiedContacts(du.emailVerified, du.phoneVerified)`.
+6. Validar estado:
+   - `DELETED` → rechazar (`AccountDeleted`).
+   - `SUSPENDED` → permitir retorno (no es operación de negocio).
+7. `AccountRepository.save(acc)` (control optimista).
+8. `AuditLogger.log("AccountEnsured", issuer, subject, acc.id, "OK" | "ERROR", reason?)`.
+
+**Efecto:** `Account` existe y, si hubo `du`, quedó alineado con el IdP.
+
+---
+
+**`SyncVerifiedContactsCommand`**  
+*Propósito:* reconciliar `email.verified` y `phone.verified` con el directorio del IdP.  
+*Entradas:* `issuer`, `subject`.  
+*Flujo:*
+1. `du = IdpDirectory.getUser(issuer, subject)`.
+2. Cargar `acc`; si `DELETED` → `AccountDeleted`.
+3. `acc.syncVerifiedContacts(du.emailVerified, du.phoneVerified)`.
+4. Guardar (control optimista); auditar `ContactsVerifiedSynced`.
+
+---
+
+**`SetPinCommand`**  
+*Propósito:* establecer/actualizar PIN de refuerzo.  
+*Entradas:* `issuer`, `subject`, `rawPin`.  
+*Flujo:*
+1. Cargar `acc`; si `DELETED` → error.
+2. Validar política mínima de PIN (longitud, dígitos, etc.).
+3. `acc.setPin(rawPin, PinHasher)` (el agregado calcula/guarda el hash).
+4. Guardar; auditar `PinSet`.
+
+---
+
+**`ClearPinCommand`**  
+*Propósito:* eliminar PIN.  
+*Entradas:* `issuer`, `subject`.  
+*Flujo:*
+1. Cargar `acc`; si `DELETED` → error.
+2. `acc.clearPin()`.
+3. Guardar; auditar `PinCleared`.
+
+---
+
+**`VerifyPinCommand`**  
+*Propósito:* verificar PIN inmediatamente antes de autorizar una operación sensible.  
+*Entradas:* `issuer`, `subject`, `rawPin`.  
+*Flujo:*
+1. Cargar `acc`; si `DELETED` → error; si `SUSPENDED` → `AccountSuspended`.
+2. Aplicar *rate limit* persistente en `RateLimiterStore` por `accountId` (ventana/cooldown).
+3. `ok = acc.verifyPin(rawPin, PinVerifier)`. Si `false` → `PinMismatch`.
+4. Auditar `PinVerified` (éxito/fracaso).
+
+---
+
+**`ActivateAccountCommand` / `SuspendAccountCommand` / `ReactivateAccountCommand` / `DeleteAccountCommand`**  
+*Propósito:* gestionar estado de `Account`.  
+*Entradas:* `issuer`, `subject` (o backoffice).  
+*Flujo:* cargar `acc`; invocar `activate()` / `suspend()` / `reactivate()` / `delete()`; guardar; auditar.  
+**Regla irreversible:** una vez `DELETED`, no puede volver a `ACTIVE/SUSPENDED`. Reintentos de crear el mismo `(issuer, subject)` devuelven **410** (o **409**, uno solo globalmente) y se auditan.
+
+---
+
+**`GetOwnAccountQuery` / `GetAccountByExternalIdentityQuery`**  
+*Propósito:* lectura coherente del estado de `Account`.  
+*Entradas:* por contexto (`issuer`, `subject`) o parámetros (backoffice).  
+*Flujo:* cargar `acc`; devolver vista (sin secretos). `SUSPENDED/DELETED` no bloquean la **lectura** (según política), pero no cambian el dominio.
+
+---
+
+**5) Errores y política única de códigos**
+
+- `IdTokenInvalid` → **401** (resuelto en middleware).
+- `AccountNotFound` → **404** (cuando se esperaba existente).
+- `AccountDeleted` → **410** (usar siempre este código para consistencia).
+- `AccountSuspended` → **423**.
+- `PinNotSet` → **409**.
+- `PinMismatch` → **403**.
+- `WeakPin` → **422** (o **400**, uno solo).
+- `ConcurrencyConflict` → **409**.
+- Fallback `IdpDirectory` caído en Ensure → **no error**; marcar “sync pendiente” y auditar `DirectoryUnavailable`.
+
+---
+
+**6) Concurrencia e idempotencia**
+
+- **Creación concurrente:** confiar en índice único `(issuer, subject)`; si `UniqueViolation`, releer y continuar (idempotente).
+- **`save` con versión:** ante `ConcurrencyConflict`, reintentar **una vez** según política.
+- **Idempotencia por operación:**
+  - `EnsureAccountFromIdpCommand` → si no hay cambios, no emite eventos adicionales.
+  - `SetPin` / `ClearPin` → si ya está en el estado objetivo, no hace nada.
+  - `SyncVerifiedContacts` → solo emite evento si hubo cambios.
+
+---
+
+**7) Observabilidad y seguridad**
+
+- `AuditLogger`: registrar `issuer`, `subject`, `accountId`, `event`, `result`, `reason`; **nunca** token, PIN, email o teléfono.
+- **Métricas:** contadores por evento (ensures, syncs, set/clear/verify pin, cambios de estado) y tasas de error/rate limit.
+
+---
+
+**8) Pruebas de contrato (mínimas imprescindibles)**
+
+- `EnsureAccountFromIdp`: creación vs. existente; `IdpDirectory` caído con fallback; `DELETED` → **410**.
+- `Set/Clear/Verify PIN`: política de PIN, *rate limit* persistente; `SUSPENDED` bloquea `VerifyPin`.
+- **Concurrencia:** doble creación (índice único) y `ConcurrencyConflict` en `save`.
+
+<br/>
+
 #### 2.6.1.4. Infrastructure Layer
 #### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
