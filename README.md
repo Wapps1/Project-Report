@@ -1688,7 +1688,7 @@ No bloquea flujos si el directorio está caído.
 
 <br/>
 
-### 2.6.2. Bounded Context: Authorization
+### 2.6.2. Bounded Context: Identidad & KYC
 
 - *KYC de persona: validación de documento, biometría/face-match, verificación de nombre y edad.*
 
@@ -2306,6 +2306,13 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 <br/>
 
 - *KYC Workers — Component View*
+<img width="3100" height="7320" alt="image" src="https://github.com/user-attachments/assets/4ece5c2d-b963-48db-9ded-e01d7d605861" />
+
+<br/>
+
+- *Data Stores (SQL) — Component Diagram*
+<img width="2350" height="7411" alt="image" src="https://github.com/user-attachments/assets/9fc60a03-04ac-4090-9435-1cf46af84d1b" />
+
 
 <br/>
  
@@ -2322,10 +2329,300 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 
 <br/>
 
-### 2.6.3. Bounded Context: Clients
+### 2.6.3. Bounded Context: Customers
 #### 2.6.3.1. Domain Layer
+
+**Domain Layer — Customers**
+
+> **Scope:** aptitud operativa del cliente (*readiness*), preferencias y plantillas reutilizables (ítems y rutas).  
+> **Identidad:** `subjectId = AccountId` (IAM).  
+> **Ownership leak-proof:** toda mutación exige `ownerId == subjectId` del JWT.
+
+---
+
+**1) Aggregates**
+
+**1.1. CustomerOperationalProfile (Aggregate Root)**
+
+- **Propósito:** decidir y exponer la **aptitud** del cliente y gestionar sus **preferencias**.
+- **Estado**
+  - `subjectId` (único)
+  - `status: EligibilityStatus = INCOMPLETE | ELIGIBLE | SUSPENDED | BANNED`
+  - `reasons: Set<EligibilityReason>` (vigentes)
+  - `preferences`: `language`, `units`, `notificationChannels`, `uxDefaults`
+  - `audit`: `createdAt`, `updatedAt`, `lastStatusChangeAt`
+- **Invariantes**
+  - Un perfil por `subjectId`.
+  - `status` coherente con `reasons` según política de precedencia.
+  - `BANNED` es **terminal**.
+  - Mínima PII: no duplica email/teléfono/nombre ni documento.
+- **Política de elegibilidad (precedencia)**
+  1. `FRAUD_BLOCKED` ⇒ **BANNED**
+  2. Bloqueantes: `DISPUTE_BLOCKED`, `ACCOUNT_DISABLED`, `COMPLIANCE_HOLD` ⇒ **SUSPENDED**
+  3. Prerrequisitos: `KYC_MISSING`, `KYC_REJECTED`, `PHONE_NOT_VERIFIED`, `AGE_UNDER_MIN` ⇒ **INCOMPLETE**
+  4. Sin razones ⇒ **ELIGIBLE**
+- **Ciclo de vida de razones**
+  - `AGE_UNDER_MIN` se **auto-limpia** al cumplir edad (job diario o evento).
+  - Resto: se limpia/aplica mediante eventos explícitos (sin TTL genérico en MVP).
+- **Comportamientos**
+  - `ensureCreated(subjectId)` → crea con razones iniciales `{KYC_MISSING, PHONE_NOT_VERIFIED}`
+  - `applyReason(reason)` / `clearReason(reason)` → recalcula `status`
+  - `suspendFor(reason)` / `unsuspend(reason)` *(solo limpia razones bloqueantes: `DISPUTE_BLOCKED`, `ACCOUNT_DISABLED`, `COMPLIANCE_HOLD`)*
+  - `banFor(reason = FRAUD_BLOCKED)`
+  - `updatePreferences(prefs)` *(normaliza unidades a canónico: kg/cm)*
+- **Domain Events** *(prefijo `Customers.*`, incluyen `correlationId` y **snapshot** de `reasons`)*
+  - `Customers.CustomerOperationalProfileEnsured`
+  - `Customers.CustomerEligibilityUpdated { oldStatus, newStatus, reasons }` *(solo si cambia `status`)*
+  - `Customers.CustomerPreferencesUpdated`
+  - `Customers.CustomerBanned`
+  - `Customers.CustomerSuspended` / `Customers.CustomerUnsuspended`
+
+---
+
+**1.2. ItemTemplate (Aggregate Root)**
+
+- **Propósito:** acelerar la creación de solicitudes con descripciones de **ítems** reutilizables.
+- **Estado**
+  - `templateId`, `ownerId (= subjectId)`
+  - `name`, `category`
+  - `dimensions: Dimensions`, `weight: Weight` *(internamente en cm/kg)*
+  - `photos: List<PhotoRef>` *(referencias inmutables)*
+  - `notes?`, `favorite: boolean`
+  - `usage: UsageStats { count, lastUsedAt }`
+  - `status: ACTIVE | DELETED`
+  - `version?` *(optimistic locking opcional)*
+- **Invariantes**
+  - Solo el **owner** modifica.
+  - `name` y `category` obligatorios; dimensiones/peso > 0 y unidades coherentes.
+  - **Soft-delete:** `registerUse()` **rechaza** `DELETED`.
+- **Comportamientos y eventos**
+  - CRUD, `markFavorite`, `registerUse` →
+  - `Customers.ItemTemplateCreated/Updated/Deleted/Used/Favorited/Unfavorited`
+
+---
+
+**1.3. RouteTemplate (Aggregate Root)**
+
+- **Propósito:** reutilizar **rutas**.
+- **Estado**
+  - `templateId`, `ownerId`, `label`
+  - `origin: Location`, `waypoints: List<Location> (≤ 10)`, `destination: Location`
+  - `favorite`, `usage: UsageStats`
+  - `status: ACTIVE | DELETED`
+  - `version?` *(opcional)*
+- **Validaciones de `Location` (MVP)**
+  - `lat ∈ [-90, 90]`, `lng ∈ [-180, 180]`
+  - `waypoints` dentro del límite
+  - `address?` opcional (sin normalización canónica en MVP)
+- **Comportamientos y eventos**
+  - CRUD, `markFavorite`, `registerUse` *(rechaza `DELETED`)* →
+  - `Customers.RouteTemplateCreated/Updated/Deleted/Used/Favorited/Unfavorited`
+
+---
+
+**2) Value Objects**
+
+- `SubjectId`, `TemplateId`
+- `EligibilityStatus`, `EligibilityReason`
+- `Language` (p. ej., `es-PE`)
+- `Units` (masa: `kg|lb`; longitud: `cm|in`)  
+  - **Interno canónico:** **kg/cm**. Entradas aceptan `lb/in` y se convierten a canónico; salidas formateables a la preferida.
+- `Dimensions { length, width, height, unit }` *(> 0; convierte a cm)*
+- `Weight { value, unit }` *(> 0; convierte a kg)*
+- `PhotoRef { bucket, key, checksum, version }` *(**inmutable**)*
+- `Location { lat, lng, address? }`
+- `UsageStats { count, lastUsedAt }`
+
+---
+
+**3) Domain Services / Policies**
+
+- **EligibilityPolicy:** calcula `status` desde `reasons` aplicando la precedencia fija.
+- **LegalAgePolicy:** edad mínima y zona horaria para `AGE_UNDER_MIN`.
+- **LocationValidator:** valida rangos y límite de `waypoints`.
+
+---
+
+**4) Factories**
+
+- **CustomerOperationalProfileFactory**
+  - `ensure(subjectId)` → crea perfil con razones `{KYC_MISSING, PHONE_NOT_VERIFIED}`
+- **ItemTemplateFactory / RouteTemplateFactory**
+  - Construyen ARs válidos; convierten unidades a canónico (kg/cm).
+
+---
+
+**5) Repositories (interfaces)**
+
+- `CustomerOperationalProfileRepository`
+  - `findBySubjectId(subjectId)`, `save(profile)`, `lockForUpdate(subjectId)`  
+  - Índice **único** por `subjectId`.
+- `ItemTemplateRepository`
+  - `findById(ownerId, templateId, includeDeleted=false)`
+  - `findAllByOwner(ownerId, paging, includeDeleted=false)`
+  - `save(template)`
+- `RouteTemplateRepository`
+  - `findById(ownerId, templateId, includeDeleted=false)`
+  - `findAllByOwner(ownerId, paging, includeDeleted=false)`
+  - `save(template)`
+> Por defecto, repos de plantillas retornan **solo `ACTIVE`**; `includeDeleted=true` habilita consultas administrativas.
+
+---
+
+**6) Idempotency (regla transversal)**
+
+- **Scope:** `method + path + subjectId`.
+- **TTL recomendado:** 6–24 h.
+- En upserts, el hash incluye **campos semánticos** del cuerpo (excluye metadata volátil).
+- Reintentos con la misma clave → **misma respuesta**; si el cuerpo difiere → **409**.
+
+---
+
+**7) Interacciones de dominio (entrantes/salientes)**
+
+- **Entrantes (eventos externos → comandos)**
+  - `KycVerified` → `clearReason(KYC_MISSING)` y `clearReason(KYC_REJECTED)`
+  - `KycRejected` → `applyReason(KYC_REJECTED)`
+  - `PhoneVerified` → `clearReason(PHONE_NOT_VERIFIED)`
+  - `PhoneChanged` → `applyReason(PHONE_NOT_VERIFIED)`
+  - `AccountDisabled` / `AccountEnabled` → `applyReason(ACCOUNT_DISABLED)` / `clearReason(ACCOUNT_DISABLED)`
+  - `DisputeOpened` / `DisputeResolved` → `applyReason(DISPUTE_BLOCKED)` / `clearReason(DISPUTE_BLOCKED)`
+  - Antifraude confirmado → `banFor(FRAUD_BLOCKED)`
+- **Auto-ensure en consumo de eventos:** si llega un evento para `subjectId` sin perfil previo ⇒ `ensureCreated(subjectId)` y luego aplicar/limpiar razones.
+- **Salientes (domain events)**
+  - Cambios de `status` ⇒ `Customers.CustomerEligibilityUpdated { oldStatus, newStatus, reasons }`
+  - Cambios de preferencias ⇒ `Customers.CustomerPreferencesUpdated`
+  - Mutaciones de plantillas ⇒ eventos `Customers.ItemTemplate*` / `Customers.RouteTemplate*`
+
+---
+
+**8) Mapeo Razón → Status (precedencia)**
+
+| Prioridad | Razones                                                              | Status       |
+|-----------|-----------------------------------------------------------------------|--------------|
+| 1         | `FRAUD_BLOCKED`                                                       | `BANNED`     |
+| 2         | `DISPUTE_BLOCKED`, `ACCOUNT_DISABLED`, `COMPLIANCE_HOLD`             | `SUSPENDED`  |
+| 3         | `KYC_MISSING`, `KYC_REJECTED`, `PHONE_NOT_VERIFIED`, `AGE_UNDER_MIN` | `INCOMPLETE` |
+| 4         | *(sin razones)*                                                       | `ELIGIBLE`   |
+
+
+<b/>
+
 #### 2.6.3.2. Interface Layer
 #### 2.6.3.3. Application Layer
+
+# Application Layer — Customers
+
+> **Propósito:** orquestar flujos de *Customers* (aptitud, preferencias y plantillas) coordinando **Aggregates**, **Policies** y **Repositories**.  
+> **Capacidades:** (a) perfil operativo (*readiness*), (b) preferencias, (c) plantillas (ítems/rutas), (d) consumo de eventos externos (KYC/IAM/Disputas/Antifraude/Legal Age), (e) consultas para UI.
+
+---
+
+## 1) Convenciones transversales
+
+- **Ownership leak-proof:** `subjectId` del `SecurityContext`; no se aceptan `ownerId` externos.
+- **Auto-ensure:** todo flujo que usa perfil ejecuta `ensure(subjectId)` **en la misma transacción** antes de mutar.
+- **Bloqueo de perfil:** cualquier handler (command/event) que **modifique** `CustomerOperationalProfile` hace `lockForUpdate(subjectId)` **en la misma tx** para evitar *write skew*.
+- **Idempotency:**
+  - **API/commands:** `method + path + subjectId` (TTL 6–24 h).
+  - **Eventos externos:** clave `eventId` para consumo idempotente.
+- **Entrega confiable:**
+  - **Transactional Outbox:** persistir eventos en la tx y publicar **post-commit**.
+  - **Inbox:** registrar `eventId` procesados para “exactly-once” lógico.
+- **Orden causal (eventos externos):** mantener `lastExternalState.{kyc, phone, account, dispute}` por `subjectId` (con `version/occurredAt`) y **ignorar** eventos atrasados.
+- **Normalización de unidades:** convertir a **kg/cm** **antes** de validar/invocar dominio.
+- **Emisión de eventos:**
+  - `Customers.CustomerEligibilityUpdated` **solo** si cambia `status` (incluye snapshot de `reasons`).
+  - `Customers.CustomerPreferencesUpdated`, `Customers.ItemTemplateUpdated`, `Customers.RouteTemplateUpdated` **solo si hubo cambios efectivos** (comparar antes/después).
+  - No emitir `CustomerSuspended/Unsuspended`.
+  - Para *ban*: si ya está `BANNED`, **no** re-emitir `CustomerBanned` ni `CustomerEligibilityUpdated`.
+- **Consultas por defecto:** `findAllByOwner` ordena por `updatedAt DESC`.
+- **Correlation:** si falta `correlationId` entrante, se genera y se propaga.
+
+---
+
+## 2) Command Handlers (sincrónicos)
+
+> Todos validan **guards por status** y ownership; ejecutan **auto-ensure**; bloquean perfil con **lockForUpdate** si modifican el AR; publican eventos vía **Outbox**.
+
+### 2.1. Perfil operativo (readiness)
+
+- **EnsureCustomerProfileCommandHandler** → crea si no existe con `{KYC_MISSING, PHONE_NOT_VERIFIED}` → `CustomerOperationalProfileEnsured`.
+- **ApplyReasonCommandHandler** → `ensure + lockForUpdate → applyReason → reevaluate` → si cambia `status` → `CustomerEligibilityUpdated`.
+- **ClearReasonCommandHandler** → `ensure + lockForUpdate → clearReason → reevaluate` → si cambia `status` → `CustomerEligibilityUpdated`.
+- **SuspendCustomerCommandHandler** (`DISPUTE_BLOCKED | ACCOUNT_DISABLED | COMPLIANCE_HOLD`) → si cambia `status` → `CustomerEligibilityUpdated`.
+- **UnsuspendCustomerCommandHandler** (solo razones **bloqueantes**) → si cambia `status` → `CustomerEligibilityUpdated`.
+- **BanCustomerCommandHandler** (`FRAUD_BLOCKED`) → si `status != BANNED` → `CustomerBanned` + `CustomerEligibilityUpdated`.
+- **UpdatePreferencesCommandHandler** → normaliza, actualiza; **emitir solo si cambió** → `CustomerPreferencesUpdated`.
+
+**Guards por `status`:**
+- `BANNED`: solo `UpdatePreferences`. Mutaciones de plantillas **bloqueadas**.
+- `SUSPENDED`: lectura y edición de preferencias **permitidas**; mutaciones de plantillas **permitidas**.
+
+### 2.2. Plantillas de ítems
+
+- **Create/Update/Attach/Detach/Favorite/Delete/RegisterUse**
+  - Updates con `version?`: si llega, **If-Match**; si no, **last-write-wins**.
+  - `RegisterUse(usageCorrelationId)` deduplica por (`templateId`,`usageCorrelationId`).
+  - Eventos `ItemTemplate*` **solo si hubo cambios efectivos**; `registerUse` siempre emite `Used`.
+  - Rechazar `registerUse` si `DELETED`.
+
+### 2.3. Plantillas de rutas
+
+- **Create/Update/Favorite/Delete/RegisterUse**
+  - Validar `Location` (rangos; `waypoints ≤ 10`).
+  - Misma semántica de `version?`, `usageCorrelationId` y emisión **solo si cambió**.
+
+---
+
+## 3) Event Handlers (asíncronos)
+
+> **Inbox** para idempotencia, **auto-ensure** si falta perfil, **lockForUpdate** cuando modifica perfil, **orden causal** con `lastExternalState`.
+
+- **OnKycVerified** → `clear(KYC_MISSING)` y `clear(KYC_REJECTED)` → reevaluate → si cambia `status` → `CustomerEligibilityUpdated`.
+- **OnKycRejected** → `apply(KYC_REJECTED)` → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnPhoneVerified** → `clear(PHONE_NOT_VERIFIED)` → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnPhoneChanged** → `apply(PHONE_NOT_VERIFIED)` → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnAccountDisabled** → `apply(ACCOUNT_DISABLED)` → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnAccountEnabled** → `clear(ACCOUNT_DISABLED)` → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnDisputeOpened** → `apply(DISPUTE_BLOCKED)` respetando **orden causal (dispute)** → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnDisputeResolved** → `clear(DISPUTE_BLOCKED)` respetando **orden causal (dispute)** → reevaluate → posible `CustomerEligibilityUpdated`.
+- **OnFraudConfirmed** → si `status != BANNED` → `banFor(FRAUD_BLOCKED)` → `CustomerBanned` + `CustomerEligibilityUpdated`.
+- **OnLegalAgeReached** → `clear(AGE_UNDER_MIN)` → reevaluate → posible `CustomerEligibilityUpdated`.
+
+> **Fuente de verdad de mayoría de edad:** evento externo `OnLegalAgeReached` (Identidad/KYC). No se usa job.
+
+---
+
+## 4) Query Handlers (lecturas)
+
+- **GetCustomerOperationalProfileQueryHandler** → `status`, `reasons`, `preferences`.
+- **GetCustomerPreferencesQueryHandler** → `language`, `units`, `notificationChannels`, `uxDefaults` (formateo a unidad preferida).
+- **ListItemTemplatesQueryHandler** → `paging`, filtros; **solo `ACTIVE`** por defecto; `updatedAt DESC`.
+- **GetItemTemplateByIdQueryHandler** (`includeDeleted?`).
+- **ListRouteTemplatesQueryHandler** → mismas reglas.
+- **GetRouteTemplateByIdQueryHandler** (`includeDeleted?`).
+- **GetTemplateSuggestionsQueryHandler** → ranking simple a partir de `UsageStats`.
+
+---
+
+## 5) Adaptadores / Puertos
+
+- **Repositories:** `CustomerOperationalProfileRepository` (incluye `lockForUpdate(subjectId)`), `ItemTemplateRepository`, `RouteTemplateRepository`.
+- **Mensajería:** `OutboxPublisher` (post-commit), `InboxStore` (dedupe), `CorrelationProvider`.
+- **Stores auxiliares:** `ExternalStateStore` con `lastExternalState.{kyc, phone, account, dispute}` por `subjectId`; `IdempotencyStore`.
+- **Servicios de apoyo:** `UnitsNormalizer`, `LocationValidator`, `EligibilityPolicy`, `LegalAgePolicy`.
+
+---
+
+## 6) Flujos de referencia
+
+1. **Primer inicio** → `EnsureCustomerProfile` (auto-ensure + lock si aplica) → perfil `INCOMPLETE` con razones iniciales → respuesta.
+2. **Aprobación KYC** → `OnKycVerified` (Inbox + orden causal) → limpiar razones → reevaluate → `CustomerEligibilityUpdated` (Outbox).
+3. **Legal age** → `OnLegalAgeReached` → `clear(AGE_UNDER_MIN)` → reevaluate → posible `CustomerEligibilityUpdated`.
+4. **Uso de plantillas** → `List*Templates` → al confirmar solicitud, `Register*TemplateUse(usageCorrelationId=requestId)` (dedupe) → `*TemplateUsed`.
+
+
 #### 2.6.3.4. Infrastructure Layer
 #### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
