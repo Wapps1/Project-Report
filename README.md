@@ -1411,21 +1411,7 @@ Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middl
 
 ---
 
-**5) Errores y política única de códigos**
-
-- `IdTokenInvalid` → **401** (resuelto en middleware).
-- `AccountNotFound` → **404** (cuando se esperaba existente).
-- `AccountDeleted` → **410** (usar siempre este código para consistencia).
-- `AccountSuspended` → **423**.
-- `PinNotSet` → **409**.
-- `PinMismatch` → **403**.
-- `WeakPin` → **422** (o **400**, uno solo).
-- `ConcurrencyConflict` → **409**.
-- Fallback `IdpDirectory` caído en Ensure → **no error**; marcar “sync pendiente” y auditar `DirectoryUnavailable`.
-
----
-
-**6) Concurrencia e idempotencia**
+**5) Concurrencia e idempotencia**
 
 - **Creación concurrente:** confiar en índice único `(issuer, subject)`; si `UniqueViolation`, releer y continuar (idempotente).
 - **`save` con versión:** ante `ConcurrencyConflict`, reintentar **una vez** según política.
@@ -1436,14 +1422,7 @@ Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middl
 
 ---
 
-**7) Observabilidad y seguridad**
-
-- `AuditLogger`: registrar `issuer`, `subject`, `accountId`, `event`, `result`, `reason`; **nunca** token, PIN, email o teléfono.
-- **Métricas:** contadores por evento (ensures, syncs, set/clear/verify pin, cambios de estado) y tasas de error/rate limit.
-
----
-
-**8) Pruebas de contrato (mínimas imprescindibles)**
+**6) Pruebas de contrato (mínimas imprescindibles)**
 
 - `EnsureAccountFromIdp`: creación vs. existente; `IdpDirectory` caído con fallback; `DELETED` → **410**.
 - `Set/Clear/Verify PIN`: política de PIN, *rate limit* persistente; `SUSPENDED` bloquea `VerifyPin`.
@@ -1453,196 +1432,74 @@ Encapsula orquestación y políticas: verifica el ID token del **IdP** en *middl
 
 #### 2.6.1.4. Infrastructure Layer
 
-Implementa los **ports** definidos por Domain/Application y accede a servicios externos.  
-Alineado al modelo **IdP-only con Firebase**: el dominio no maneja contraseñas/OTP/sesiones propias; la infraestructura:
-- Verifica tokens (middleware).
-- Persiste `Account`.
-- Ejecuta rate-limit de **PIN**.
-- Registra auditoría.
-- Publica **Domain Events** con **Transactional Outbox**.
+# Infrastructure Layer — IAM 
 
-**Toques finales (hardening):**
-- Outbox con “claim” seguro.
-- Retención y consumer groups en **Redis Streams**.
-- Defensas adicionales en **DB** (CHECK/trigger/índices).
-- Tipificación de `result` en auditoría.
+**Alcance:** implementar los **ports** definidos por Domain/Application y conectar con **PostgreSQL**, **Redis (Streams)** y **Firebase**.
 
 ---
 
-**1) Repositorios y adaptadores (implementaciones de ports)**
+## 1) Repositories (Database adapters)
 
-**1.1 `AccountRepositoryPostgres`**  
-*Persistencia del Aggregate Root `Account` en PostgreSQL.*
+### 1.1 AccountRepositoryPostgres ← implements `AccountRepository`
+- **Servicio externo:** PostgreSQL  
+- **Responsabilidad:** persistir y cargar el **Aggregate Root `Account`** (identidad local enlazada al IdP).  
+- **Tabla lógica:** `iam_account` (email/phone verificados y PIN si existe).  
+- **Notas técnicas:**
+  - **Optimistic concurrency**: `UPDATE … WHERE id = ? AND version = ?` (si 0 filas → `ConcurrencyConflict`).
+  - **Unicidad**: índice único `(issuer, subject)`.
+  - **Normalización**: `issuer = lower(btrim(issuer))`, `subject = btrim(subject)`, `email_value = lower(btrim(email_value))` (si no nulo), `phone_value` en **E.164**.
+  - **Tombstone**: `DELETED` irreversible (trigger/constraint).
 
-- **Tabla:** `iam_account`
+### 1.2 AuditLoggerPostgres ← implements `AuditLogger`
+- **Servicio externo:** PostgreSQL  
+- **Responsabilidad:** registrar eventos de seguridad (**append-only**) para trazabilidad del BC IAM.  
+- **Tabla lógica:** `security_audit_log`.  
+- **Notas técnicas:**
+  - Campos mínimos: `issuer`, `subject`, `account_id`, `event_name`, `result (OK|DENY|ERROR)`, `reason?`, `occurred_at`.
+  - **Sin PII sensible**: no almacenar tokens, PIN ni contactos (email/phone).
 
-  | Columna          | Tipo         | Notas                                                  |
-  |------------------|--------------|--------------------------------------------------------|
-  | `id`             | `UUID` (PK)  | Identificador del aggregate                           |
-  | `issuer`         | `TEXT`       | Normalizado a minúsculas y `btrim`                     |
-  | `subject`        | `TEXT`       | `btrim` (sin espacios extremos)                        |
-  | `email_value`    | `TEXT`       | Minúsculas + `btrim` (nullable)                        |
-  | `email_verified` | `BOOLEAN`    | `NOT NULL DEFAULT false`                               |
-  | `phone_value`    | `TEXT`       | Formato **E.164** (nullable)                           |
-  | `phone_verified` | `BOOLEAN`    | `NOT NULL DEFAULT false`                               |
-  | `pin_hash`       | `TEXT`       | Formato PHC (`$argon2id$…`)                            |
-  | `pin_updated_at` | `TIMESTAMPTZ`| Última actualización de PIN                            |
-  | `status`         | `ENUM`       | `ACTIVE | SUSPENDED | DELETED`                         |
-  | `version`        | `INTEGER`    | Control optimista                                      |
-  | `created_at`     | `TIMESTAMPTZ`|                                                        |
-  | `updated_at`     | `TIMESTAMPTZ`| Actualizada por trigger                                |
-
-- **Índices y constraints**
-  - **Único:** (`issuer`, `subject`) → invariante de unicidad.
-  - **Índice auxiliar:** en `subject` (si hay consultas frecuentes).
-  - **CHECKs de normalización:**
-    - `issuer = lower(btrim(issuer))`
-    - `subject = btrim(subject)`
-    - `email_value IS NULL OR email_value = lower(btrim(email_value))`
-    - `phone_value IS NULL OR phone_value ~ '^\+?[1-9]\d{1,14}$'` *(E.164)*
-  - **Trigger**: auto-actualización de `updated_at` en `UPDATE`.
-  - **Regla tombstone (irreversible):** `BEFORE UPDATE` rechaza cambios de `status` si `OLD.status = 'DELETED'`.
-
-- **Control optimista**
-  - `save(account)` incrementa `version`.
-  - `UPDATE … WHERE id = ? AND version = ?` → si no afecta filas → `ConcurrencyConflict`.
+### 1.3 OutboxRepositoryPostgres ← port interno para publicación diferida
+- **Servicio externo:** PostgreSQL  
+- **Responsabilidad:** almacenar **Domain Events** pendientes (Transactional Outbox).  
+- **Tabla lógica:** `outbox_event (event_id, aggregate_type, aggregate_id, event_type, payload, occurred_at, published_at NULL)`.
 
 ---
 
-**1.2 `IdpTokenVerifierFirebase` (middleware)**  
-*Verifica ID token y fija identidad en el `SecurityContext`.*
+## 2) Adapters a servicios externos (IdP / Directorio / Rate limit / Crypto)
 
-- **Validaciones estrictas**
-  - Firma contra JWKS del proyecto.
-  - `iss == https://securetoken.google.com/<projectId>`
-  - `aud == <projectId>`
-  - `checkRevoked = true` en **todas** las verificaciones.
-- **Salida al contexto**
-  - `issuer`, `subject` (y `authTime` opcional para “fresh auth”).
-  - Los handlers **no** re-verifican el token; leen `(issuer, subject)` del contexto.
+### 2.1 IdpDirectoryFirebase ← implements `IdpDirectory`
+- **Servicio externo:** Firebase **Admin Directory**  
+- **Responsabilidad:** obtener **email/phone actuales** y banderas **verified** del sujeto `(issuer, subject)` para crear/sincronizar `Account`.  
+- **Contrato:** `getUser(issuer, subject) -> { email?, emailVerified, phoneNumber?, phoneVerified }`.
 
----
+### 2.2 RateLimiterStoreRedis ← implements `RateLimiterStore`
+- **Servicio externo:** **Redis**  
+- **Responsabilidad:** contadores/TTL del **rate-limit** de `VerifyPin` (intentos y cooldown).  
+- **Claves típicas:**  
+  `iam:pin:attempts:{accountId}` (contador con TTL) · `iam:pin:cooldown:{accountId}` (TTL).  
+- **Semántica:** si `cooldown` activo → `429`; `403` solo para `PinMismatch`.
 
-**1.3 `IdpDirectoryFirebase`**  
-*Consulta el directorio administrativo del IdP (fuente de verdad de contactos/verificación).*
+### 2.3 PinHasherArgon2id ← implements `PinHasher`
+- **Servicio externo:** librería criptográfica local  
+- **Responsabilidad:** generar **hash de PIN** (formato **PHC** `$argon2id$…`) con parámetros endurecidos (memoria/iteraciones/salt por registro).  
+- **Rehash** transparente en siguiente `setPin` si cambian parámetros.
 
-- **Contrato devuelto**
-  - `email`, `emailVerified`
-  - `phoneNumber`, `phoneVerified`
-- **Uso**
-  - **Creación** de `Account`: tomar `email/phoneNumber`, **normalizar** y persistir.
-  - **Sincronización**: aplicar **solo** banderas `emailVerified/phoneVerified`.
-- **Fallo del directorio**
-  - Marcar **“sync pendiente”** (ver §3.3); **no** bloquear flujo.
-  - Auditar indisponibilidad de directorio.
+### 2.4 PinVerifierConstantTime ← implements `PinVerifier`
+- **Servicio externo:** librería criptográfica local  
+- **Responsabilidad:** comparar PIN **en tiempo constante** contra el hash almacenado.
 
----
-
-**1.4 `PinHasherArgon2id` / `PinVerifierConstantTime`**  
-- **Hash** en formato PHC (`$argon2id$…`) con parámetros endurecidos (memoria/iteraciones/salt por registro).
-- **Verificación** en tiempo constante (mitiga *timing leaks*).
-- **Rehash transparente:** al cambiar parámetros, el siguiente `setPin` reescribe `pin_hash`.
+### (Middleware en Interface) IdpTokenVerifierFirebase
+- **Capa:** Interface/Presentation (técnicamente Infra)  
+- **Servicio externo:** **Firebase Authentication**  
+- **Responsabilidad:** verificar el **ID Token** y colocar `(issuer, subject)` en `SecurityContext`.  
+- **Checks:** firma (JWKS), `iss == https://securetoken.google.com/<projectId>`, `aud == <projectId>`, `checkRevoked = true`.
 
 ---
 
-**1.5 `RateLimiterStoreRedis`**  
-*Almacén persistente para intentos y cooldown de `VerifyPin`.*
+## 3) Message Broker (publicación de Domain Events)
 
-- **Tecnología:** Redis gestionado, autenticado y con TLS.
-- **Claves por `accountId`:**
-  - Intentos: `iam:pin:attempts:{accountId}` (contador con TTL de ventana).
-  - Cooldown: `iam:pin:cooldown:{accountId}` (TTL de enfriamiento).
-- **Semántica determinista:**
-  - Si existe **cooldown** → **429**.
-  - `INCR attempts`; si supera umbral → set cooldown → **429**.
-  - En otro caso, permitir verificación.
-- **Códigos:** **429** para rate-limit; **403** solo para PIN incorrecto.
-
----
-
-**1.6 `AuditLoggerPostgres`**  
-*Registro append-only de eventos de seguridad.*
-
-- **Tabla:** `security_audit_log`
-  - `issuer`, `subject`, `account_id`, `event_name`, `result`, `reason`, `occurred_at`.
-- **Tipificación de `result`:** `ENUM` o `CHECK` con `OK | DENY | ERROR`.
-- **PII:** nunca almacenar tokens, PIN ni contactos (email/phone).
-
----
-
-**1.7 `DomainEventsOutboxPostgres` + `OutboxDispatcherRedisStreams`**  
-*Transactional Outbox + Redis Streams, con claim seguro y deduplicación.*
-
-- **Tabla:** `outbox_event`
-  - `event_id (UUID)`, `aggregate_type`, `aggregate_id`, `event_type`, `payload` *(sin datos sensibles)*, `occurred_at`, `locked_at`, `published_at`.
-- **Recolección segura (claiming)**
-  - En una misma transacción:
-    - Seleccionar **no publicados** y **no bloqueados** (o lock vencido) `ORDER BY occurred_at FOR UPDATE SKIP LOCKED`.
-    - Marcar `locked_at = now()` para reclamarlos.
-    - Tras publicar, `published_at = now()`.
-- **Publicación en Streams**
-  - Stream: `iam.domain-events` con **retención** (p. ej., `MAXLEN ~ 1e6`).
-  - **Consumer groups** por servicio suscriptor.
-  - Cada mensaje incluye `event_id`; consumidores **deduplican** por `event_id` y confirman con `XACK`.
-
----
-
-**2) Seguridad operativa y secretos**
-- TLS extremo a extremo (Postgres, Redis, Firebase).
-- Secretos en gestor seguro (service account IdP, credenciales DB/Redis).
-- Principio de **menor privilegio** para cuentas de servicio.
-- **Rotación** periódica de secretos y claves.
-
----
-
-**3) Procesos de fondo y colas técnicas**
-
-**3.1 `OutboxDispatcher`**  
-Lee `outbox_event` con claim seguro (`locked_at`), publica en `iam.domain-events` y marca `published_at`.  
-Reintentos **idempotentes** (consumidores deduplican por `event_id`).
-
-**3.2 Consumers de dominio (otros BCs)**  
-Se suscriben con **consumer groups**, procesan, deduplican por `event_id` y hacen `XACK`.  
-La **retención** del stream permite recuperación controlada.
-
-**3.3 `ContactsReconciler`**  
-Fuente “sync pendiente” en `Redis Set`: `iam:contacts:pending`.  
-Reintenta sincronización con el IdP; al completar, remueve la cuenta del set.  
-No bloquea flujos si el directorio está caído.
-
----
-
-**4) Observabilidad, backups y endurecimiento**
-- **Métricas (Prometheus):**
-  - `iam_account_ensured_total{result}`
-  - `iam_contacts_sync_total{changed}`
-  - `iam_pin_verify_total{status="ok|mismatch|ratelimit"}`
-  - `iam_outbox_pending`
-  - `iam_directory_unavailable_total`
-- **Trazas (OpenTelemetry):** verificación de token, repos, IdP Directory, Redis (rate-limit/streams), outbox dispatcher.
-- **Logs estructurados:** JSON sin PII.
-- **Backups:** snapshots + **PITR** en Postgres; snapshots gestionados en Redis; restauración ensayada.
-
----
-
-**5) Manejo de errores (alineado con Application)**
-- Token inválido/revocado → **401** (middleware).
-- `AccountDeleted` al asegurar → **410** (política única).
-- `AccountSuspended` en negocio/`VerifyPin` → **423**.
-- `PinMismatch` → **403**.
-- Rate-limit de PIN → **429** (cooldown/umbral).
-- Concurrencia (optimista) → **409**.
-- IdP Directory caído en *ensure* → **sin error**; marcar sync pendiente y auditar `DirectoryUnavailable`.
-
----
-
-**6) Pruebas de infraestructura (contratos mínimos)**
-- `AccountRepositoryPostgres`: control optimista, unicidad `(issuer,subject)`, CHECKs/normalización y **tombstone**.
-- `IdpTokenVerifierFirebase`: `iss/aud` exactos, revocación activa, contexto poblado.
-- `IdpDirectoryFirebase`: entrega valores y banderas; caída → “sync pendiente” sin bloquear.
-- `RateLimiterStoreRedis`: intentos/TTL/cooldown deterministas y **persistentes**.
-- **Outbox**: claim con `locked_at`, publicación, marca `published_at`, retención de stream, consumer groups, deduplicación por `event_id`.
-- `AuditLoggerPostgres`: inserción, `result` tipificado, consultas por `account_id/fecha`.
+### OutboxDispatcherRedisStreams — adapter de mensajería
+- **Servicios externos:** PostgreSQL (lee `outbox
 
 
 <br/>
@@ -1815,13 +1672,7 @@ No bloquea flujos si el directorio está caído.
 - `ReviewTaskOpened{ taskId, caseId, openedAt }`  
 - `ReviewTaskDecided{ taskId, caseId, decision, reasonCodes[], decidedAt }`
 
-*Si IAM requiere PII para claims (p. ej., `legalName`, `dob`), eso se envía como **Integration Event** en la capa de aplicación, no en Domain Events.*
-
 ---
-
-**8) Errores de dominio (semánticos)**
-
-`OpenCaseAlreadyExists`, `InvalidStateTransition`, `DocumentNotValid`, `BiometricsNotValid`, `UnderAgeNotAllowed`, `HumanReviewRequired`, `RevocationRequiresVerifiedCase`, `AttemptsExceeded`
 
 <br>
 
@@ -1974,36 +1825,6 @@ Capa que expone **Controllers** (HTTP) y **Consumers** (webhooks) que orquestan 
 | POST `/api/v1/webhooks/vendors/{provider}`         | `EventInboxService` → `ProviderCallbackOrchestrator`                       |
 
 ---
-
-## 5) Ejemplos de Problem Details (RFC 7807)
-
-**422 — Documento inválido (NATIONAL_ID sin back):**
-    {
-      "type": "https://errors.redcarga.com/kyc/document-invalid",
-      "title": "Document Not Valid",
-      "detail": "NATIONAL_ID requires front and back images.",
-      "instance": "/api/v1/kyc/cases/KC_123/document",
-      "correlationId": "7d9b8c...",
-      "reasonCodes": ["DOC_INVALID_FORMAT"]
-    }
-
-**429 — Límite de intentos:**
-    {
-      "type": "https://errors.redcarga.com/kyc/attempts-exceeded",
-      "title": "Too Many Attempts",
-      "detail": "Retry after the cooldown window.",
-      "instance": "/api/v1/kyc/cases/KC_123/document",
-      "correlationId": "7d9b8c...",
-      "reasonCodes": ["ATTEMPTS_EXCEEDED"]
-    }
-Headers: `Retry-After: 300`
-
----
-
-## 6) Notas finales de privacidad y contenido
-- PII mínima en respuestas; nunca retornar `docPhotoHash`, `selfieHash` ni blobs.
-- `faceMatchScore` cuando aparezca debe cumplir `0 ≤ score ≤ 1`.
-- `country` siempre en ISO-3166-1 alpha-2.
 
 <br/>
 
@@ -2624,6 +2445,191 @@ Implementan Ports de Application con timeouts (3–5s), retries con backoff, cir
 
 
 #### 2.6.3.4. Infrastructure Layer
+
+# Infrastructure Layer — Customers (actualizada)
+
+> Implementa acceso a **DB relacional**, **mensajería confiable** (Outbox/Inbox), **idempotencia**, **orden causal**, **caché** opcional y **referencias** a almacenamiento de objetos. Contiene los **Repositories** del dominio y adaptadores técnicos.
+
+---
+
+## 1) Persistencia (RDBMS)
+
+**Modelo relacional** con `snake_case`, `created_at/updated_at` y `status` para soft-delete cuando aplique.
+
+### 1.1. Tablas de dominio
+
+**`customer_profile`** (1:1 por `subject_id`)
+- `subject_id` (PK, UNIQUE)
+- `status` (`INCOMPLETE|ELIGIBLE|SUSPENDED|BANNED`)
+- `language`, `units_mass` (`kg|lb`), `units_length` (`cm|in`)
+- `notification_channels` (JSON), `ux_defaults` (JSON)
+- `last_status_change_at`, `created_at`, `updated_at`
+
+**`customer_profile_reason`** (N:1 con `customer_profile`)
+- `subject_id` (FK)
+- `reason_code` (PK compuesta con `subject_id`)
+- `added_at`  
+  **UNIQUE**(`subject_id`,`reason_code`)
+
+**`item_template`**
+- `template_id` (PK) · `owner_id`
+- `name`, `category`
+- `length_cm`, `width_cm`, `height_cm`, `weight_kg` *(NULL si no definidos; > 0 si no NULL)*
+- `notes` (NULL), `favorite` (BOOL)
+- `status` (`ACTIVE|DELETED`)
+- `version` (INT, para optimistic locking opcional)
+- `created_at`, `updated_at`  
+  **Índice por defecto:** (`owner_id`,`updated_at DESC`). Consultas devuelven **solo `ACTIVE`**.
+
+**`item_template_photo`**
+- `template_id` (FK → `item_template`, **ON DELETE CASCADE**)
+- `position` (INT, **≥ 0**)
+- `bucket`, `object_key`, `checksum`, `version_tag`  
+  **UNIQUE**(`template_id`,`position`) — `PhotoRef` es **inmutable**.
+
+**`route_template`** *(con origin/destination persistidos, consistente con dominio)*
+- `template_id` (PK) · `owner_id`
+- `label`
+- `origin_lat` (DECIMAL(9,6), **NOT NULL**, CHECK −90..90)
+- `origin_lng` (DECIMAL(9,6), **NOT NULL**, CHECK −180..180)
+- `origin_address` (TEXT, NULL)
+- `destination_lat` (DECIMAL(9,6), **NOT NULL**, CHECK −90..90)
+- `destination_lng` (DECIMAL(9,6), **NOT NULL**, CHECK −180..180)
+- `destination_address` (TEXT, NULL)
+- `favorite` (BOOL)
+- `status` (`ACTIVE|DELETED`)
+- `version` (INT opcional)
+- `created_at`, `updated_at`  
+  **Índice:** (`owner_id`,`updated_at DESC`). Por defecto **solo `ACTIVE`**.
+
+**`route_waypoint`**
+- `template_id` (FK → `route_template`, **ON DELETE CASCADE**)
+- `idx` (INT, PK compuesta con `template_id`, **≥ 0**)
+- `lat` (DECIMAL(9,6), **NOT NULL**, CHECK −90..90)
+- `lng` (DECIMAL(9,6), **NOT NULL**, CHECK −180..180)
+- `address` (TEXT, NULL)  
+  *(Máx. waypoints p. ej., 10, validado en Application.)*
+
+**`template_usage_dedup`** *(deduplicación sin colisiones entre tipos de plantilla)*
+- `template_type` (ENUM: `ITEM` | `ROUTE`)
+- `template_id`
+- `usage_correlation_id`
+- `used_at`  
+  **PK**(`template_type`,`template_id`,`usage_correlation_id`)
+
+### 1.2. Tablas técnicas
+
+**`outbox_event`**
+- `event_id` (PK UUID) · `aggregate_type` · `aggregate_id`
+- `event_type` (ej.: `Customers.CustomerEligibilityUpdated`)
+- `payload` (JSON) · `occurred_at` · `published_at` (NULL)
+- *(opcional)* `publish_attempts` (INT) · `last_error` (TEXT)
+
+**`inbox_event`** *(patrón a prueba de fallos, sin pérdidas silenciosas)*
+- `event_id`
+- `source`
+- `handler` *(identifica al consumidor/handler lógico)*
+- `received_at`
+- `handled_at` (NULL al inicio)
+- `attempts` (INT, DEFAULT 0)  
+  **PK**(`event_id`,`handler`).  
+  **Flujo por intento:**
+  1. `INSERT … ON CONFLICT DO NOTHING`
+  2. Procesar **solo si** `handled_at IS NULL`
+  3. Éxito → `UPDATE … SET handled_at = now()`
+  4. Falla → rollback (queda `handled_at = NULL`) → reintentos
+
+**`idempotency_key`**
+- `key_hash` (PK) · `method` · `path` · `subject_id` · `body_hash`
+- `status_code` · `response_hash` · `headers_subset` (JSON)
+- `created_at` · `ttl_expires_at`
+
+**`external_state`**
+- `subject_id` (PK)
+- `kyc_version` (INT), `kyc_occurred_at` (TIMESTAMP)
+- `phone_version` (INT), `phone_occurred_at` (TIMESTAMP)
+- `account_version` (INT), `account_occurred_at` (TIMESTAMP)
+- `dispute_version` (INT), `dispute_occurred_at` (TIMESTAMP)
+
+---
+
+## 2) Repositories (implementaciones previstas)
+
+- **SqlCustomerOperationalProfileRepository**  
+  `findBySubjectId`, `lockForUpdate(subjectId)`, `save`  
+  (opera sobre `customer_profile` + `customer_profile_reason`).
+
+- **SqlItemTemplateRepository**  
+  `findById(owner,id, includeDeleted=false)`, `findAllByOwner(owner,paging, includeDeleted=false)`, `save`  
+  (opera sobre `item_template` + `item_template_photo`).
+
+- **SqlRouteTemplateRepository**  
+  Igual patrón; **mapea origin/destination** y gestiona `route_waypoint` con reemplazo seguro en la misma transacción.
+
+- **TemplateUsageDedupStore**  
+  Dedup por (`template_type`,`template_id`,`usage_correlation_id`) en `template_usage_dedup`.
+
+**Reglas en los mappers**
+- Persistencia en **kg/cm** (valores canónicos).
+- Consultas por defecto excluyen `DELETED` (flag `includeDeleted` cuando aplique).
+
+---
+
+## 3) Mensajería
+
+- **OutboxPublisher**  
+  Lee `outbox_event` no publicados (ordenados por `occurred_at`), publica al broker y marca `published_at`. Puede usar *lock* cooperativo (*SKIP LOCKED*) si hay varios workers.
+
+- **InboxAwareEventConsumer**  
+  Usa el patrón de `inbox_event` (PK por `event_id` y `handler`) para **idempotencia por handler** y reintentos seguros sin pérdidas.
+
+- **Formato de eventos**  
+  JSON con `event_type`, `correlation_id`, `occurred_at`, `subject_id`, `reasons?` cuando aplique.
+
+---
+
+## 4) Almacenamiento de objetos
+
+- **ObjectStorageClient** (S3/MinIO/GCS): este BC **no** guarda binarios; solo **referencias** (`PhotoRef`: bucket/key/checksum/version).
+- Verificación de existencia: puede ser síncrona (HEAD) o diferida.
+
+---
+
+## 5) Transaccionalidad y concurrencia
+
+- **Una transacción por comando/evento** (unidad de trabajo por Aggregate).
+- **`lockForUpdate(subject_id)`** al modificar **CustomerOperationalProfile** (commands y event handlers).
+- **Optimistic locking** en plantillas con `version` (If-Match).
+- Nivel de aislamiento mínimo: **READ COMMITTED**; elevar si hay contención.
+
+---
+
+## 6) Observabilidad
+
+- Logs estructurados (incluyen `correlation_id`, `event_id`, `subject_id`).
+- Métricas: latencia de repos, tamaño outbox/inbox, reintentos, *cache hit ratio*.
+- Trazabilidad de publicación/consumo (contadores de `publish_attempts` y `attempts`).
+
+---
+
+## 7) Mapeo Dominio ↔ Infra (resumen)
+
+| Dominio                     | Adaptador/Repo Infra                    | Almacenamiento                                                   |
+|----------------------------|-----------------------------------------|------------------------------------------------------------------|
+| CustomerOperationalProfile | SqlCustomerOperationalProfileRepository | `customer_profile`, `customer_profile_reason`                    |
+| ItemTemplate               | SqlItemTemplateRepository               | `item_template`, `item_template_photo`                           |
+| RouteTemplate (origin/dest)| SqlRouteTemplateRepository              | `route_template`, `route_waypoint`                               |
+| Register\*Use (dedup)      | TemplateUsageDedupStore                 | `template_usage_dedup (template_type, template_id, correlation)` |
+| Eventos (salida)           | OutboxPublisher                         | `outbox_event` + broker                                          |
+| Eventos (entrada)          | InboxAwareEventConsumer                 | `inbox_event`, `external_state`                                  |
+| Idempotencia API           | IdempotencyStore                        | `idempotency_key`                                                |
+| Caché de plantillas        | RedisCacheAdapter                       | Redis                                                            |
+| PhotoRef                   | ObjectStorageClient                     | S3/MinIO/GCS (externo al BC)                                     |
+
+---
+
+<b/>
+
 #### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.3.6.1. Bounded Context Domain Layer Class Diagrams
