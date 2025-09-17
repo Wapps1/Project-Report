@@ -2661,10 +2661,25 @@ Request, Item, Measurements (**AI|USER**), Suggestion, Publish, Version, Superse
 <b/>
 
 #### 2.6.7.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *Requests Service — Component Diagram*
+<img width="3850" height="7228" alt="image" src="https://github.com/user-attachments/assets/8535f88c-f9ee-4b5e-b105-3cf1a1a01a00" />
+
+- *Requests Jobs — Component Diagram*
+<img width="2370" height="2611" alt="image" src="https://github.com/user-attachments/assets/553c064a-0f28-4fae-aac8-55c80ab48c85" />
+
+<br/>
+
 #### 2.6.7.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.7.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/REQUESTS-BC.svg"></img>
+
+<br/>
+
 ##### 2.6.7.6.2. Bounded Context Database Design Diagram
 
+<img src="img/class-diagram/REQUESTS-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -2877,10 +2892,18 @@ Variables de entorno / vault; **rotación** de claves HMAC de pagos.
 <br/>
 
 #### 2.6.8.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *BC Deals — Deals API (Component Diagram)*
+<img width="6100" height="9028" alt="image" src="https://github.com/user-attachments/assets/5e13d747-6167-4854-b80b-ba9820cc6bcd" />
+
+<br/>
+
 #### 2.6.8.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.8.6.1. Bounded Context Domain Layer Class Diagrams
-##### 2.6.8.6.2. Bounded Context Database Design Diagram
 
+<br/>
+
+##### 2.6.8.6.2. Bounded Context Database Design Diagram
 
 
 <br/>
