@@ -1355,6 +1355,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!--helloo-->
 <!-- US21 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
@@ -1397,6 +1398,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
     </tr>
   </tbody>
 </table>
+<br>
 
 <!-- US22 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
@@ -1432,6 +1434,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US23 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1466,6 +1469,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US24 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1500,6 +1504,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US25 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1538,6 +1543,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US26 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1580,6 +1586,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US27 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1614,6 +1621,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US28 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1648,6 +1656,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US29 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1677,6 +1686,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
     </tr>
   </tbody>
 </table>
+<br>
 
 <!-- US30 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
@@ -1712,6 +1722,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US31 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1746,6 +1757,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US32 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1780,6 +1792,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US33 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1815,6 +1828,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US34 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1850,6 +1864,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US35 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1884,6 +1899,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US36 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1918,6 +1934,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US37 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1952,6 +1969,7 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<br>
 <!-- US38 -->
 <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
   <tbody>
@@ -1986,6 +2004,376 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+
+<br>
+<!-- ======================= FLOTA – GESTIÓN DE VEHÍCULOS (REVISADO) ======================= -->
+
+<!-- US39 -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:10%;">Story ID</th><th style="width:40%;">User</th><th style="width:10%;">Priority</th><th style="width:40%;">Epic</th>
+    </tr>
+    <tr>
+      <td>US39</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Flota – Gestión de vehículos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Dar de alta vehículo y validar placa única</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como administrador, quiero registrar un vehículo con placa y datos básicos, para incorporarlo a la flota de forma unívoca y continuar con su habilitación.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Alta básica</strong><br>
+        <strong>Dado que</strong> ingreso placa, marca, modelo y año<br>
+        <strong>Y</strong> la placa no existe en mi empresa ni globalmente<br>
+        <strong>Cuando</strong> guardo el formulario<br>
+        <strong>Entonces</strong> el vehículo se crea en estado “Borrador”<br>
+        <strong>Y</strong> queda pendiente de completar documentación y atributos.<br><br>
+        <strong>Escenario 2: Placa duplicada</strong><br>
+        <strong>Dado que</strong> la placa ya está registrada<br>
+        <strong>Cuando</strong> intento guardar<br>
+        <strong>Entonces</strong> el sistema bloquea la operación<br>
+        <strong>Y</strong> muestra el detalle del conflicto.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US40 (ampliado con equipamiento/temperatura/apilamiento) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US40</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Flota – Gestión de vehículos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Registrar capacidad técnica y atributos logísticos de la unidad</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como administrador, quiero declarar carga útil, volumen útil, dimensiones internas (L×A×H), tipo de carrocería, rango de temperatura, apilamiento permitido, accesos (lateral/trasera/superior) y equipamiento (rampa, fajas, montacargas), para usar la unidad en compatibilidad y capacidad publicable.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Captura y validación</strong><br>
+        <strong>Dado que</strong> ingreso carga útil y dimensiones<br>
+        <strong>Y</strong> selecciono carrocería, temperatura, apilamiento y equipamiento<br>
+        <strong>Cuando</strong> guardo<br>
+        <strong>Entonces</strong> el sistema calcula volumen útil (m³)<br>
+        <strong>Y</strong> valida rangos razonables por tipo de unidad.<br><br>
+        <strong>Escenario 2: Atributos para matching</strong><br>
+        <strong>Dado que</strong> marco requisitos como “refrigerado” o “con rampa”<br>
+        <strong>Cuando</strong> se ejecute el matching<br>
+        <strong>Entonces</strong> solo se considerarán solicitudes compatibles con dichos atributos<br>
+        <strong>Y</strong> el resto quedará excluido con motivo visible.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US41 (incluye galería/evidencias) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US41</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Flota – Documentos del vehículo</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Subir y validar documentos del vehículo con galería de evidencias (SOAT, CITV, tarjeta, fotos VIN/laterales)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como administrador, quiero cargar documentos obligatorios con lectura de metadatos y adjuntar evidencias fotográficas estandarizadas, para habilitar la unidad conforme a normativa y auditoría.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Carga y OCR</strong><br>
+        <strong>Dado que</strong> adjunto archivos legibles (PDF/imagen)<br>
+        <strong>Y</strong> indico tipo de documento<br>
+        <strong>Cuando</strong> envío<br>
+        <strong>Entonces</strong> quedan “En revisión”<br>
+        <strong>Y</strong> el sistema extrae número, emisor y fecha de vencimiento.<br><br>
+        <strong>Escenario 2: Dictamen documental</strong><br>
+        <strong>Dado que</strong> un revisor o regla automática valida vigencia y coincidencia con la placa<br>
+        <strong>Cuando</strong> se emite el dictamen<br>
+        <strong>Entonces</strong> el documento pasa a “Aprobado” u “Observado”<br>
+        <strong>Y</strong> se exige subsanación si corresponde.<br><br>
+        <strong>Escenario 3: Evidencias fotográficas</strong><br>
+        <strong>Dado que</strong> cargo fotos (frontal, posterior, laterales, VIN)<br>
+        <strong>Y</strong> falta una toma mínima<br>
+        <strong>Cuando</strong> intento guardar<br>
+        <strong>Entonces</strong> el sistema bloquea la acción<br>
+        <strong>Y</strong> señala qué evidencia falta con guía de calidad.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US42 (explicita exclusión de matching/capacidad) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US42</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Flota – Documentos del vehículo</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Alertas de vencimiento y bloqueo operativo por documentos del vehículo</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como administrador, quiero recibir alertas preventivas y bloquear el uso de unidades con documentos vencidos, para evitar riesgos y excluirlas automáticamente del matching y de la capacidad publicada.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Alertas preventivas</strong><br>
+        <strong>Dado que</strong> un documento vencerá en ≤30/15/7 días<br>
+        <strong>Y</strong> la unidad está habilitada<br>
+        <strong>Cuando</strong> se alcance cada umbral<br>
+        <strong>Entonces</strong> recibo notificaciones (email/push)<br>
+        <strong>Y</strong> la unidad muestra advertencia en el panel.<br><br>
+        <strong>Escenario 2: Bloqueo y exclusión</strong><br>
+        <strong>Dado que</strong> el documento está vencido<br>
+        <strong>Cuando</strong> intento asignar la unidad o calcular capacidad<br>
+        <strong>Entonces</strong> el sistema lo impide<br>
+        <strong>Y</strong> la unidad queda excluida de matching y de cómputos.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US43 (gating por estado) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US43</td>
+      <td>Proveedor (administrador)</td>
+      <td>Alta</td>
+      <td>Flota – Gestión de vehículos</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Cambiar estado del vehículo (Habilitado/Deshabilitado) con motivos y trazabilidad</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como administrador, quiero habilitar/deshabilitar una unidad con motivo (mantenimiento, documento vencido, siniestro), para controlar su disponibilidad con historial auditable y efecto inmediato en matching/capacidad.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Deshabilitación manual</strong><br>
+        <strong>Dado que</strong> selecciono un vehículo<br>
+        <strong>Y</strong> indico motivo y nota<br>
+        <strong>Cuando</strong> confirmo<br>
+        <strong>Entonces</strong> el estado pasa a “Deshabilitado”<br>
+        <strong>Y</strong> queda registro en auditoría y se excluye de matching/capacidad.<br><br>
+        <strong>Escenario 2: Habilitación con validaciones</strong><br>
+        <strong>Dado que</strong> deseo habilitar una unidad<br>
+        <strong>Y</strong> tiene documentos aprobados y atributos completos<br>
+        <strong>Cuando</strong> confirmo<br>
+        <strong>Entonces</strong> pasa a “Habilitado”<br>
+        <strong>Y</strong> vuelve a ser elegible para planificación y viajes.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US44</td>
+      <td>Proveedor (planificador)</td>
+      <td>Alta</td>
+      <td>Planificación – Rutas operativas</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Definir corredores con frecuencia, ventanas, cobertura y compatibilidad de carga (con previsualización de calce)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como planificador, quiero registrar rutas (origen, intermedios, destino), días de operación y ventanas, más cobertura geográfica (radios/polígonos), modalidad (puerta–puerta/terminal–terminal) y tipos de carga admitida/excluida con límites L×A×H/peso, para filtrar solicitudes y previsualizar calces antes de publicar.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Alta de corredor</strong><br>
+        <strong>Dado que</strong> defino origen/destino, frecuencia y ventanas<br>
+        <strong>Y</strong> establezco cobertura geográfica<br>
+        <strong>Cuando</strong> guardo<br>
+        <strong>Entonces</strong> el corredor queda “Activo” y visible para capacidad.<br><br>
+        <strong>Escenario 2: Compatibilidad de carga</strong><br>
+        <strong>Dado que</strong> marco categorías admitidas/excluidas y límites L×A×H/peso<br>
+        <strong>Cuando</strong> llegue una solicitud fuera de rango o categoría<br>
+        <strong>Entonces</strong> se excluye del matching<br>
+        <strong>Y</strong> se muestra el motivo al proveedor.<br><br>
+        <strong>Escenario 3: Previsualización de calce</strong><br>
+        <strong>Dado que</strong> configuro reglas de la ruta<br>
+        <strong>Cuando</strong> ejecuto “Previsualizar calces”<br>
+        <strong>Entonces</strong> veo un listado simulado con puntaje de compatibilidad<br>
+        <strong>Y</strong> advertencias por bloqueos (mínimos, equipo, cobertura).
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US48 (ampliado con buffers y mínimos) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US45</td>
+      <td>Proveedor (planificador)</td>
+      <td>Alta</td>
+      <td>Planificación – Capacidad publicable</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Calcular capacidad publicable por ruta/fecha (kg, m³, pallets) con buffers y mínimos</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como planificador, quiero calcular capacidad por corredor y día considerando flota habilitada, mantenimientos, reservas, buffers de seguridad y mínimos operativos, para publicar oferta realista.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Cómputo base</strong><br>
+        <strong>Dado que</strong> existen unidades habilitadas con capacidad técnica<br>
+        <strong>Y</strong> la ruta está activa en esa fecha<br>
+        <strong>Cuando</strong> ejecuto el cálculo<br>
+        <strong>Entonces</strong> obtengo capacidad por métrica (kg/m³/pallets)<br>
+        <strong>Y</strong> se excluyen unidades bloqueadas o en mantenimiento.<br><br>
+        <strong>Escenario 2: Buffers y mínimos</strong><br>
+        <strong>Dado que</strong> establezco un buffer (%) y un mínimo operativo<br>
+        <strong>Cuando</strong> publico la capacidad<br>
+        <strong>Entonces</strong> la publicable respeta el buffer y no baja del mínimo configurado<br>
+        <strong>Y</strong> se advierte si el mínimo no es alcanzable.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US50 (hold → commit) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US46</td>
+      <td>Proveedor (planificador)</td>
+      <td>Alta</td>
+      <td>Planificación – Reservas y sobreventa</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Reservar capacidad al iniciar trato y confirmar al pagar (hold → commit)</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como planificador, quiero que al iniciar un trato se haga una reserva temporal (hold) que se confirma al pagar, para evitar sobreventa y liberar cupo si el trato cae.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Hold</strong><br>
+        <strong>Dado que</strong> un cliente inicia un trato<br>
+        <strong>Y</strong> hay capacidad suficiente<br>
+        <strong>Cuando</strong> se crea el trato<br>
+        <strong>Entonces</strong> se descuenta capacidad como “hold” con TTL<br>
+        <strong>Y</strong> se muestra su expiración.<br><br>
+        <strong>Escenario 2: Commit</strong><br>
+        <strong>Dado que</strong> el pago es aprobado<br>
+        <strong>Cuando</strong> se confirma<br>
+        <strong>Entonces</strong> el hold pasa a “commit” firme<br>
+        <strong>Y</strong> si el pago falla/expira, el hold se libera automáticamente.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<!-- US51 (incluye solapes) -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th>Story ID</th><th>User</th><th>Priority</th><th>Epic</th>
+    </tr>
+    <tr>
+      <td>US47</td>
+      <td>Proveedor (planificador)</td>
+      <td>Alta</td>
+      <td>Planificación – Disponibilidad dinámica</td>
+    </tr>
+    <tr><th colspan="4">Title</th></tr>
+    <tr><td colspan="4">Recalcular disponibilidad ante cambios y prevenir sobreventa/solapes</td></tr>
+    <tr><th colspan="4">Description</th></tr>
+    <tr>
+      <td colspan="4">Como planificador, quiero que cambios en tratos, cancelaciones o reasignaciones actualicen automáticamente la capacidad disponible y se detecten solapes entre rutas/horarios que usen la misma flota.</td>
+    </tr>
+    <tr><th colspan="4">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="4">
+        <strong>Escenario 1: Liberación por cancelación</strong><br>
+        <strong>Dado que</strong> un trato cancelado tenía hold/commit<br>
+        <strong>Cuando</strong> se procesa la cancelación<br>
+        <strong>Entonces</strong> se devuelve capacidad al corredor/salida<br>
+        <strong>Y</strong> se actualizan dashboards de ocupación.<br><br>
+        <strong>Escenario 2: Prevención de sobreventa</strong><br>
+        <strong>Dado que</strong> intentan reservar por sobre la capacidad disponible<br>
+        <strong>Cuando</strong> se valida la operación<br>
+        <strong>Entonces</strong> el sistema la rechaza<br>
+        <strong>Y</strong> muestra el déficit por métrica (kg/m³/pallets).<br><br>
+        <strong>Escenario 3: Detección de solapes</strong><br>
+        <strong>Dado que</strong> dos rutas/salidas compiten por la misma unidad/ventana<br>
+        <strong>Cuando</strong> intento publicarlas<br>
+        <strong>Entonces</strong> el sistema alerta el solape y bloquea si no se resuelve<br>
+        <strong>Y</strong> exige ajustar capacidad o reasignar unidades.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<br>
 
 
 
