@@ -2511,6 +2511,32 @@ Request, Item, Measurements (**AI|USER**), Suggestion, Publish, Version, Superse
 <b/>
 
 #### 2.6.7.2. Interface Layer
+
+**Base path:** `/api/v1/requests` · **Auth:** JWT (IAM) · **Ownership:** `404` si `requestId` no pertenece al `subjectId`.
+
+**Endpoints (resumidos)**
+
+- `POST /` — crear **borrador**
+- `PUT /{requestId}/items/{itemId}` — **upsert** ítem
+- `POST /{requestId}/items/{itemId}/photos:uploadUrl`
+- `POST /{requestId}/items/{itemId}:suggest-measurements`
+- `POST /{requestId}/items/{itemId}:accept-measurements`
+- `PUT /{requestId}/route`
+- `POST /{requestId}:publish`
+- `POST /{requestId}:revise`
+- `POST /{requestId}:cancel`
+- `GET /{requestId}`
+- **Webhook** `/integrations/deals/formalized` *(HMAC + ventana de replay + dedupe)*
+
+**Convenciones**
+
+- `Idempotency-Key` en **mutaciones**.  
+- Errores → **RFC 7807** con extensiones: `code`, `correlationId`.
+
+---
+
+<b/>
+
 #### 2.6.7.3. Application Layer
 
 **Casos de uso ↔ Handlers**
@@ -2553,6 +2579,30 @@ Request, Item, Measurements (**AI|USER**), Suggestion, Publish, Version, Superse
 
 <b/>
 #### 2.6.7.4. Infrastructure Layer
+
+**Adapters**
+
+- **`MeasurementPort`**
+  - `OnDeviceBridgeAdapter` *(la app ejecuta ML Kit/ARCore y envía sugerencia)*.
+  - `CloudAIMeasureAdapter` *(opt-in, TTL corto, anonimiza)*.
+- **`ImageStoragePort`**
+  - `ObjectStorageAdapter` con **pre-signed upload**.
+- **`GeoNormalizerPort`**
+  - `GeoCatalogAdapter` *(UBIGEO/H3)*.
+- **Mensajería**
+  - `OutboxPublisher` + `MessagingProducer` *(retry + DLQ)*.
+- **Cross-cutting**
+  - `AuthContextAdapter`, `TxManagerAdapter`, `IdempotencyStoreAdapter`.
+
+**Políticas de IA**
+
+- **Default:** on-device.  
+- **Cloud (opt-in):** blobs **borrados tras decisión**.  
+- **SLA:** timeout estricto, **graceful degradation**.  
+- **Trazabilidad:** `modelId`, `confidence`, `latencyMs` en la sugerencia.
+
+<b/>
+
 #### 2.6.7.5. Bounded Context Software Architecture Component Level Diagrams
 #### 2.6.7.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.7.6.1. Bounded Context Domain Layer Class Diagrams
