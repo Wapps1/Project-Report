@@ -646,6 +646,47 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 #### 2.5.1.2. Domain Message Flows Modeling
 #### 2.5.1.3. Bounded Context Canvases
 ### 2.5.2. Context Mapping
+
+**Open Host Service (OHS)**<br>
+El upstream publica capacidades por un contrato estable (API/eventos) que múltiples downstream consumen sin conocer su modelo interno.
+En Red Carga, IAM expone autenticación, MFA y emisión/rotación de tokens/claims; todos los BC consumen este OHS para autorizar acciones sin acoplarse a la implementación de IAM.
+<img src="img/context-mapping/context-mapping-ohs.png" />
+<br>
+**Conformist (CF)** <br>
+El downstream adopta el modelo/estados del upstream para integrar rápido.
+Aquí Pagos se alinea al PSP: usa sus estados y webhooks nativos para autorizar/capturar/reembolsar y conciliar, tomando al PSP como fuente de verdad operativa.
+<img src="img/context-mapping/context-mapping-cf.png" />
+<br>
+**Customer/Supplier (C/S)** <br>
+Relación proveedor–cliente: el supplier define el lenguaje; el customer puede influir backlog.
+<ul>
+<li>Clientes → Solicitudes (con ACL): plantillas/preferencias se traducen al modelo publicable.</li>
+<li>Solicitudes → Tratos: la negociación adopta el lenguaje de la solicitud.</li>
+<li>Tratos → Pagos (Saga/Outbox): eventos orquestan cobro y compensaciones.</li>
+<li>Pagos → Guías / Viajes (gating=PAID): pago aprobado habilita emisión y operación.</li>
+<li>Proveedores → Flota / Planificación: habilitación de empresa alimenta vehículos y rutas/capacidad.</li>
+<li>Flota → Viajes (snapshot): datos de vehículo/licencias para operar.</li>
+<li>Planificación → Tratos / Viajes: capacidad/slots gobiernan oferta y programación.</li>
+<li>Identidad → Clientes / Proveedores: resultado KYC habilita alta/uso.</li>
+</ul>
+<img src="img/context-mapping/context-mapping-cs.png" ></img>
+<br>
+<strong>Partnership (P) </strong><br>
+Interdependencia simétrica con coordinación de diseño y releases.
+Planificación ↔ Tratos: la capacidad/ventanas condiciona la negociación y ésta retroalimenta reglas anti-overbooking/SLA; se lanzan cambios coordinados.
+<img src="img/context-mapping/context-mapping-p.png" />
+<br>
+<strong>Anti-Corruption Layer (ACL)</strong> <br>
+Capa de traducción que protege al downstream del lenguaje/volatilidad del upstream o externo.
+<ul>
+<li>Clientes → Solicitudes: normaliza unidades, mapea categorías/enums y valida completitud.</li>
+<li>Guías → SUNAT GRE: mapea entidades al payload normativo, maneja idempotencia/reintentos y versionado de API.</li>
+<li>Disputas → Pagos / Viajes: traduce RequestHoldFunds/PauseTrip a comandos reales y mapea respuestas a eventos del lenguaje de Disputas.</li>
+</ul>
+<img src="img/context-mapping/context-mapping-acl.png" />
+<br>
+
+
 ### 2.5.3. Software Architecture
 En esta sección se describe la arquitectura de software de la solución Red Carga, siguiendo el enfoque del C4 Model. Para ello se presentan los diagramas de Contexto, Contenedores y Despliegue, que permiten visualizar las diferentes capas del sistema iniciando por un panorama hasta su implementación en un entorno de producción. Cada nivel muestra los actores, las tecnologías principales y las interacciones con servicios externos que forman parte del alcance del proyecto.
 
