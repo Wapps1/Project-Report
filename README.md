@@ -557,7 +557,413 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 <br>
 
 ### 2.2.2. Registro de entrevistas
+
+<div align="center">
+
+---
+
+## 📋 **Entrevista #1**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Vladimir Rogel Elera Ozeta</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>51 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Administrador</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EaZpzkWRmKJLnsuYjlsPDNsBao9lt5rR_oivky7oKIHYMQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=c5ZTCl">Entrevista 1</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 7:17 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Vladimir Rogel Elera Ozeta" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+
+Vladimir Rogel Elera Ozeta, de 51 años, es administrador de una empresa que opera principalmente en Chiclayo y Tumbes. Señala que gestionan todo tipo de carga incluyendo motos, mototaxis, autos y paquetería y que el proceso actual va de forma directa y presencial: los clientes llegan a la oficina, realizan la consulta y allí mismo se coordina el envío.
+
+Indica que el mayor retraso ocurre por el regateo de precios: aunque existen precios estándar, suelen flexibilizarlos a pedido del cliente, lo que dilata el cierre. En la coordinación operativa, la dificultad recurrente está en el acomodado de encomiendas (cuidado de frágiles, orden de descarga priorizando destinos lejanos) y la enseñanza al personal que realiza esa tarea. En documentación, trabajan con boleta, factura o guía de remisión y hoy enfrentan objeciones de algunos clientes por la transición obligatoria a la guía de remisión electrónica de SUNAT. En contraste, afirma no tener problemas con contratos, pagos o facturación. Sobre la comunicación, no la percibe débil, pero reconoce como punto flaco la precisión de precios debido al regateo.
+
+Para captar clientes, su principal canal sigue siendo el boca a boca, aunque recientemente están incursionando en redes sociales. Como factores que inclinan la decisión de los clientes, menciona la confianza: cuentan con un local seguro para resguardar mercadería y garantizan buena condición en la entrega. Respecto al seguimiento, utilizan equipos GPS y un sistema de monitoreo para ubicar en tiempo real las unidades. Finalmente, considera que una aplicación que centralice cotizaciones, contratos, pagos y tracking sería excelente: permitiría acordar precios y gestionar sin ir al local, y ayudaría a expandirse más allá del boca a boca y atraer más clientes.
+
+---
+
+## 📋 **Entrevista #2**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Antonieta Ayra</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>67 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Gerencia</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EXmFGOHjIFRDkUEfqcq8WUEBmKlL5rZ6ovD-Pv-VwT3BIg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=JJOg9Z">Entrevista 2</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 4:44 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+
+Antonieta Ayra (67), gerente de una empresa con operación en Chiclayo, explica que reciben con mayor frecuencia mototaxis, motos lineales, motores, televisores nuevos, mudanzas y mercadería diversa. El flujo actual es presencial: el cliente se acerca a la oficina, solicita el precio y, si acepta, deja boleta o factura para que la empresa emita su guía de transportes. Señala que la tramitación en sí no suele generar demoras; los atrasos aparecen al arribo cuando el consignatario no recoge la carga y esta puede quedar 2–3 días en la oficina de destino. Resalta que la captación de clientes se apoya en la antigüedad de la empresa y en la seguridad del servicio: muchos usuarios confían su producto al local de Chiclayo para el traslado "con todo seguro".
+
+En materia documentaria, subraya la formalidad: boleta para persona natural y factura para persona jurídica, y menciona como dificultad la resistencia de algunos clientes acostumbrados a la informalidad. Para el seguimiento del envío, indica que los camiones cuentan con GPS y se monitorean para conocer ubicación y hora de llegada en tiempo real. Sobre una aplicación como Red Carga, valora poder centralizar cotizaciones, contratos, pagos y tracking, además de acceder a una base más amplia de clientes; le resultan clave la puntualidad y los pagos directos, considerando que algunos clientes cancelan al dejar el producto y otros en destino, pero en todos los casos la mercadería viaja lista.
+
+---
+
+## 📋 **Entrevista #3**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Erika Rodríguez</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>46 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Administrador</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EQiYFTYEAR9Aieoo9T6RMZ8BT-BAUmq26dZJ4p-hhY8ioQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=e9sN1V">Entrevista 3</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 3:41 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-3.png" alt="Entrevista 3" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+
+Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente paquetería, mudanzas, mototaxis y motos lineales, con un flujo operativo breve y puntual al que aplican un seguimiento riguroso para asegurar que todo marche bien. Señala que los retrasos más habituales provienen de la verificación de que la encomienda efectivamente llegue a destino en el tiempo previsto. Para captar clientes usan atención directa en los counters, WhatsApp y teléfono; los más efectivos son WhatsApp y el trato personal en mostrador. Afirma que los eligen por puntualidad, rapidez y precio. En lo documentario, cada envío debe ir con declaración jurada, boleta, guía de remisión o factura; la fricción típica surge por la informalidad de algunos clientes, a quienes piden firmar una declaración jurada si no cuentan con los papeles exactos. No reporta problemas en contratos, pagos o facturación. El seguimiento se realiza por GPS. Sobre una aplicación, valora centralizar cotizaciones, contratos, pagos y tracking para atraer y atender a más clientes.
+
+---
+
+
+</div>
+
+
 ### 2.2.3. Análisis de entrevistas
+
+<div align="center">
+
+## 📊 **Análisis del Segmento Objetivo #2**
+
+*Administradores de empresas que se encargan del transporte interprovincial de carga*
+
+---
+
+### 🎯 **Características Objetivas**
+
+#### 👥 **Demografía y Rol**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Rango de edad</strong></td>
+    <td>46–67 años</td>
+  </tr>
+  <tr>
+    <td><strong>Rol</strong></td>
+    <td>Administración/Gerencia en empresas de transporte interprovincial (100% de entrevistados)</td>
+  </tr>
+</table>
+
+#### 🌍 **Ámbito Geográfico**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Operación principal</strong></td>
+    <td>Chiclayo (67%)</td>
+  </tr>
+  <tr>
+    <td><strong>Cobertura extendida</strong></td>
+    <td>Chiclayo–Tumbes (33%)</td>
+  </tr>
+</table>
+
+#### 📦 **Portafolio de Carga**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Tipos más frecuentes</strong></td>
+    <td>Paquetería, mudanzas, mototaxis, motos lineales, motores y televisores (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Otros</strong></td>
+    <td>Autos (33%)</td>
+  </tr>
+</table>
+
+#### 🔄 **Proceso Actual (de consulta a envío)**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Modalidad</strong></td>
+    <td>Predominio presencial en mostrador/counter u oficina para cotizar y confirmar (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Documentos en el cierre</strong></td>
+    <td>Boleta o factura y guía (100%)</td>
+  </tr>
+</table>
+
+#### 📞 **Canales de Captación y Atención**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Canal principal</strong></td>
+    <td>Directo/presencial (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Motor de confianza</strong></td>
+    <td>Boca a boca (67%)</td>
+  </tr>
+  <tr>
+    <td><strong>Canales digitales</strong></td>
+    <td>WhatsApp/teléfono operativos para atención/cierre (33%)</td>
+  </tr>
+  <tr>
+    <td><strong>Expansión digital</strong></td>
+    <td>Intención de ampliar presencia digital/redes (67%)</td>
+  </tr>
+</table>
+
+#### 💰 **Pagos**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Modalidad</strong></td>
+    <td>Mixta: pago en origen o en destino (33% lo menciona explícito)</td>
+  </tr>
+  <tr>
+    <td><strong>Disposición</strong></td>
+    <td>100% abiertos a centralizar pagos en una app</td>
+  </tr>
+</table>
+
+#### 📋 **Documentación y Formalidad**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Requisitos mínimos</strong></td>
+    <td>Boleta/factura + guía (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Transición regulatoria</strong></td>
+    <td>Guía de remisión electrónica (SUNAT) y objeciones de clientes (33%)</td>
+  </tr>
+  <tr>
+    <td><strong>Brecha de formalidad</strong></td>
+    <td>Casos de informalidad del cliente; se recurre a declaración jurada (67%)</td>
+  </tr>
+</table>
+
+#### 🛰️ **Seguimiento y Trazabilidad**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Equipos</strong></td>
+    <td>GPS en unidades y monitoreo interno (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Interés en compartir</strong></td>
+    <td>Trazabilidad al cliente y centralizar eventos en una sola plataforma (100%)</td>
+  </tr>
+</table>
+
+---
+
+### 🧠 **Características Subjetivas**
+
+#### ⭐ **Valores y Prioridades**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Confianza y seguridad</strong></td>
+    <td>Local seguro, cuidado del estado del producto (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Puntualidad/rapidez</strong></td>
+    <td>67%</td>
+  </tr>
+  <tr>
+    <td><strong>Precio competitivo</strong></td>
+    <td>67%</td>
+  </tr>
+</table>
+
+#### 🎯 **Actitudes y Expectativas**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Orientación a resultados</strong></td>
+    <td>Buscan que "todo marche bien" con seguimiento riguroso (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Apertura a digitalizar</strong></td>
+    <td>Si acelera respuesta, evita visitas al local y amplía clientes (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Comunicación constante</strong></td>
+    <td>Sobre el estado del envío (67%)</td>
+  </tr>
+</table>
+
+---
+
+### ⚠️ **Fricciones Operativas Identificadas**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Regateo de precios</strong></td>
+    <td>Alarga el cierre (33%)</td>
+  </tr>
+  <tr>
+    <td><strong>No recojo en destino</strong></td>
+    <td>2–3 días en oficina destino que genera tiempos/costos (33%)</td>
+  </tr>
+  <tr>
+    <td><strong>Acomodo/estiba</strong></td>
+    <td>Frágiles, orden de descarga depende de la pericia del personal (33%)</td>
+  </tr>
+  <tr>
+    <td><strong>Verificación de entrega</strong></td>
+    <td>Demanda seguimiento adicional (33%)</td>
+  </tr>
+  <tr>
+    <td><strong>Documentación incompleta</strong></td>
+    <td>Cliente informal → declaración jurada (67%)</td>
+  </tr>
+</table>
+
+---
+
+### 💡 **Necesidades y Deseos**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Cotizar y cerrar a distancia</strong></td>
+    <td>Ahorrar visitas y regateos extensos (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Centralizar todo</strong></td>
+    <td>Cotizaciones, documentos, pagos, tracking en un solo lugar (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Mostrar trazabilidad</strong></td>
+    <td>Clara al cliente (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Manejar formalidad</strong></td>
+    <td>Capturar boleta/factura/guía y declaración jurada guiada (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Gestionar pagos</strong></td>
+    <td>Casos de pago en destino y pagos directos/puntuales (67%)</td>
+  </tr>
+  <tr>
+    <td><strong>Ampliar alcance comercial</strong></td>
+    <td>Más allá del boca a boca (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Comunicación proactiva</strong></td>
+    <td>Avisos de estado y "listo para recojo" (67%)</td>
+  </tr>
+</table>
+
+---
+
+### 🚧 **Barreras y Riesgos Percibidos**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Clientes reacios a formalizar</strong></td>
+    <td>Transición a GRE electrónica (67%)</td>
+  </tr>
+  <tr>
+    <td><strong>Hábitos arraigados</strong></td>
+    <td>Atención presencial y regateo (≥33%)</td>
+  </tr>
+  <tr>
+    <td><strong>Cuellos en destino</strong></td>
+    <td>No recojo que afecta satisfacción y costos (33%)</td>
+  </tr>
+</table>
+
+---
+
+### 🎯 **Oportunidades Claras**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Respuesta a distancia</strong></td>
+    <td>Cotizar y confirmar con precios claros y reglas visibles (evita regateo infinito)</td>
+  </tr>
+  <tr>
+    <td><strong>Documentar sin dolor</strong></td>
+    <td>Guías y comprobantes guiados, con plan B de declaración jurada</td>
+  </tr>
+  <tr>
+    <td><strong>Trazabilidad compartida</strong></td>
+    <td>Cliente ve GPS/eventos y recibe avisos ("en ruta", "llegó a oficina destino", "listo para recojo")</td>
+  </tr>
+  <tr>
+    <td><strong>Cobros ordenados</strong></td>
+    <td>Soportar pago al dejar y pago en destino, con confirmaciones claras</td>
+  </tr>
+  <tr>
+    <td><strong>Alcance comercial</strong></td>
+    <td>Facilidades para enviar cotización por WhatsApp y mostrar reputación/seguridad</td>
+  </tr>
+</table>
+
+</div>
 
 ## 2.3. Needfinding
 
