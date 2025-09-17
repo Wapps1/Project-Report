@@ -2260,7 +2260,7 @@ Vehicle, Document, Compliance/Policy, Enabled/Disabled, DisabledCause, Verificat
 
 ##### 2.6.5.6.2. Bounded Context Database Design Diagram
 
-<img width="1144" height="1012" alt="image" src="https://github.com/user-attachments/assets/1af1c451-06d0-432b-8d1b-fdc1becf1052" />
+<img src="img/class-diagram/FLEET-BC-DATABASE.svg"></img>
 
 
 <br/>
@@ -2901,10 +2901,13 @@ Variables de entorno / vault; **rotación** de claves HMAC de pagos.
 #### 2.6.8.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.8.6.1. Bounded Context Domain Layer Class Diagrams
 
+<img src="img/class-diagram/DEALS-BC.svg"></img>
+
 <br/>
 
 ##### 2.6.8.6.2. Bounded Context Database Design Diagram
 
+<img src="img/class-diagram/DEALS-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -3170,9 +3173,22 @@ Charge, Top-up, Refund, Net collected, Fee (1%), Payout, **Formalized (Payment)*
 <b/>
 
 #### 2.6.9.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *BC Payments — Payments API (Component Diagram)*
+<img width="2390" height="10228" alt="image" src="https://github.com/user-attachments/assets/58579d96-bbef-4515-a22c-73ef835a1a12" />
+
+<b/>
+
 #### 2.6.9.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.9.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/PAYMENTS-BC.svg"></img>
+
+<b/>
+
 ##### 2.6.9.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/PAYMENTS-BC-DATABASE.svg"></img>
 
 <br/>
 
