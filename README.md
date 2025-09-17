@@ -118,7 +118,41 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
       - [**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**](#segmento-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
       - [**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**](#segmento-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
     - [2.2.2. Registro de entrevistas](#222-registro-de-entrevistas)
+  - [📊 **Análisis del Segmento Objetivo #1**](#-análisis-del-segmento-objetivo-1)
+  - [📋 **Entrevista #1**](#-entrevista-1)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista)
+  - [📋 **Entrevista #2**](#-entrevista-2)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-1)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-1)
+  - [📊 **Análisis del Segmento Objetivo #2**](#-análisis-del-segmento-objetivo-2)
+  - [📋 **Entrevista #4**](#-entrevista-4)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-2)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-2)
+  - [📋 **Entrevista #5**](#-entrevista-5)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-3)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-3)
+  - [📋 **Entrevista #6**](#-entrevista-6)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-4)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-4)
     - [2.2.3. Análisis de entrevistas](#223-análisis-de-entrevistas)
+  - [📊 **Análisis del Segmento Objetivo #2**](#-análisis-del-segmento-objetivo-2-1)
+    - [🎯 **Características Objetivas**](#-características-objetivas)
+      - [👥 **Demografía y Rol**](#-demografía-y-rol)
+      - [🌍 **Ámbito Geográfico**](#-ámbito-geográfico)
+      - [📦 **Portafolio de Carga**](#-portafolio-de-carga)
+      - [🔄 **Proceso Actual (de consulta a envío)**](#-proceso-actual-de-consulta-a-envío)
+      - [📞 **Canales de Captación y Atención**](#-canales-de-captación-y-atención)
+      - [💰 **Pagos**](#-pagos)
+      - [📋 **Documentación y Formalidad**](#-documentación-y-formalidad)
+      - [🛰️ **Seguimiento y Trazabilidad**](#️-seguimiento-y-trazabilidad)
+    - [🧠 **Características Subjetivas**](#-características-subjetivas)
+      - [⭐ **Valores y Prioridades**](#-valores-y-prioridades)
+      - [🎯 **Actitudes y Expectativas**](#-actitudes-y-expectativas)
+    - [⚠️ **Fricciones Operativas Identificadas**](#️-fricciones-operativas-identificadas)
+    - [💡 **Necesidades y Deseos**](#-necesidades-y-deseos)
+    - [🚧 **Barreras y Riesgos Percibidos**](#-barreras-y-riesgos-percibidos)
+    - [🎯 **Oportunidades Claras**](#-oportunidades-claras)
   - [2.3. Needfinding](#23-needfinding)
     - [2.3.1. User Personas](#231-user-personas)
     - [2.3.2. User Task Matrix](#232-user-task-matrix)
@@ -560,9 +594,92 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 
 <div align="center">
 
----
+## 📊 **Análisis del Segmento Objetivo #1**
+
+*Personas o empresas que quieren transportar carga de forma interprovincial*
 
 ## 📋 **Entrevista #1**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Alexander Miranda Vivanco</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>25 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Vendedor de dispositivos electrónico</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="">Entrevista 1</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 6:35 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Alexander Miranda Vivanco" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+
+
+
+---
+## 📋 **Entrevista #2**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td> Jocelyn Damaly Almerco Rojas</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>22 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Dueña de un negocio de venta al por mayor de ropa </td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="">Entrevista 2</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 5:04 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2 - Jocelyn Damaly Almerco Rojas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+
+
+
+---
+---
+## 📊 **Análisis del Segmento Objetivo #2**
+
+*Administradores de empresas que se encargan del transporte interprovincial de carga*
+
+## 📋 **Entrevista #4**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -583,7 +700,7 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EaZpzkWRmKJLnsuYjlsPDNsBao9lt5rR_oivky7oKIHYMQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=c5ZTCl">Entrevista 1</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EaZpzkWRmKJLnsuYjlsPDNsBao9lt5rR_oivky7oKIHYMQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=c5ZTCl">Entrevista 4</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
@@ -593,7 +710,7 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 
 ### 📸 **Imagen de la Entrevista**
 
-<img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Vladimir Rogel Elera Ozeta" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="img/entrevistas-img/entrevista-4.png" alt="Entrevista 4 - Vladimir Rogel Elera Ozeta" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
 
@@ -605,7 +722,7 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
 
 ---
 
-## 📋 **Entrevista #2**
+## 📋 **Entrevista #5**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -626,7 +743,7 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EXmFGOHjIFRDkUEfqcq8WUEBmKlL5rZ6ovD-Pv-VwT3BIg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=JJOg9Z">Entrevista 2</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EXmFGOHjIFRDkUEfqcq8WUEBmKlL5rZ6ovD-Pv-VwT3BIg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=JJOg9Z">Entrevista 5</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
@@ -636,7 +753,7 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
 
 ### 📸 **Imagen de la Entrevista**
 
-<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="img/entrevistas-img/entrevista-5.png" alt="Entrevista 5" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
 
@@ -646,7 +763,7 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
 
 ---
 
-## 📋 **Entrevista #3**
+## 📋 **Entrevista #6**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -667,7 +784,7 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EQiYFTYEAR9Aieoo9T6RMZ8BT-BAUmq26dZJ4p-hhY8ioQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=e9sN1V">Entrevista 3</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EQiYFTYEAR9Aieoo9T6RMZ8BT-BAUmq26dZJ4p-hhY8ioQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=e9sN1V">Entrevista 6</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
@@ -677,7 +794,7 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
 
 ### 📸 **Imagen de la Entrevista**
 
-<img src="img/entrevistas-img/entrevista-3.png" alt="Entrevista 3" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="img/entrevistas-img/entrevista-6.png" alt="Entrevista 6" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
 
