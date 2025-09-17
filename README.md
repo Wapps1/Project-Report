@@ -646,66 +646,44 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 #### 2.5.1.2. Domain Message Flows Modeling
 #### 2.5.1.3. Bounded Context Canvases
 ### 2.5.2. Context Mapping
-**Open Host Service (OHS)** <br>
+
+**Open Host Service (OHS)**<br>
 El upstream publica capacidades por un contrato estable (API/eventos) que múltiples downstream consumen sin conocer su modelo interno.
-En Red Carga, IAM expone autenticación, MFA, emisión/rotación de tokens y validación de sesiones/claims. Todos los BCs consumen este OHS para autorizar acciones, manteniendo su propio lenguaje sin acoplarse a la implementación de IAM.
-<img src="img/context-mapping/context-mapping-ohs.png" ></img>
+En Red Carga, IAM expone autenticación, MFA y emisión/rotación de tokens/claims; todos los BC consumen este OHS para autorizar acciones sin acoplarse a la implementación de IAM.
+<img src="img/context-mapping/context-mapping-ohs.png" />
 <br>
 **Conformist (CF)** <br>
-El downstream adopta el modelo del upstream sin traducción para integrar rápido, asumiendo sus estados y semántica.
-Aquí, Pagos se alinea al PSP (pasarela externa): usa sus estados y webhooks nativos para autorizar/capturar/reembolsar, y trata los cambios del PSP como fuente de verdad operativa.
-<img src="img/context-mapping/context-mapping-cf.png" ></img>
+El downstream adopta el modelo/estados del upstream para integrar rápido.
+Aquí Pagos se alinea al PSP: usa sus estados y webhooks nativos para autorizar/capturar/reembolsar y conciliar, tomando al PSP como fuente de verdad operativa.
+<img src="img/context-mapping/context-mapping-cf.png" />
 <br>
 **Customer/Supplier (C/S)** <br>
-<br>Clientes → Solicitudes
-
-Relación proveedor–cliente donde el upstream prioriza capacidades para habilitar al downstream.
-Clientes provee plantillas/preferencias; Solicitudes requiere un lenguaje operativo publicable. La integración se ejecuta vía ACL para traducir unidades/enums y validar completitud antes de publicar.
-
-<br>Solicitudes → Tratos
-
-El downstream (Tratos) depende del lenguaje publicado por el upstream (Solicitudes).
-La negociación adopta los atributos cotizables de la solicitud (ítems, ruta, restricciones), evitando redefinirlos y asegurando consistencia durante la negociación.
-
-<br>Tratos → Pagos
-
-El downstream (Pagos) habilita objetivos del upstream (Tratos); se coordina por eventos.
-Se usa Saga + Outbox: un Trato iniciado/confirmado dispara cobro; fallas generan compensaciones (reintentos, cancelación o reembolso).
-
-<br>Pagos → Guías
-
-El upstream condiciona capacidades del downstream.
-Solo si Pago = PAID se permite emitir Guías; el BC de Guías actúa como consumidor de ese estado para generar la documentación obligatoria.
-
-<br>Pagos → Viajes
-
-El upstream habilita operación en campo del downstream.
-Con Pago aprobado, Viajes puede asignar unidad y activar tracking; sin pago, la operación queda bloqueada por política.
+Relación proveedor–cliente: el supplier define el lenguaje; el customer puede influir backlog.
+<ul>
+<li>Clientes → Solicitudes (con ACL): plantillas/preferencias se traducen al modelo publicable.</li>
+<li>Solicitudes → Tratos: la negociación adopta el lenguaje de la solicitud.</li>
+<li>Tratos → Pagos (Saga/Outbox): eventos orquestan cobro y compensaciones.</li>
+<li>Pagos → Guías / Viajes (gating=PAID): pago aprobado habilita emisión y operación.</li>
+<li>Proveedores → Flota / Planificación: habilitación de empresa alimenta vehículos y rutas/capacidad.</li>
+<li>Flota → Viajes (snapshot): datos de vehículo/licencias para operar.</li>
+<li>Planificación → Tratos / Viajes: capacidad/slots gobiernan oferta y programación.</li>
+<li>Identidad → Clientes / Proveedores: resultado KYC habilita alta/uso.</li>
+</ul>
 <img src="img/context-mapping/context-mapping-cs.png" ></img>
 <br>
-**Partnership (P)** <br>
-Planificación ↔ Tratos
-
+<strong>Partnership (P) </strong><br>
 Interdependencia simétrica con coordinación de diseño y releases.
-La capacidad/ventanas de Planificación condicionan cómo Tratos negocia y confirma; a su vez, Tratos retroalimenta reglas anti-overbooking y SLA. Se planifican cambios de forma conjunta para evitar bloqueos.
-<img src="img/context-mapping/context-mapping-p.png" ></img>
+Planificación ↔ Tratos: la capacidad/ventanas condiciona la negociación y ésta retroalimenta reglas anti-overbooking/SLA; se lanzan cambios coordinados.
+<img src="img/context-mapping/context-mapping-p.png" />
 <br>
-**Anti-Corruption Layer (ACL)** <br>
-Clientes → Solicitudes
-
-El ACL protege al downstream de la semántica del upstream traduciendo contratos.
-Convierte plantillas y preferencias del cliente a un modelo publicable (normalización de unidades, mapeo de categorías/enums, validaciones), preservando el lenguaje de Solicitudes.
-
-<br>Guías → SUNAT GRE (externo)
-
-El ACL aísla normativa/volatilidad de un sistema externo.
-Mapea las entidades de Guías al payload GRE, maneja idempotencia/reintentos y versionado de la API de SUNAT, devolviendo estados propios del dominio (emitida/observada/anulada).
-
-<br>Disputas → Pagos / Viajes
-
-El ACL evita que las máquinas de estado internas contaminen el árbitro de disputas.
-Traduce acciones neutrales como RequestHoldFunds o PauseTrip a comandos reales de Pagos/Viajes, y mapea los resultados a eventos del lenguaje de Disputas (fondos retenidos/liberados, viaje pausado/reanudado).
-<img src="img/context-mapping/context-mapping-acl.png" ></img>
+<strong>Anti-Corruption Layer (ACL)</strong> <br>
+Capa de traducción que protege al downstream del lenguaje/volatilidad del upstream o externo.
+<ul>
+<li>Clientes → Solicitudes: normaliza unidades, mapea categorías/enums y valida completitud.</li>
+<li>Guías → SUNAT GRE: mapea entidades al payload normativo, maneja idempotencia/reintentos y versionado de API.</li>
+<li>Disputas → Pagos / Viajes: traduce RequestHoldFunds/PauseTrip a comandos reales y mapea respuestas a eventos del lenguaje de Disputas.</li>
+</ul>
+<img src="img/context-mapping/context-mapping-acl.png" />
 <br>
 
 
