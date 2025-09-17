@@ -621,6 +621,15 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 
 # Bibliografía
 
+Fazi, S., & Fransoo, J. C. (2025). Freight Mobility as a Service: Open platforms for synchromodal transport. *Transportation Research Part E: Logistics and Transportation Review, 204*, 104368. <https://doi.org/10.1016/j.tre.2025.104368>
+
+Marques, A. C. & Agostinho S. (2025). Enhancing Customer Experience Through IoT-Driven Coopetition: A Service-Dominant Logic Approach in Networks. Logistics, 9(2), 75. <https://doi.org/10.3390/logistics9020075>
+
+Ministerio de Transportes y Comunicaciones del Perú (2024). *Anuario Estadístico 2024*. <https://cdn.www.gob.pe/uploads/document/file/8255192/344726-anuario-estadistico-2024%282%29.pdf?v=1751558212>
+
+Peng, T., Gan, M., & Wei, L. (2025). Spatial patterns and community structures of urban freight: Network insights into diesel and electric truck mobility. *Journal of Transport Geography, 129*, 104411. <https://doi.org/10.1016/j.jtrangeo.2025.104411>
+
+Saxena, D., Singh, N., Gupta, K., Verma, A., Mishra, V., Kumar, J., Gupta, I., Patni, S., Gupta, R., Kumar, J., & Singh, A. K. (2025). An Intelligent Multi-Depot Vehicle Routing and Management Model for Smart Cities. *IEEE Transactions on Intelligent Transportation Systems, 26*, 7740. <https://ieeexplore.ieee.org/document/10977971>
 
 <br>
 <br>
