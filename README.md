@@ -1504,19 +1504,28 @@ No aplican (flujos locales, un AR por TX).
 
 #### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
 
+- *Identity & KYC - System Context*
+<img width="2350" height="4300" alt="image" src="https://github.com/user-attachments/assets/66f5ca27-5c8a-45e1-a034-8d989217fa56" />
+
+- *Identity & KYC - Containers*
+<img width="2370" height="4828" alt="image" src="https://github.com/user-attachments/assets/c34afa92-c9c5-477a-9f6c-65f3a47745f8" />
+
+- *KYC API - Component Diagram*
+<img width="3140" height="8011" alt="image" src="https://github.com/user-attachments/assets/4c8967f4-9dbb-4c9a-a7f3-9e0a773dd0db" />
 
 <br/>
  
 #### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
 
-<br/>
-
 ##### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/KYC-BC.svg"></img>
 
 <br/>
 
 ##### 2.6.2.6.2. Bounded Context Database Design Diagram
 
+<img src="img/class-diagram/KYC-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -2447,9 +2456,11 @@ Ruta operativa, corredor, flags de aceptación, normalización, elegibilidad, es
 
 #### 2.6.6.5. Bounded Context Software Architecture Component Level Diagrams
 
+- *Planning - Planning Service*
+
+<img width="3120" height="10209" alt="image" src="https://github.com/user-attachments/assets/2f751f57-bc67-446a-a6fa-b5a7353c3afa" />
 
 <br/>
-
 
 #### 2.6.6.6. Bounded Context Software Architecture Code Level Diagrams
 
@@ -2457,8 +2468,13 @@ Ruta operativa, corredor, flags de aceptación, normalización, elegibilidad, es
 
 ##### 2.6.6.6.1. Bounded Context Domain Layer Class Diagrams
 
+<img src="img/class-diagram/PLANNING-BC.svg"></img>
+
+<br/>
+
 ##### 2.6.6.6.2. Bounded Context Database Design Diagram
 
+<img src="img/class-diagram/PLANNING-BC-DATABASE.svg"></img>
 
 <br/>
 
