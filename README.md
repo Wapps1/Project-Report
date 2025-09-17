@@ -1224,12 +1224,6 @@ No aplican (flujos locales, un AR por TX).
 - *IAM API - Component Diagram*
 <img width="4640" height="6811" alt="image" src="https://github.com/user-attachments/assets/08314d99-cc47-42ec-8728-0122073c581e" />
 
-- *IAM Database - Component Diagram*
-<img width="600" height="800" alt="image" src="https://github.com/user-attachments/assets/234b847e-536f-4d29-9684-cc673948968d" />
-
-- *IAM Redis - Component Diagram*
-<img width="600" height="800" alt="image" src="https://github.com/user-attachments/assets/6502ecf3-8bb1-4f0e-a123-311bff2a5194" />
-
 - *IAM Event Dispatcher - Component Diagram*
 <img width="2390" height="1411" alt="image" src="https://github.com/user-attachments/assets/817e8d43-e621-461c-ac24-1023106accbd" />
 
@@ -1249,7 +1243,7 @@ No aplican (flujos locales, un AR por TX).
 
 <br/>
 
-### 2.6.2. Bounded Context: Identidad & KYC
+### 2.6.2. Bounded Context: Identity & KYC
 
 - *KYC de persona: validación de documento, biometría/face-match, verificación de nombre y edad.*
 
@@ -2237,9 +2231,28 @@ Vehicle, Document, Compliance/Policy, Enabled/Disabled, DisabledCause, Verificat
 <br/>
 
 #### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *BC Fleet*
+<img width="2370" height="3400" alt="image" src="https://github.com/user-attachments/assets/cef7b7c7-e831-457e-83c1-63918d5b3bd4" />
+
+- *BC Fleet - Fleet Service*
+<img width="2390" height="9028" alt="image" src="https://github.com/user-attachments/assets/d0280dc2-6fc1-4f8d-962a-6a03d459c52a" />
+
+
+<br/>
+
 #### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.5.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/FLEET-BC.svg"></img>
+
+
+<br/>
+
 ##### 2.6.5.6.2. Bounded Context Database Design Diagram
+
+<img width="1144" height="1012" alt="image" src="https://github.com/user-attachments/assets/1af1c451-06d0-432b-8d1b-fdc1becf1052" />
+
 
 <br/>
 
