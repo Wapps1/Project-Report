@@ -597,8 +597,44 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 ## 📊 **Análisis del Segmento Objetivo #1**
 
 *Personas o empresas que quieren transportar carga de forma interprovincial*
-
 ## 📋 **Entrevista #1**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td> Jocelyn Damaly Almerco Rojas</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>22 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Dueña de un negocio de venta al por mayor de ropa </td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="">Entrevista 1</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 5:04 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2 - Jocelyn Damaly Almerco Rojas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+Jocelyn Damaly Almerco, de 22 años y residente de Lima, es dueña de un negocio mayorista de ropa importada que vende a boutiques, ferias y emprendedores en provincias; realiza envíos interprovinciales todas las semanas (6 a 8 al mes), generalmente en bultos grandes o “pacas” de 20 a 60 prendas por caja. Para encontrar transporte recurre a recomendaciones en grupos de Facebook y WhatsApp y, a veces, a Google; compara precio, seguridad y rapidez, solicita entre 3 y 4 cotizaciones y demora de 1 a 2 días en decidir, contactando sobre todo por WhatsApp y llamadas (y de manera presencial si el envío es muy grande). Suele lidiar con cotizaciones confusas porque no siempre queda claro si cobran por peso o por volumen ni si incluyen seguro. Asimismo con trámites de guía de remisión, factura y comprobantes; paga por transferencia o depósito y le incomoda cuando le exigen efectivo para montos altos. Sus prioridades son la seguridad, la rapidez, un precio competitivo y una buena atención al cliente; ha sufrido demoras de varios días, cajas maltratadas e incluso la pérdida total de un paquete. Para una app ideal, considera imprescindibles la cotización inmediata por peso/volumen (con el “peso cobrable” claro), contratar seguro desde la app, pagos digitales seguros (Yape, Plin, tarjeta, transferencia), seguimiento en tiempo real y un historial con comprobantes digitales para su control contable.
+
+---
+## 📋 **Entrevista #2**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -623,7 +659,7 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 6:35 s</td>
+    <td>Inicio: 5:05 s - Fin: 12:43 s</td>
   </tr>
 </table>
 
@@ -632,48 +668,12 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 <img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Alexander Miranda Vivanco" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
+Alexander Miranda Vivanco, 25 años, radicado en Lima, vende dispositivos electrónicos y realiza envíos interprovinciales a diario. Para encontrar transporte recurre a redes sociales, priorizando empresas con buenas referencias, y suele cerrar acuerdos en un día. Se comunica principalmente por teléfono o WhatsApp y compara entre cuatro y cinco cotizaciones antes de decidirse. Sus principales fricciones son la comparación entre propuestas,a veces poco claras entre sí, y la demora en las respuestas de los transportistas, lo que termina retrasando sus despachos. Le solicitan guía de remisión; paga por transferencia o tarjeta sin mayores inconvenientes. Valora por encima de todo la seguridad y la rapidez, seguidas de un precio competitivo y una atención al cliente eficaz; ha experimentado demoras e incluso la pérdida de un paquete en ruta. En una app ideal, considera indispensables la cotización inmediata y el seguimiento en tiempo real de sus envíos.
 
 
 
 ---
-## 📋 **Entrevista #2**
 
-<table align="center" style="margin: 0 auto;">
-  <tr>
-    <td><strong>Campo</strong></td>
-    <td><strong>Información</strong></td>
-  </tr>
-  <tr>
-    <td><strong>Nombre completo</strong></td>
-    <td> Jocelyn Damaly Almerco Rojas</td>
-  </tr>
-  <tr>
-    <td><strong>Edad</strong></td>
-    <td>22 años</td>
-  </tr>
-  <tr>
-    <td><strong>Cargo / Rol en la empresa</strong></td>
-    <td>Dueña de un negocio de venta al por mayor de ropa </td>
-  </tr>
-  <tr>
-    <td><strong>Enlace del video</strong></td>
-    <td><a href="">Entrevista 2</a></td>
-  </tr>
-  <tr>
-    <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 5:04 s</td>
-  </tr>
-</table>
-
-### 📸 **Imagen de la Entrevista**
-
-<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2 - Jocelyn Damaly Almerco Rojas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-
-### 📝 **Resumen de la Entrevista**
-
-
-
----
 ---
 ## 📊 **Análisis del Segmento Objetivo #2**
 
