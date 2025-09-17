@@ -1239,11 +1239,13 @@ No aplican (flujos locales, un AR por TX).
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
 
-
+<img src="img/class-diagram/IAM-BC.svg"></img>
 
 <br/>
 
 ##### 2.6.1.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/IAM-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -2431,8 +2433,17 @@ Ruta operativa, corredor, flags de aceptación, normalización, elegibilidad, es
 <br/>
 
 #### 2.6.6.5. Bounded Context Software Architecture Component Level Diagrams
+
+
+<br/>
+
+
 #### 2.6.6.6. Bounded Context Software Architecture Code Level Diagrams
+
+<br/>
+
 ##### 2.6.6.6.1. Bounded Context Domain Layer Class Diagrams
+
 ##### 2.6.6.6.2. Bounded Context Database Design Diagram
 
 
