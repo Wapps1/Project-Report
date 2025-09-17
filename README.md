@@ -1021,8 +1021,6 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 
 - *Autenticación, MFA, emisión/rotación de tokens y control de sesiones concurrentes.*
 
-<br/>
-
 #### 2.6.1.1. Domain Layer
 **Aggregates (AR)**
 
@@ -1146,6 +1144,7 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 **Webhooks**  
 No aplica.
 
+---
 
 <br/>
 
@@ -1187,11 +1186,9 @@ No aplican (flujos locales, un AR por TX).
 
 ---
 
-
 <br/>
 
 #### 2.6.1.4. Infrastructure Layer
-
 
 **Repositorios (implementaciones)**
 - `AccountRepositoryPostgres` — persistencia con **optimistic locking** (`version`), unicidad `(issuer,subject)`, regla tombstone.
