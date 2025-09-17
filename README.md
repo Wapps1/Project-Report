@@ -274,7 +274,7 @@ Normalmente desde su teléfono móvil, desde donde se encuentre, como en casa, o
 Se dirige a completar el flujo que va desde solicitar envío hasta la entrega final de la carga, con todas las etapas intermedias funcionando bien: cotizaciones, aceptación, pago, documentación, seguimiento, entrega.
 
 - ¿Dónde surge el problema?<br>
-Surge en los momentos de coordinación, al enviar fotos y medidas, al negociar precio y ruta, al momento del pago, y sobre todo la falta de trazabilidad y documentación cuando el envio ya está en curso.
+Surge en los momentos de coordinación, al enviar fotos y medidas, al negociar precio y ruta, al momento del pago, y sobre todo la falta de trazabilidad y documentación cuando el envio ya está en curso. Esta falta de integración operativa ha sido abordada por Saxena et al. (2025), quienes proponen un modelo inteligente de gestión de rutas y flotas desde múltiples depósitos, optimizando la asignación de vehículos y mejorando la eficiencia logística en entornos fragmentados como el transporte interprovincial de carga.
 
 **Who (Quién)**
 
@@ -290,12 +290,12 @@ Clientes quienes necesitan transporte interprovincial y proveedores de transport
 **Why (Por qué)**
 
 - ¿Cuál es la causa del problema?<br>
-Falta de formalización en muchos servicios de transporte interprovincial, las cuales en su mayoría se coordinan por teléfono, WhatsApp, sin garantía de pagos y documentación. Además de la dificultad para estimar costos reales cuando datos de peso, volumen, rutas, puntos intermedios no están estandarizados. También la falta de transparencia sobre el estado del envío "¿dónde está mi carga?" o "¿cuándo llegará?.
+Falta de formalización en muchos servicios de transporte interprovincial, las cuales en su mayoría se coordinan por teléfono, WhatsApp, sin garantía de pagos y documentación. Además de la dificultad para estimar costos reales cuando datos de peso, volumen, rutas, puntos intermedios no están estandarizados. También la falta de transparencia sobre el estado del envío "¿dónde está mi carga?" o "¿cuándo llegará? se agrava por la fragmentación de las redes logísticas y la baja adopción tecnológica. Según Peng et al. (2025), los patrones de movilidad de carga urbana muestran estructuras comunitarias dispersas que dificultan la trazabilidad, especialmente en entornos con flotas mixtas (diésel y eléctricas), lo cual es extrapolable al transporte interprovincial en países como Perú.
 
 **How (Cómo)**
 
 - ¿En qué condiciones los clientes usan nuestro producto?<br>
-Los clientes usan el aplicativo cuando necesitan enviar carga de forma segura y rápida, desde oficina o móvil. Buscan trazabilidad, pagos documentados y coordinación confiable, evitando la informalidad en envíos puntuales o recurrentes.
+Los clientes usan el aplicativo cuando necesitan enviar carga de forma segura y rápida, desde oficina o móvil. Buscan trazabilidad, pagos documentados y coordinación confiable, evitando la informalidad en envíos puntuales o recurrentes. Este enfoque se alinea con propuestas como la de Fazi y Fransoo (2025), quienes plantean plataformas abiertas para coordinar transporte de carga en tiempo real, integrando actores logísticos mediante soluciones digitales interoperables.
 
 - ¿Cómo nos conocieron los compradores?<br>
 Los compradores llegan por recomendaciones, búsquedas en internet y redes sociales. También descubren la solución a través de transportistas asociados, asociaciones comerciales o campañas de publicidad que destacan seguridad, trazabilidad y pagos confiables.
@@ -304,7 +304,7 @@ Los compradores llegan por recomendaciones, búsquedas en internet y redes socia
 Prefieren un aplicativo móvil fácil de usar, con notificaciones, formularios simples y chat integrado.
 
 - ¿Qué llevó a la persona a llegar a esta situación?<br>
-Necesitan resolver envíos urgentes y seguros tras experiencias negativas con fraudes o retrasos. La falta de alternativas digitales transparentes los empuja a buscar un canal formal que garantice seguridad y eficiencia.
+Experiencias previas con fraudes y retrasos, sumadas al desconocimiento de plataformas digitales confiables. La urgencia por envíos seguros y la falta de trazabilidad en canales informales la empujaron a buscar soluciones formales. Como señalan Marques y Agostinho (2025), la baja visibilidad operativa genera decisiones improvisadas y dependencia informal
 
 **How much (cuánto)**
 
