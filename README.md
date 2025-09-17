@@ -344,7 +344,7 @@ Normalmente desde su teléfono móvil, desde donde se encuentre, como en casa, o
 Se dirige a completar el flujo que va desde solicitar envío hasta la entrega final de la carga, con todas las etapas intermedias funcionando bien: cotizaciones, aceptación, pago, documentación, seguimiento, entrega.
 
 - ¿Dónde surge el problema?<br>
-Surge en los momentos de coordinación, al enviar fotos y medidas, al negociar precio y ruta, al momento del pago, y sobre todo la falta de trazabilidad y documentación cuando el envio ya está en curso.
+Surge en los momentos de coordinación, al enviar fotos y medidas, al negociar precio y ruta, al momento del pago, y sobre todo la falta de trazabilidad y documentación cuando el envio ya está en curso. Esta falta de integración operativa ha sido abordada por Saxena et al. (2025), quienes proponen un modelo inteligente de gestión de rutas y flotas desde múltiples depósitos, optimizando la asignación de vehículos y mejorando la eficiencia logística en entornos fragmentados como el transporte interprovincial de carga.
 
 **Who (Quién)**
 
@@ -360,12 +360,12 @@ Clientes quienes necesitan transporte interprovincial y proveedores de transport
 **Why (Por qué)**
 
 - ¿Cuál es la causa del problema?<br>
-Falta de formalización en muchos servicios de transporte interprovincial, las cuales en su mayoría se coordinan por teléfono, WhatsApp, sin garantía de pagos y documentación. Además de la dificultad para estimar costos reales cuando datos de peso, volumen, rutas, puntos intermedios no están estandarizados. También la falta de transparencia sobre el estado del envío "¿dónde está mi carga?" o "¿cuándo llegará?.
+Falta de formalización en muchos servicios de transporte interprovincial, las cuales en su mayoría se coordinan por teléfono, WhatsApp, sin garantía de pagos y documentación. Además de la dificultad para estimar costos reales cuando datos de peso, volumen, rutas, puntos intermedios no están estandarizados. También la falta de transparencia sobre el estado del envío "¿dónde está mi carga?" o "¿cuándo llegará? se agrava por la fragmentación de las redes logísticas y la baja adopción tecnológica. Según Peng et al. (2025), los patrones de movilidad de carga urbana muestran estructuras comunitarias dispersas que dificultan la trazabilidad, especialmente en entornos con flotas mixtas (diésel y eléctricas), lo cual es extrapolable al transporte interprovincial en países como Perú.
 
 **How (Cómo)**
 
 - ¿En qué condiciones los clientes usan nuestro producto?<br>
-Los clientes usan el aplicativo cuando necesitan enviar carga de forma segura y rápida, desde oficina o móvil. Buscan trazabilidad, pagos documentados y coordinación confiable, evitando la informalidad en envíos puntuales o recurrentes.
+Los clientes usan el aplicativo cuando necesitan enviar carga de forma segura y rápida, desde oficina o móvil. Buscan trazabilidad, pagos documentados y coordinación confiable, evitando la informalidad en envíos puntuales o recurrentes. Este enfoque se alinea con propuestas como la de Fazi y Fransoo (2025), quienes plantean plataformas abiertas para coordinar transporte de carga en tiempo real, integrando actores logísticos mediante soluciones digitales interoperables.
 
 - ¿Cómo nos conocieron los compradores?<br>
 Los compradores llegan por recomendaciones, búsquedas en internet y redes sociales. También descubren la solución a través de transportistas asociados, asociaciones comerciales o campañas de publicidad que destacan seguridad, trazabilidad y pagos confiables.
@@ -374,7 +374,7 @@ Los compradores llegan por recomendaciones, búsquedas en internet y redes socia
 Prefieren un aplicativo móvil fácil de usar, con notificaciones, formularios simples y chat integrado.
 
 - ¿Qué llevó a la persona a llegar a esta situación?<br>
-Necesitan resolver envíos urgentes y seguros tras experiencias negativas con fraudes o retrasos. La falta de alternativas digitales transparentes los empuja a buscar un canal formal que garantice seguridad y eficiencia.
+Experiencias previas con fraudes y retrasos, sumadas al desconocimiento de plataformas digitales confiables. La urgencia por envíos seguros y la falta de trazabilidad en canales informales la empujaron a buscar soluciones formales. Como señalan Marques y Agostinho (2025), la baja visibilidad operativa genera decisiones improvisadas y dependencia informal
 
 **How much (cuánto)**
 
@@ -697,6 +697,15 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 
 # Bibliografía
 
+Fazi, S., & Fransoo, J. C. (2025). Freight Mobility as a Service: Open platforms for synchromodal transport. *Transportation Research Part E: Logistics and Transportation Review, 204*, 104368. <https://doi.org/10.1016/j.tre.2025.104368>
+
+Marques, A. C. & Agostinho S. (2025). Enhancing Customer Experience Through IoT-Driven Coopetition: A Service-Dominant Logic Approach in Networks. Logistics, 9(2), 75. <https://doi.org/10.3390/logistics9020075>
+
+Ministerio de Transportes y Comunicaciones del Perú (2024). *Anuario Estadístico 2024*. <https://cdn.www.gob.pe/uploads/document/file/8255192/344726-anuario-estadistico-2024%282%29.pdf?v=1751558212>
+
+Peng, T., Gan, M., & Wei, L. (2025). Spatial patterns and community structures of urban freight: Network insights into diesel and electric truck mobility. *Journal of Transport Geography, 129*, 104411. <https://doi.org/10.1016/j.jtrangeo.2025.104411>
+
+Saxena, D., Singh, N., Gupta, K., Verma, A., Mishra, V., Kumar, J., Gupta, I., Patni, S., Gupta, R., Kumar, J., & Singh, A. K. (2025). An Intelligent Multi-Depot Vehicle Routing and Management Model for Smart Cities. *IEEE Transactions on Intelligent Transportation Systems, 26*, 7740. <https://ieeexplore.ieee.org/document/10977971>
 
 <br>
 <br>
