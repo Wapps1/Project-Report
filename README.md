@@ -1225,10 +1225,10 @@ No aplican (flujos locales, un AR por TX).
 <img width="4640" height="6811" alt="image" src="https://github.com/user-attachments/assets/08314d99-cc47-42ec-8728-0122073c581e" />
 
 - *IAM Database - Component Diagram*
-<img width="898" height="2011" alt="image" src="https://github.com/user-attachments/assets/234b847e-536f-4d29-9684-cc673948968d" />
+<img width="600" height="800" alt="image" src="https://github.com/user-attachments/assets/234b847e-536f-4d29-9684-cc673948968d" />
 
 - *IAM Redis - Component Diagram*
-<img width="898" height="1411" alt="image" src="https://github.com/user-attachments/assets/6502ecf3-8bb1-4f0e-a123-311bff2a5194" />
+<img width="600" height="800" alt="image" src="https://github.com/user-attachments/assets/6502ecf3-8bb1-4f0e-a123-311bff2a5194" />
 
 - *IAM Event Dispatcher - Component Diagram*
 <img width="2390" height="1411" alt="image" src="https://github.com/user-attachments/assets/817e8d43-e621-461c-ac24-1023106accbd" />
