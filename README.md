@@ -1214,6 +1214,26 @@ No aplican (flujos locales, un AR por TX).
 
 #### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
 
+- *BC IAM - System Context*
+
+<img width="2350" height="1300" alt="image" src="https://github.com/user-attachments/assets/6c8c7799-1fd7-4fcb-bcd9-7cbf6e68daf3" />
+
+- *BC IAM - Containers*
+<img width="2370" height="2520" alt="image" src="https://github.com/user-attachments/assets/edc9bf99-fbca-4e0f-a982-a6e198510fec" />
+
+- *IAM API - Component Diagram*
+<img width="4640" height="6811" alt="image" src="https://github.com/user-attachments/assets/08314d99-cc47-42ec-8728-0122073c581e" />
+
+- *IAM Database - Component Diagram*
+<img width="898" height="2011" alt="image" src="https://github.com/user-attachments/assets/234b847e-536f-4d29-9684-cc673948968d" />
+
+- *IAM Redis - Component Diagram*
+<img width="898" height="1411" alt="image" src="https://github.com/user-attachments/assets/6502ecf3-8bb1-4f0e-a123-311bff2a5194" />
+
+- *IAM Event Dispatcher - Component Diagram*
+<img width="2390" height="1411" alt="image" src="https://github.com/user-attachments/assets/817e8d43-e621-461c-ac24-1023106accbd" />
+
+
 <br/>
 
 #### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
