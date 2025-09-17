@@ -2612,6 +2612,223 @@ Request, Item, Measurements (**AI|USER**), Suggestion, Publish, Version, Superse
 <br/>
 
 
+### 2.6.8. Bounded Context: Deals
+
+- *Aceptación parcial y negociación hasta condiciones finales; conversación contextual del trato.*
+
+#### 2.6.8.1. Domain Layer
+
+**Aggregates (AR)**
+
+**1) Deal (Aggregate Root)**
+
+- **Estado (snapshot por hitos)**
+  - `dealId: UUID` · `requestRef: { requestId, version }` · `quoteRef: QuoteId`
+  - `parties: { clientId: SubjectId, providerId: SubjectId }`
+  - `status: DRAFT | NEGOTIATION | TERMS_AGREED | READY_FOR_PAYMENT | FORMAL | IN_TRANSIT | DELIVERED | CANCELLED | EXPIRED`
+  - `terms: DealTerms[v]*` *(histórico durante NEGOTIATION)*
+  - `agreedTerms?: DealTerms` *(congelado en TERMS_AGREED)*
+  - `financials: { currency, baseAmount, moneyChanges: MoneyChange[], finalAmount, appFeePct = 1%, appFeeAmount }`
+  - `ops: { plannedDates, routeSummary, constraints }`
+  - `links: { threadId?, tripId?, docsRef? }`
+  - `audit { createdAt, updatedAt, closedAt? }`
+
+- **Invariantes**
+  - Referencia **inmutable** a `(requestId, version)`; Deals **no** muta Requests/Quotes.
+  - **NEGOTIATION:** solo propuestas/contra-propuestas; cada una crea `DealTerms[v+1]`.
+  - **TERMS_AGREED:** congela `agreedTerms` y fija `baseAmount = agreedTerms.price`.
+  - **READY_FOR_PAYMENT:** requiere `agreedTerms` y `baseAmount > 0`, `currency` definido.
+  - **FORMAL:** **solo** por `onPaymentSucceeded(paymentId, capturedAmount)`; fija `appFeeAmount` con `FeeCalculator` sobre lo **capturado acumulado**.
+  - `finalAmount = baseAmount ± Σ(moneyChanges)`; la **fee** se recalcula sobre el total capturado.
+  - Ajustes post-pago **solo** en `FORMAL` y **antes** de `DELIVERED | CANCELLED`.
+  - Estados terminales: `DELIVERED`, `CANCELLED`, `EXPIRED`.
+
+- **Transiciones permitidas (resumen)**
+  - `DRAFT → NEGOTIATION`
+  - `NEGOTIATION → TERMS_AGREED | EXPIRED | CANCELLED`
+  - `TERMS_AGREED → READY_FOR_PAYMENT | CANCELLED`
+  - `READY_FOR_PAYMENT → FORMAL | CANCELLED` *(por falla/timeout de pago puede volver a READY_FOR_PAYMENT según Payments; el AR no “retrocede” desde FORMAL)*
+  - `FORMAL → IN_TRANSIT | CANCELLED`
+  - `IN_TRANSIT → DELIVERED | CANCELLED`
+
+- **Comportamientos**
+  - `openFromQuote(quoteSnapshot)`
+  - `proposeTerms(changeSet)` / `counterPropose(changeSet)`
+  - `agreeTerms()`
+  - `markReadyForPayment(orderRef)`
+  - `onPaymentSucceeded(paymentRef, capturedAmount)` → `FORMAL` + `appFeeAmount`
+  - `requestAdjustment(delta)` / `acceptAdjustment()` / `rejectAdjustment()`
+  - `markInTransit(tripId)`
+  - `markDelivered(podRef)`
+  - `cancel(policy, cause)` *(pre/post-pago con penalidad si aplica)*
+  - `expire()` *(solo en NEGOTIATION)*
+
+**2) DealTerms (VO versionado)**  
+`v: Int≥1` · `price: Money` · `priceComponents { lineItems[], discounts[] }` ·  
+`dates { pickupWindow, deliveryWindow }` · `route { origin, stops[], destination }` ·  
+`serviceFlags { handling, refrigerated, … }` · `notes?`  
+**Reglas:** continuidad **O→…→D**; ventanas coherentes; flags proveedor ⊇ flags requeridos.
+
+**3) MoneyChange (VO)**  
+`type: TOP_UP | REFUND | PENALTY | PRICE_CORRECTION` · `amount > 0` · `reason`  
+**Reglas:** signo implícito por `type`; `finalAmount` consistente.
+
+**4) CancellationPolicy (VO)**  
+`rules[]` con ventanas/porcentajes → computa **penalty** según fecha y estado.
+
+**Domain Services**
+
+- `AdjustmentPolicy` — normaliza cambios post-pago (cuándo `TOP_UP` vs `REFUND`, límites).
+- `FeeCalculator` — regla 1% (redondeo/mínimo).
+- `RouteConsistency` — coherencia `agreedTerms` ↔ `routeSummary`.
+
+**Repositories (interfaces)**
+
+- `DealRepository` — `findById`, `save`, `findActiveByParty(subjectId)`, `existsOpenFor(quoteId)`  
+  `save` persiste AR + **outbox** en la misma transacción.
+
+**Domain Events (mínimos)**
+
+- `DealOpened { dealId, requestRef, quoteRef, parties }`
+- `DealTermsProposed { dealId, v }`
+- `DealTermsAgreed { dealId, terms }`
+- `DealReadyForPayment { dealId, orderId, amount, currency }`
+- `DealFormalized { dealId, paymentId, finalCaptured, fee }`
+- `DealAdjustmentRequested { dealId, delta }` / `DealAdjusted { dealId, newFinal, fee }`
+- `DealInTransit { dealId, tripId }` / `DealDelivered { dealId, podRef }`
+- `DealCancelled { dealId, cause, penalty? }`
+- `DealExpired { dealId }`
+
+**Ubiquitous Language (breve)**  
+Deal; Negotiation; TermsAgreed; Formal; Adjustment (TOP_UP/REFUND); Penalty; POD.
+
+---
+
+<br/>
+
+#### 2.6.8.2. Interface Layer
+
+**Endpoints (base `/api/v1/deals`)**
+
+- `POST /` — **OpenDeal** `{ quoteId }`
+- `POST /{dealId}/terms/proposals` — **Propose/Counter** `{ changeSet }`
+- `POST /{dealId}/terms/agree` — **AgreeTerms** → crea **Order**
+- `GET /{dealId}` — detalle (incluye snapshots)
+- `POST /{dealId}/adjustments` — **RequestAdjustment** `{ delta }`
+- `POST /{dealId}/adjustments/accept` — **AcceptAdjustment**
+- `POST /{dealId}/cancel` — **CancelDeal** `{ cause }`
+- `GET /mine?status=…` — listar deals del sujeto autenticado
+
+**Webhooks / Consumers (pagos)**
+
+- `POST /_hooks/payments` — `PaymentSucceeded | Failed | Refunded` *(HMAC, reintentos, dedupe por `eventId`)*.  
+  **2xx** solo si el handler fue **idempotente** y **persistido**.
+
+**Contratos I/O**
+
+- DTOs compactos; errores **RFC 7807**.  
+- Campos clave: `dealId`, `status`, `agreedTerms`, `finalAmount`, `fee`, `links { threadId, tripId }`.
+
+**Auth & Ownership**
+
+- `Authorization: Bearer <JWT>` (IAM) · `subjectId` desde `SecurityContext`.
+- Acceso **solo** si `clientId == subjectId` **o** `providerId == subjectId`; si no, **404**.
+
+**Versionado & Idempotency-Key**
+
+- `X-Idempotency-Key` en `POST/PUT/PATCH/DELETE`.  
+- Versión: `/api/v1`.
+
+---
+
+<br/>
+
+#### 2.6.8.3. Application Layer
+
+**Capabilities**
+
+- Abrir trato desde cotización
+- Negociar (proponer/contra-proponer)
+- Acordar términos y preparar pago
+- Formalizar tras pago exitoso
+- Ajustes post-pago (top-up/refund)
+- Cancelar con política/penalidad
+- Marcar entregado (POD) y abrir ventana de rating
+- Expirar negociación por timeout
+
+**Command/Query Handlers**
+
+- `OpenDealCommand { quoteId }` → `DealOpened`
+- `ProposeTermsCommand { dealId, changeSet }` → `DealTermsProposed`
+- `AgreeTermsCommand { dealId }` → `DealTermsAgreed` + `DealReadyForPayment { orderId }` *(vía `PaymentsPort.createOrder`)*
+- `OnPaymentSucceededEvent { orderId, paymentId, capturedAmount }` → `DealFormalized` + `DocsPort.issue*` + `TripsPort.startTrip`
+- `RequestAdjustmentCommand { dealId, delta }` → `DealAdjustmentRequested`
+- `AcceptAdjustmentCommand { dealId }` → `PaymentsPort.capture/refund` → `DealAdjusted`
+- `CancelDealCommand { dealId, cause }` → calcula `penalty` → captura/refund diferencial → `DealCancelled`
+- `OnTripDeliveredEvent { tripId, podRef }` → `DealDelivered` + *OpenRatingWindow*
+- `ExpireDealCommand { dealId }` → `DealExpired`
+
+**Puertos (interfaces)**
+
+`PaymentsPort { createOrder, capture, refund, getPaymentStatus }` ·  
+`DocsPort { issueShipperGuide, issueCarrierGuide }` ·  
+`TripsPort { startTrip, linkDeal }` ·  
+`QuotesPort { getQuoteSnapshot, markAsNegotiating }` ·  
+`ProvidersPort { isProviderEnabled(providerId) }` ·  
+`NotificationsPort { notify(subjectId, event) }` ·  
+`ConversationsPort { openThread(dealId), closeThread(dealId) }` ·  
+`Clock`, `IdGenerator`, `TxManager`.
+
+**Idempotencia / Transaccionalidad**
+
+- `X-Idempotency-Key` en mutaciones (**scope:** `subjectId + action + targetId`).
+- **Transactional Outbox** para publicación confiable.
+
+**Sagas**
+
+- **Formalización:** `ReadyForPayment → createOrder → PaymentSucceeded → Formalized → Docs & Trip`.
+- **Ajuste:** `RequestAdjustment → capture/refund → Adjusted`.
+- **Cancelación:** compensaciones *(refund/penalty)*.
+
+---
+
+<br/>
+
+#### 2.6.8.4. Infrastructure Layer
+
+**Repositorios (impl)**  
+`SqlDealRepository` + `UnitOfWork` + `OutboxAppender`.  
+Proyección de consulta: `DealsByPartyView` *(read-model)*.
+
+**Adapters / Integraciones**  
+`PaymentsHttpAdapter` *(createOrder, capture, refund, webhook verifier)* ·  
+`DocsAdapter` *(shipper/carrier guides)* ·  
+`TripsAdapter` *(startTrip, linkDeal)* ·  
+`QuotesAdapter` *(snapshot, markNegotiating)* ·  
+`ProvidersAdapter` *(check enabled)* ·  
+`NotificationsAdapter` *(push/SSE por `dealId`)* ·  
+`ConversationsAdapter` *(open/close thread)* ·  
+`ClockSystem`, `UuidGenerator`, `SpringTxManager`.
+
+**Mensajería / Outbox**  
+`OutboxStore` + `OutboxPublisher` *(reintentos, DLQ)*.  
+**Exactly-once** efectivo: idempotencia por `eventId` y **inbox** si aplica.
+
+**Configuración / secretos**  
+Variables de entorno / vault; **rotación** de claves HMAC de pagos.
+
+<br/>
+
+#### 2.6.8.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.8.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.8.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.8.6.2. Bounded Context Database Design Diagram
+
+
+
+<br/>
+
+
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
 #### 2.6.X.2. Interface Layer
