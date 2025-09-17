@@ -650,40 +650,46 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 **Open Host Service (OHS)**<br>
 El upstream publica capacidades por un contrato estable (API/eventos) que múltiples downstream consumen sin conocer su modelo interno.
 En Red Carga, IAM expone autenticación, MFA y emisión/rotación de tokens/claims; todos los BC consumen este OHS para autorizar acciones sin acoplarse a la implementación de IAM.
-<img src="img/context-mapping/context-mapping-ohs.png" />
+
+<img src="img/context-mapping/context-mapping-ohs.jpg" />
 <br>
-**Conformist (CF)** <br>
+<strong>Conformist (CF)</strong> <br>
 El downstream adopta el modelo/estados del upstream para integrar rápido.
 Aquí Payments se alinea al PSP: usa sus estados y webhooks nativos para autorizar/capturar/reembolsar y conciliar, tomando al PSP como fuente de verdad operativa.
-<img src="img/context-mapping/context-mapping-cf.png" />
 <br>
-**Customer/Supplier (C/S)** <br>
+
+
+<img src="img/context-mapping/context-mapping-cf.jpg" />
+<br>
+<strong>Customer/Supplier (C/S)</strong> <br>
 Relación proveedor–cliente: el supplier define el lenguaje; el customer puede influir backlog.
 <ul>
 <li>Customers → Requests (con ACL): plantillas/preferencias se traducen al modelo publicable.</li>
 <li>Requests → Deals: la negociación adopta el lenguaje de la solicitud.</li>
 <li>Deals → Payments (Saga/Outbox): eventos orquestan cobro y compensaciones.</li>
-<li>Payments → Guías / Viajes (gating=PAID): pago aprobado habilita emisión y operación.</li>
-<li>Proveedores → Flota / Planificación: habilitación de empresa alimenta vehículos y rutas/capacidad.</li>
-<li>Flota → Viajes (snapshot): datos de vehículo/licencias para operar.</li>
-<li>Planificación → Deals / Viajes: capacidad/slots gobiernan oferta y programación.</li>
-<li>Identidad → Customers / Proveedores: resultado KYC habilita alta/uso.</li>
+<li>Payments → Waybills / Trips (gating=PAID): pago aprobado habilita emisión y operación.</li>
+<li>Providers → Fleet / Planning: habilitación de empresa alimenta vehículos y rutas/capacidad.</li>
+<li>Fleet → Trips (snapshot): datos de vehículo/licencias para operar.</li>
+<li>Planning → Deals / Trips: capacidad/slots gobiernan oferta y programación.</li>
+<li>Identity & KYC → Customers / Providers: resultado KYC habilita alta/uso.</li>
 </ul>
-<img src="img/context-mapping/context-mapping-cs.png" ></img>
+
+<img src="img/context-mapping/context-mapping-cs.jpg" ></img>
 <br>
 <strong>Partnership (P) </strong><br>
 Interdependencia simétrica con coordinación de diseño y releases.
-Planificación ↔ Deals: la capacidad/ventanas condiciona la negociación y ésta retroalimenta reglas anti-overbooking/SLA; se lanzan cambios coordinados.
-<img src="img/context-mapping/context-mapping-p.png" />
+Planning ↔ Deals: la capacidad/ventanas condiciona la negociación y ésta retroalimenta reglas anti-overbooking/SLA; se lanzan cambios coordinados.
+
+<img src="img/context-mapping/context-mapping-p.jpg" />
 <br>
 <strong>Anti-Corruption Layer (ACL)</strong> <br>
 Capa de traducción que protege al downstream del lenguaje/volatilidad del upstream o externo.
 <ul>
 <li>Customers → Requests: normaliza unidades, mapea categorías/enums y valida completitud.</li>
-<li>Guías → SUNAT GRE: mapea entidades al payload normativo, maneja idempotencia/reintentos y versionado de API.</li>
-<li>Disputas → Payments / Viajes: traduce RequestHoldFunds/PauseTrip a comandos reales y mapea respuestas a eventos del lenguaje de Disputas.</li>
+<li>Waybills → SUNAT GRE: mapea entidades al payload normativo, maneja idempotencia/reintentos y versionado de API.</li>
 </ul>
-<img src="img/context-mapping/context-mapping-acl.png" />
+
+<img src="img/context-mapping/context-mapping-acl.jpg" />
 <br>
 
 
