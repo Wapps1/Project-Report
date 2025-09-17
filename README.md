@@ -3096,6 +3096,934 @@ Charge, Top-up, Refund, Net collected, Fee (1%), Payout, **Formalized (Payment)*
 
 <br/>
 
+### 2.6.10. Bounded Context: Waybills
+
+- *Emisión/corrección/anulación de guía de remisión (cliente) y guía de transportista (proveedor).*
+
+<br/>
+
+#### 2.6.10.1. Domain Layer
+
+### Aggregates (AR)
+
+#### 1) Waybill (Aggregate Root)
+
+**Estado clave**
+
+- `waybillId : WaybillId`
+- `type : WaybillType = REMITTER | CARRIER`
+- `dealRef : { dealId }` *(Deal no versiona)*
+- `requestRef : { requestId, version }`
+- `parties : { remitterRef, carrierRef, consigneeRef }` *(snapshots KYC/Providers)*
+- `logistics : { route: RouteSnapshot, segmentKey: SegmentKey, departureWindow, arrivalWindow? }`
+- `transport : { vehicleRef?, trailerRef?, driverRef?, unitPartitions?: List<UnitPartition> }` *(GRE-T)*
+- `declaredGoods : List<DeclaredItem>`
+- `status : DRAFT | READY_TO_FILE | FILED_ACCEPTED | FILED_REJECTED | VOIDED | SUPERSEDED | PENDING_RECONCILIATION`
+- `filing : { provider: FilingProvider, externalId?, receipt?, publicLink? }`
+- `representation : { xmlHash?, xmlUrl?, pdfUrl? }`
+- `audit : { createdAt, updatedAt, createdBy, lastFiledAt?, lastVoidedAt? }`
+- `timeline : List<WaybillEvent>` *(append-only: preparación, validación, filing, baja, reemplazo, incidencias)*
+
+**Invariantes**
+
+- **Snapshots inmutables tras `FILED_*`**: `parties`, `route`, `segmentKey`, `declaredGoods`, `transport` (incl. particiones) no cambian; cambios **sustanciales** ⇒ `SUPERSEDED` o `VOIDED` + nueva.
+- **GRE-T particionada**: `unitPartitions` cubre destinos **disjuntos** y su **unión = destinos**; cada partición mapea **1:1** a **unidad física**.
+- **Llaves de unicidad/solapamiento**: no pueden coexistir guías **activas** (no void/superseded) que cubran el mismo `(type, dealId, unitKey?, segmentKey)` en la **ventana** `[departureWindow, arrivalWindow]`.
+- **Estados válidos**
+  - `DRAFT → READY_TO_FILE` (si validación local pasa).
+  - `READY_TO_FILE → FILED_ACCEPTED | FILED_REJECTED` (solo por `file()`).
+  - `FILED_REJECTED → READY_TO_FILE` (tras corrección **no sustancial**).
+  - `FILED_ACCEPTED → VOIDED | SUPERSEDED`.
+  - `PENDING_RECONCILIATION` es un **stub** creado desde webhook (event-first); solo permite `reconcileWithSnapshots()`.
+
+**Comportamientos**
+
+- `prepareRemitter(snapshots)` / `prepareCarrier(snapshots, partitioningHints?)`
+- `validateLocally(policy)` → `READY_TO_FILE` + **`WaybillReadyToFile`**.
+- `file(filingRequest)` → `FILED_ACCEPTED|FILED_REJECTED` + `WaybillFiled`.
+- `void(reason)` → `VOIDED` + `WaybillVoided`.
+- `supersede(newId, reason)` → `SUPERSEDED` + `WaybillSuperseded`.
+- `issueEvent(eventType, details)` → `WaybillEventIssued`.
+- `reconcileWithSnapshots(externalReceipt, snapshots)` *(solo si `PENDING_RECONCILIATION`)*: valida consistencia y transiciona a `FILED_ACCEPTED` o a `DRAFT/READY_TO_FILE` según datos del proveedor y policy.
+
+#### Entities / Value Objects
+
+- `RouteSnapshot { origin, stops[], destination }`
+- `SegmentKey` *(VO normalizado por Planning; p.ej., hash de (origin,destination) con esquema y versión)*
+- `VehicleRef { vehicleId, plate, type }`
+- `TrailerRef { trailerId?, plate? }`
+- `UnitKey { tractorPlate, trailerPlate? }` *(llave física para overlap)*
+- `UnitPartition { unitKey: UnitKey, destinations: Set<LocationId> }`
+- `DeclaredItem { name, qty, weightKg, dimsCm?, packaging?, notes? }`
+- `PartyRef { subjectId|ruc, legalName, addressSnapshot }`
+- `FilingReceipt { externalId, hash?, at }`
+- `WaybillEvent { at, type, details }`
+
+#### Domain Services
+
+- `WaybillPolicyService`
+  - **requiresReissue(changes)** con **umbrales** parametrizables:
+    - `consignee` distinto ⇒ sustancial.
+    - `vehicleRef/unitKey` distinto ⇒ sustancial.
+    - cambio en `segmentKey` o destinos particionados ⇒ sustancial.
+    - variación `weightKg` o `qty` ≥ **5%** del declarado total ⇒ sustancial.
+    - otros (p.ej., packaging crítico) según configuración.
+- `WaybillValidationService`
+  - Reglas locales: completitud mínima, consistencia con Planning/Fleet, catálogos; `existsActiveOverlap(...)`.
+- `PartitioningService`
+  - Decide `unitPartitions` (por unidad/destino) a partir de `route`, `assignedUnits` y `policy`.
+
+#### Repositories (interfaces)
+
+- `WaybillRepository`
+  - `findById(id)`, `save(waybill)`
+  - `existsActiveOverlap(type, dealId, unitKey?, segmentKey, timeWindow)`
+  - `findActiveByDeal(dealId)`
+- `WaybillReadRepository` *(proyecciones para queries por trato/viaje)*
+
+#### Domain Events (payload mínimo)
+
+- `WaybillReadyToFile { waybillId, at }`
+- `WaybillFiled { waybillId, type, status: ACCEPTED|REJECTED, receipt?, publicLink?, at }`
+- `WaybillVoided { waybillId, reason, at }`
+- `WaybillSuperseded { oldId, newId, reason, at }`
+- `WaybillEventIssued { waybillId, eventType, at }`
+
+#### Ubiquitous Language (extracto)
+
+Waybill, REMITTER/CARRIER, Filing, Receipt, PublicLink, **SegmentKey**, **UnitKey**, Partition, Snapshot, **Void (Baja)**, **Supersede (Reemplazo)**, **Ready-to-File**, **Pending Reconciliation**.
+
+---
+
+<br/>
+
+#### 2.6.10.2. Interface Layer
+
+**Base path:** `/api/v1/waybills` — **Auth:** `Bearer <JWT>` (IAM)  
+**Ownership leak-proof:** validar contra `subjectId`; si no pertenece ⇒ **404**.
+
+### Endpoints
+
+- **POST** `/remitter/prepare` — prepara GRE-R.  
+- **POST** `/carrier/prepare` — prepara GRE-T (calcula particiones).  
+- **POST** `/{id}/validate` — validación local (`DRAFT → READY_TO_FILE`).  
+- **POST** `/{id}/file` — filing (**Idempotency-Key** requerida).  
+- **POST** `/{id}/void` — baja (solo `FILED_ACCEPTED`).  
+- **POST** `/{id}/supersede` — reemplazo (crea nueva + marca anterior).  
+- **POST** `/{id}/events` — guía por evento.  
+- **GET** `/{id}` — detalle + estado + `publicLink?` + `representation?`.  
+- **GET** `/{id}/representation` — URLs de `xmlUrl|pdfUrl`.  
+- **GET** `/by-deal/{dealId}` — listar guías del trato/viaje.
+
+### Webhooks (filing provider)
+
+- **POST** `/webhooks/filing`  
+  **Firma HMAC**; **reintentos** con `Retry-After`.  
+  **Dedupe** por `(eventId, externalId)`; **upsert out-of-order**: crea **stub** `PENDING_RECONCILIATION` si no existe.  
+  **2xx** solo si el upsert fue **idempotente** y **persistido**.
+
+### Contratos I/O (alto nivel)
+
+- **Requests:** ids de referencia; opcional `partitioningHints` para GRE-T.  
+- **Responses:** `waybillId`, `status`, `publicLink?`, `representation?`, `problems?`.  
+- **Errores (RFC 7807):** `validation-error`, `filing-rejected`, `gate-missing-waybill`, `ownership-mismatch`, `idempotency-conflict`.
+
+### Versionado e Idempotencia
+
+- API **v1**.  
+- `Idempotency-Key` en `POST /file|/void|/supersede` *(scope `subjectId+path+bodyHash`)*.
+
+---
+
+<br/>
+
+#### 2.6.10.3. Application Layer
+
+### Capabilities → Casos de uso
+
+1. Emitir **GRE-R** (cliente).
+2. Emitir **GRE-T** (proveedor) con **particionado automático** (por unidad/destino).
+3. Emitir **Guía por Evento** (incidencias en ruta).
+4. **Baja y Re-emisión** por cambio **sustancial** (Policy).
+5. Descargar **Representaciones** (XML/PDF) + `publicLink`.
+6. **Gate de Viaje**: `Trip.start` requiere GRE(s) **vigentes**.  
+   *Vigente = `FILED_ACCEPTED` y no `VOIDED|SUPERSEDED` al instante de salida; existe **una** por **partición/unidad-destino** requerida.*
+
+### Command/Query Handlers
+
+- `PrepareRemitterWaybillCmd(dealId, requestId, version, consigneeId)`  
+  *Pre:* `DealFormalized(dealId)`; snapshots disponibles (KYC/Providers/Planning).  
+  *Fx:* crea `Waybill{REMITTER, DRAFT}`.
+- `PrepareCarrierWaybillCmd(dealId, assignedUnits[], driverId, partitioningHints?)`  
+  *Pre:* `DealFormalized`; `assignedUnits` desde Fleet/Deals.  
+  *Fx:* crea `Waybill{CARRIER, DRAFT}` y calcula `unitPartitions` vía `PartitioningService`.
+- `ValidateLocallyCmd(waybillId)` → `READY_TO_FILE` + `WaybillReadyToFile`.
+- `FileWaybillCmd(waybillId)`  
+  *Pre:* `READY_TO_FILE`; **Idempotency-Key**.  
+  *Fx:* llama `FilingPort` → `FILED_ACCEPTED|FILED_REJECTED` + `WaybillFiled`.
+- `VoidWaybillCmd(waybillId, reason)` *(solo si `FILED_ACCEPTED`)* → `VOIDED` + evento.
+- `SupersedeWaybillCmd(oldId, reason)` → crea nueva `Waybill (DRAFT)` + marca anterior `SUPERSEDED`.
+- `IssueEventWaybillCmd(waybillId, eventType, details)` → `WaybillEventIssued`.
+- **Event-first / Reconciliación**
+  - `UpsertExternalFilingCmd(eventId, externalId, status, receipt?, publicLink?)`  
+    *Fx:* si no existe AR, crea **stub** `PENDING_RECONCILIATION` con `filing{externalId,...}`; si existe, **merge idempotente**.
+  - `ReconcileExternalWaybillCmd(waybillId, snapshots)`  
+    *Pre:* `PENDING_RECONCILIATION`.  
+    *Fx:* `reconcileWithSnapshots` → `FILED_ACCEPTED` (si aplica) o `DRAFT/READY_TO_FILE`.
+
+**Queries**: `GetWaybillStatus(waybillId|dealId)` · `ListWaybillsByTrip(tripId)` · `GetRepresentations(waybillId)`
+
+### Orquestaciones / Sagas
+
+- **EmitirGuíasSaga** *(DealFormalized → GRE-R → GRE-T)*
+  1) Espera `DealFormalized(dealId)`.  
+  2) `PrepareRemitter` → `Validate` → `File`.  
+  3) `PrepareCarrier` → `PartitioningService` → `Validate` → `File`.  
+  4) Publica `WaybillFiled` (ambas).  
+  5) On `DealAdjusted(changes)` → si `Policy.requiresReissue(changes)` ⇒ `Void/Supersede`.
+- **EventFirstReconciliation**  
+  Webhook antes del `file()` local: `UpsertExternalFilingCmd` (stub) → luego `ReconcileExternalWaybillCmd` con snapshots.
+
+### Puertos (interfaces a Infra)
+
+`FilingPort`, `DocumentStoragePort`, `PlanningReadPort`, `FleetReadPort`, `PaymentsReadPort` *(solo métrica)*, `Clock`, `IdGenerator`, `TxManager`, `EventBus`, `IdempotencyStore`.
+
+### Idempotencia y control transaccional
+
+- **Obligatoria** en `File | Void | Supersede` *(scope: `subjectId+path+bodyHash`)*.
+- **Transactional Outbox** para `Waybill*` post-commit.
+- **Inbox/Dedup** en `UpsertExternalFilingCmd` por `(eventId, externalId)`.
+- **Retries** con backoff en puertos externos; **at-least-once** con efectos idempotentes.
+
+### Event Handlers (integración)
+
+- On `DealFormalized(dealId)` → dispara **EmitirGuíasSaga**.  
+- On `DealAdjusted(dealId, changes)` → `requiresReissue?` ⇒ `Supersede/Void`.  
+- On `VehicleAssigned|VehicleChanged(dealId, unitKey)` → reevaluar GRE-T (`Supersede` si ya `FILED_ACCEPTED`).  
+- On `TripReadyToStart(tripId)` → gate: si falta GRE **vigente** ⇒ rechaza `start`.
+
+---
+
+<br/>
+
+#### 2.6.10.4. Infrastructure Layer
+
+### Repositorios (impl)
+
+- `JpaWaybillRepository` (o equivalente) con:
+  - `existsActiveOverlap(type, dealId, unitKey?, segmentKey, timeWindow)`
+  - `findActiveByDeal(dealId)`
+  - soporte de `PENDING_RECONCILIATION` (stubs event-first).
+
+### Adapters / Integraciones
+
+- **FilingPortAdapter**
+  - Construye payload (XML/UBL u otro), firma si aplica, envía; parsea respuesta (`receipt`, `publicLink`).  
+  - **Reintentos** con backoff; mapea `REJECTED` → `ProblemDetails`.  
+  - **Event-first**: procesa webhooks → `UpsertExternalFilingCmd`.
+- **DocumentStorageAdapter**
+  - Sube/lee `XML/PDF`; calcula/guarda `hash`; genera URLs prefirmadas.
+- **PlanningReadAdapter**
+  - Normaliza lugares y emite `SegmentKey`.
+- **FleetReadAdapter**
+  - Resuelve `VehicleRef`, `TrailerRef` y compone **`UnitKey (tractor+remolque)`**.
+- **PaymentsReadAdapter** *(solo lectura/telemetría; no gating).*
+
+### Mensajería / Confiabilidad
+
+- **Transactional Outbox** para `Waybill*`.  
+- **Inbox** para webhooks con dedup `(eventId, externalId)`.  
+- **EventBusPublisher** con retries y `correlationId`.
+
+### Configuración y secretos
+
+- Inyección por `ENV/Vault`: endpoints de filing, claves HMAC de webhooks, buckets/keys de storage, claves de firma/rotación.  
+- Sin valores embebidos; rotación soportada.
+
+---
+
+<br/>
+
+#### 2.6.10.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.10.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.10.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.10.6.2. Bounded Context Database Design Diagram
+
+<br/>
+
+### 2.6.11. Bounded Context: Trips
+
+- *Asignación de unidad, tracking en ruta, eventos operativos, entrega y prueba de entrega (POD).*
+
+#### 2.6.11.1. Domain Layer
+
+**Aggregates (AR)**
+
+**Trip (Aggregate Root)**
+
+**Estado clave**
+- `tripId: UUID`
+- `dealRef: { dealId: UUID }`
+- `clientId: SubjectId · providerId: SubjectId`
+- `assigned: { vehicleId?: UUID, driverId?: UUID, window?: { etd: Instant, eta: Instant } }`
+- `routeSnapshot: Route{ waypoints: List<Waypoint>, geofences, version: Int }` *(inmutable tras `ACTIVATED`)*
+- `altPaths: List<AlternativePath{ polylineRef, reason, etaDelta: Duration, routeVersion: Int }>`
+- `trackingPolicy: TrackingPolicy{ minPingInterval: Duration, idleInterval: Duration, accuracyMinM: Int, maxJumpKm: Double, maxClockSkewSec: Int }`
+- `operationalFlags: { paused: Boolean = false }`
+- `timeline: List<TripEvent>` *(append-only, ordenado por `ts`)*
+- `pod: PodRecord?`
+- `status: CREATED | ASSIGNED | ACTIVATED | EN_ROUTE | ARRIVED | POD_PENDING | DELIVERED | CANCELLED | DISPUTED | CLOSED`
+- `audit{ createdAt: Instant, updatedAt: Instant }`
+
+**Invariantes**
+- **Origen:** solo `DealFormalized` puede crear `Trip`.
+- **Unicidad viva por trato:** **máximo 1 Trip** con `status ∈ {CREATED,ASSIGNED,ACTIVATED,EN_ROUTE,ARRIVED,POD_PENDING}` por `dealId`.
+- **Assign:** `vehicleId` y `driverId` **pertenecen** a `providerId` y están `ENABLED`.
+- **Activate:** Waybills **`FILED_ACCEPTED`** vigentes (`WaybillsReady`) y **Providers/Fleet ENABLED**. *(No repetir gate financiero; eso fue al formalizar el deal).*
+- **`EN_ROUTE`:** transición **única** por **primer `LocationPing` válido dentro del geofence de origen**. `StartTrip` manual no cambia estado si ya entró por ping.
+- **Route inmutable tras `ACTIVATED`:** desvíos se modelan en `altPaths` con `routeVersion`.
+- **Arribo y Entrega:**
+  - `ARRIVED` cuando un ping válido entra al geofence de **destino**.
+  - `POD_PENDING` hasta recibir `POD` válido o vencer política de ventana.
+  - `DELIVERED` requiere `POD` válido; si ventana venció o invalidación → `DISPUTED` (o `DELIVERED late=true` según política, ver abajo).
+- **Terminales:** `DELIVERED | CANCELLED | DISPUTED | CLOSED`.
+
+**Comportamientos**
+- `assign(vehicleId, driverId, window)` → `TripAssigned`
+- `activate()` → `TripActivated`
+- `ingestPings(batch<Ping{ pingId, lat, lon, accuracyM, deviceTs, speed?, heading? }>)`
+  - Idempotencia por `(tripId, pingId)` → `TripLocationUpdated`
+  - Detección: `TripWaypointReached` / `TripRerouted` / transición a `EN_ROUTE` / `ARRIVED`
+- `reportIncident(kind, details)` → `TripIncidentReported`
+- `setPaused(paused: boolean)` *(flag operativo, no estado)*
+- `attachPod(podEvidence)` → `PodAttached`
+  - Si `PodValidationService.OK` y política de ventana permite → `TripDelivered(late?: boolean)`
+  - Si no, → `TripDisputed`
+- `close(outcome)` → `TripClosed` *(solo desde terminales)*
+
+**Entities / Value Objects**
+- **Route**  
+  `waypoints: List<Waypoint{ id: String, lat: Double, lon: Double, fenceRadiusM: Int }>` *(orden O→…→D; sin ciclos; ids únicos)*
+- **LocationPing (VO)**  
+  `pingId: UUID, lat, lon, accuracyM: Int, deviceTs: Instant, receivedTs: Instant, source: DRIVER_APP, speed?: Double, heading?: Double`  
+  Reglas anti-spoof: `accuracyM ≤ policy`, `|deviceTs-now| ≤ maxClockSkewSec`, no *jumps* > `maxJumpKm`/min.
+- **TripEvent (Entity)**  
+  `eventId: UUID` *(usar `pingId` cuando aplique)*, `type`, `payload`, `ts: Instant`, `who` — append-only; `ts` monotónico dentro del `eventId`.
+- **PodRecord (Entity)**  
+  `methods: Set<PodMethod = {OTP, QR, Signature, Photos}>` · `geoStamp{ lat, lon, accuracyM, distToDestM }` · `ts: Instant, notes?: String, mediaHashes: List<SHA256>, bundleHash: SHA256`  
+  Regla: ≥1 método + `distToDestM - accuracyM ≤ fenceRadiusM`
+- **TrackingPolicy (VO)** *(ver arriba)*
+- **AlternativePath (VO)** *(ver arriba)*
+
+**Domain Services**
+- `PodValidationService.validate(podRecord, routeSnapshot, arrivedTs?): ValidationResult`
+- `GeofenceService`
+  - `distanceMeters(WGS84, p1, p2)` *(Haversine/Vectorizado)*
+  - `isInside(geoStamp, fence)` *(usa `dist - accuracyM ≤ fenceRadiusM`)*
+  - `detectWaypointHit(ping, routeSnapshot|altPaths): waypointId?`
+- `AntiSpoofingService.check(ping, lastPing, policy): Verdict`
+- `EtaService.estimate(currentPos, polylineRef|waypoints): Instant`
+- `LateDeliveryPolicy.evaluate(arrivedAt, now, podTs): { allowDeliver: Boolean, late: Boolean }`
+- `OperationalBlockPolicy.onDisabledInTransit(event): { graceUntil?: Instant, allowedActions: Set<Action> }`
+
+**Domain Events (payload mínimo)**
+- `TripCreated{ tripId, dealId, clientId, providerId, ts }`
+- `TripAssigned{ tripId, vehicleId, driverId, window, ts }`
+- `TripActivated{ tripId, routeVersion, ts }`
+- `TripLocationUpdated{ tripId, lat, lon, accuracyM, ts }`
+- `TripWaypointReached{ tripId, waypointId, ts }`
+- `TripRerouted{ tripId, routeVersion, reason, etaDelta, ts }`
+- `TripIncidentReported{ tripId, kind, severity?, ts }`
+- `TripArrived{ tripId, ts }`
+- `PodAttached{ tripId, methods, ts }`
+- `TripDelivered{ tripId, late?: Boolean, ts }`
+- `TripCancelled{ tripId, reason, ts }`
+- `TripDisputed{ tripId, reason, ts }`
+- `TripClosed{ tripId, outcome, ts }`
+
+**Repositories (interfaces)**
+- `TripRepository { findById(tripId): Trip?, save(Trip): void }` *(concurrencia optimista por `version`)*
+- `TripQueryRepository` *(read-model para timeline/live y compaction)*
+
+**Ubiquitous Language (breve)**  
+Ping, Waypoint, Geofence, Route Snapshot, Alternative Path, POD, Late Delivery, Paused.
+
+---
+
+
+<br/>
+
+#### 2.6.11.2. Interface Layer
+
+# 2.6.x. Bounded Context: Trips (Viajes)
+
+**2.6.x.1. Domain Layer**
+
+> Núcleo: `Trip` (AR); tracking con pings idempotentes; POD validado en geofence; gates claros con **Waybills/Providers/Fleet**; políticas de *late delivery* y bloqueos operativos.
+
+**Aggregates (AR)**
+
+**Trip (Aggregate Root)**
+
+**Estado clave**
+- `tripId: UUID`
+- `dealRef: { dealId: UUID }`
+- `clientId: SubjectId · providerId: SubjectId`
+- `assigned: { vehicleId?: UUID, driverId?: UUID, window?: { etd: Instant, eta: Instant } }`
+- `routeSnapshot: Route{ waypoints: List<Waypoint>, geofences, version: Int }` *(inmutable tras `ACTIVATED`)*
+- `altPaths: List<AlternativePath{ polylineRef, reason, etaDelta: Duration, routeVersion: Int }>`
+- `trackingPolicy: TrackingPolicy{ minPingInterval: Duration, idleInterval: Duration, accuracyMinM: Int, maxJumpKm: Double, maxClockSkewSec: Int }`
+- `operationalFlags: { paused: Boolean = false }`
+- `timeline: List<TripEvent>` *(append-only, ordenado por `ts`)*
+- `pod: PodRecord?`
+- `status: CREATED | ASSIGNED | ACTIVATED | EN_ROUTE | ARRIVED | POD_PENDING | DELIVERED | CANCELLED | DISPUTED | CLOSED`
+- `audit{ createdAt: Instant, updatedAt: Instant }`
+
+**Invariantes**
+- **Origen:** solo `DealFormalized` puede crear `Trip`.
+- **Unicidad viva por trato:** **máximo 1 Trip** con `status ∈ {CREATED,ASSIGNED,ACTIVATED,EN_ROUTE,ARRIVED,POD_PENDING}` por `dealId`.
+- **Assign:** `vehicleId` y `driverId` **pertenecen** a `providerId` y están `ENABLED`.
+- **Activate:** Waybills **`FILED_ACCEPTED`** vigentes (`WaybillsReady`) y **Providers/Fleet ENABLED**. *(No repetir gate financiero; eso fue al formalizar el deal).*
+- **`EN_ROUTE`:** transición **única** por **primer `LocationPing` válido dentro del geofence de origen**. `StartTrip` manual no cambia estado si ya entró por ping.
+- **Route inmutable tras `ACTIVATED`:** desvíos se modelan en `altPaths` con `routeVersion`.
+- **Arribo y Entrega:**
+  - `ARRIVED` cuando un ping válido entra al geofence de **destino**.
+  - `POD_PENDING` hasta recibir `POD` válido o vencer política de ventana.
+  - `DELIVERED` requiere `POD` válido; si ventana venció o invalidación → `DISPUTED` (o `DELIVERED late=true` según política, ver abajo).
+- **Terminales:** `DELIVERED | CANCELLED | DISPUTED | CLOSED`.
+
+**Comportamientos**
+- `assign(vehicleId, driverId, window)` → `TripAssigned`
+- `activate()` → `TripActivated`
+- `ingestPings(batch<Ping{ pingId, lat, lon, accuracyM, deviceTs, speed?, heading? }>)`
+  - Idempotencia por `(tripId, pingId)` → `TripLocationUpdated`
+  - Detección: `TripWaypointReached` / `TripRerouted` / transición a `EN_ROUTE` / `ARRIVED`
+- `reportIncident(kind, details)` → `TripIncidentReported`
+- `setPaused(paused: boolean)` *(flag operativo, no estado)*
+- `attachPod(podEvidence)` → `PodAttached`
+  - Si `PodValidationService.OK` y política de ventana permite → `TripDelivered(late?: boolean)`
+  - Si no, → `TripDisputed`
+- `close(outcome)` → `TripClosed` *(solo desde terminales)*
+
+**Entities / Value Objects**
+- **Route**  
+  `waypoints: List<Waypoint{ id: String, lat: Double, lon: Double, fenceRadiusM: Int }>` *(orden O→…→D; sin ciclos; ids únicos)*
+- **LocationPing (VO)**  
+  `pingId: UUID, lat, lon, accuracyM: Int, deviceTs: Instant, receivedTs: Instant, source: DRIVER_APP, speed?: Double, heading?: Double`  
+  Reglas anti-spoof: `accuracyM ≤ policy`, `|deviceTs-now| ≤ maxClockSkewSec`, no *jumps* > `maxJumpKm`/min.
+- **TripEvent (Entity)**  
+  `eventId: UUID` *(usar `pingId` cuando aplique)*, `type`, `payload`, `ts: Instant`, `who` — append-only; `ts` monotónico dentro del `eventId`.
+- **PodRecord (Entity)**  
+  `methods: Set<PodMethod = {OTP, QR, Signature, Photos}>` · `geoStamp{ lat, lon, accuracyM, distToDestM }` · `ts: Instant, notes?: String, mediaHashes: List<SHA256>, bundleHash: SHA256`  
+  Regla: ≥1 método + `distToDestM - accuracyM ≤ fenceRadiusM`
+- **TrackingPolicy (VO)** *(ver arriba)*
+- **AlternativePath (VO)** *(ver arriba)*
+
+**Domain Services**
+- `PodValidationService.validate(podRecord, routeSnapshot, arrivedTs?): ValidationResult`
+- `GeofenceService`
+  - `distanceMeters(WGS84, p1, p2)` *(Haversine/Vectorizado)*
+  - `isInside(geoStamp, fence)` *(usa `dist - accuracyM ≤ fenceRadiusM`)*
+  - `detectWaypointHit(ping, routeSnapshot|altPaths): waypointId?`
+- `AntiSpoofingService.check(ping, lastPing, policy): Verdict`
+- `EtaService.estimate(currentPos, polylineRef|waypoints): Instant`
+- `LateDeliveryPolicy.evaluate(arrivedAt, now, podTs): { allowDeliver: Boolean, late: Boolean }`
+- `OperationalBlockPolicy.onDisabledInTransit(event): { graceUntil?: Instant, allowedActions: Set<Action> }`
+
+**Domain Events (payload mínimo)**
+- `TripCreated{ tripId, dealId, clientId, providerId, ts }`
+- `TripAssigned{ tripId, vehicleId, driverId, window, ts }`
+- `TripActivated{ tripId, routeVersion, ts }`
+- `TripLocationUpdated{ tripId, lat, lon, accuracyM, ts }`
+- `TripWaypointReached{ tripId, waypointId, ts }`
+- `TripRerouted{ tripId, routeVersion, reason, etaDelta, ts }`
+- `TripIncidentReported{ tripId, kind, severity?, ts }`
+- `TripArrived{ tripId, ts }`
+- `PodAttached{ tripId, methods, ts }`
+- `TripDelivered{ tripId, late?: Boolean, ts }`
+- `TripCancelled{ tripId, reason, ts }`
+- `TripDisputed{ tripId, reason, ts }`
+- `TripClosed{ tripId, outcome, ts }`
+
+**Repositories (interfaces)**
+- `TripRepository { findById(tripId): Trip?, save(Trip): void }` *(concurrencia optimista por `version`)*
+- `TripQueryRepository` *(read-model para timeline/live y compaction)*
+
+**Ubiquitous Language (breve)**  
+Ping, Waypoint, Geofence, Route Snapshot, Alternative Path, POD, Late Delivery, Paused.
+
+---
+
+**2.6.x.2. Application Layer**
+
+> Orquesta casos de uso; aplica gates **Waybills/Providers/Fleet**; idempotencia de pings; outbox transaccional; políticas de ventana y bloqueos.
+
+**Capabilities ↔ Casos de uso**  
+1) Crear viaje · 2) Asignar · 3) Activar · 4) Ingesta de pings · 5) Incidente/Desvío · 6) Arribo · 7) Adjuntar POD/Entregar · 8) Cerrar/Disputar/Cancelar
+
+**Command Handlers (entradas, precondiciones, efectos)**
+- `CreateTripCmd(dealId)`  
+  **Pre:** `DealFormalized(dealId)` · **Efecto:** `TripCreated`
+- `AssignTripCmd(tripId, vehicleId, driverId, window)`  
+  **Pre:** `status ∈ {CREATED,ASSIGNED}`; `Fleet.isVehicleEnabled(vehicleId)`, `Providers.isDriverActive(driverId)`; **ownership** `providerId`  
+  **Efecto:** `TripAssigned`
+- `ActivateTripCmd(tripId)`  
+  **Pre:** `WaybillsPort.isReady(dealId) == true` *(FILED_ACCEPTED)* y `Providers/Fleet ENABLED`  
+  **Efecto:** `TripActivated`
+- `IngestLocationsCmd(tripId, batchId, pings[])`  
+  **Pre:** `status ∈ {ACTIVATED,EN_ROUTE,ARRIVED,POD_PENDING}`  
+  **Idempotencia:** `batchId` para el lote y `(tripId,pingId)` por ping  
+  **Efecto:** `TripLocationUpdated` (+ `TripWaypointReached`/`TripRerouted` / transición)  
+  **Límites:** máx. **200 pings** o **256KB** por request; `|deviceTs-now| ≤ 300s`; retención offline ≤ **24h**
+- `ReportIncidentCmd(tripId, kind, details)` → `TripIncidentReported`
+- `MarkArrivedCmd(tripId)` → `TripArrived` *(fallback si auto-detección falló)*
+- `AttachPodCmd(tripId, podEvidence, idempotencyKey)`  
+  **Pre:** `PodValidationService.OK` · **Política:** `LateDeliveryPolicy` decide `late` vs `dispute`  
+  **Efecto:** `PodAttached` → `TripDelivered(late?)` **o** `TripDisputed`
+- `CloseTripCmd(tripId, outcome)` → `TripClosed` *(requiere terminal previo)*
+- `CancelTripCmd(tripId, reason)` → `TripCancelled` *(si no terminal)*
+
+**Sagas / Orquestación**
+- **ActivateTripSaga**
+  1. Verificar `WaybillsReady` + `Providers/Fleet ENABLED`
+  2. `TripActivated` (abre tracking)
+  3. Notificar `Chat/Notifications`
+  4. Si falla, rollback a `ASSIGNED` + alerta
+- **DeliveryAndPayoutSaga**  
+  **Trigger:** `TripDelivered` → `Ratings.openWindow(tripId)` → `Payments.releasePayout(providerId, dealId)` → `TripClosed(DELIVERED)`
+- **OperationalBlockSaga** *(deshabilitado en ruta)*  
+  **Trigger:** `VehicleDisabled`/`ProviderDisabled` → aplicar `OperationalBlockPolicy` → `setPaused(true)`; si `graceUntil` expira y no se completó, `CancelTripCmd` o `Dispute` según policy
+
+**Puertos (interfaces a Infra)**  
+`Clock`, `IdGenerator`, `TxManager`, `OutboxPublisher` · `WaybillsPort` *(isReady)*, `FleetPort`, `ProvidersPort` · `GeoEtaPort` *(snap-to-route/ETA)*, `ChatPort`, `NotificationsPort`, `StoragePort` *(POD media)*
+
+**Idempotencia / Control transaccional**
+- **Idempotency-Key** en `IngestLocationsCmd(batchId)` y `AttachPodCmd`
+- **Transactional Outbox**: mutación del AR + publicación a outbox en **una** TX
+- **Optimistic locking** por `version` en `Trip`
+
+**Event Handlers (integración)**
+- **Entrantes:** `onDealFormalized(DealFormalized)` → `CreateTripCmd` · `onWaybillsReady(DealId)` → habilita `ActivateTripCmd` · `onVehicleDisabled / onProviderDisabled` → `OperationalBlockSaga`
+- **Salientes:** `onTripActivated` → `ChatPort.pinThread`, `NotificationsPort.push` · `onTripDelivered/Closed` → `Ratings.openWindow`, `Payments.releasePayout`
+
+---
+
+**2.6.x.3. Interface / Presentation Layer**
+
+> Endpoints/consumers, contratos y errores **RFC 7807**, autenticación y ownership leak-proof.
+
+**Endpoints (HTTP, REST)**
+- `POST /trips` *(interno)* — crear desde Deal
+- `POST /trips/{id}/assign`
+- `POST /trips/{id}/activate`
+- `POST /trips/{id}/locations` *(driver app; batch con `pings[].pingId`)*
+- `POST /trips/{id}/events` *(incident/pause/resume/arrived)*
+- `POST /trips/{id}/pod` *(con `Idempotency-Key`)*
+- `POST /trips/{id}/close`
+- `GET /trips/{id}/timeline`
+- `GET /trips/{id}/live` *(SSE/WebSocket tokenizado)*
+
+**Consumers (mensajería)**
+- `DealFormalized` → crear trip
+- `WaybillsReady` → habilitar activación
+- `VehicleDisabled/ProviderDisabled` → `OperationalBlockSaga`
+
+**Contratos I/O (DTOs) y errores**
+- **Requests**
+  - `AssignTripRequest{ vehicleId, driverId, window{etd,eta} }`
+  - `IngestLocationsRequest{ idempotencyKey, pings:[{ pingId, lat, lon, accuracyM, deviceTs, speed?, heading? }] }`
+  - `AttachPodRequest{ idempotencyKey, methods{otp?, qr?, signature?, photos:[MediaRef] }, geoStamp{lat,lon,accuracyM}, notes? }`
+  - `MediaRef{ urlSigned, sha256, sizeBytes }`
+- **Responses**  
+  `{ tripId, status, nextActions?, late? }`
+- **Errores (`application/problem+json`, RFC 7807)**  
+  `400/validation-error` (accuracy insuficiente, batch excedido, clock skew) · `401/unauthorized` · `403/forbidden` (ownership) · `404/not-found` (recursos ajenos → 404) · `409/conflict` (estado/versión) · `422/domain-rule` (precondiciones de activación, POD inválido)
+
+**Autenticación & ownership leak-proof**
+- **Driver app:** JWT con `providerId`, `driverId`, `scopes: trip:write`
+- **Client/Provider:** acceso a `timeline/live` solo si son dueños (preferir **404** frente a **403**)
+
+**Versionado & Idempotency**
+- `Accept-Version: 1.0`
+- **Idempotency-Key** **obligatoria** en `locations` y `pod`
+
+**Webhooks**
+- `POST /webhook/trips.events`  
+  Firma `X-Signature: HMAC-SHA256(body)` · dedupe por `X-Delivery-Id` · reintentos exponenciales hasta 24h (idempotentes)
+
+---
+
+<br/>
+
+#### 2.6.11.3. Application Layer
+
+**Capabilities ↔ Casos de uso**  
+1) Crear viaje · 2) Asignar · 3) Activar · 4) Ingesta de pings · 5) Incidente/Desvío · 6) Arribo · 7) Adjuntar POD/Entregar · 8) Cerrar/Disputar/Cancelar
+
+**Command Handlers (entradas, precondiciones, efectos)**
+- `CreateTripCmd(dealId)`  
+  **Pre:** `DealFormalized(dealId)` · **Efecto:** `TripCreated`
+- `AssignTripCmd(tripId, vehicleId, driverId, window)`  
+  **Pre:** `status ∈ {CREATED,ASSIGNED}`; `Fleet.isVehicleEnabled(vehicleId)`, `Providers.isDriverActive(driverId)`; **ownership** `providerId`  
+  **Efecto:** `TripAssigned`
+- `ActivateTripCmd(tripId)`  
+  **Pre:** `WaybillsPort.isReady(dealId) == true` *(FILED_ACCEPTED)* y `Providers/Fleet ENABLED`  
+  **Efecto:** `TripActivated`
+- `IngestLocationsCmd(tripId, batchId, pings[])`  
+  **Pre:** `status ∈ {ACTIVATED,EN_ROUTE,ARRIVED,POD_PENDING}`  
+  **Idempotencia:** `batchId` para el lote y `(tripId,pingId)` por ping  
+  **Efecto:** `TripLocationUpdated` (+ `TripWaypointReached`/`TripRerouted` / transición)  
+  **Límites:** máx. **200 pings** o **256KB** por request; `|deviceTs-now| ≤ 300s`; retención offline ≤ **24h**
+- `ReportIncidentCmd(tripId, kind, details)` → `TripIncidentReported`
+- `MarkArrivedCmd(tripId)` → `TripArrived` *(fallback si auto-detección falló)*
+- `AttachPodCmd(tripId, podEvidence, idempotencyKey)`  
+  **Pre:** `PodValidationService.OK` · **Política:** `LateDeliveryPolicy` decide `late` vs `dispute`  
+  **Efecto:** `PodAttached` → `TripDelivered(late?)` **o** `TripDisputed`
+- `CloseTripCmd(tripId, outcome)` → `TripClosed` *(requiere terminal previo)*
+- `CancelTripCmd(tripId, reason)` → `TripCancelled` *(si no terminal)*
+
+**Sagas / Orquestación**
+- **ActivateTripSaga**
+  1. Verificar `WaybillsReady` + `Providers/Fleet ENABLED`
+  2. `TripActivated` (abre tracking)
+  3. Notificar `Chat/Notifications`
+  4. Si falla, rollback a `ASSIGNED` + alerta
+- **DeliveryAndPayoutSaga**  
+  **Trigger:** `TripDelivered` → `Ratings.openWindow(tripId)` → `Payments.releasePayout(providerId, dealId)` → `TripClosed(DELIVERED)`
+- **OperationalBlockSaga** *(deshabilitado en ruta)*  
+  **Trigger:** `VehicleDisabled`/`ProviderDisabled` → aplicar `OperationalBlockPolicy` → `setPaused(true)`; si `graceUntil` expira y no se completó, `CancelTripCmd` o `Dispute` según policy
+
+**Puertos (interfaces a Infra)**  
+`Clock`, `IdGenerator`, `TxManager`, `OutboxPublisher` · `WaybillsPort` *(isReady)*, `FleetPort`, `ProvidersPort` · `GeoEtaPort` *(snap-to-route/ETA)*, `ChatPort`, `NotificationsPort`, `StoragePort` *(POD media)*
+
+**Idempotencia / Control transaccional**
+- **Idempotency-Key** en `IngestLocationsCmd(batchId)` y `AttachPodCmd`
+- **Transactional Outbox**: mutación del AR + publicación a outbox en **una** TX
+- **Optimistic locking** por `version` en `Trip`
+
+**Event Handlers (integración)**
+- **Entrantes:** `onDealFormalized(DealFormalized)` → `CreateTripCmd` · `onWaybillsReady(DealId)` → habilita `ActivateTripCmd` · `onVehicleDisabled / onProviderDisabled` → `OperationalBlockSaga`
+- **Salientes:** `onTripActivated` → `ChatPort.pinThread`, `NotificationsPort.push` · `onTripDelivered/Closed` → `Ratings.openWindow`, `Payments.releasePayout`
+
+---
+
+
+<br/>
+
+#### 2.6.11.4. Infrastructure Layer
+
+**Repositorios (impl.)**
+- `SqlTripRepository` — `save` con **optimistic locking** (`version`)
+- `TripQueryStore` — proyección de timeline + **compaction** (Douglas–Peucker / buckets por minuto)
+
+**Integraciones (Adapters)**
+- **Geo/ETA:** `MapboxGeoAdapter | GoogleMapsAdapter | OsrmAdapter` — `snapToRoute`, ETA por polyline, detección de desvíos
+- **WaybillsAdapter** (`WaybillsPort`) — `isReady(dealId)` *(FILED_ACCEPTED)*
+- **FleetAdapter**, **ProvidersAdapter** — estado operativo
+- **PaymentsAdapter** — **solo** `releasePayout()` tras `TripDelivered`
+- **ChatAdapter** — pin/link de thread (no mensajes)
+- **NotificationsAdapter** — push/SMS/email
+- **StorageAdapter** — media POD: URLs firmadas, **antivirus**, verificación de `sha256`
+- **Clock/IdGenerator/TxManager** — utilitarios
+
+**Mensajería / Outbox**
+- **Transactional Outbox**: publicación `Trip*` con *retries* y *backoff*, marca de entrega
+- **Consumers:** `DealFormalized`, `WaybillsReady`, `VehicleDisabled`, `ProviderDisabled`
+
+**Configuración y secretos**
+- ENV/Vault: `GEO_API_KEY`, `WEBHOOK_SECRET`, `STORAGE_SIGNING_KEY`
+- Rotación de claves y **feature flags** (selección proveedor GEO)
+- Observabilidad: métricas de ingestión (pings procesados, descartes por spoof, latencias ETA), eventos por segundo, ratio de *late delivery*
+
+---
+
+<br/>
+
+#### 2.6.11.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.11.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.11.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.11.6.2. Bounded Context Database Design Diagram
+
+<br/>
+
+### 2.6.12. Bounded Context: Reviews
+
+- *Ventana de calificación, doble ciego, tags y métricas/badges de reputación.*
+
+#### 2.6.12.1. Domain Layer
+
+**Aggregates (AR)**
+
+**1) Review (Aggregate Root)**  
+**Propósito.** Representar la calificación de una parte a otra por un Trip formal (**máximo 1 por lado**).
+
+**Estado clave**
+- `reviewId: UUID`
+- `tripRef: { tripId: UUID }`
+- `rater: { subjectId: UUID, role: RATER_ROLE }` (`CLIENT | PROVIDER`)
+- `ratee: { subjectId: UUID, role: RATEE_ROLE }` (`PROVIDER | CLIENT`)
+- `window: { openedAt: Instant, nominalExpiresAt: Instant, pauses: List<{from:Instant,to?:Instant}> }`
+- `effectiveExpiresAt: Instant` *(derivado = nominal + Σpausas)*
+- `status: DRAFT | SUBMITTED | REVEALED | VOID`
+- `freezeAt?: Instant` *(gracia propia = `submittedAt + REVIEW_FREEZE_GRACE_MINUTES`)*
+- `submittedAt?: Instant`
+- `blindPayload: { otherSideSubmittedAt?: Instant, revealedAt?: Instant }`
+- `scores: DimensionScores` *(1–5 por dimensión según rol)*
+- `tags: Set<TagId>`
+- `comment?: Comment`
+- `moderation: { status: CLEAN | MASKED | VOID, reasons: Set<Reason>, decidedAt?: Instant }`
+- `collusionHold?: { held: boolean, heldUntil?: Instant }` *(silencioso)*
+- `audit{ createdAt, updatedAt }`
+
+**Invariantes**
+- Única por `(tripId, rater.subjectId, ratee.subjectId)`; `rater ≠ ratee`.
+- `rater/ratee` corresponden a partes del Trip (cliente/proveedor).
+- Solo abre ventana si el Trip llega **formal** desde Trips.
+- Edición permitida mientras `now < freezeAt` **y** `now < effectiveExpiresAt` **y** `status == SUBMITTED` (independiente de la otra parte).
+- Solo `REVEALED` y no `VOID` contribuyen a métricas.
+
+**Comportamientos**
+- `submit(scores,tags,comment, clock)` → `submittedAt=now`, `freezeAt=now+grace`, `status=SUBMITTED`.
+- `edit(updates, clock)` → valida rango/tags y `now < freezeAt` y ventana activa.
+- `pauseWindow(from)` / `resumeWindow(to)` → agrega a `pauses[]` y recalcula `effectiveExpiresAt`.
+- `applyModeration(action: MASK|VOID)` → actualiza `moderation`; si `VOID` y ya `REVEALED`, marca recomputo.
+- `applyCollusionHold(until?)` / `clearCollusionHold()` → set/clear hold (sin notificar a usuarios).
+- `markOtherSideSubmitted(at)` → actualiza doble ciego.
+- `reveal(clock)` → si `DoubleBlindPolicy.canReveal(this, now)` ⇒ `status=REVEALED`, set `revealedAt`.
+
+**2) ReputationProfile (Aggregate Root)**  
+**Propósito.** Mantener métricas agregadas y badges por `subjectId` y `role`.
+
+**Estado clave**
+- `profileId: UUID`
+- `subjectId: UUID`
+- `role: PROFILE_ROLE` (`CLIENT | PROVIDER`)
+- `stats: ReputationStats`
+- `globalScore` *(promedio ponderado con bayes + decaimiento)*
+- `byDimension: Map<Dimension, ScoreAggregate>`
+- `histogram: { stars1..stars5: Int }`
+- `sampleSize: Int`
+- `rolling: List<MetricSnapshot>` *(90d)*
+- `operationalKpis: { onTimeRate, chatResponseRate, disputePct, firstResponseTimeP50 }`
+- `badges: Set<BadgeId>`
+- `policies: { bayesianPrior, decayPolicy }`
+- `audit{ createdAt, updatedAt }`
+
+**Comportamientos**
+- `applyRevealedReview(scores, revealedAt)`
+- `applyOperationalKpiUpdate(kpis, at)`
+- `recomputeWithDecay(clockNow)`
+- `grantBadge(badgeId)` / `revokeBadge(badgeId)`
+
+**Entities y Value Objects**
+- `DimensionScores` *(valida 1..5 y dimensiones por rol)*
+- `ScoreAggregate` *(sum,count,mean; actualiza histograma)*
+- `MetricSnapshot` *(timestamp + valores)*
+- `Comment` *(texto + flags de moderación)*
+- `TagId`, `BadgeId`
+
+**Policies (VO)**
+- `BayesianPrior{ mean, weight }`
+- `DecayPolicy{ halfLifeDays, minWeight }`
+- `WindowPolicy{ durationDays }`
+- `FreezePolicy{ graceMinutes }`
+
+**Domain Services**
+- `DoubleBlindPolicy.canReveal(review, now)`  
+  `= !review.collusionHold.held && ((review.submittedAt && review.blindPayload.otherSideSubmittedAt) || now ≥ review.effectiveExpiresAt)`
+- `ScoreAggregator` *(prior bayesiano + decaimiento temporal)*
+- `BadgePolicyService` *(umbrales de muestras, KPIs y tiempo)*
+- `AntiCollusionService` *(puerto: score de riesgo y hold)*
+- `ModerationPolicy` *(puerto: lenguaje/PII → acciones `MASK|VOID`)*
+
+**Domain Events (cuándo/payload mínimo)**
+- `TripReviewWindowOpened{ tripId, clientId, providerId, window }`
+- `ReviewSubmitted{ reviewId, tripId, raterId, rateeId, scores, tags, submittedAt }`
+- `ReviewEdited{ reviewId }`
+- `ReviewFrozen{ reviewId, freezeAt }`
+- `ReviewModerationApplied{ reviewId, action: MASK|VOID }`
+- `ReviewCollusionHoldApplied{ reviewId, heldUntil? }` / `ReviewCollusionHoldCleared{ reviewId }`
+- `ReviewRevealed{ reviewId, tripId, raterId, rateeId, scores, tags, revealedAt }`
+- `ReputationUpdated{ subjectId, role, newGlobalScore, sampleSize }`
+- `BadgeGranted{ subjectId, role, badgeId }` / `BadgeRevoked{ ... }`
+- `ReputationSignalUpdated{ subjectId, role, signalVector }`
+
+**Repositories (interfaces)**
+- `ReviewRepository`  
+  `findById(id)` · `findByTripAndSide(tripId, side)` · `findWithinWindow(now)` · `findPendingReveal(now)` · `findHeldByCollusion(now)` · `save(review)`
+- `ReputationProfileRepository` · `TagCatalogRepository (RO)` · `BadgeCatalogRepository (RO)`
+
+**Ubiquitous Language (extracto)**  
+Review, Window, Effective Expiration, Freeze (gracia propia), Double Blind, Reveal, Collusion Hold, Moderation (Mask/Void), Reputation Profile, Bayesian Prior, Decay, Histogram, Operational KPIs, Badge.
+
+---
+
+<br/>
+
+#### 2.6.12.2. Interface Layer
+
+**Endpoints/Controllers**
+- `POST /v1/reviews/{tripId}/submit` — body: `scores,tags,comment,idempotencyKey`
+- `PATCH /v1/reviews/{reviewId}` — editar si `now < freezeAt` y ventana activa
+- `GET /v1/reviews/pending` — mis ventanas/fechas límite
+- `POST /v1/reviews/{reviewId}/flag` — reportar abuso
+- `GET /v1/reputation/providers/{providerId}` — público: solo `REVEALED` no `VOID` (comments `MASKED` anonimizados)
+- `GET /v1/reputation/clients/{clientId}` — **solo** proveedores autenticados con `AccessScope` válido (ofertó o tuvo trato)
+- `GET /v1/me/reputation/dashboard` — rolling 90d, KPIs, badges
+- **Backoffice**  
+  `POST /v1/moderation/reviews/{reviewId}` (MASK|VOID) ·  
+  `POST /v1/admin/reputation/recompute` ·  
+  `POST /v1/admin/reputation/recompute-all-on-policy-change`
+
+**Consumers (mensajería)**
+- `TripsConsumer`: `TripDelivered|TripClosed`
+- `ChatConsumer`: `MessageSent`
+- `DisputesConsumer`: `DisputeOpened|Resolved`
+- `PaymentsConsumer`: `PaymentCaptured|TopUpCaptured|RefundProcessed`
+
+**Contratos I/O y errores (RFC 7807)**
+- **Códigos**:  
+  `400` `invalid-dimensions|invalid-tags|window-closed` ·  
+  `403` `not-owner|role-mismatch|forbidden-scope` ·  
+  `404` `review-not-found|trip-not-eligible` ·  
+  `409` `already-submitted|already-revealed|frozen-by-policy` ·  
+  `423` `paused-for-dispute|held-by-anticollusion`
+- **Respuestas** incluyen `effectiveExpiresAt`, `freezeAt`, `status`, `remainingDays`
+
+**AuthN/AuthZ y visibilidad**
+- `subjectId` desde JWT (IAM)
+- Solo el **owner** crea/edita su review
+- Reputación de cliente **solo visible** si `AccessScopePort` confirma relación (oferta o trato)
+- Endpoint público de proveedor **no** expone contenido **no revelado** ni `VOID`
+
+**Versionado & Idempotency-Key**
+- Prefijo `/v1`
+- `Idempotency-Key` en `POST/PATCH`
+
+**Webhooks (opcional)**
+- Firma **HMAC**, reintentos con backoff y deduplicación por `eventId`
+
+---
+
+<br/>
+
+#### 2.6.12.3. Application Layer
+
+**Capabilities ↔ Casos de uso**
+- Abrir ventana al `TripDelivered | TripClosed` (formal=true)
+- Enviar/editar review (gracia propia + ventana efectiva)
+- Pausar/Reanudar por disputa
+- Aplicar/Quitar collusion hold (silencioso)
+- Revelar (scheduler + eventos; doble ciego/expiración)
+- Moderación (auto/manual)
+- Actualizar reputación y otorgar/revocar badges
+- Backfill completo ante cambios de `BayesianPrior/DecayPolicy`
+- Publicar señales (ranking/planning/perfiles)
+
+**Command Handlers (precondiciones → efectos)**
+- `OpenReviewWindowOnTripClosed(cmd)`  
+  **Pre:** `Trips` → `TripDelivered|TripClosed{ tripId, formal:true, deliveredAt, onTime }`  
+  **Fx:** crea **dos** `Review` (cliente→proveedor y proveedor→cliente) con `openedAt/nominalExpiresAt`; `TripReviewWindowOpened`.  
+  *Si `formal` no viene, confirmar con `TripsReadModel (RO)`*
+- `SubmitReview(cmd)`  
+  **Pre:** ventana activa (`now < effectiveExpiresAt`), no `REVEALED`, owner  
+  **Fx:** `SUBMITTED`, `freezeAt = now + grace`, `ReviewSubmitted + ReviewFrozen`; dispara `AntiCollusionPort` y `ModerationPolicy` async; si `otherSideSubmittedAt` existe ⇒ intentar `reveal()`
+- `EditReview(cmd)`  
+  **Pre:** `status==SUBMITTED` y `now < freezeAt` y ventana activa  
+  **Fx:** `ReviewEdited`
+- `PauseReviewWindowForDispute(cmd)` / `ResumeReviewWindow(cmd)`  
+  **Fx:** actualiza `pauses[]`; recalcula `effectiveExpiresAt`
+- `ApplyCollusionHold(cmd)` / `ClearCollusionHold(cmd)`  
+  **Fx:** set/clear hold; `ReviewCollusionHoldApplied/Cleared`
+- `RevealPendingReviews(cmd)` *(scheduler idempotente)*  
+  **Pre:** `DoubleBlindPolicy` o vencimiento  
+  **Fx:** `REVEALED`; `ReviewRevealed`
+- `ModerateReview(cmd)`  
+  **Fx:** `ReviewModerationApplied`; si `VOID` y ya `REVEALED` ⇒ encolar `RecomputeReputation`
+- `RecomputeReputation(cmd)`  
+  **Fx:** recalcula agregados (bayes + decaimiento) → `ReputationUpdated`; evalúa badges
+- `RecomputeAllOnPolicyChange(cmd)` *(backfill full, idempotente)*  
+  **Pre:** cambio de `BayesianPrior` o `DecayPolicy`  
+  **Fx:** ejecuta `RecomputeReputation` para todos los perfiles
+- `GrantOrRevokeBadges(cmd)`  
+  **Pre:** `BadgePolicyService`  
+  **Fx:** `BadgeGranted/Revoked`
+
+**Query Handlers (lecturas)**
+- `GetPublicProviderReputation(query)` *(público)*
+- `GetClientReputationForProvider(query)` *(solo si `AccessScope` lo permite)*
+- `GetMyPendingReviews(query)` *(ventanas abiertas)*
+- `GetMyReputationDashboard(query)` *(rolling 90d, KPIs)*
+
+**Orquestación / Event Handlers (integración)**
+- **Consume**  
+  `Trips: TripDelivered|TripClosed{ formal, onTime }` (abrir ventana, KPI puntualidad) ·  
+  `Chat: MessageSent` (FRT/response rate) ·  
+  `Disputes: DisputeOpened|Resolved` (pausas) ·  
+  `Payments: PaymentCaptured|TopUpCaptured|RefundProcessed` (contexto/analítica; no gatea)
+- **Produce**  
+  `Review*`, `ReputationUpdated`, `ReputationSignalUpdated`, `Badge*`
+
+**Puertos (interfaces a Infra)**
+- `Clock`, `IdGenerator`, `TxManager`
+- `Notifier` *(recordatorios/revelación/moderación)*
+- `ContentModerationPort` *(NLP/PII)*
+- `AntiCollusionPort` *(riesgo; puede devolver `heldUntil`)*
+- `ProfilesPublisherPort`, `SignalsPublisherPort`, `OutboxPublisher`
+- `AuthzContextPort` *(subjectId, roles)*
+- `TripsReadModelPort (RO)` *(confirmar formalidad)*
+- `AccessScopePort` *(relación proveedor↔cliente para lecturas de cliente)*
+
+**Reglas de KPIs (en Application)**
+- `OnTimeRate(90d) = onTimeDeliveries / totalDeliveries`
+- `ChatResponseRate(30d) = % mensajes con primera respuesta < X horas`; además `firstResponseTimeP50`
+- `DisputePct(180d) = viajes con disputa / total`; y `winRate`  
+  *(ventanas configurables; alisado exponencial opcional)*
+
+**Idempotencia y control transaccional**
+- **Idempotency-Key** obligatoria en `POST/PATCH` de escritura
+- `OpenReviewWindowOnTripClosed` idempotente por `(tripId, side)`
+- **Transactional Outbox**: persistir estado + evento en la misma TX; publicación con dedupe por `eventId`
+
+---
+
+<br/>
+
+#### 2.6.12.4. Infrastructure Layer
+
+**Repositorios (implementaciones)**
+- `SqlReviewRepository` *(índices por `tripId+side`, `status`, `effectiveExpiresAt`, `collusionHold.heldUntil`)*
+- `SqlReputationProfileRepository`
+- `InMemory/SqlTagCatalogRepository (RO)` · `InMemory/SqlBadgeCatalogRepository (RO)`
+
+**Adapters / Integraciones**
+- **Mensajería:** `OutboxPublisher` (+ consumers `Trips/Chat/Disputes/Payments`)
+- **Moderación:** `ModerationAdapter` (NLP/PII → `MASK|ALLOW|VOID`)
+- **Anticolusión:** `AntiCollusionAdapter` (heurísticas/ML; puede sugerir `heldUntil`)
+- **Notifier:** `Email/SMS/InAppNotifier` (recordatorios y revelación)
+- **Profiles/Signals:** `ProfilesPublisherPort` (perfiles públicos) · `SearchIndexPublisher` (solo reviews `REVEALED` no `VOID`)
+- **TripsReadModelAdapter (RO):** confirma formal si el evento no lo provee
+- **AccessScopeAdapter:** valida contexto proveedor↔cliente (oferta o trato)
+
+**Transactional Outbox / Retries**
+- Publicación **at-least-once** con dedupe por `eventId`; **DLQ** para errores persistentes
+- Re-cómputos tras `VOID` o cambio de policy se encolan y ejecutan con **locks optimistas**
+
+**Configuración y secretos (inyección, no valores)**
+- `REPUTATION_WINDOW_DAYS`, `REVIEW_FREEZE_GRACE_MINUTES`  
+- `BAYES_PRIOR_MEAN`, `BAYES_PRIOR_WEIGHT`, `DECAY_HALFLIFE_DAYS`  
+- `CHAT_RESPONSE_THRESHOLD_HOURS`, ventanas KPIs (90/30/180d)  
+- Claves de firma de **webhooks** y credenciales de adaptadores externos
+
+<br/>
+
+#### 2.6.12.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.12.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.12.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.12.6.2. Bounded Context Database Design Diagram
+
+<br/>
+
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
 #### 2.6.X.2. Interface Layer
@@ -3105,7 +4033,6 @@ Charge, Top-up, Refund, Net collected, Fee (1%), Payout, **Formalized (Payment)*
 #### 2.6.X.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.X.6.1. Bounded Context Domain Layer Class Diagrams
 ##### 2.6.X.6.2. Bounded Context Database Design Diagram
-
 
 
 <br/>
