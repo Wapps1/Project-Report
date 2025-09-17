@@ -2828,6 +2828,273 @@ Variables de entorno / vault; **rotación** de claves HMAC de pagos.
 
 <br/>
 
+### 2.6.9. Bounded Context: Payments
+- *Cobro al cliente, comisión 1%, top-up, reembolsos parciales y liquidaciones al proveedor.*
+
+#### 2.6.9.1. Domain Layer
+
+**Aggregates (AR)**
+
+**1) Payment (Aggregate Root)**
+
+- **Estado**
+  - `paymentId: UUID`
+  - `dealRef: { dealId: UUID }`
+  - `clientId: SubjectId`, `providerId: SubjectId`
+  - `currency: Currency` *(inmutable; monocurrency)*
+  - `movements: List<PaymentMovement>` *(append-only)*
+  - `totals: { originalCharge, topUps, refunds, capturedTotal, netCollected, appFeePct=1%, appFeeAmount }`
+  - `status: OPEN | FORMALIZED | CLOSED`
+  - `audit { createdAt, updatedAt }`
+
+- **Invariantes**
+  - **Monocurrency**: todos los movimientos en `currency`.
+  - **Append-only** en `movements`.
+  - `refunds ≤ capturedTotal` *(por asignación explícita)*.
+  - **Fee final** = `FeePolicyService(netCollected)` *(1% con redondeo por moneda)*.
+  - **Formalización** (política A): `FORMALIZED` si `netCollected > 0`.
+  - `CLOSED` solo si **saldo liquidable = 0** y **sin reservas vigentes** en Payouts.
+
+- **Comportamientos**
+  - `addInitialCharge(amount) -> movementId`
+  - `addTopUp(amount, reason) -> movementId`
+  - `addRefund(amount, reason, appliedTo: AllocationPlan) -> movementId`
+  - `recomputeTotals()`
+  - `tryFormalize()` *(emite evento al pasar a `FORMALIZED`)*
+  - `closeIfSettled()` *(pasa a `CLOSED` si cumple invariant)*
+
+**2) Payout (Aggregate Root)**
+
+- **Estado**
+  - `payoutId: UUID`
+  - `providerId: SubjectId`
+  - `currency: Currency`
+  - `items: List<PayoutItem { paymentId, amount: Money }>`
+  - `amount: Money` *(Σ items)*
+  - `status: CREATED | REQUESTED | SUCCEEDED | FAILED`
+  - `externalRef?: String`
+  - `audit { createdAt, updatedAt }`
+
+- **Invariantes**
+  - `amount = Σ items.amount`
+  - `amount ≤ saldoNetoLiquidable(providerId, currency)`
+    - por `Payment`: `netoProveedor = netCollected - appFeeAmount - refundsAplicadasAlProveedor - reservasVigentes`
+  - Un `paymentId` **no** aporta dos veces al **mismo** período de liquidación.
+
+- **Comportamientos**
+  - `request()` → **reserva** `amount` sobre saldos elegibles.
+  - `markSucceeded(externalRef)` → **consume** la reserva.
+  - `markFailed(reason)` → **libera** la reserva.
+
+**Entities & Value Objects**
+
+- **PaymentMovement (Entity en `Payment`)**
+  - `movementId: UUID`
+  - `type: CHARGE | TOPUP | REFUND`
+  - `amount: Money`
+  - `gateway: { provider: Culqi|MercadoPago, paymentRef: String }`
+  - `status:`
+    - `CHARGE|TOPUP`: `CREATED → (AUTHORIZED)? → CAPTURED | FAILED`
+    - `REFUND`: `CREATED → PROCESSED | FAILED`
+  - `reason?: String`, `createdAt`
+  - `appliedTo?: List<{ movementId: UUID, amount: Money }>` *(solo REFUND)*
+
+- **VOs**
+  - `Money { amount: Decimal(escala ISO-4217), currency }` *(escala válida; **no** negativos)*
+  - `Percent { value ∈ [0..100] }`
+  - `Currency { ISO }`
+
+**Domain Services**
+
+- `FeePolicyService`
+  - `computeAppFee(netCollected) -> Money` *(1%, redondeo por moneda; opcional mínimo)*
+  - `deltaFee(oldNet, newNet) -> Money`
+- `RefundAllocationPolicy`
+  - `plan(payment, refundAmount) -> AllocationPlan` *(FIFO contra `CAPTURED`; o por `gatewayRef` si se indica)*
+
+**Domain Events**
+
+- `PaymentInitiated { paymentId, dealId, amount, currency }`
+- `PaymentCaptured { paymentId, movementId, amount, currency }`
+- `PaymentFormalized { paymentId, dealId }`
+- `TopUpCaptured { paymentId, movementId, amount, currency }`
+- `RefundProcessed { paymentId, movementId, amount, currency }`
+- `PayoutRequested { payoutId, providerId, amount, currency }`
+- `PayoutSucceeded { payoutId, providerId, amount, currency }`
+
+**Repositories (interfaces)**
+
+- `PaymentRepository`
+  - `findById(paymentId)`, `findOpenByDeal(dealId)`, `save(payment)`, `lock(paymentId)`
+  - `upsertMovementByGatewayRef(gatewayRef, builderFn) -> movementId`
+- `PayoutRepository`
+  - `findById(payoutId)`, `findPendingByProvider(providerId)`, `save(payout)`
+  - `reserve(providerId, currency, amount)`, `releaseReservation(...)`
+
+**Ubiquitous Language (breve)**
+Charge, Top-up, Refund, Net collected, Fee (1%), Payout, **Formalized (Payment)**, **Formal (Deal)**.
+
+---
+
+<b/>
+
+#### 2.6.9.2. Interface Layer
+
+**Convenciones**
+
+- **Base:** `/api/v1/payments`
+- **Auth:** `Authorization: Bearer <JWT>`
+- **Ownership**
+  - Endpoints de **cliente** → `subjectId == clientId` del `Payment` (si no, **404**).
+  - Endpoints de **proveedor** → `subjectId == providerId`.
+- `Idempotency-Key` en `POST/PATCH`.
+- Errores: **RFC 7807** con `code`, `correlationId`.
+
+**Endpoints (cliente)**
+
+- `POST /deals/{dealId}/charges`  
+  Crea el cargo inicial. Body: `{ amount, currency }`  
+  Respuesta: `{ paymentId, gatewayInit: {...} }`  
+  Errores: `409` si ya hay cargo en curso idempotente; `422` si `currency` difiere.
+
+- `POST /payments/{paymentId}/top-ups`  
+  Cobra diferencia. Body: `{ amount, reason }`  
+  Respuesta: `201 { movementId }`
+
+- `POST /payments/{paymentId}/refunds`  
+  Refund parcial/total. Body: `{ amount, reason }`  
+  Respuesta: `202 { movementId }`
+
+- `GET /payments/{paymentId}`  
+  Consulta `movements`, `totals`, `status`.
+
+**Endpoints (proveedor)**
+
+- `GET /providers/{providerId}/balance?currency=XXX` — saldo neto elegible.
+- `POST /providers/{providerId}/payouts` — crea orden de liquidación.  
+  Body: `{ currency, items: [{ paymentId, amount }] }`  
+  Respuesta: `201 { payoutId }`
+
+**Webhooks (pasarela)**
+
+- `POST /webhooks/payment-gateway` — `payment_succeeded | payment_refunded | payment_failed`  
+  Firma **HMAC/headers propios**, dedupe por `eventId`, **upsert por `gatewayRef`**.  
+  **2xx** solo si el handler fue **idempotente** y **persistido**.
+
+**DTOs (ejemplo breve)**
+
+- `PaymentSummaryResponse`  
+  `{ paymentId, dealId, currency, totals { originalCharge, topUps, refunds, netCollected, appFeeAmount }, status, movements: [...] }`
+
+- `ProblemDetails` *(RFC 7807)*  
+  `{ type, title, status, detail, instance, code, correlationId }`
+
+---
+
+<b/>
+
+#### 2.6.9.3. Application Layer
+
+**Capabilities → Casos de uso**
+
+- Cobro inicial (crear y capturar cargo del Deal)
+- Top-up (cobro adicional + delta de fee)
+- Refund (total/parcial con asignación FIFO y ajuste de fee)
+- Payout (crear y ejecutar liquidación con reservas)
+
+**Puertos (interfaces a Infra)**
+
+- `PaymentGatewayPort`
+  - `createCharge(intent { amount, currency, metadata }) -> GatewayRef`
+  - `capture(gatewayRef) -> CaptureResult`
+  - `refund(gatewayRef, amount) -> RefundResult`
+- `WebhookVerifierPort` → `verify(signature, payload) -> bool`
+- `DealReadPort` → `getDealSnapshot(dealId) -> { status, agreedAmount, currency, clientId, providerId }`
+- `IdempotencyStore` → `checkAndPut(key)`, `markDone(key)`
+- `Clock`, `IdGenerator`, `TxManager`, `EventBus`
+
+**Command Handlers**
+
+- `InitiateChargeCommand { dealId, amount, currency, idemKey }`  
+  **Pre:** `Deal.status == READY_FOR_PAYMENT`; `amount == agreedAmount`; `currency` coincide; ownership del cliente.  
+  **Steps:** idempotencia → `findOpenByDeal` o crear `Payment` → `addInitialCharge(CREATED)` → `PaymentGatewayPort.createCharge` → persistir + `PaymentInitiated`.
+
+- `ConfirmChargeCommand { paymentId, gatewayRef }` *(auth→capture)*  
+  **Pre:** movimiento `CHARGE` en `AUTHORIZED`.  
+  **Steps:** `capture` → marcar `CAPTURED` → `recomputeTotals` → `tryFormalize()` → eventos `PaymentCaptured` (+ `PaymentFormalized` si aplica).
+
+- `ApplyTopUpCommand { paymentId, amount, reason, idemKey }`  
+  **Pre:** `Payment.status != CLOSED` y `amount > 0`.  
+  **Steps:** `addTopUp(CREATED)` → `createCharge/capture` → marcar `CAPTURED` → `recomputeTotals` *(cobra `deltaFee` si sube neto)* → `TopUpCaptured` → `tryFormalize()`.
+
+- `RequestRefundCommand { paymentId, amount, reason, idemKey }`  
+  **Pre:** `amount > 0` y ≤ `capturedTotal - refunds` disponible; ventana/política OK.  
+  **Steps:** `plan = RefundAllocationPolicy.plan(...)` → `addRefund(CREATED, plan)` → `PaymentGatewayPort.refund(...)` → marcar `PROCESSED` → `recomputeTotals` *(devuelve fee excedente si baja el neto)* → `RefundProcessed` → `closeIfSettled()`.
+
+- `CreatePayoutCommand { providerId, currency, items[] }`  
+  **Pre:** saldo neto elegible ≥ Σ `items.amount`; sin duplicar `paymentId` del período.  
+  **Steps:** crear `Payout.CREATED` → `request()` *(reserva)* → `PayoutRequested`.
+
+- `MarkPayoutSucceededCommand { payoutId, externalRef }` / `MarkPayoutFailedCommand { payoutId, reason }`  
+  **Steps:** actualizar estado; `SUCCEEDED` **consume** reserva (y puede disparar `closeIfSettled()` en Payments afectados); `FAILED` **libera** reserva.
+
+**Event Handlers (integración)**
+
+- **Webhooks (pasarela)**
+  - `onPaymentCaptured(event { eventId, gatewayRef, amount, currency, metadata })`  
+    Verificar firma → **upsert por `gatewayRef/eventId`**: si existe, idempotente; si no, crearlo `CAPTURED` → `recomputeTotals` → `tryFormalize()` → `PaymentCaptured` (+ `PaymentFormalized` si aplica).
+  - `onRefundProcessed(event { eventId, gatewayRef, amount, ... })`  
+    Igual flujo: upsert a `REFUND.PROCESSED` (si no existía, construir y marcar para reconciliar `appliedTo` en background) → `recomputeTotals` → `RefundProcessed`.
+
+- **Desde otros BCs**
+  - `onDealReadyForPayment(dealId)` → preparar `Payment` si no existe (sin movimientos).
+  - *(opcional)* `onTripDelivered(dealId)` → lanzar `CreatePayoutCommand` automático según política `T+0/T+1`.
+
+**Idempotencia y control transaccional**
+
+- `Idempotency-Key` en todos los comandos mutantes *(scope: `method+path+subjectId+payloadHash`)*.
+- Borde transaccional = **Handler**; eventos **post-commit** vía **Transactional Outbox**.
+- `PaymentRepository.lock(paymentId)` para evitar carreras al registrar movimientos.
+
+---
+
+<b/>
+
+#### 2.6.9.4. Infrastructure Layer
+
+**Repos**
+
+- `SqlPaymentRepository` — persistencia de `Payment` con `movements` **append-only**; `lock(paymentId)`; `upsertMovementByGatewayRef(...)`.
+- `SqlPayoutRepository` — manejo de `Payout` y **reservas** (`request/succeed/fail`).
+
+**Adapters**
+
+- `CulqiPaymentGatewayAdapter` / `MercadoPagoGatewayAdapter`  
+  Implementan `PaymentGatewayPort` (`createCharge/capture/refund`) y setean `metadata = { paymentId, dealId, providerId, clientId, type: CHARGE|TOPUP|REFUND }`.
+- `WebhookSignatureVerifier` — valida firma, **timestamp drift** y repeticiones.
+
+**Messaging**
+
+- `TransactionalOutboxPublisher` para `PaymentCaptured`, `PaymentFormalized`, `RefundProcessed`, `PayoutRequested/Succeeded`.
+- **Inbox** para webhooks *(dedupe por `eventId`)*.
+
+**Cross-cutting**
+
+- `IdempotencyStore` (SQL/Redis)
+- `SecretsProvider` (KeyVault/Env) para claves de pasarela (rotables)
+- **Observabilidad:** logs con `correlationId`, métricas por operación, alarmas de fallo de webhook.
+
+---
+
+
+<b/>
+
+#### 2.6.9.5. Bounded Context Software Architecture Component Level Diagrams
+#### 2.6.9.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.9.6.1. Bounded Context Domain Layer Class Diagrams
+##### 2.6.9.6.2. Bounded Context Database Design Diagram
+
+<br/>
 
 ### 2.6.X. Bounded Context: Nombre
 #### 2.6.X.1. Domain Layer
