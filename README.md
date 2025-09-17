@@ -3441,9 +3441,20 @@ Waybill, REMITTER/CARRIER, Filing, Receipt, PublicLink, **SegmentKey**, **UnitKe
 <br/>
 
 #### 2.6.10.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *Waybills — Containers*
+<img width="1640" height="5409" alt="image" src="https://github.com/user-attachments/assets/4e51e964-d3fd-42ff-bb1d-d4add448768a" />
+
+<br/>
+
 #### 2.6.10.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.10.6.1. Bounded Context Domain Layer Class Diagrams
+
+<br/>
+
 ##### 2.6.10.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/WAYBILLS-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -3836,9 +3847,22 @@ Ping, Waypoint, Geofence, Route Snapshot, Alternative Path, POD, Late Delivery, 
 <br/>
 
 #### 2.6.11.5. Bounded Context Software Architecture Component Level Diagrams
+ - *Trips API — Component Diagram*
+<img width="5350" height="12517" alt="image" src="https://github.com/user-attachments/assets/2d54e51c-fcc4-44af-9dc8-ec16f99c4c1d" />
+
+
+<br/>
+
 #### 2.6.11.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.11.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/TRIPS-BC.svg"></img>
+
+<br/>
+
 ##### 2.6.11.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/TRIPS-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -4114,8 +4138,17 @@ Review, Window, Effective Expiration, Freeze (gracia propia), Double Blind, Reve
 <br/>
 
 #### 2.6.12.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *BC Reputación — Componentes: Reputation Service*
+<img width="3120" height="8611" alt="image" src="https://github.com/user-attachments/assets/fbce8cd3-bb76-4d10-a12f-24fbdc139b07" />
+
+<br/>
+
 #### 2.6.12.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.12.6.1. Bounded Context Domain Layer Class Diagrams
+
+<br/>
+
 ##### 2.6.12.6.2. Bounded Context Database Design Diagram
 
 <br/>
