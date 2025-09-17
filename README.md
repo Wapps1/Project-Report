@@ -654,34 +654,34 @@ En Red Carga, IAM expone autenticación, MFA y emisión/rotación de tokens/clai
 <br>
 **Conformist (CF)** <br>
 El downstream adopta el modelo/estados del upstream para integrar rápido.
-Aquí Pagos se alinea al PSP: usa sus estados y webhooks nativos para autorizar/capturar/reembolsar y conciliar, tomando al PSP como fuente de verdad operativa.
+Aquí Payments se alinea al PSP: usa sus estados y webhooks nativos para autorizar/capturar/reembolsar y conciliar, tomando al PSP como fuente de verdad operativa.
 <img src="img/context-mapping/context-mapping-cf.png" />
 <br>
 **Customer/Supplier (C/S)** <br>
 Relación proveedor–cliente: el supplier define el lenguaje; el customer puede influir backlog.
 <ul>
-<li>Clientes → Solicitudes (con ACL): plantillas/preferencias se traducen al modelo publicable.</li>
-<li>Solicitudes → Tratos: la negociación adopta el lenguaje de la solicitud.</li>
-<li>Tratos → Pagos (Saga/Outbox): eventos orquestan cobro y compensaciones.</li>
-<li>Pagos → Guías / Viajes (gating=PAID): pago aprobado habilita emisión y operación.</li>
+<li>Customers → Requests (con ACL): plantillas/preferencias se traducen al modelo publicable.</li>
+<li>Requests → Deals: la negociación adopta el lenguaje de la solicitud.</li>
+<li>Deals → Payments (Saga/Outbox): eventos orquestan cobro y compensaciones.</li>
+<li>Payments → Guías / Viajes (gating=PAID): pago aprobado habilita emisión y operación.</li>
 <li>Proveedores → Flota / Planificación: habilitación de empresa alimenta vehículos y rutas/capacidad.</li>
 <li>Flota → Viajes (snapshot): datos de vehículo/licencias para operar.</li>
-<li>Planificación → Tratos / Viajes: capacidad/slots gobiernan oferta y programación.</li>
-<li>Identidad → Clientes / Proveedores: resultado KYC habilita alta/uso.</li>
+<li>Planificación → Deals / Viajes: capacidad/slots gobiernan oferta y programación.</li>
+<li>Identidad → Customers / Proveedores: resultado KYC habilita alta/uso.</li>
 </ul>
 <img src="img/context-mapping/context-mapping-cs.png" ></img>
 <br>
 <strong>Partnership (P) </strong><br>
 Interdependencia simétrica con coordinación de diseño y releases.
-Planificación ↔ Tratos: la capacidad/ventanas condiciona la negociación y ésta retroalimenta reglas anti-overbooking/SLA; se lanzan cambios coordinados.
+Planificación ↔ Deals: la capacidad/ventanas condiciona la negociación y ésta retroalimenta reglas anti-overbooking/SLA; se lanzan cambios coordinados.
 <img src="img/context-mapping/context-mapping-p.png" />
 <br>
 <strong>Anti-Corruption Layer (ACL)</strong> <br>
 Capa de traducción que protege al downstream del lenguaje/volatilidad del upstream o externo.
 <ul>
-<li>Clientes → Solicitudes: normaliza unidades, mapea categorías/enums y valida completitud.</li>
+<li>Customers → Requests: normaliza unidades, mapea categorías/enums y valida completitud.</li>
 <li>Guías → SUNAT GRE: mapea entidades al payload normativo, maneja idempotencia/reintentos y versionado de API.</li>
-<li>Disputas → Pagos / Viajes: traduce RequestHoldFunds/PauseTrip a comandos reales y mapea respuestas a eventos del lenguaje de Disputas.</li>
+<li>Disputas → Payments / Viajes: traduce RequestHoldFunds/PauseTrip a comandos reales y mapea respuestas a eventos del lenguaje de Disputas.</li>
 </ul>
 <img src="img/context-mapping/context-mapping-acl.png" />
 <br>
