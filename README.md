@@ -618,7 +618,7 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="">Entrevista 1</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ed5e5774e%2Dceb5%2D408d%2D9745%2Dd83a3086968e">Entrevista 1</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
@@ -655,7 +655,7 @@ Jocelyn Damaly Almerco, de 22 años y residente de Lima, es dueña de un negocio
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="">Entrevista 1</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ed5e5774e%2Dceb5%2D408d%2D9745%2Dd83a3086968e">Entrevista 1</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
@@ -673,6 +673,43 @@ Alexander Miranda Vivanco, 25 años, radicado en Lima, vende dispositivos electr
 
 
 ---
+
+## 📋 **Entrevista #3**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Mariano Oblitas</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>19 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Vendedor de pesas</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E48fd1635%2Ddc6d%2D4463%2Db15a%2D424760a0467b">Entrevista 3</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 12:43 s - Fin: 18:58 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-3.png" alt="Entrevista 3 - Mariano Oblitas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+Mariano Oblitas, de 19 años y residente en Lima, tiene un emprendimiento de venta de pesas y barras y realiza envíos interprovinciales una o dos veces por semana. Sus paquetes suelen pesar 10–15 kg y, cuando incluye barras, viajan en cajas grandes. Para elegir transportistas busca referencias en comunidades de vendedores (Mercado Libre y grupos de Facebook) y prioriza la confiabilidad/renombre porque, según cuenta, algunas empresas pequeñas no cumplen, llegan tarde, malogran el paquete o mandan a la dirección equivocada. El tiempo para encontrar una empresa adecuada puede ser de 3–4 horas, en especial por coberturas parciales (hay transportistas que solo van al norte o al sur). Suele contactar a 3–4 proveedores del “ranking” compartido por la comunidad y decide combinando fiabilidad y precio. Cotizar no es sencillo: frecuentemente no responden rápido o brindan información incompleta (dicen solo el precio, no aclaran si incluye seguro, si el envío es directo o si lo derivan, etc.). En requisitos, le piden Guía de Remisión, DNI del remitente, datos de origen (para asignarle almacén de despacho) y datos del destinatario. Paga con efectivo y Yape/Plin, pero a veces el transportista no acepta el medio elegido, obligándolo a buscar una alternativa. En prioridades, valora todo (seguridad, precio, rapidez y atención), pero pone por delante el precio y la seguridad: puede tolerar 3–5 días de tránsito si el costo no le genera pérdidas y si el producto viaja asegurado para cubrir daños o robos. Para una app ideal, quiere comparar precios fácilmente, ver reseñas reales de clientes, contar con seguimiento en tiempo real tipo “tracking” y chatear con el transportista dentro de la plataforma.
+
 
 ---
 ## 📊 **Análisis del Segmento Objetivo #2**
@@ -700,11 +737,11 @@ Alexander Miranda Vivanco, 25 años, radicado en Lima, vende dispositivos electr
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EaZpzkWRmKJLnsuYjlsPDNsBao9lt5rR_oivky7oKIHYMQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=c5ZTCl">Entrevista 4</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E2d2a8cf5%2D9aa8%2D4b1c%2D9853%2De2206c54d30a&startedResponseCatch=true">Entrevista 4</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 7:17 s</td>
+    <td>Inicio: 18:58 s - Fin: 26:15 s</td>
   </tr>
 </table>
 
@@ -743,11 +780,11 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EXmFGOHjIFRDkUEfqcq8WUEBmKlL5rZ6ovD-Pv-VwT3BIg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=JJOg9Z">Entrevista 5</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ec9a707b5%2D00b1%2D42d3%2D9893%2D5f8f2bd163e9&startedResponseCatch=true">Entrevista 5</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 4:44 s</td>
+    <td>Inicio: 26:16 s - Fin: 30:57 s</td>
   </tr>
 </table>
 
@@ -784,11 +821,11 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EQiYFTYEAR9Aieoo9T6RMZ8BT-BAUmq26dZJ4p-hhY8ioQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=e9sN1V">Entrevista 6</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044_upc_edu_pe%2FDocuments%2F2025+20.+%5B1ACC0238%5D+Aplicaciones+para+Dispositivos+M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas+Red+Carga.mp4&referrer=StreamWebApp.Web&referrerScenario=AddressBarCopied.view.1955f1c9-6535-4a47-bf98-65deeb8d68e0&startedResponseCatch=true">Entrevista 6</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 3:41 s</td>
+    <td>Inicio: 30:57 s - Fin: 34:39 s</td>
   </tr>
 </table>
 
