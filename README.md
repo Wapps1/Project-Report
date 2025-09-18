@@ -1046,6 +1046,8 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 ### 2.4.2. Impact Mapping
 ### 2.4.3. Product Backlog
 
+# Product Backlog
+
 | # Orden | User Story Id | Título | Story Points |
 |---------|---------------|--------|--------------|
 | 1 | US48 | Visualizar información principal de la empresa/producto | 3 |
@@ -1066,66 +1068,77 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 | 16 | US63 | Bloqueo por intentos fallidos y mecanismos de desbloqueo | 5 |
 | 17 | US01 | Verificar correo e iniciar registro | 5 |
 | 18 | US02 | Verificar teléfono por SMS OTP | 5 |
-| 19 | US03 | Validar documento de identidad y coincidencia de nombre | 8 |
-| 20 | US04 | Validar edad mínima y configurar PIN | 3 |
-| 21 | US05 | Registrar datos fiscales (RUC opcional) y completar perfil | 5 |
-| 22 | US21 | Registrar medidas por IA o manual con edición | 8 |
-| 23 | US22 | Capturar fotos de ítems con reglas de calidad | 5 |
-| 24 | US23 | Definir ruta (origen y destino) | 3 |
-| 25 | US24 | Registrar peso declarado y cálculo automático del peso volumétrico | 3 |
-| 26 | US25 | Publicar solicitud y confirmar exactitud de medidas y peso | 5 |
-| 27 | US09 | Registrar empresa transportista y validar RUC | 5 |
-| 28 | US10 | Cargar y validar poderes y documentación legal | 5 |
-| 29 | US11 | Solicitar habilitación de la empresa y dictamen | 5 |
-| 30 | US34 | Notificar a proveedores sobre nueva solicitud publicada | 3 |
-| 31 | US35 | Notificar al cliente por cotización recibida | 3 |
-| 32 | US28 | Iniciar trato desde una cotización y habilitar chat contextual | 5 |
-| 33 | US29 | Mensajería del trato: enviar y leer mensajes | 3 |
-| 34 | US30 | Acordar trato, congelar negociación y mantener chat operativo hasta entrega confirmada | 8 |
-| 35 | US31 | Marcar trato "Listo para pago" con resumen y comisión | 3 |
-| 36 | US64 | Registrar medio de pago (tarjeta o cuenta) | 5 |
-| 37 | US65 | Realizar pago de un trato acordado | 5 |
-| 38 | US66 | Visualizar desglose del pago con comisión | 2 |
-| 39 | US39 | Dar de alta vehículo y validar placa única | 3 |
-| 40 | US40 | Registrar capacidad técnica y atributos logísticos de la unidad | 5 |
-| 41 | US41 | Subir y validar documentos del vehículo con galería de evidencias (SOAT, CITV, tarjeta, fotos VIN/laterales) | 5 |
-| 42 | US44 | Definir corredores con frecuencia, ventanas, cobertura y compatibilidad de carga (con previsualización de calce) | 8 |
-| 43 | US45 | Calcular capacidad publicable por ruta/fecha (kg, m³, pallets) con buffers y mínimos | 8 |
-| 44 | US13 | Asignar unidad/placa a un trato formal | 5 |
-| 45 | US14 | Activar tracking del viaje y enviar posición | 5 |
-| 46 | US15 | Registrar eventos operativos en ruta | 5 |
-| 47 | US16 | Confirmar entrega y adjuntar prueba de entrega (POD) | 5 |
-| 48 | US17 | Cerrar viaje y desactivar tracking | 3 |
-| 49 | US20 | Recibir notificaciones de eventos de viaje | 3 |
-| 50 | US36 | Notificar actualizaciones de seguimiento del envío | 3 |
-| 51 | US33 | Notificar nuevo mensaje de chat | 2 |
-| 52 | US67 | Solicitar liquidación de ingresos disponibles | 3 |
-| 53 | US70 | Recibir liquidación consolidada con detalle | 3 |
-| 54 | US71 | Calificar al proveedor tras la entrega | 3 |
-| 55 | US72 | Calificar al cliente tras la entrega | 3 |
-| 56 | US07 | Gestionar plantillas de ítems (crear, reutilizar, eliminar) | 5 |
-| 57 | US08 | Gestionar plantillas de rutas (crear, actualizar, eliminar) | 5 |
-| 58 | US26 | Actualizar solicitud publicada con notificación de cambios / cancelar / expirar | 5 |
-| 59 | US27 | Seleccionar objetos genéricos y personalizar | 3 |
-| 60 | US32 | Cancelar trato con causa y reglas de reputación | 5 |
-| 61 | US06 | Configurar preferencias de notificación y horarios | 3 |
-| 62 | US37 | Ver centro de notificaciones y marcar como leído | 3 |
-| 63 | US43 | Cambiar estado del vehículo (Habilitado/Deshabilitado) con motivos y trazabilidad | 3 |
-| 64 | US42 | Alertas de vencimiento y bloqueo operativo por documentos del vehículo | 5 |
-| 65 | US12 | Alertas de vencimiento y renovación de documentos | 5 |
-| 66 | US46 | Reservar capacidad al iniciar trato y confirmar al pagar (hold → commit) | 8 |
-| 67 | US47 | Recalcular disponibilidad ante cambios y prevenir sobreventa/solapes | 8 |
-| 68 | US69 | Descargar comprobante de pago | 2 |
-| 69 | US68 | Visualizar historial de liquidaciones | 3 |
-| 70 | US73 | Recibir notificación para calificar al proveedor | 2 |
-| 71 | US74 | Recibir notificación para calificar al cliente | 2 |
-| 72 | US75 | Seleccionar tags en la calificación de proveedor | 2 |
-| 73 | US76 | Seleccionar tags en la calificación de cliente | 2 |
-| 74 | US18 | Duplicar plantilla de ítem o ruta | 2 |
-| 75 | US19 | Checklist de requisitos y progreso de habilitación | 3 |
-| 76 | US38 | Silenciar notificaciones de un trato o solicitud | 2 |
-| 77 | US77 | Visualizar métricas y badges del proveedor | 2 |
-| 78 | US78 | Visualizar métricas y badges del cliente | 2 |
+| 19 | TS01 | Capturar documento y validar contra fuente oficial (OCR/MRZ + padrón) | 8 |
+| 20 | TS02 | Selfie con liveness y face-match contra foto del documento | 8 |
+| 21 | TS03 | Verificación de nombre y edad mínima + motor de decisión KYC | 5 |
+| 22 | TS04 | Auditoría integral y protección de PII (hash, cifrado, retención) | 5 |
+| 23 | US03 | Validar documento de identidad y coincidencia de nombre | 8 |
+| 24 | US04 | Validar edad mínima y configurar PIN | 3 |
+| 25 | US05 | Registrar datos fiscales (RUC opcional) y completar perfil | 5 |
+| 26 | US21 | Registrar medidas por IA o manual con edición | 8 |
+| 27 | US22 | Capturar fotos de ítems con reglas de calidad | 5 |
+| 28 | US23 | Definir ruta (origen y destino) | 3 |
+| 29 | US24 | Registrar peso declarado y cálculo automático del peso volumétrico | 3 |
+| 30 | US25 | Publicar solicitud y confirmar exactitud de medidas y peso | 5 |
+| 31 | US09 | Registrar empresa transportista y validar RUC | 5 |
+| 32 | US10 | Cargar y validar poderes y documentación legal | 5 |
+| 33 | US11 | Solicitar habilitación de la empresa y dictamen | 5 |
+| 34 | US34 | Notificar a proveedores sobre nueva solicitud publicada | 3 |
+| 35 | US35 | Notificar al cliente por cotización recibida | 3 |
+| 36 | US28 | Iniciar trato desde una cotización y habilitar chat contextual | 5 |
+| 37 | US29 | Mensajería del trato: enviar y leer mensajes | 3 |
+| 38 | US30 | Acordar trato, congelar negociación y mantener chat operativo hasta entrega confirmada | 8 |
+| 39 | US31 | Marcar trato "Listo para pago" con resumen y comisión | 3 |
+| 40 | US64 | Registrar medio de pago (tarjeta o cuenta) | 5 |
+| 41 | US65 | Realizar pago de un trato acordado | 5 |
+| 42 | US66 | Visualizar desglose del pago con comisión | 2 |
+| 43 | US79 | Emitir guía de remisión del cliente | 5 |
+| 44 | US80 | Emitir guía de remisión del transportista | 5 |
+| 45 | US39 | Dar de alta vehículo y validar placa única | 3 |
+| 46 | US40 | Registrar capacidad técnica y atributos logísticos de la unidad | 5 |
+| 47 | US41 | Subir y validar documentos del vehículo con galería de evidencias (SOAT, CITV, tarjeta, fotos VIN/laterales) | 5 |
+| 48 | US44 | Definir corredores con frecuencia, ventanas, cobertura y compatibilidad de carga (con previsualización de calce) | 8 |
+| 49 | US45 | Calcular capacidad publicable por ruta/fecha (kg, m³, pallets) con buffers y mínimos | 8 |
+| 50 | US13 | Asignar unidad/placa a un trato formal | 5 |
+| 51 | US14 | Activar tracking del viaje y enviar posición | 5 |
+| 52 | US15 | Registrar eventos operativos en ruta | 5 |
+| 53 | US16 | Confirmar entrega y adjuntar prueba de entrega (POD) | 5 |
+| 54 | US17 | Cerrar viaje y desactivar tracking | 3 |
+| 55 | US20 | Recibir notificaciones de eventos de viaje | 3 |
+| 56 | US36 | Notificar actualizaciones de seguimiento del envío | 3 |
+| 57 | US33 | Notificar nuevo mensaje de chat | 2 |
+| 58 | US67 | Solicitar liquidación de ingresos disponibles | 3 |
+| 59 | US70 | Recibir liquidación consolidada con detalle | 3 |
+| 60 | US71 | Calificar al proveedor tras la entrega | 3 |
+| 61 | US72 | Calificar al cliente tras la entrega | 3 |
+| 62 | US07 | Gestionar plantillas de ítems (crear, reutilizar, eliminar) | 5 |
+| 63 | US08 | Gestionar plantillas de rutas (crear, actualizar, eliminar) | 5 |
+| 64 | US26 | Actualizar solicitud publicada con notificación de cambios / cancelar / expirar | 5 |
+| 65 | US27 | Seleccionar objetos genéricos y personalizar | 3 |
+| 66 | US32 | Cancelar trato con causa y reglas de reputación | 5 |
+| 67 | US06 | Configurar preferencias de notificación y horarios | 3 |
+| 68 | US37 | Ver centro de notificaciones y marcar como leído | 3 |
+| 69 | US43 | Cambiar estado del vehículo (Habilitado/Deshabilitado) con motivos y trazabilidad | 3 |
+| 70 | US42 | Alertas de vencimiento y bloqueo operativo por documentos del vehículo | 5 |
+| 71 | US12 | Alertas de vencimiento y renovación de documentos | 5 |
+| 72 | US46 | Reservar capacidad al iniciar trato y confirmar al pagar (hold → commit) | 8 |
+| 73 | US47 | Recalcular disponibilidad ante cambios y prevenir sobreventa/solapes | 8 |
+| 74 | US81 | Solicitar corrección de guía emitida | 3 |
+| 75 | US82 | Corregir guía del transportista antes del viaje | 3 |
+| 76 | US83 | Anular guía de remisión del cliente | 3 |
+| 77 | US84 | Anular guía de remisión del transportista | 3 |
+| 78 | US69 | Descargar comprobante de pago | 2 |
+| 79 | US68 | Visualizar historial de liquidaciones | 3 |
+| 80 | US73 | Recibir notificación para calificar al proveedor | 2 |
+| 81 | US74 | Recibir notificación para calificar al cliente | 2 |
+| 82 | US75 | Seleccionar tags en la calificación de proveedor | 2 |
+| 83 | US76 | Seleccionar tags en la calificación de cliente | 2 |
+| 84 | TS05 | Política de reintentos, bloqueo temporal y fallback a revisión manual | 3 |
+| 85 | US18 | Duplicar plantilla de ítem o ruta | 2 |
+| 86 | US19 | Checklist de requisitos y progreso de habilitación | 3 |
+| 87 | US38 | Silenciar notificaciones de un trato o solicitud | 2 |
+| 88 | US77 | Visualizar métricas y badges del proveedor | 2 |
+| 89 | US78 | Visualizar métricas y badges del cliente | 2 |
 
 ## 2.5. Strategic-Level Domain-Driven Design
 ### 2.5.1. EventStorming
