@@ -2145,6 +2145,25 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 
 ### 2.3.5. Ubiquitous Language
 
+| **Término** | **Definición** |
+| ----------- | -------------- |
+| **Cliente** | Persona natural o jurídica que solicita el traslado de mercancías a través de la plataforma. Es quien genera las solicitudes de envío.                                                    |
+| **Proveedor de Transporte** | Empresa o conductor independiente autorizado que ofrece sus unidades de transporte (camiones, furgones, tráileres) para movilizar la carga de los clientes.                               |
+| **Solicitud de Envío** | Registro formal creado por el cliente en la plataforma donde se especifican los datos de la carga (origen, destino, tipo, peso, volumen, fecha y condiciones especiales).                 |
+| **Oferta de Transporte** | Propuesta emitida por un proveedor indicando condiciones de servicio (precio, tiempos, disponibilidad) para cumplir con una solicitud de envío.                                           |
+| **Contrato de Transporte** | Acuerdo generado digitalmente en la plataforma cuando un cliente acepta la oferta de un proveedor, estableciendo las obligaciones de ambas partes.                                        |
+| **Carga** | Mercancía, producto o material que debe ser trasladado de un punto de origen a un punto de destino. Puede clasificarse por peso, volumen, categoría o condiciones de manejo.              |
+| **Unidad de Transporte** | Vehículo registrado en la plataforma (camión, tráiler, furgoneta, etc.) que cuenta con características específicas de capacidad, dimensiones y permisos.                                  |
+| **Ruta** | Trayecto definido entre el punto de origen y el punto de destino del envío, que puede incluir paradas intermedias o desvíos.                                                              |
+| **Seguimiento en Tiempo Real** | Funcionalidad de la plataforma que permite visualizar la ubicación actualizada del vehículo y el estado del envío durante el transporte.                                                  |
+| **Guía de Transporte** | Documento digital generado por la plataforma que respalda el traslado de la carga, detallando información legal, datos del cliente, proveedor, ruta y características de la mercancía.    |
+| **Incidencia de Transporte** | Evento inesperado (demora, accidente, desperfecto mecánico, pérdida parcial de carga) que afecta el normal cumplimiento del contrato de transporte y debe ser reportado en la plataforma. |
+| **Historial de Envíos** | Registro cronológico de todas las solicitudes, contratos y movimientos realizados por un cliente o proveedor en la plataforma.                                                            |
+| **Notificación de Servicio** | Alerta enviada al cliente o proveedor informando sobre cambios de estado de la solicitud, aceptación de oferta, inicio de ruta, incidencias o entrega finalizada.                         |
+| **Entrega Confirmada** | Estado final de un envío que indica que la carga ha llegado a destino y el cliente ha confirmado la recepción conforme.                                                                   |
+| **Calificación de Servicio** | Evaluación que realiza el cliente respecto al proveedor de transporte (o viceversa) una vez concluido el envío, con el fin de medir calidad, puntualidad y seguridad.                     |
+| **Panel de Control** | Interfaz principal de la plataforma que muestra indicadores, notificaciones y herramientas de gestión para clientes y proveedores.   
+
 ## 2.4. Requirements Specification
 ### 2.4.1. User Stories
 
