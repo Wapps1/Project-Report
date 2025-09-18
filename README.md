@@ -271,7 +271,78 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
 <br>
 
 # Objetivos SMART
-
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <thead>
+    <tr>
+      <th>Nombre del estudiante</th>
+      <th>Descripción del objetivo</th>
+      <th>Fecha de inicio</th>
+      <th>Fecha de cumplimiento esperada</th>
+      <th>¿Qué se va a lograr?</th>
+      <th>¿Tiene KPI o métrica clara?</th>
+      <th>¿Es retador o va más allá de sus funciones?</th>
+      <th>¿Está alineado a la estrategia?</th>
+      <th>¿Cuándo se cumplirá?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ariana Agreda</td>
+      <td>Aprender y mejorar mis habilidades en la programación móvil usando Android Studio y Flutter, desarrollando prácticas semanales para reforzar lo aprendido.</td>
+      <td>10/09/2025</td>
+      <td>20/12/2025</td>
+      <td>Lograr crear aplicaciones móviles básicas con formularios, conexión a base de datos y navegación entre pantallas.</td>
+      <td>El avance se medirá en base a la finalización de al menos 3 mini-proyectos funcionales probados por mis compañeros.</td>
+      <td>Sí, porque implica ir más allá de las clases y practicar de forma constante fuera del horario académico.</td>
+      <td>Sí, está alineado al curso de aplicaciones móviles y al objetivo del equipo de construir una solución real.</td>
+      <td>Cuando se completen los proyectos y puedan ser presentados como prototipos al final del ciclo.</td>
+    </tr>
+    <tr>
+      <td>Claudia Belledonne</td>
+      <td>Practicar y fortalecer mis conocimientos en interfaces gráficas y experiencia de usuario (UI/UX) para aplicaciones móviles.</td>
+      <td>10/09/2025</td>
+      <td>20/12/2025</td>
+      <td>Diseñar pantallas amigables y coherentes con las necesidades de los usuarios de la app del proyecto.</td>
+      <td>La métrica será la retroalimentación recibida de al menos 5 usuarios en pruebas de usabilidad.</td>
+      <td>Sí, porque no solo implica programar, sino también entender la perspectiva de los usuarios.</td>
+      <td>Sí, está alineado a la meta de entregar una aplicación clara y fácil de usar.</td>
+      <td>Cuando los prototipos y vistas de la aplicación sean terminados y validados por el equipo.</td>
+    </tr>
+    <tr>
+      <td>Mauricio Elera</td>
+      <td>Mejorar mis habilidades en la conexión de aplicaciones móviles con bases de datos y servicios en la nube.</td>
+      <td>10/09/2025</td>
+      <td>20/12/2025</td>
+      <td>Poder implementar el registro y login de usuarios, almacenando información de manera segura.</td>
+      <td>Se medirá al lograr un sistema de autenticación que funcione correctamente con al menos 10 usuarios de prueba.</td>
+      <td>Sí, porque exige integrar varias tecnologías y superar la teoría para llegar a la práctica real.</td>
+      <td>Sí, está alineado a la necesidad de tener una app completa con sesiones seguras.</td>
+      <td>Al finalizar el proyecto de curso con un login y base de datos funcionando.</td>
+    </tr>
+    <tr>
+      <td>María Hernández</td>
+      <td>Aprender a trabajar con APIs externas e integrar funciones en la aplicación (ejemplo: mapas, notificaciones).</td>
+      <td>10/09/2025</td>
+      <td>20/12/2025</td>
+      <td>Incorporar en la app funciones como ubicación en mapa y envío de notificaciones en tiempo real.</td>
+      <td>Se validará con pruebas de funcionamiento en al menos 2 dispositivos distintos.</td>
+      <td>Sí, porque demanda investigar documentación oficial y resolver problemas de integración.</td>
+      <td>Sí, está alineado a dar mayor valor y realismo a la aplicación.</td>
+      <td>Cuando estas funciones estén disponibles y sean probadas dentro del prototipo final.</td>
+    </tr>
+    <tr>
+      <td>Fabiola Saldaña</td>
+      <td>Fortalecer mis habilidades en la planificación, arquitectura y buenas prácticas de desarrollo móvil en equipo.</td>
+      <td>10/09/2025</td>
+      <td>20/12/2025</td>
+      <td>Aplicar principios de organización del código y control de versiones para mantener un proyecto ordenado.</td>
+      <td>El progreso se medirá al mantener un repositorio con commits claros y revisiones de código entre compañeros.</td>
+      <td>Sí, porque no solo implica programar, sino coordinar con el equipo para seguir estándares comunes.</td>
+      <td>Sí, está alineado al objetivo de entregar un producto grupal funcional y mantenible.</td>
+      <td>Al presentar el proyecto final con código limpio, documentado y ordenado.</td>
+    </tr>
+  </tbody>
+</table>
 
 # Capítulo I: Presentación
 
