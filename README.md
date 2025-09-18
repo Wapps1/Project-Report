@@ -4185,16 +4185,175 @@ Review, Window, Effective Expiration, Freeze (gracia propia), Double Blind, Reve
 
 <br/>
 
-### 2.6.X. Bounded Context: Nombre
-#### 2.6.X.1. Domain Layer
-#### 2.6.X.2. Interface Layer
-#### 2.6.X.3. Application Layer
-#### 2.6.X.4. Infrastructure Layer
-#### 2.6.X.5. Bounded Context Software Architecture Component Level Diagrams
-#### 2.6.X.6. Bounded Context Software Architecture Code Level Diagrams
-##### 2.6.X.6.1. Bounded Context Domain Layer Class Diagrams
-##### 2.6.X.6.2. Bounded Context Database Design Diagram
+### 2.6.13. Bounded Context: Notifications
 
+- *Orquestación de push/email/SMS y registro de entrega/fallos con plantillas transaccionales.*
+
+<br/>
+
+#### 2.6.13.1. Domain Layer
+
+Núcleo: `Notification` (expediente de envío), `DeliveryAttempt` (intentos por canal), `Template` (plantillas con i18n) y `Preference` (consentimientos/quiet hours). Enfoque en fan-out multicanal, idempotencia, rate-limit y trazabilidad E2E.
+
+**Aggregates (AR)**
+
+**1) Notification (Aggregate Root)**  
+**Clave:** `notificationId`, `recipientId` *(subjectId)*, `type` *(QUOTE_CREATED, DEAL_ACCEPTED, PAYMENT_CONFIRMED, TOPUP_REQUIRED, WAYBILL_ISSUED, ETA_UPDATED, ARRIVING_SOON, DELIVERED, RATING_WINDOW_OPEN, ...)*,  
+`channels[]` *(Push/Email/SMS/InApp)*, `templateKey`, `payload` *(VO)*,  
+`status` *(DRAFT | ENQUEUED | SENT | DELIVERED | FAILED | CANCELLED)*, `priority`, `scheduledAt`, `createdAt`.
+
+**Invariantes**
+- Al menos **un canal** permitido por **Preferencias** del usuario.
+- `payload` satisface variables requeridas por `templateKey`.
+- Idempotencia por `idempotencyKey` *(opcional)* o por `(type, recipientId, businessId, window)`.
+
+**Comportamientos**
+- `schedule(at?)` · `enqueue()`  
+- `markSent(channel, providerMsgId)` · `markDelivered(channel, at)` · `markFailed(channel, reason)`  
+- `cancel()` · `reschedule(at)`  
+- `mustFanout()` *(decide si se intenta más de un canal)*
+
+**2) DeliveryAttempt (Entity en Notification)**  
+**Clave:** `attemptId`, `channel`, `provider`, `state` *(PENDING | SENT | DELIVERED | FAILED | DLQ)*, `retryCount`, `nextRetryAt`, `providerResponse`.  
+**Comportamientos:** `backoff()` · `toDeadLetter(reason)`.
+
+**3) Template (AR simple / catálogo)**  
+**Clave:** `templateKey`, `version`, `channel`, `locale`.  
+**VOs:** `TemplateBody{ subject|title|body|layout }`, `VariablesSpec{ required[], optional[] }`, `I18n`.  
+**Invariante:** variables **requeridas** presentes en `payload`.
+
+**4) Preference (AR por sujeto)**  
+**Clave:** `recipientId`.  
+**Atributos:** `subscriptions[type]=ON|OFF`, `allowedChannels[type]`, `quietHours{ start,end,tz }`, `rateLimit{ window, max }`.  
+**Reglas:** `isAllowed(type,channel,time)` · `enforceRateLimit(type,channel)`.
+
+**Entities & Value Objects**
+- **Payload (VO seguro tipado):** `businessId` *(dealId/waybillId/paymentId)*, `amount`, `currency`, `eta`, `deepLink`, `name`, ...
+- **Channel (VO):** `PUSH | EMAIL | SMS | INAPP`
+- **Locale (VO):** `es-PE`, `en-US`
+- **IdempotencyKey (VO)**
+- **QuietHours (VO):** `start,end,tz`
+- **BackoffPolicy (VO):** `strategy=exponential`, `maxRetries`
+
+**Domain Services**
+- `ChannelSelectionService` — orden/fallback por `Preference`, `type`, `priority`, **hora local** y **costo**.
+- `TemplateRenderService` — valida variables y renderiza por `channel/locale`.
+- `IdempotencyService` — hash `(recipientId,type,businessId,window)` para dedupe.
+- `RateLimitService` — chequeos por `recipientId/type/channel`.
+
+**Repositories (interfaces)**
+- `NotificationRepository` — `save`, `findById`, `existsByIdempotencyKey`, `dequeuePending(now,batchSize)`
+- `TemplateRepository` — `get(templateKey, channel, locale)`
+- `PreferenceRepository` — `getByRecipient(recipientId)`
+- `DeliveryAttemptRepository` — `append`, `updateState`
+
+**Domain Events (payload mínimo)**
+- `NotificationEnqueued{ notificationId, type, recipientId }`
+- `NotificationSent{ notificationId, channel, providerMsgId }`
+- `NotificationDelivered{ notificationId, channel, at }`
+- `NotificationFailed{ notificationId, channel, reason, retryCount }`
+- `NotificationDeduplicated{ idempotencyKey }`
+
+**Ubiquitous Language (breve)**  
+Notificación, Plantilla, Canal, Preferencias, Consentimiento, Quiet Hours, Fallback, Reintento, DLQ, Idempotencia, Entrega, Apertura, Clic.
+
+---
+
+<br/>
+
+#### 2.6.13.2. Interface Layer
+
+<br/>
+
+#### 2.6.13.3. Application Layer
+
+**Capabilities → Casos de uso**
+- Enviar **inmediata** (Deal accepted, Payment confirmed, …)
+- **Programar** (recordatorios, `RATING_WINDOW_OPEN`)
+- **Fan-out multicanal** con fallback *(p.ej., Push→SMS)*
+- Reintentos con **backoff** + **DLQ**
+- Respetar **preferencias/consentimiento** y **quiet hours**
+- **Idempotencia** y deduplicación por evento
+- Auditoría de entrega/estado + consultas
+
+**Command Handlers (precondiciones → efectos)**
+- `SendNotificationCommandHandler.handle(cmd)`  
+  **Input:** `recipientId, type, businessId, templateKey, payload, preferredChannels?, idempotencyKey?`  
+  **Pre:** preferencias permiten canal · variables completas  
+  **Fx:** `Notification.schedule()/enqueue()` → `NotificationEnqueued`
+- `ScheduleNotificationHandler.handle(cmd)` → programa `scheduledAt`
+- `CancelNotificationHandler.handle(cmd)` → `Notification.cancel()`
+
+**Event Handlers (integración → disparan SendNotification)**
+- **Deals:** `DealAccepted`, `DealFormalized`
+- **Payments:** `PaymentConfirmed`, `TopUpRequired`, `RefundIssued`
+- **Waybills:** `WaybillIssued`, `WaybillVoided`
+- **Tracking/Trips:** `EtaUpdated`, `Departed`, `ArrivingSoon`, `Delivered`
+- **Reputation:** `RatingWindowOpened`
+- **Delivery callbacks (webhooks):** `markDelivered/markFailed` por canal
+
+**Orquestadores / Sagas**
+- **CriticalTrackingAlertSaga:** ante `EtaUpdated` crítico → intenta **Push**; si **Failed** o **QuietHours** bloquea → **SMS**; audita todo.
+
+**Puertos (interfaces a Infra)**
+`Clock`, `IdGenerator`, `TransactionManager`,  
+`PushPort`, `EmailPort`, `SmsPort`, `InAppPort`,  
+`TemplateStoragePort` *(si cuerpos viven en storage)*,  
+`EventBusPort` *(outbox)*, `WebhookVerifierPort`.
+
+**Idempotencia y transacciones**
+- Al encolar: verificar `IdempotencyService`
+- **Transactional Outbox** para publicar eventos de integración de forma confiable
+- Handlers idempotentes por `idempotencyKey` y `providerMsgId`
+
+---
+
+<br/>
+
+#### 2.6.13.4. Infrastructure Layer
+
+**Repositorios (implementaciones)**
+- `SqlNotificationRepository`
+- `SqlPreferenceRepository`, `SqlTemplateRepository`
+- `SqlDeliveryAttemptRepository`
+
+**Adapters externos**
+- **Push:** `FcmPushAdapter` (Android), `ApnsPushAdapter` (iOS)
+- **Email:** `SmtpAdapter` o ESP (`SendGridAdapter`, `MailgunAdapter`)
+- **SMS:** `TwilioAdapter` *(o gateway local)*
+- **In-App:** `InAppAdapter` (persiste + notifica via WebSocket/Firebase)
+
+**Mensajería / Outbox**
+- `OutboxPublisher` *(Kafka/Rabbit/Service Bus)*
+- Workers: `NotificationDispatcher` (pendientes), `RetryWorker` (backoff), `DlqWorker`
+
+**Configuración y secretos**
+- Inyección por **ENV/Secret Manager** (sin hardcode)
+- Claves API por canal; plantillas en **DB** o **blob storage**
+
+**Observabilidad**
+- Métricas *(Prometheus)*, logs estructurados, trazas
+- KPIs: tasa de entrega por canal, latencia `enqueue→delivered`, ratio de fallback, tasa de bounces
+
+<br/>
+
+#### 2.6.13.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *BC Notifications — Container: Notifications API*
+![Uploading image.png…]()
+
+<br/>
+
+#### 2.6.13.6. Bounded Context Software Architecture Code Level Diagrams
+##### 2.6.13.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/NOTIFICATIONS-BC.svg"></img>
+
+<br/>
+
+##### 2.6.13.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/NOTIFICATIONS-BC-DATABASE.svg"></img>
 
 <br/>
 
