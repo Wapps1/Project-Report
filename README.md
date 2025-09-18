@@ -1765,9 +1765,22 @@ No aplican (flujos locales, un AR por TX).
 <b/>
 
 #### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
+
+- *Customers API — Component Diagram*
+<img width="3870" height="5500" alt="image" src="https://github.com/user-attachments/assets/05341706-f8f7-475d-a1c4-60b50020ca34" />
+
+<b/>
+
 #### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.3.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/CUSTOMER-BC.svg"></img>
+
+<b/>
+
 ##### 2.6.3.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/CUSTOMER-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -1981,9 +1994,19 @@ No aplican (flujos locales, un AR por TX).
 <br/>
 
 #### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
+
+<br/>
+
 #### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.4.6.1. Bounded Context Domain Layer Class Diagrams
+
+<img src="img/class-diagram/PROVIDERS-BC.svg"></img>
+
+<br/>
+
 ##### 2.6.4.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/PROVIDERS-BC-DATABASE.svg"></img>
 
 <br/>
 
@@ -4147,9 +4170,13 @@ Review, Window, Effective Expiration, Freeze (gracia propia), Double Blind, Reve
 #### 2.6.12.6. Bounded Context Software Architecture Code Level Diagrams
 ##### 2.6.12.6.1. Bounded Context Domain Layer Class Diagrams
 
+<img src="img/class-diagram/REPUTATION-BC.svg"></img>
+
 <br/>
 
 ##### 2.6.12.6.2. Bounded Context Database Design Diagram
+
+<img src="img/class-diagram/REPUTATION-BC-DATABASE.svg"></img>
 
 <br/>
 
