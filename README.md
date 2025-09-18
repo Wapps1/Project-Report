@@ -1827,6 +1827,123 @@ En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostr
 
 
 #### 2.5.1.3. Bounded Context Canvases
+
+### 📋 **Descripción**
+
+En esta sección se presentan los Bounded Context Canvases, que definen los límites y responsabilidades de cada contexto del dominio. Cada canvas detalla el propósito, funcionalidades clave, integraciones y eventos de cada Bounded Context, proporcionando una visión clara de cómo se organiza el sistema en dominios cohesivos.
+
+### 🏗️ **Bounded Contexts del Sistema**
+
+#### 💰 **Payments**
+
+<img src="img/event-storming/bc-canvases/payments.png" alt="Payments - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Descripción:**
+Orquesta todo el cobro al cliente (autorización/captura), calcula y aplica la comisión del 1%, gestiona top-ups y reembolsos parciales, y emite eventos de "DealFormalized/PaymentApproved" que habilitan documentación y viaje. Se integra con el PSP y mantiene idempotencia, reintentos y liquidaciones al proveedor. Es core/compliance por su impacto directo en ingresos y riesgo.
+
+**Responsabilidades Clave:**
+- Procesamiento de pagos y autorizaciones
+- Cálculo y aplicación de comisiones
+- Gestión de top-ups y reembolsos
+- Integración con PSP (Payment Service Provider)
+- Mantenimiento de idempotencia y reintentos
+- Liquidaciones al proveedor
+
+---
+
+#### 🤝 **Deals**
+
+<img src="img/event-storming/bc-canvases/deals.png" alt="Deals - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Descripción:**
+Gestiona la negociación: recepción de cotizaciones, aceptación parcial, arranque del trato desde una quote, control de estado hasta "listo para pago" y bloqueo de la solicitud. Publica eventos que habilitan chat/contexto y coordina con Requests para asegurar exclusividad. Es el punto de encuentro operacional entre cliente y proveedor.
+
+**Responsabilidades Clave:**
+- Gestión de cotizaciones y negociaciones
+- Control del estado del trato
+- Coordinación con Requests para exclusividad
+- Habilitación de chat y contexto de negociación
+- Publicación de eventos de estado
+
+---
+
+#### 📦 **Requests**
+
+<img src="img/event-storming/bc-canvases/requestes.png" alt="Requests - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Descripción:**
+Crea y publica solicitudes de envío con ítems, medidas estimadas por IA, peso y ruta, controlando edición/expiración. Tras publicar, consulta a Planning por elegibilidad y dispara un broadcast a proveedores. Mantiene el lifecycle de la solicitud hasta ser bloqueada por un Deal. Es la puerta de entrada del flujo de carga.
+
+**Responsabilidades Clave:**
+- Creación y gestión de solicitudes de envío
+- Integración con IA para estimación de medidas
+- Control de edición y expiración
+- Consulta de elegibilidad con Planning
+- Broadcast a proveedores
+- Gestión del lifecycle de solicitudes
+
+---
+
+#### 📋 **Planning**
+
+<img src="img/event-storming/bc-canvases/planning.png" alt="Planning - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Descripción:**
+Calcula disponibilidad publicable combinando rutas operativas, capacidad y calendarios; determina proveedores elegibles para una solicitud. Reacciona a cambios de flota/rutas y recalcúla de forma incremental, exponiendo una query de matching. Es un contexto analítico/gateway clave para la eficiencia del marketplace.
+
+**Responsabilidades Clave:**
+- Cálculo de disponibilidad publicable
+- Determinación de proveedores elegibles
+- Combinación de rutas, capacidad y calendarios
+- Reacción a cambios de flota/rutas
+- Exposición de queries de matching
+- Optimización del marketplace
+
+---
+
+#### 🛰️ **Trips**
+
+<img src="img/event-storming/bc-canvases/trips.png" alt="Trips - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Descripción:**
+Administra el ciclo de vida del viaje formal: asignación de unidad, activación de tracking, registro de eventos operativos (desvíos, paradas, incidencias), arribo y confirmación de entrega con POD, cerrando tracking. Consume "DealFormalized" y "WaybillsIssued" como prerrequisitos y alimenta a Notifications y Reviews. Es un execution context central.
+
+**Responsabilidades Clave:**
+- Gestión del ciclo de vida del viaje
+- Asignación de unidades
+- Activación y control de tracking
+- Registro de eventos operativos
+- Confirmación de entrega con POD
+- Integración con Notifications y Reviews
+
+---
+
+#### 📋 **Waybills**
+
+<img src="img/event-storming/bc-canvases/waybills.png" alt="Waybills - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Descripción:**
+Emite, corrige y anula la guía de remisión del cliente y la guía de transportista del proveedor tras el pago aprobado, integrándose con la autoridad fiscal. Asegura validaciones regulatorias, idempotencia y enlaces de descarga, y notifica a Trips/Notifications. Es un contexto de cumplimiento documental crítico para operar legalmente.
+
+**Responsabilidades Clave:**
+- Emisión de guías de remisión y transportista
+- Corrección y anulación de documentos
+- Integración con autoridad fiscal
+- Validaciones regulatorias
+- Mantenimiento de idempotencia
+- Notificación a Trips y Notifications
+
+### 📊 **Resumen de Bounded Contexts**
+
+| Contexto | Tipo | Responsabilidad Principal | Integraciones Clave |
+|----------|------|-------------------------|-------------------|
+| **Payments** | Core/Compliance | Procesamiento de pagos y comisiones | PSP, Deals, Waybills |
+| **Deals** | Core | Negociación y gestión de tratos | Requests, Payments, Notifications |
+| **Requests** | Core | Gestión de solicitudes de envío | Planning, Deals, IA System |
+| **Planning** | Analítico/Gateway | Cálculo de disponibilidad y matching | Fleet, Requests, Deals |
+| **Trips** | Execution | Gestión del ciclo de vida del viaje | Waybills, Notifications, Reviews |
+| **Waybills** | Compliance | Gestión documental regulatoria | Payments, Trips, Notifications |
+
 ### 2.5.2. Context Mapping
 ### 2.5.3. Software Architecture
 En esta sección se describe la arquitectura de software de la solución Red Carga, siguiendo el enfoque del C4 Model. Para ello se presentan los diagramas de Contexto, Contenedores y Despliegue, que permiten visualizar las diferentes capas del sistema iniciando por un panorama hasta su implementación en un entorno de producción. Cada nivel muestra los actores, las tecnologías principales y las interacciones con servicios externos que forman parte del alcance del proyecto.
