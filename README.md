@@ -4855,6 +4855,95 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Impacto en reputación y liquidaciones
 
 #### 2.5.1.2. Domain Message Flows Modeling
+
+### 📋 **Descripción**
+
+En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostrando cómo interactúan los diferentes dominios del sistema a través de eventos y comandos. Cada flujo representa un escenario de negocio completo que involucra múltiples contextos y sus interacciones.
+
+
+### 🔄 **Escenarios de Integración**
+
+#### 1️⃣ **Alta de Cliente con Verificación KYC**
+
+<img src="img/event-storming/domain-message-flows-modeling/alta-cliente-verificacion.jpg" alt="Alta de Cliente con Verificación KYC" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Flujo de Integración:**
+- El cliente solicita iniciar KYC en **Identity**
+- El BC **Identity** valida documento/nombre/edad
+- **Identity** emite `PersonVerified` a **Customers**
+- **Customers** crea la cuenta y publica `CustomerCreated`
+- **Notifications** confirma el alta al cliente
+
+**Bounded Contexts Involucrados:**
+- Identity → Customers → Notifications
+
+---
+
+#### 2️⃣ **Onboarding de Proveedor (Empresa Habilitada)**
+
+<img src="img/event-storming/domain-message-flows-modeling/onboarding-proveedor.jpg" alt="Onboarding de Proveedor" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Flujo de Integración:**
+- El proveedor envía RUC y documentos a **Providers**
+- **Providers** valida el RUC vía **Identity**
+- **Providers** marca la empresa como validada
+- **Operaciones** decide con `ApproveProvider` (o rechazo)
+- **Providers** emite `ProviderApproved/Rejected`
+- **Notifications** notifica la decisión al proveedor
+
+**Bounded Contexts Involucrados:**
+- Providers → Identity → Operaciones → Notifications
+
+---
+
+#### 3️⃣ **Alta de Vehículo y Disponibilidad Publicable**
+
+<img src="img/event-storming/domain-message-flows-modeling/alta-vehiculo.jpg" alt="Alta de Vehículo y Disponibilidad" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Flujo de Integración:**
+- El proveedor registra un vehículo en **Fleet**
+- **Fleet** valida documentos del vehículo
+- Al quedar habilitado, **Fleet** publica `VehicleBecameAvailable` a **Planning**
+- **Planning** recalcula disponibilidad/cupos
+- **Planning** opcionalmente notifica que la flota está lista
+
+**Bounded Contexts Involucrados:**
+- Fleet → Planning → Notifications
+
+---
+
+#### 4️⃣ **Publicación de Solicitud de Envío**
+
+<img src="img/event-storming/domain-message-flows-modeling/publicacion-solicitud.jpg" alt="Publicación de Solicitud de Envío" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Flujo de Integración:**
+- El cliente crea borrador en **Requests**
+- **Requests** consulta a un sistema de IA para estimar medidas desde fotos
+- **Requests** publica la solicitud (`RequestPublished`)
+- **Requests** pide elegibilidad de proveedores a **Planning**
+- **Requests** emite `RequestBroadcasted` para notificar a los candidatos
+
+**Bounded Contexts Involucrados:**
+- Requests → IA System → Planning → Notifications
+
+---
+
+#### 5️⃣ **Cotización e Inicio de Trato**
+
+<img src="img/event-storming/domain-message-flows-modeling/cotizacion-trato.jpg" alt="Cotización e Inicio de Trato" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Flujo de Integración:**
+- El proveedor envía una cotización a **Deals** (`QuoteReceived`)
+- El cliente elige la cotización y dispara `StartDealFromQuote`
+- **Deals** bloquea la solicitud en **Requests** (`RequestLockedByDeal`)
+- **Deals** emite `DealStarted` para habilitar el chat
+- **Deals** avisa a las partes sobre el inicio del trato
+
+**Bounded Contexts Involucrados:**
+- Deals → Requests → Notifications
+
+
+
 #### 2.5.1.3. Bounded Context Canvases
 ### 2.5.2. Context Mapping
 
