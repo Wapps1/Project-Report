@@ -65,11 +65,108 @@
         <tr>
             <td>0</td>
             <td>3/09/2025</td>
-            <td>Ariana Agreda</td>
-            <td>Creación del reporte.</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td>Creación del reporte: portada, índice y estructura inicial por capítulos.</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>4/09/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez</td>
+            <td>Borrador de <b>1.1.1 Descripción de la Startup</b> y <b>1.3 Segmentos objetivo</b>.</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>5/09/2025</td>
+            <td>María Patricia Hernández Uchuya</td>
+            <td>Avances en <b>1.2.1 Antecedentes y problemática</b> y definición del <b>Lean UX Process</b>.</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>6/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
+            <td><b>1.1.2 Perfiles de integrantes</b> completado; primera pasada de estilo y formato.</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>7/09/2025</td>
+            <td>Claudia Valeria Belledonne Espinoza</td>
+            <td>Inicio de <b>2.1 Competidores</b> (análisis competitivo y tácticas).</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>8/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>2.2.1 Diseño de entrevistas</b> y <b>2.3.5 As-is Scenario Mapping</b> (borrador).</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>9/09/2025</td>
+            <td>Fabiola Del Rocio Saldaña Ayala</td>
+            <td><b>2.3 Needfinding</b>: Personas, Task Matrix, Journey &amp; Empathy (versiones iniciales).</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>10/09/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez</td>
+            <td><b>2.2.2 Registro de entrevistas</b>; consolidación de evidencias y resúmenes.</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>11/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>2.2.3 Análisis de entrevistas</b> y hallazgos clave; mapas “as-is” ajustados.</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>12/09/2025</td>
+            <td>María Patricia Hernández Uchuya</td>
+            <td><b>2.4 Ubiquitous Language</b> (glosario inicial) y <b>3.4 Product Backlog</b> (borrador).</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>13/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
+            <td><b>3.2 User Stories</b> (primer corte) e <b>3.3 Impact Mapping</b> (versión 1).</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>14/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>4.1.3 Arquitectura</b> — Diagrama de Contexto completado; lineamientos de estilo.</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>15/09/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez</td>
+            <td><b>4.1.1 EventStorming</b> y <b>4.1.2 Context Mapping</b> (borradores consolidados).</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>16/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>Diagrama de Contenedores</b> y <b>Deployment</b> (versión 1); correcciones visuales.</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>16/09/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez y Claudia Valeria Belledonne Espinoza</td>
+            <td>Inicio de <b>4.2 Tactical DDD</b>: estructura por BC; primeros <b>Component Diagrams</b>.</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>17/09/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez y Claudia Valeria Belledonne Espinoza</td>
+            <td><b>Code/Domain Class Diagrams</b> y <b>Database Design Diagrams</b> por BC (pasada integral); enlaces y consistencia entre capas.</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>17/09/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
+            <td>Revisión general, limpieza de formato, numeración final y cierre de versión para entrega.</td>
         </tr>
     </table>
 <div>
+
 
 <br>
 
