@@ -4340,7 +4340,8 @@ Notificación, Plantilla, Canal, Preferencias, Consentimiento, Quiet Hours, Fall
 #### 2.6.13.5. Bounded Context Software Architecture Component Level Diagrams
 
 - *BC Notifications — Container: Notifications API*
-![Uploading image.png…]()
+<img width="2390" height="3211" alt="image" src="https://github.com/user-attachments/assets/7104c73b-d452-476d-b245-62f0cb9d9464" />
+
 
 <br/>
 
