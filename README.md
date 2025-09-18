@@ -350,7 +350,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
 ### 1.1.1. Descripción de la Startup
 
 **Descripción.**  
-Wapps es una startup tecnológica creada por estudiantes de la Universidad “X”, dedicada al desarrollo de soluciones digitales que transforman procesos tradicionales en experiencias más simples, seguras y eficientes. Nuestro proyecto principal, **Red Carga**, conecta a clientes que necesitan enviar carga interprovincial con proveedores de transporte, ofreciendo una plataforma moderna de gestión de solicitudes, cotizaciones, pagos y trazabilidad en tiempo real.
+Wapps es una startup tecnológica creada por estudiantes de la Universidad UPC, dedicada al desarrollo de soluciones digitales que transforman procesos tradicionales en experiencias más simples, seguras y eficientes. Nuestro proyecto principal, **Red Carga**, conecta a clientes que necesitan enviar carga interprovincial con proveedores de transporte, ofreciendo una plataforma moderna de gestión de solicitudes, cotizaciones, pagos y trazabilidad en tiempo real.
 
 **Misión.**  
 Impulsar la digitalización en el sector logístico y de transporte en el Perú, creando herramientas accesibles y confiables que faciliten la conexión entre personas y empresas, optimizando tiempo, costos y transparencia en cada envío.
