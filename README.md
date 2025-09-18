@@ -856,7 +856,10 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 <p><strong>Dirigido a:</strong> Personas o representantes de empresas que desean enviar carga interprovincial y buscan seleccionar entre distintas propuestas el servicio más adecuado.</p>
 
 <p><em>Base: 3 entrevistas (Jocelyn, Alexander, Mariano)</em></p>
+
+
 ---
+
 <!-- ========================= -->
 <!-- Características Objetivas -->
 <!-- ========================= -->
@@ -966,40 +969,119 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 <!-- ============================ -->
 <!-- Fricciones y puntos de dolor -->
 <!-- ============================ -->
+<!-- ⚠️ Fricciones Operativas Identificadas -->
 <h3>⚠️ <strong>Fricciones Operativas Identificadas</strong></h3>
-<ul style="max-width:900px;text-align:left;">
-  <li><strong>Cotizaciones incompletas</strong>: no siempre especifican si el cobro es por peso/volumen ni si incluye seguro; falta estandarización.</li>
-  <li><strong>Demora en respuestas</strong>: ralentiza despachos y alarga la decisión.</li>
-  <li><strong>Cobertura por zonas</strong>: algunos transportistas solo norte/sur; obliga a buscar alternativas.</li>
-  <li><strong>Incidencias</strong>: demoras, cajas maltratadas, direcciones erróneas y pérdidas reportadas.</li>
-  <li><strong>Pagos</strong>: exigencia de efectivo para montos altos o rechazo del medio preferido.</li>
-</ul>
+<table align="center" style="margin:0 auto; border-collapse:collapse;" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Fricción</th>
+      <th>Detalle observado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cotizaciones incompletas</td>
+      <td>No aclaran peso vs. volumen (“peso cobrable”) ni si incluye seguro; falta estandarización.</td>
+    </tr>
+    <tr>
+      <td>Demora en respuestas</td>
+      <td>Respuestas tardías de transportistas que retrasan el despacho y la decisión.</td>
+    </tr>
+    <tr>
+      <td>Cobertura por zonas</td>
+      <td>Transportistas que solo cubren norte/sur; obliga a buscar alternativas por ruta.</td>
+    </tr>
+    <tr>
+      <td>Incidencias en envío</td>
+      <td>Demoras, cajas maltratadas, direcciones erróneas y pérdidas reportadas.</td>
+    </tr>
+    <tr>
+      <td>Pagos con fricción</td>
+      <td>Exigencia de efectivo para montos altos o rechazo del medio preferido (Yape/Plin/tarjeta).</td>
+    </tr>
+  </tbody>
+</table>
 
-<!-- ===================== -->
-<!-- Necesidades y deseos -->
-<!-- ===================== -->
+<!-- 💡 Necesidades y Deseos -->
 <h3>💡 <strong>Necesidades y Deseos</strong></h3>
-<ul style="max-width:900px;text-align:left;">
-  <li><strong>Cotización inmediata</strong> con “peso cobrable” claro (peso vs. volumen), cobertura y tiempos.</li>
-  <li><strong>Seguro configurable</strong> y contratable desde la app.</li>
-  <li><strong>Pagos digitales seguros</strong>: Yape, Plin, tarjeta, transferencia (con comprobantes digitales).</li>
-  <li><strong>Seguimiento en tiempo real</strong> y notificaciones de hitos.</li>
-  <li><strong>Historial centralizado</strong> de envíos y documentos (guías, boletas/facturas) para control contable.</li>
-  <li><strong>Reputación/ratings verificables</strong> y <strong>chat in-app</strong> con el transportista.</li>
-</ul>
+<table align="center" style="margin:16px auto; border-collapse:collapse;" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Necesidad/Deseo</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cotización inmediata y clara</td>
+      <td>Mostrar precio por peso/volumen, “peso cobrable”, cobertura y tiempos estimados.</td>
+    </tr>
+    <tr>
+      <td>Seguro configurable</td>
+      <td>Contratar/activar seguro desde la app con monto y condiciones visibles.</td>
+    </tr>
+    <tr>
+      <td>Pagos digitales seguros</td>
+      <td>Yape, Plin, tarjeta y transferencia con comprobantes digitales automáticos.</td>
+    </tr>
+    <tr>
+      <td>Tracking en tiempo real</td>
+      <td>Seguimiento del envío con hitos (“recibido”, “en ruta”, “llegó”, “listo para recojo”).</td>
+    </tr>
+    <tr>
+      <td>Historial y documentos</td>
+      <td>Centralizar guías, boletas/facturas y comprobantes para control contable.</td>
+    </tr>
+    <tr>
+      <td>Confianza y comunicación</td>
+      <td>Reseñas verificadas del transportista y chat in-app para coordinar.</td>
+    </tr>
+  </tbody>
+</table>
 
-<!-- ================== -->
-<!-- Oportunidades UX/UI -->
-<!-- ================== -->
+<!-- 🎯 Oportunidades Claras para Red Carga -->
 <h3>🎯 <strong>Oportunidades Claras para Red Carga</strong></h3>
-<ol style="max-width:900px;text-align:left;">
-  <li><strong>Comparador estandarizado</strong> (precio, peso/volumen, seguro, directo/derivado, cobertura, tiempo estimado).</li>
-  <li><strong>Motor de cobertura por ruta</strong> para filtrar proveedores aptos antes de cotizar.</li>
-  <li><strong>Checkout de pago flexible</strong> con compatibilidad visible y comprobantes automáticos.</li>
-  <li><strong>Tracking + eventos</strong> (“recibido”, “en ruta”, “llegó a destino”, “listo para recojo”).</li>
-  <li><strong>Gestión documental</strong> guiada (guía de remisión, comprobantes) e historial descargable.</li>
-  <li><strong>Confianza</strong>: reseñas verificadas, evidencia de envíos previos y chat integrado.</li>
-</ol>
+<table align="center" style="margin:0 auto; border-collapse:collapse;" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Oportunidad</th>
+      <th>Cómo se implementa</th>
+      <th>Beneficio esperado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Comparador estandarizado</td>
+      <td>Ficha de cotización con campos obligatorios (precio, peso/volumen, seguro, directo/derivado, cobertura, ETA).</td>
+      <td>Reduce ambigüedad y acelera la decisión.</td>
+    </tr>
+    <tr>
+      <td>Motor de cobertura por ruta</td>
+      <td>Filtro automático por origen/destino (norte/sur/todo Perú) antes de cotizar.</td>
+      <td>Evita cotizaciones inviables y ahorra tiempo.</td>
+    </tr>
+    <tr>
+      <td>Checkout de pago flexible</td>
+      <td>Compatibilidad visible con Yape/Plin/tarjeta/transferencia y emisión de comprobantes.</td>
+      <td>Disminuye fricción y rechazos en el pago.</td>
+    </tr>
+    <tr>
+      <td>Tracking + eventos</td>
+      <td>Geolocalización del proveedor y notificaciones de hitos del envío.</td>
+      <td>Transparencia y tranquilidad para el cliente.</td>
+    </tr>
+    <tr>
+      <td>Gestión documental guiada</td>
+      <td>Asistente para generar/adjuntar guía de remisión y comprobantes, con historial descargable.</td>
+      <td>Cumplimiento y orden contable.</td>
+    </tr>
+    <tr>
+      <td>Reputación y soporte</td>
+      <td>Ratings verificados, evidencia de envíos previos y chat in-app para incidencias.</td>
+      <td>Mayor confianza y resolución rápida de problemas.</td>
+    </tr>
+  </tbody>
+</table>
 
 </div>
 
