@@ -1445,6 +1445,693 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 ## 2.5. Strategic-Level Domain-Driven Design
 ### 2.5.1. EventStorming
 #### 2.5.1.1. Candidate Context Discovery
+
+### 🌐 **Tablero Interactivo de Event Storming (Candidate Context Discovery)**
+
+Para una visualización completa e interactiva de todo el proceso de Event Storming desarrollado, puedes acceder al tablero de Miro donde se encuentra implementado paso a paso:
+
+**[🔗 Ver Event Storming Completo (Candidate Context Discovery) en Miro](https://miro.com/app/board/uXjVJJ2Q680=/?share_link_id=532792292602)**
+
+
+---
+
+## 📋 **Step 0 — Nomenclatura**
+
+### 📋 **Descripción**
+
+En esta fase inicial del Event Storming, definimos la nomenclatura y simbología que se utilizará a lo largo de todo el proceso. Cada elemento del sistema se representa con un color específico para facilitar la identificación y comprensión durante las sesiones de modelado.
+
+### 🎨 **Simbología de Colores**
+
+<img src="img/event-storming/nomenclatura.png" alt="Nomenclatura - Event Storming" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 🔤 **Elementos del Sistema**
+
+| Color | Elemento | Descripción |
+|-------|----------|-------------|
+| 🟠 **Naranja** | **Domain Event** | Eventos que han ocurrido en el pasado, representan hechos consumados en el dominio |
+| 🟡 **Amarillo** | **User/Actor** | Usuarios, actores o roles que interactúan con el sistema |
+| 🟣 **Morado** | **Business Process** | Procesos de negocio que conectan eventos y acciones |
+| 🔵 **Azul Claro** | **Command** | Acciones o intenciones que los usuarios quieren ejecutar |
+| ⚪ **Blanco** | **External System** | Sistemas externos que se integran con nuestra solución |
+| 🟢 **Verde Claro** | **View/Read Model** | Modelos de lectura y vistas para consultas de soporte |
+| 🔴 **Rojo/Rosa** | **Question/Risk** | Preguntas, riesgos o hotspots que requieren atención |
+
+
+
+## 🔍 **Step 1 — Collect Domain Events**
+
+### 📋 **Descripción**
+
+En esta primera fase del Event Storming, volcamos todos los eventos de dominio en pasado, sin orden ni filtros. El objetivo es capturar el vocabulario del negocio y el alcance real del sistema, desde procesos de onboarding, solicitudes y cotizaciones, hasta pagos, guías, tracking, disputas, calificaciones y notificaciones.
+
+### 📊 **Eventos Identificados**
+
+<img src="img/event-storming/step-1.png" alt="Step 1 - Collect Domain Events" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+
+## ⏰ **Step 2 — Enforce the Timeline**
+
+### 📋 **Descripción**
+
+En esta segunda fase del Event Storming, ordenamos los eventos de dominio en timelines coherentes por flujo de negocio. El objetivo es crear historias de negocio end-to-end con causalidad básica y puntos de cierre/expiración, identificando las secuencias lógicas y las ramas de decisión en cada proceso.
+
+
+### 📊 **Timelines Identificados**
+
+<img src="img/event-storming/step-2.png" alt="Step 2 - Enforce the Timeline" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 🔄 **Preparación del Proveedor**
+
+<img src="img/event-storming/step2/preparacion-proveedor.png" alt="Preparación del Proveedor" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Encadenamos el alta y ciclo de vida de vehículos y rutas: **Vehículo registrado** → **Documento validado** → (actualizaciones 0..n | deshabilitado [terminal]) con side-effect de **Disponibilidad de flota actualizada**. Para rutas: **Ruta creada** → (actualizada 0..n | deshabilitada [terminal]) también disparando disponibilidad.
+
+### 👤 **Registro de Cliente**
+
+<img src="img/event-storming/step2/registro-cliente.png" alt="Registro de Cliente" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Forzamos prerequisitos y secuencia: **consentimiento** → **verificaciones** (correo, OTP, teléfono) → **validación de identidad** (documento, nombre, edad) → **seguridad** (PIN) → (RUC si aplica) → **Perfil validado** → **Cuenta de cliente creada**. Marcamos que no hay "cuenta preliminar": la cuenta nace al final, tras pasar todos los checks.
+
+### 🏢 **Registro de Proveedor**
+
+<img src="img/event-storming/step2/registro-proveedor.png" alt="Registro de Proveedor" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Similar al cliente, pero con capa legal: **consentimiento y verificaciones** → **identidad persona responsable** → **RUC validado y Documentación legal validada** → **Solicitud de habilitación enviada** → decisión: **Cuenta aprobada** | **Cuenta rechazada** [terminal].
+
+### 🔐 **Sesiones y Seguridad**
+
+<img src="img/event-storming/step2/sesiones-seguridad.png" alt="Sesiones y Seguridad" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Secuencia y estados de sesión: **Inicio de sesión fallido** | **exitoso** → **Segundo factor verificado** → **Sesión restaurada automáticamente**. Luego eventos de cierre temporal: **Token expirado** → **Sesión cerrada**. Modelamos fallas e inactividad separadas del login exitoso.
+
+### 📦 **Solicitud de Envío de Carga**
+
+<img src="img/event-storming/step2/solicitud-envio-carga.png" alt="Solicitud de Envío de Carga" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Ordenamos captura y enriquecimiento: **Fotos capturadas** → **Medidas IA** → (edición del cliente) → **Peso registrado** → **Ruta definida** → **Solicitud publicada**. Terminales: **Cancelada**, **Expirada**, o **Cerrada por inicio de trato**. Aseguramos que publicación solo ocurre tras ruta/peso/medidas.
+
+### 🤝 **Trato**
+
+<img src="img/event-storming/step2/trato.png" alt="Trato" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Flujo de negociación: **Trato iniciado** → **Chat habilitado** → (mensajes/lecturas) → **Condiciones actualizadas** → **Trato acordado** → **Trato listo para pago**. Terminales paralelas: **Cancelado por cliente/proveedor** (cierra chat) o continuidad hacia pagos.
+
+### 💰 **Pago**
+
+<img src="img/event-storming/step2/pago.png" alt="Pago" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Camino principal: **Pago iniciado** → (aprobado | fallido → reintentado) → **Comisión aplicada** → **Trato formalizado**. Aislamos fallas y reintentos para no avanzar al formalizado hasta la confirmación.
+
+### 📋 **Documentación (Guías)**
+
+<img src="img/event-storming/step2/documentacion.png" alt="Documentación" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Secuencias separadas por emisor: cliente emite **Guía de remisión** y proveedor **Guía de transportista**; cada una puede corregirse o anularse (terminal). Definimos que la emisión ocurre tras pago/formalización y que correcciones/anulaciones respetan ventanas.
+
+### 🔔 **Notificaciones**
+
+<img src="img/event-storming/step2/notificaciones.png" alt="Notificaciones" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Línea simple con estados de entrega: **Notificación enviada** → (entregada | fallida) y **Correo transaccional enviado** en paralelo. Quedó como timeline auxiliar consumido por otros.
+
+### 📝 **Plantillas**
+
+<img src="img/event-storming/step2/plantillas.png" alt="Plantillas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Dos sublíneas (ítem y ruta) con el mismo patrón CRUD: **creada** → (actualizada 0..n | eliminada [terminal]). Útiles como prerequisito opcional en Solicitudes.
+
+### 💬 **Cotizaciones**
+
+<img src="img/event-storming/step2/cotizaciones.png" alt="Cotizaciones" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Secuencia desde recepción/actualización hasta decisiones del cliente: **Cotización recibida/actualizada** → (retirada por proveedor | expirada | rechazada | marcada como favorita) → **Trato iniciado desde cotización**. Aclaramos que solo algunas ramas llevan al trato.
+
+### ⚖️ **Disputas**
+
+<img src="img/event-storming/step2/disputas.png" alt="Disputas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Árbol con resolución por acuerdo o decisión: **Disputa abierta** → (evidencias de ambas partes) → (**Acuerdo conciliado** | **Decisión emitida**) → (**Reembolso por disputa ejecutado** si aplica) → **Disputa resuelta** → **Disputa cerrada** [terminal]. Marcamos pausa de otras ventanas (ratings) mientras está abierta.
+
+### ⭐ **Calificaciones**
+
+<img src="img/event-storming/step2/calificaciones.png" alt="Calificaciones" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Ventana y doble ciego: **Ventana habilitada** → **Calificación cliente/proveedor** → (ediciones 0..n dentro de ventana) → (**Doble ciego completado** | **Ventana expirada**) → **Calificaciones desbloqueadas** → **Métrica de reputación actualizada**. Indicamos que la ventana puede pausarse por disputa.
+
+### 🔄 **Cambio Post-Pago**
+
+<img src="img/event-storming/step2/cambio-post-pag.png" alt="Cambio Post-Pago" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Dos ramas según delta: **Cambio solicitado** → (aceptado | rechazado). Si top-up: **Top-up aprobado** → **Top-up cobrado** → **Comisión ajustada** → **Comisión recalculada**; si refund: **Reembolso aprobado** → **Reembolso ejecutado** → **Comisión ajustada** → **Comisión recalculada**. Alternativa: **Continuidad original** o **Trato cancelado según política** [terminal].
+
+### 🛰️ **Tracking**
+
+<img src="img/event-storming/step2/tracking.png" alt="Tracking" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+Hitos operativos ordenados: **Unidad/placa asignada** → **Tracking activado** → **Recojo iniciado/completado** → **Salida en ruta** → (arribos intermedios, paradas, desvíos, incidencias) → **Arribo a destino** → **Entrega confirmada** (proveedor/cliente) → **Entrega confirmada** (consolidada) → **Tracking desactivado**. Definimos que eventos en ruta no cierran el viaje pero pueden disparar alertas/ajustes.
+
+## 🔥 **Step 3 — Hotspots**
+
+### 📋 **Descripción**
+
+En esta tercera fase del Event Storming, señalamos ambigüedades, riesgos, reglas finas e integraciones en cada timeline. El objetivo es identificar límites, tolerancias, ventanas legales, idempotencia, expiraciones, antifraude, telemetría, doble ciego y otros aspectos críticos que requieren decisiones de diseño.
+
+### 📊 **Hotspots Identificados**
+
+<img src="img/event-storming/step-3.png" alt="Step 3 - Hotspots" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 🔄 **Preparación del Proveedor**
+
+<img src="img/event-storming/step3/preparacion-proveedor.png" alt="Preparación del Proveedor - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Unicidad de placa** entre proveedores
+- **Lista exacta de documentos** por país y vencimientos
+- **Disparo de rematch** de ofertas activas al actualizar
+- **Cálculo de "disponibilidad"** y reglas específicas
+- **Reglas para deshabilitar** con viajes pendientes
+
+### 👤 **Registro de Cliente**
+
+<img src="img/event-storming/step3/registro-cliente.png" alt="Registro de Cliente - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **¿Qué es evento vs. UI?** (vista iniciada)
+- **Fuentes de verdad para KYC** (OCR, face-match, consulta oficial)
+- **Aplicación de RUC** a cliente
+- **Límites/orden de validaciones**
+- **Fallback manual** si IA no confía
+
+### 🏢 **Registro de Proveedor**
+
+<img src="img/event-storming/step3/registro-proveedor.png" alt="Registro de Proveedor - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Límite de sesiones** de verificación
+- **Origen de verificación RUC** y poderes
+- **Documentos habilitantes** (formatos/país)
+- **Doble confirmación interna** para aprobar
+- **Estados intermedios** y reintentos
+
+### 🔐 **Sesiones y Seguridad**
+
+<img src="img/event-storming/step3/sesiones-seguridad.png" alt="Sesiones y Seguridad - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Nº de sesiones concurrentes** por usuario/dispositivo
+- **Vínculo del token** a huella de dispositivo
+- **Manejo de token expirado** en medio de pago
+- **Cierre forzado** por actividad sospechosa
+- **Notificación tras múltiples fallos**
+
+### 📦 **Solicitud de Envío de Carga**
+
+<img src="img/event-storming/step3/solicitud-envio-carga.png" alt="Solicitud de Envío de Carga - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **UX del flujo** (orden real vs. Domain Events)
+- **Mínimos de fotos/ángulos** y tamaños
+- **Confianza/errores de IA** de medidas
+- **Recálculo de peso volumétrico**
+- **Campos editables** tras publicar
+- **Responsabilidad de diferencias** posteriores
+
+### 🤝 **Trato (Negociación & Chat)**
+
+<img src="img/event-storming/step3/trato.png" alt="Trato - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Cap de tratos abiertos** por solicitud/proveedor
+- **Rate-limits de chat**
+- **Campos editables** de condiciones y tolerancias
+- **Cierre de chat** y condiciones
+- **Impacto en reputación** por cancelaciones fuera de ventana
+
+### 💰 **Pago**
+
+<img src="img/event-storming/step3/pago.png" alt="Pago - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Nº de reintentos** y backoff
+- **Mantenimiento/liberación** de autorización pendiente
+- **Orden exacto** de "comisión aplicada" vs. "formalizado"
+- **Manejo de fallas** con PSP
+- **Reconciliación de webhooks**
+
+### 📋 **Documentación (Guías)**
+
+<img src="img/event-storming/step3/documentacion.png" alt="Documentación - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Quién emite qué** (cliente vs. proveedor)
+- **Motivos y ventana** de corrección/anulación
+- **Dependencias con estado** del viaje
+- **Consistencia entre guías** cuando cambia la ruta/peso
+
+### 🔔 **Notificaciones**
+
+<img src="img/event-storming/step3/notificaciones.png" alt="Notificaciones - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Medios por tipo** (push/SMS/email/in-app)
+- **Confirmación de entrega real** (open tracking/TTL)
+- **Reintentos y políticas** de fallback
+- **Plantillas transaccionales** multi-idioma
+
+### 📝 **Plantillas**
+
+<img src="img/event-storming/step3/plantillas.png" alt="Plantillas - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Unicidad por nombre** vs. por usuario
+- **Límites de cantidad** por usuario
+- **Normalización de unidades** (cm/kg)
+- **Edición/propagación** de cambios a solicitudes ya publicadas
+
+### 💬 **Cotizaciones**
+
+<img src="img/event-storming/step3/cotizaciones.png" alt="Cotizaciones - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Qué incluye el precio** (fees, peajes, extras)
+- **Retiro de ofertas** por proveedor y impacto al cliente
+- **Expiración y relojes**
+- **Transformación de cotización → trato** con idempotencia
+
+### ⚖️ **Disputas**
+
+<img src="img/event-storming/step3/disputas.png" alt="Disputas - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Quién puede abrir** y hasta cuándo
+- **Evidencias válidas**
+- **Aceptación explícita** de ambas partes para conciliar
+- **Decisión en no acuerdo**
+- **Impacto en reputación** y congelamiento de ventanas de rating
+
+### ⭐ **Calificaciones**
+
+<img src="img/event-storming/step3/calificaciones.png" alt="Calificaciones - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Confirmación necesaria** (una o ambas para desbloquear)
+- **Pausa automática** si se abre disputa
+- **Edición dentro de ventana**
+- **Anonimato/doble ciego**
+- **Tags válidos** y moderación de contenido
+
+### 🔄 **Cambio Post-Pago**
+
+<img src="img/event-storming/step3/cambio-post-pag-1.png" alt="Cambio Post-Pago - Hotspots 1" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+<img src="img/event-storming/step3/cambio-post-pag-2.png" alt="Cambio Post-Pago - Hotspots 2" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Una o doble confirmación**
+- **Tolerancias/umbrales** para autoaceptar
+- **Simultaneidad de solicitudes** (locking)
+- **Responsabilidad de fees PSP** en reembolsos
+- **Congelar fondos** y efecto en liquidaciones/proveedor
+
+### 🛰️ **Tracking (Viajes)**
+
+<img src="img/event-storming/step3/tracking.png" alt="Tracking - Hotspots" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Hotspots identificados:**
+- **Tipo de GPS/telemática**
+- **Thresholds de geocerca** y "desvío significativo"
+- **Salida "solo si recojo completo"** o override manual
+- **Alertas por parada** > X min
+- **Confirmación de entrega** (1 o 2 confirmaciones + PoD)
+- **Desactivación de tracking** (entrega vs. cierre de disputa)
+
+## ⚙️ **Step 4 — Causality and Domain Orchestration**
+
+### 📋 **Descripción**
+
+En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (intención), Policies/Sagas (reglas y orquestación), Read Models (consultas de soporte) y Sistemas externos (PSP, KYC, OSE, Maps, Telemática, Push/SMS/Email). El objetivo es crear flujos ejecutables con precondiciones, efectos, webhooks y hand-offs entre dominios.
+
+
+### 📊 **Orquestación de Dominios**
+
+<img src="img/event-storming/step-4.png" alt="Step 4 - Causality and Domain Orchestration" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 🔄 **Preparación del Proveedor**
+
+<img src="img/event-storming/step4/preparacion-proveedor.png" alt="Preparación del Proveedor - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Registrar/actualizar/deshabilitar vehículo y crear/actualizar/deshabilitar ruta
+
+**Policies:** Validar documentos vehiculares, recalcular disponibilidad y notificar impactos
+
+**Read Models:** Requisitos documentales, capacidad comprometida y tratos/ofertas afectadas
+
+**Sistemas Externos:** Autoridad Vehicular, Matching/Index y Notificaciones
+
+### 👤 **Registro de Cliente**
+
+<img src="img/event-storming/step4/registro-cliente.png" alt="Registro de Cliente - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Proporcionar correo/teléfono/documento/PIN
+
+**Policies:** Verificación (OTP, KYC persona, name/age match) y checklist previo a crear cuenta
+
+**Read Models:** Usuarios, intentos fallidos, KYC y límites
+
+**Sistemas Externos:** Email/SMS, IdP/Auth, OCR/KYC
+
+### 🏢 **Registro de Proveedor**
+
+<img src="img/event-storming/step4/registro-proveedor.png" alt="Registro de Proveedor - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Enviar documentación legal, RUC y solicitar habilitación
+
+**Policies:** Validación (SUNAT/Registro Público), gate de aprobación y auditoría
+
+**Read Models:** Checklist legal/empresarial
+
+**Sistemas Externos:** Tax API/Registros, Notificaciones; decisión final por Operaciones (aprobar/rechazar)
+
+### 🔐 **Sesiones y Seguridad**
+
+<img src="img/event-storming/step4/sesiones-seguridad.png" alt="Sesiones y Seguridad - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Login, confirmar MFA, restaurar/cerrar sesión
+
+**Policies:** Autenticación, anti-bruteforce, riesgo y emisión/rotación de tokens
+
+**Read Models:** Credenciales hash, sesiones activas, dispositivos confiables y perfil de riesgo
+
+**Sistemas Externos:** IdP/Auth, SMS/Push; timers de expiración/rotación
+
+### 📦 **Solicitud de Envío de Carga**
+
+<img src="img/event-storming/step4/solicitud-envio-carga.png" alt="Solicitud de Envío de Carga - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Fotos, estimar medidas IA, editar medidas, registrar peso y definir ruta
+
+**Policies:** Validar contenidos, recalcular peso volumétrico, normalizar direcciones y checklist de publicación
+
+**Read Models:** Catálogos, umbrales IA y configuraciones de expiración
+
+**Sistemas Externos:** MediaStore, Geocoding/Maps, Servicio IA, Matching/Index, Notificaciones
+
+### 🤝 **Trato (Negociación & Chat)**
+
+<img src="img/event-storming/step4/trato.png" alt="Trato - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Iniciar trato, habilitar chat, enviar/marcar leído, proponer/aceptar condiciones y cancelar
+
+**Policies:** Límites, reservas de capacidad, tolerancias y doble aceptación
+
+**Read Models:** Ofertas vigentes, capacidad comprometida y reglas de cancelación
+
+**Sistemas Externos:** WS/Push, MediaStore, Notificaciones y hand-off a Pagos
+
+### 💰 **Pago**
+
+<img src="img/event-storming/step4/pago.png" alt="Pago - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Iniciar/confirmar/reintentar pago y liberar autorización
+
+**Policies:** Antifraude, 3DS, idempotencia, comisión 1% y reintentos con backoff
+
+**Read Models:** Retry policy, conciliación y ledger de comisiones
+
+**Sistemas Externos:** Webhooks con PSP, Notificaciones; eventos conducen a Trato formalizado y programan liquidaciones
+
+### 📋 **Documentación (Guías)**
+
+<img src="img/event-storming/step4/documentacion.png" alt="Documentación - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Emitir/corregir/anular guía de remisión (cliente) y de transportista (proveedor)
+
+**Policies:** Firmas, series/correlativos, ventanas legales y consistencia con el trato
+
+**Read Models:** Checklist legal por país y versiones
+
+**Sistemas Externos:** Autoridad Fiscal/OSE, MediaStore, Notificaciones; hand-off para habilitar Viajes
+
+### 🔔 **Notificaciones**
+
+<img src="img/event-storming/step4/notificaciones.png" alt="Notificaciones - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Command único de encolado con fan-out por canal
+
+**Policies:** Resolución de destinatarios, selección de canal, plantillas, idempotencia, rate limit y reintentos
+
+**Read Models:** Preferencias, canales verificados y políticas de escalamiento
+
+**Sistemas Externos:** FCM/APNs, SES/Email, SMS, in-app/WS con webhooks para entrega/fallo
+
+### 📝 **Plantillas**
+
+<img src="img/event-storming/step4/plantillas.png" alt="Plantillas - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** CRUD para plantillas de ítem/ruta
+
+**Policies:** Validación, normalización de unidades, unicidad y versionado seguro
+
+**Read Models:** Plantillas por usuario, versiones y uso en borradores
+
+**Sistemas Externos:** MediaStore y Geocoding; triggers desde Solicitudes para autoguardado
+
+### 💬 **Cotizaciones (Ofertas)**
+
+<img src="img/event-storming/step4/cotizaciones.png" alt="Cotizaciones - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Enviar/actualizar/retirar cotización y acciones del cliente (rechazar, favorito, iniciar trato)
+
+**Policies:** Elegibilidad y compatibilidad (capacidad, ruta, dimensiones), normalización de precio y locks al iniciar trato
+
+**Read Models:** Reglas de cotización, capacidad comprometida y caducidades
+
+**Sistemas Externos:** Matching/Index y Notificaciones
+
+### ⚖️ **Disputas**
+
+<img src="img/event-storming/step4/disputas.png" alt="Disputas - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Abrir disputa, cargar evidencia, proponer/aceptar acuerdo, emitir decisión y cerrar
+
+**Policies:** Elegibilidad por ventana/estado, pausa de calificaciones/liquidaciones, idempotencia y auditoría
+
+**Read Models:** Disputas por trato, SLA y estado de pagos
+
+**Sistemas Externos:** MediaStore, Notificaciones, y hand-offs a Pagos y Reputación
+
+### ⭐ **Calificaciones (Reputación)**
+
+<img src="img/event-storming/step4/calificaciones.png" alt="Calificaciones - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Habilitar ventana, registrar/editar calificación
+
+**Policies:** Doble ciego, moderación y desbloqueo (ambas calificaciones o expiración)
+
+**Read Models:** Ventanas activas, catálogo de tags y métricas
+
+**Sistemas Externos:** Moderation/NLP, Notificaciones; cálculo de métricas y badges tras desbloqueo
+
+### 🔄 **Cambio Post-Pago (Ajustes)**
+
+<img src="img/event-storming/step4/cambio-post-pag-1.png" alt="Cambio Post-Pago - Orchestration 1" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+<img src="img/event-storming/step4/cambio-post-pag-2.png" alt="Cambio Post-Pago - Orchestration 2" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Proponer/aceptar/rechazar ajuste
+
+**Policies:** Tolerancias, doble confirmación, locking por propuesta y clasificación delta (top-up/refund)
+
+**Read Models:** Tarificador, tolerancias y estado de liquidación
+
+**Sistemas Externos:** Pagos (top-up/reembolso), Notificaciones y impacto en Guías/Reputación
+
+### 🛰️ **Tracking (Viajes)**
+
+<img src="img/event-storming/step4/tracking.png" alt="Tracking - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Commands:** Asignar unidad, activar tracking, registrar hitos (recojo, salida, paradas, desvíos, incidencias, arribo, entregas) y desactivar tracking
+
+**Policies:** Prerequisitos (guías/unidad), geocercas, umbrales de desviación/parada y consolidación de entrega (1-o-2 confirmaciones + PoD)
+
+**Read Models:** Ruta planificada, SLAs y estado del viaje
+
+**Sistemas Externos:** Telemática, Maps, MediaStore, Notificaciones; hand-offs a Reputación, Disputas y Liquidaciones
+
+## 🏗️ **Step 5 — Project to Bounded Contexts**
+
+### 📋 **Descripción**
+
+En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en Bounded Contexts (IAM, Identity, Customers, Providers, Fleet, Planning, Requests, Deals, Payments, Waybills, Trips, Reviews, Disputes, Notifications), definiendo para cada BC qué timelines contiene y el orden operativo interno, más los eventos publicados/consumidos entre BCs. El resultado es un mapa de contextos listo para arquitectura modular o microservicios.
+
+### 📊 **Mapa de Bounded Contexts**
+
+<img src="img/event-storming/step-5.png" alt="Step 5 - Bounded Contexts" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 🔐 **IAM (Identity & Access Management)**
+
+<img src="img/event-storming/step5/iam.png" alt="IAM - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Sesiones y seguridad
+
+**Flujo Ultraresumido:** 
+- Login → MFA (si aplica) → Sesión activa/restaurada
+- Expiración/cierre por token o riesgo
+- Rate-limit ante fallos
+
+**Eventos Emitidos:** Identidad autenticada para el resto
+
+### 👤 **Identity (Identity & KYC)**
+
+<img src="img/event-storming/step5/identity.png" alt="Identity - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timelines:** Registro KYC de persona (cliente/representante)
+
+**Flujo:**
+- Consentimientos → Verificación correo/OTP
+- Validación documento + name/age match → PIN
+- Si todo OK, "PersonaVerificada" para Customers/Providers
+
+### 🔔 **Notifications**
+
+<img src="img/event-storming/step5/notifications.png" alt="Notifications - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Notificaciones transaccionales
+
+**Flujo:**
+- Encolar → Resolver destinatarios/preferencias
+- Render plantilla → Fan-out por canal (push/email/SMS/in-app)
+- Enviada/entregada/fallida con reintentos y fallback
+
+### 👥 **Customers**
+
+<img src="img/event-storming/step5/customers.png" alt="Customers - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timelines:** Alta de cuenta cliente (post-KYC) + plantillas
+
+**Flujo:**
+- PersonaVerificada → Perfil/estado apto → Cuenta creada
+- CRUD de Plantilla de ítem/ruta con versionado y normalización de unidades
+- Expuesto a Requests
+
+### 🏢 **Providers**
+
+<img src="img/event-storming/step5/providers.png" alt="Providers - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Onboarding del proveedor (empresa)
+
+**Flujo:**
+- Validar RUC y documentos legales
+- Solicitud de habilitación → Aprobado/rechazado
+- Si aprobado, habilita Fleet/Planning
+
+### 🚛 **Fleet**
+
+<img src="img/event-storming/step5/fleet.png" alt="Fleet - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Preparación del proveedor (vehículos)
+
+**Flujo:**
+- Vehículo registrado → Documento validado
+- (Actualizaciones 0..n | Deshabilitado [terminal])
+- Recalcular disponibilidad
+- Propaga cambios a Planning/Deals
+
+### 📋 **Planning**
+
+<img src="img/event-storming/step5/planning.png" alt="Planning - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Rutas operativas y disponibilidad publicable
+
+**Flujo:**
+- Ruta creada → (Actualizada 0..n | Deshabilitada)
+- Disponibilidad actualizada
+- Publica ofertabilidad hacia Deals (cotizaciones)
+
+### 📦 **Requests**
+
+<img src="img/event-storming/step5/requests.png" alt="Requests - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Solicitud de envío
+
+**Flujo:**
+- Fotos → IA de medidas → Edición → Peso → Ruta → Publicación
+- Cierre por cancelación/expiración o por inicio de trato
+- Dispara elegibilidad a Deals
+
+### ⭐ **Reviews**
+
+<img src="img/event-storming/step5/reviews.png" alt="Reviews - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Calificaciones/reputación
+
+**Flujo:**
+- Habilitar ventana al entregar/cerrar disputa
+- Cliente/proveedor califican (doble ciego)
+- Desbloqueo al completar/expirar
+- Recalcular métricas y badges
+
+### 🛰️ **Trips**
+
+<img src="img/event-storming/step5/trips.png" alt="Trips - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Tracking y entrega
+
+**Flujo:**
+- Unidad asignada + guías vigentes → Activar tracking
+- Recojo → Salida → Eventos en ruta (paradas/desvíos/incidencias)
+- Arribo → Confirmaciones/PoD → Desactivar tracking
+- Abre ventana de Reviews y agenda liquidación
+
+### 📋 **Waybills**
+
+<img src="img/event-storming/step5/waybills.png" alt="Waybills - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Documentación (guías)
+
+**Flujo:**
+- Tras pago/trato formalizado, cliente emite Guía de Remisión
+- Proveedor emite Guía de Transportista
+- Pueden corregirse/anularse con ventanas legales
+- Habilitan inicio de viaje en Trips
+
+### 💰 **Payments**
+
+<img src="img/event-storming/step5/payments.png" alt="Payments - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timelines:** Pago y cambios post-pago
+
+**Flujo Pago:**
+- Iniciar → (Aprobado | Fallido/reintento)
+- Aplicar comisión 1% → Formalizar trato → Programar liquidación
+
+**Flujo Ajustes:**
+- Propuesta → (Aceptado: top-up cobrado / reembolso ejecutado → comisión ajustada | Rechazado: continuidad/cancelación)
+
+### 🤝 **Deals**
+
+<img src="img/event-storming/step5/deals.png" alt="Deals - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timelines:** Cotizaciones y trato
+
+**Flujo:**
+- Solicitud publicada + disponibilidad ⇒ Cotizaciones (recibida/actualizada/retirada/expirada)
+- Cliente inicia trato → Chat/negociación → Acuerdo
+- Listo para pago (handoff a Payments) o cancelaciones (cierra chat y libera capacidad)
+
+### ⚖️ **Disputes**
+
+<img src="img/event-storming/step5/dispute.png" alt="Disputes - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Timeline:** Gestión de disputas
+
+**Flujo:**
+- Apertura de disputa → Carga de evidencias
+- Proceso de conciliación o decisión
+- Resolución y cierre
+- Impacto en reputación y liquidaciones
+
 #### 2.5.1.2. Domain Message Flows Modeling
 #### 2.5.1.3. Bounded Context Canvases
 ### 2.5.2. Context Mapping
