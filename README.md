@@ -4833,6 +4833,29 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 
 ## Conclusiones y recomendaciones
 
+###Conclusiones
+Como equipo, confirmamos que Red Carga aborda un problema real de los remitentes: hoy la comparación de transportistas ocurre en canales informales, lo que dificulta obtener precios, tiempos y trazabilidad confiables. Nuestra solución integra cotización, negociación, pago y seguimiento en un solo flujo, reduciendo fricciones clave del “matching”.
+
+Sostenemos que el encadenado funcional Solicitud → Cotizaciones → Trato → Pago → Documentos → Tracking → Calificación es coherente con las necesidades del usuario y con un marketplace de dos lados. El “gating” por pago en la app ordena la operación, protege la comisión y deja evidencia auditable para resolver incidencias.
+
+Reconocemos que, aunque la propuesta de valor es clara, la monetización requiere ajustes para garantizar sostenibilidad. El 1% como anzuelo de adopción es útil, pero debemos evolucionar a un esquema que cubra pasarela, comunicaciones y mapas sin afectar la experiencia.
+
+Valoramos que nuestra coordinación incremental (definición de BCs, eventos y criterios de aceptación) aceleró el entendimiento compartido y disminuyó retrabajos. La disciplina en registrar decisiones y supuestos facilitó la integración entre diseño, desarrollo y evaluación.
+
+También aprendimos que la diversidad de roles en el equipo (negocio, UX, técnico) enriquece la calidad de las decisiones, siempre que exista una cadencia clara de revisión y un lenguaje común. La práctica de “cerrar” cada iteración con métricas y retroalimentación fortaleció nuestro aprendizaje colectivo.
+
+
+###Recomendaciones
+
+Recomendamos pilotear en corredores acotados y de alto volumen para equilibrar oferta y demanda, medir tiempos a primera cotización y conversión a trato, y ajustar UX y precios con datos reales. Esta estrategia nos permitirá priorizar funcionalidades con mayor impacto y optimizar costos operativos.
+
+Sugerimos evolucionar la economía unitaria de forma gradual: mantener una promoción inicial controlada y transicionar a un esquema que asegure cobertura de costos críticos, acompañado de escrow transaccional y políticas de reembolso transparentes. Con ello, reforzamos confianza y reducimos exposición a contracargos.
+
+Fomentar la Colaboración Constante: Es importante mantener una comunicación fluida entre todos los miembros del equipo durante todo el proceso de desarrollo. Utilizar herramientas de gestión de proyectos y reuniones regulares para asegurar que todos estén alineados con los objetivos y plazos.
+
+Optimizar la gestión del tiempo y recursos en tareas críticas, especialmente aquellas relacionadas con la integración y pruebas de funcionalidades entre los distintos componentes.
+
+Continuar promoviendo las retrospectivas internas de equipo, lo que ha demostrado ser útil para identificar obstáculos y mejorar la dinámica de trabajo.
 
 <br>
 <br>
