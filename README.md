@@ -253,7 +253,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </thead>
   <tbody>
     <tr>
-      <td>Estudiante 1</td>
+      <td>Ariana Agreda</td>
       <td>Aprender y mejorar mis habilidades en la programación móvil usando Android Studio y Flutter, desarrollando prácticas semanales para reforzar lo aprendido.</td>
       <td>10/09/2025</td>
       <td>20/12/2025</td>
@@ -264,7 +264,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <td>Cuando se completen los proyectos y puedan ser presentados como prototipos al final del ciclo.</td>
     </tr>
     <tr>
-      <td>Estudiante 2</td>
+      <td>Claudia Belledonne</td>
       <td>Practicar y fortalecer mis conocimientos en interfaces gráficas y experiencia de usuario (UI/UX) para aplicaciones móviles.</td>
       <td>10/09/2025</td>
       <td>20/12/2025</td>
@@ -275,7 +275,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <td>Cuando los prototipos y vistas de la aplicación sean terminados y validados por el equipo.</td>
     </tr>
     <tr>
-      <td>Estudiante 3</td>
+      <td>Mauricio Elera</td>
       <td>Mejorar mis habilidades en la conexión de aplicaciones móviles con bases de datos y servicios en la nube.</td>
       <td>10/09/2025</td>
       <td>20/12/2025</td>
@@ -286,7 +286,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <td>Al finalizar el proyecto de curso con un login y base de datos funcionando.</td>
     </tr>
     <tr>
-      <td>Estudiante 4</td>
+      <td>María Hernández</td>
       <td>Aprender a trabajar con APIs externas e integrar funciones en la aplicación (ejemplo: mapas, notificaciones).</td>
       <td>10/09/2025</td>
       <td>20/12/2025</td>
@@ -297,7 +297,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <td>Cuando estas funciones estén disponibles y sean probadas dentro del prototipo final.</td>
     </tr>
     <tr>
-      <td>Estudiante 5</td>
+      <td>Fabiola Saldaña</td>
       <td>Fortalecer mis habilidades en la planificación, arquitectura y buenas prácticas de desarrollo móvil en equipo.</td>
       <td>10/09/2025</td>
       <td>20/12/2025</td>
