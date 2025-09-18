@@ -2482,8 +2482,84 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
 
 <br>
 
-#### Spikes stories
+#### Spikes stories<!-- ======================= SPIKE 6 ======================= -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:15%;">Story ID</th>
+      <th>Title</th>
+    </tr>
+    <tr>
+      <td>SP01</td>
+      <td><strong>Evaluación y prototipo de geocodificación, ruteo y visualización con soporte offline</strong></td>
+    </tr>
+    <tr><th colspan="2">Description</th></tr>
+    <tr>
+      <td colspan="2">Como equipo, quiero comparar proveedores de mapas (Google/Mapbox/HERE/OSRM) para geocodificar direcciones en Perú, calcular distancia/ETA (perfil camión) y renderizar mapas con buffer offline, a fin de soportar US23, US14, US15 y notificaciones de tracking.</td>
+    </tr>
+    <tr><th colspan="2">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="2">
+        <strong>Criterio 1: Exactitud de geocoding</strong><br>
+        <strong>Dado que</strong> usamos un set de 50–100 direcciones reales (Perú)<br>
+        <strong>Cuando</strong> ejecutamos geocoding forward/reverse en cada vendor<br>
+        <strong>Entonces</strong> documentamos tasa de acierto, ambigüedad y tiempos de respuesta. <br><br>
+        <strong>Criterio 2: Ruteo con perfil de camión</strong><br>
+        <strong>Dado que</strong> definimos 10 rutas representativas (urbano/interurbano)<br>
+        <strong>Cuando</strong> consultamos distancia/ETA con tráfico histórico y restricciones de camión (si aplica)<br>
+        <strong>Entonces</strong> comparamos diferencias y registramos APIs necesarias (Distance Matrix/Routing) y costos estimados. <br><br>
+        <strong>Criterio 3: Visualización y buffer offline</strong><br>
+        <strong>Dado que</strong> integramos el SDK móvil<br>
+        <strong>Cuando</strong> cacheamos tiles para un corredor y simulamos pérdida de señal<br>
+        <strong>Entonces</strong> el mapa sigue operativo y el trazado no “salta”. <br><br>
+        <strong>Criterio 4: Costos, límites y fallback</strong><br>
+        <strong>Dado que</strong> modelamos QPS/mes por solicitud, tracking y ruteo<br>
+        <strong>Cuando</strong> proyectamos pricing/cuotas<br>
+        <strong>Entonces</strong> definimos caché, rate limits y plan de degradación/fallback entre vendors.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+<br>
+<!-- ======================= SPIKE 3 ======================= -->
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:15%;">Story ID</th>
+      <th>Title</th>
+    </tr>
+    <tr>
+      <td>SP02</td>
+      <td><strong>Prototipo de estimación L×A×H y peso volumétrico con umbral de confianza y fallback</strong></td>
+    </tr>
+    <tr><th colspan="2">Description</th></tr>
+    <tr>
+      <td colspan="2">Como equipo, quiero prototipar la estimación de dimensiones y peso volumétrico desde fotos (multi-ángulo), comparando enfoques (profundidad monocular + referencia de escala vs. fotogrametría ligera), para soportar US21/US22 con métricas de precisión y tiempos.</td>
+    </tr>
+    <tr><th colspan="2">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="2">
+        <strong>Criterio 1: Enfoques y precisión</strong><br>
+        <strong>Dado que</strong> probamos dos enfoques (monocular+escala y multi-vista)<br>
+        <strong>Cuando</strong> evaluamos sobre un set etiquetado (&ge;30 ítems, 3 tamaños/clases)<br>
+        <strong>Entonces</strong> reportamos error medio relativo (%) por dimensión y por volumen, y latencia por ítem. <br><br>
+        <strong>Criterio 2: Escala y UX de captura</strong><br>
+        <strong>Dado que</strong> necesitamos referencia de escala (A4/tarjeta/moneda)<br>
+        <strong>Cuando</strong> la app valida presencia/posición de referencia<br>
+        <strong>Entonces</strong> el modelo reduce error y se documentan reglas mínimas de captura (fotos/ángulos/iluminación). <br><br>
+        <strong>Criterio 3: Confianza y fallback</strong><br>
+        <strong>Dado que</strong> el modelo entrega un score<br>
+        <strong>Cuando</strong> el score &lt; umbral configurado<br>
+        <strong>Entonces</strong> se ofrece completar manualmente (US21 Esc.4) preservando fotos, y se guarda causa/score. <br><br>
+        <strong>Criterio 4: Costos y despliegue</strong><br>
+        <strong>Dado que</strong> comparamos on-device vs. server (CPU/GPU serverless)<br>
+        <strong>Cuando</strong> estimamos costo por 1,000 ítems y p95 de latencia<br>
+        <strong>Entonces</strong> recomendamos arquitectura (inferencia en backend u on-device) y límites operativos.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ### 2.4.2. Impact Mapping
 ### 2.4.3. Product Backlog
