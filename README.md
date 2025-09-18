@@ -316,13 +316,37 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
     </td>
   </tr>
 
-  <tr>
-    <th colspan="2" align="center">Nombre y logo</th>
-    <th align="center">Su startup: <b>RedCarga</b></th>
-    <th align="center">Competidor 1: <b>Efletex (Perú)</b></th>
-    <th align="center">Competidor 2: <b>DeltaX (LatAm)</b></th>
-    <th align="center">Competidor 3: <b>MiCarga (Tracklink, Perú)</b></th>
-  </tr>
+<tr class="table-logos">
+  <th colspan="2" align="center">Nombre y logo</th>
+
+  <th align="center">
+    <div class="cell-logo">
+    <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/97977d5e-9d18-414d-989e-23719a459403" />
+      <div>Su startup: <b>RedCarga</b></div>
+    </div>
+  </th>
+
+  <th align="center">
+    <div class="cell-logo">
+      <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/a097e4f4-ea7a-4d84-b1ea-1be1660544ed" />
+      <div>Competidor 1: <b>Efletex (Perú)</b></div>
+    </div>
+  </th>
+
+  <th align="center">
+    <div class="cell-logo">
+      <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/901b3423-02cf-4356-9627-b7d7122ed527" />
+      <div>Competidor 2: <b>DeltaX (LatAm)</b></div>
+    </div>
+  </th>
+
+  <th align="center">
+    <div class="cell-logo">
+        <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/114aa992-8c81-453f-b707-2ddae12f4515" />
+      <div>Competidor 3: <b>MiCarga (Tracklink, Perú)</b></div>
+    </div>
+  </th>
+</tr>
 
   <!-- PERFIL -->
   <tr>
