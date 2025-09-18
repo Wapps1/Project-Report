@@ -118,7 +118,41 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
       - [**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**](#segmento-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
       - [**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**](#segmento-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
     - [2.2.2. Registro de entrevistas](#222-registro-de-entrevistas)
+  - [📊 **Análisis del Segmento Objetivo #1**](#-análisis-del-segmento-objetivo-1)
+  - [📋 **Entrevista #1**](#-entrevista-1)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista)
+  - [📋 **Entrevista #2**](#-entrevista-2)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-1)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-1)
+  - [📊 **Análisis del Segmento Objetivo #2**](#-análisis-del-segmento-objetivo-2)
+  - [📋 **Entrevista #4**](#-entrevista-4)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-2)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-2)
+  - [📋 **Entrevista #5**](#-entrevista-5)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-3)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-3)
+  - [📋 **Entrevista #6**](#-entrevista-6)
+    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-4)
+    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-4)
     - [2.2.3. Análisis de entrevistas](#223-análisis-de-entrevistas)
+  - [📊 **Análisis del Segmento Objetivo #2**](#-análisis-del-segmento-objetivo-2-1)
+    - [🎯 **Características Objetivas**](#-características-objetivas)
+      - [👥 **Demografía y Rol**](#-demografía-y-rol)
+      - [🌍 **Ámbito Geográfico**](#-ámbito-geográfico)
+      - [📦 **Portafolio de Carga**](#-portafolio-de-carga)
+      - [🔄 **Proceso Actual (de consulta a envío)**](#-proceso-actual-de-consulta-a-envío)
+      - [📞 **Canales de Captación y Atención**](#-canales-de-captación-y-atención)
+      - [💰 **Pagos**](#-pagos)
+      - [📋 **Documentación y Formalidad**](#-documentación-y-formalidad)
+      - [🛰️ **Seguimiento y Trazabilidad**](#️-seguimiento-y-trazabilidad)
+    - [🧠 **Características Subjetivas**](#-características-subjetivas)
+      - [⭐ **Valores y Prioridades**](#-valores-y-prioridades)
+      - [🎯 **Actitudes y Expectativas**](#-actitudes-y-expectativas)
+    - [⚠️ **Fricciones Operativas Identificadas**](#️-fricciones-operativas-identificadas)
+    - [💡 **Necesidades y Deseos**](#-necesidades-y-deseos)
+    - [🚧 **Barreras y Riesgos Percibidos**](#-barreras-y-riesgos-percibidos)
+    - [🎯 **Oportunidades Claras**](#-oportunidades-claras)
   - [2.3. Needfinding](#23-needfinding)
     - [2.3.1. User Personas](#231-user-personas)
     - [2.3.2. User Task Matrix](#232-user-task-matrix)
@@ -560,9 +594,129 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 
 <div align="center">
 
+## 📊 **Análisis del Segmento Objetivo #1**
+
+*Personas o empresas que quieren transportar carga de forma interprovincial*
+## 📋 **Entrevista #1**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td> Jocelyn Damaly Almerco Rojas</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>22 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Dueña de un negocio de venta al por mayor de ropa </td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ed5e5774e%2Dceb5%2D408d%2D9745%2Dd83a3086968e">Entrevista 1</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 0:00 s - Fin: 5:04 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2 - Jocelyn Damaly Almerco Rojas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+Jocelyn Damaly Almerco, de 22 años y residente de Lima, es dueña de un negocio mayorista de ropa importada que vende a boutiques, ferias y emprendedores en provincias; realiza envíos interprovinciales todas las semanas (6 a 8 al mes), generalmente en bultos grandes o “pacas” de 20 a 60 prendas por caja. Para encontrar transporte recurre a recomendaciones en grupos de Facebook y WhatsApp y, a veces, a Google; compara precio, seguridad y rapidez, solicita entre 3 y 4 cotizaciones y demora de 1 a 2 días en decidir, contactando sobre todo por WhatsApp y llamadas (y de manera presencial si el envío es muy grande). Suele lidiar con cotizaciones confusas porque no siempre queda claro si cobran por peso o por volumen ni si incluyen seguro. Asimismo con trámites de guía de remisión, factura y comprobantes; paga por transferencia o depósito y le incomoda cuando le exigen efectivo para montos altos. Sus prioridades son la seguridad, la rapidez, un precio competitivo y una buena atención al cliente; ha sufrido demoras de varios días, cajas maltratadas e incluso la pérdida total de un paquete. Para una app ideal, considera imprescindibles la cotización inmediata por peso/volumen (con el “peso cobrable” claro), contratar seguro desde la app, pagos digitales seguros (Yape, Plin, tarjeta, transferencia), seguimiento en tiempo real y un historial con comprobantes digitales para su control contable.
+
+---
+## 📋 **Entrevista #2**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Alexander Miranda Vivanco</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>25 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Vendedor de dispositivos electrónico</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ed5e5774e%2Dceb5%2D408d%2D9745%2Dd83a3086968e">Entrevista 1</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 5:05 s - Fin: 12:43 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Alexander Miranda Vivanco" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+Alexander Miranda Vivanco, 25 años, radicado en Lima, vende dispositivos electrónicos y realiza envíos interprovinciales a diario. Para encontrar transporte recurre a redes sociales, priorizando empresas con buenas referencias, y suele cerrar acuerdos en un día. Se comunica principalmente por teléfono o WhatsApp y compara entre cuatro y cinco cotizaciones antes de decidirse. Sus principales fricciones son la comparación entre propuestas,a veces poco claras entre sí, y la demora en las respuestas de los transportistas, lo que termina retrasando sus despachos. Le solicitan guía de remisión; paga por transferencia o tarjeta sin mayores inconvenientes. Valora por encima de todo la seguridad y la rapidez, seguidas de un precio competitivo y una atención al cliente eficaz; ha experimentado demoras e incluso la pérdida de un paquete en ruta. En una app ideal, considera indispensables la cotización inmediata y el seguimiento en tiempo real de sus envíos.
+
+
+
 ---
 
-## 📋 **Entrevista #1**
+## 📋 **Entrevista #3**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Mariano Oblitas</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>19 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Vendedor de pesas</td>
+  </tr>
+  <tr>
+    <td><strong>Enlace del video</strong></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E48fd1635%2Ddc6d%2D4463%2Db15a%2D424760a0467b">Entrevista 3</a></td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 12:43 s - Fin: 18:58 s</td>
+  </tr>
+</table>
+
+### 📸 **Imagen de la Entrevista**
+
+<img src="img/entrevistas-img/entrevista-3.png" alt="Entrevista 3 - Mariano Oblitas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### 📝 **Resumen de la Entrevista**
+Mariano Oblitas, de 19 años y residente en Lima, tiene un emprendimiento de venta de pesas y barras y realiza envíos interprovinciales una o dos veces por semana. Sus paquetes suelen pesar 10–15 kg y, cuando incluye barras, viajan en cajas grandes. Para elegir transportistas busca referencias en comunidades de vendedores (Mercado Libre y grupos de Facebook) y prioriza la confiabilidad/renombre porque, según cuenta, algunas empresas pequeñas no cumplen, llegan tarde, malogran el paquete o mandan a la dirección equivocada. El tiempo para encontrar una empresa adecuada puede ser de 3–4 horas, en especial por coberturas parciales (hay transportistas que solo van al norte o al sur). Suele contactar a 3–4 proveedores del “ranking” compartido por la comunidad y decide combinando fiabilidad y precio. Cotizar no es sencillo: frecuentemente no responden rápido o brindan información incompleta (dicen solo el precio, no aclaran si incluye seguro, si el envío es directo o si lo derivan, etc.). En requisitos, le piden Guía de Remisión, DNI del remitente, datos de origen (para asignarle almacén de despacho) y datos del destinatario. Paga con efectivo y Yape/Plin, pero a veces el transportista no acepta el medio elegido, obligándolo a buscar una alternativa. En prioridades, valora todo (seguridad, precio, rapidez y atención), pero pone por delante el precio y la seguridad: puede tolerar 3–5 días de tránsito si el costo no le genera pérdidas y si el producto viaja asegurado para cubrir daños o robos. Para una app ideal, quiere comparar precios fácilmente, ver reseñas reales de clientes, contar con seguimiento en tiempo real tipo “tracking” y chatear con el transportista dentro de la plataforma.
+
+
+---
+## 📊 **Análisis del Segmento Objetivo #2**
+
+*Administradores de empresas que se encargan del transporte interprovincial de carga*
+
+## 📋 **Entrevista #4**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -583,17 +737,17 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EaZpzkWRmKJLnsuYjlsPDNsBao9lt5rR_oivky7oKIHYMQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=c5ZTCl">Entrevista 1</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E2d2a8cf5%2D9aa8%2D4b1c%2D9853%2De2206c54d30a&startedResponseCatch=true">Entrevista 4</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 7:17 s</td>
+    <td>Inicio: 18:58 s - Fin: 26:15 s</td>
   </tr>
 </table>
 
 ### 📸 **Imagen de la Entrevista**
 
-<img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Vladimir Rogel Elera Ozeta" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="img/entrevistas-img/entrevista-4.png" alt="Entrevista 4 - Vladimir Rogel Elera Ozeta" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
 
@@ -605,7 +759,7 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
 
 ---
 
-## 📋 **Entrevista #2**
+## 📋 **Entrevista #5**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -626,17 +780,17 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EXmFGOHjIFRDkUEfqcq8WUEBmKlL5rZ6ovD-Pv-VwT3BIg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=JJOg9Z">Entrevista 2</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas%20Red%20Carga%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ec9a707b5%2D00b1%2D42d3%2D9893%2D5f8f2bd163e9&startedResponseCatch=true">Entrevista 5</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 4:44 s</td>
+    <td>Inicio: 26:16 s - Fin: 30:57 s</td>
   </tr>
 </table>
 
 ### 📸 **Imagen de la Entrevista**
 
-<img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="img/entrevistas-img/entrevista-5.png" alt="Entrevista 5" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
 
@@ -646,7 +800,7 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
 
 ---
 
-## 📋 **Entrevista #3**
+## 📋 **Entrevista #6**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -667,17 +821,17 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
   </tr>
   <tr>
     <td><strong>Enlace del video</strong></td>
-    <td><a href="https://upcedupe-my.sharepoint.com/:v:/g/personal/u202313702_upc_edu_pe/EQiYFTYEAR9Aieoo9T6RMZ8BT-BAUmq26dZJ4p-hhY8ioQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=e9sN1V">Entrevista 3</a></td>
+    <td><a href="https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu202315044_upc_edu_pe%2FDocuments%2F2025+20.+%5B1ACC0238%5D+Aplicaciones+para+Dispositivos+M%C3%B3viles%2Ftrabajo%2Fentrevistas%2FEntrevistas+Red+Carga.mp4&referrer=StreamWebApp.Web&referrerScenario=AddressBarCopied.view.1955f1c9-6535-4a47-bf98-65deeb8d68e0&startedResponseCatch=true">Entrevista 6</a></td>
   </tr>
   <tr>
     <td><strong>Duración</strong></td>
-    <td>Inicio: 0:00 s - Fin: 3:41 s</td>
+    <td>Inicio: 30:57 s - Fin: 34:39 s</td>
   </tr>
 </table>
 
 ### 📸 **Imagen de la Entrevista**
 
-<img src="img/entrevistas-img/entrevista-3.png" alt="Entrevista 3" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="img/entrevistas-img/entrevista-6.png" alt="Entrevista 6" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 📝 **Resumen de la Entrevista**
 
@@ -690,6 +844,248 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 
 
 ### 2.2.3. Análisis de entrevistas
+
+<div align="center">
+
+<!-- =============================================== -->
+<!-- SEGMENTO: Remitentes que comparan transportistas -->
+<!-- =============================================== -->
+<hr>
+
+<h2>📊 <strong>Análisis del Segmento Objetivo #1</strong></h2>
+<p><strong>Dirigido a:</strong> Personas o representantes de empresas que desean enviar carga interprovincial y buscan seleccionar entre distintas propuestas el servicio más adecuado.</p>
+
+<p><em>Base: 3 entrevistas (Jocelyn, Alexander, Mariano)</em></p>
+
+
+---
+
+<!-- ========================= -->
+<!-- Características Objetivas -->
+<!-- ========================= -->
+<h3>🎯 <strong>Características Objetivas</strong></h3>
+
+<h4>👥 <strong>Demografía y rol</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Rango de edad</strong></td>
+    <td>19–25 años</td>
+  </tr>
+  <tr>
+    <td><strong>Ubicación</strong></td>
+    <td>Lima (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Actividad</strong></td>
+    <td>Venta mayorista/minorista (ropa importada, electrónicos, pesas/barras)</td>
+  </tr>
+</table>
+
+<h4>🌍 <strong>Ámbito y frecuencia</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Destino</strong></td>
+    <td>Provincias a nivel nacional (coberturas parciales por zonas en algunos casos)</td>
+  </tr>
+  <tr>
+    <td><strong>Frecuencia</strong></td>
+    <td>Diaria (1 caso), semanal 1–2 veces (1 caso), 6–8 envíos/mes (1 caso)</td>
+  </tr>
+  <tr>
+    <td><strong>Tipo/volumen de carga</strong></td>
+    <td>Pacas de 20–60 prendas; dispositivos electrónicos; pesas (10–15 kg) y barras (cajas grandes)</td>
+  </tr>
+</table>
+
+<h4>🔎 <strong>Búsqueda y selección</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Canales de descubrimiento</strong></td>
+    <td>Grupos de Facebook y WhatsApp; comunidades de vendedores; Google</td>
+  </tr>
+  <tr>
+    <td><strong>Contacto</strong></td>
+    <td>WhatsApp y llamadas (presencial para bultos muy grandes)</td>
+  </tr>
+  <tr>
+    <td><strong>Criba inicial</strong></td>
+    <td>Confiabilidad/renombre, precio y cobertura por ruta (norte/sur/todo Perú)</td>
+  </tr>
+  <tr>
+    <td><strong>Alternativas comparadas</strong></td>
+    <td>3–5 cotizaciones por envío</td>
+  </tr>
+  <tr>
+    <td><strong>Tiempo a decisión</strong></td>
+    <td>De 3–4 horas a 1–2 días</td>
+  </tr>
+</table>
+
+<h4>💳 <strong>Pagos</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Métodos usados</strong></td>
+    <td>Transferencia/depósito, tarjeta; Yape/Plin; efectivo en algunos casos</td>
+  </tr>
+  <tr>
+    <td><strong>Fricciones</strong></td>
+    <td>Exigencia de efectivo para montos altos; proveedores que no aceptan el medio elegido</td>
+  </tr>
+</table>
+
+<h4>📋 <strong>Documentación</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Requisitos comunes</strong></td>
+    <td>Guía de remisión (obligatoria), datos de remitente/destinatario; factura/boleta (según caso)</td>
+  </tr>
+  <tr>
+    <td><strong>Trabas típicas</strong></td>
+    <td>Cotizaciones confusas (peso vs. volumen, “peso cobrable”); claridad del seguro</td>
+  </tr>
+</table>
+
+<!-- ========================= -->
+<!-- Características Subjetivas -->
+<!-- ========================= -->
+<h3>🧠 <strong>Características Subjetivas</strong></h3>
+
+<h4>⭐ <strong>Valores y prioridades</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Top 1–3</strong></td>
+    <td>Seguridad del envío; precio competitivo; rapidez</td>
+  </tr>
+  <tr>
+    <td><strong>Servicio</strong></td>
+    <td>Atención clara y oportuna; reputación/renombre del transportista</td>
+  </tr>
+  <tr>
+    <td><strong>Tolerancias</strong></td>
+    <td>Admiten 3–5 días de tránsito si hay buen precio y seguro</td>
+  </tr>
+</table>
+
+<!-- ============================ -->
+<!-- Fricciones y puntos de dolor -->
+<!-- ============================ -->
+<!-- ⚠️ Fricciones Operativas Identificadas -->
+<h3>⚠️ <strong>Fricciones Operativas Identificadas</strong></h3>
+<table align="center" style="margin:0 auto; border-collapse:collapse;" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Fricción</th>
+      <th>Detalle observado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cotizaciones incompletas</td>
+      <td>No aclaran peso vs. volumen (“peso cobrable”) ni si incluye seguro; falta estandarización.</td>
+    </tr>
+    <tr>
+      <td>Demora en respuestas</td>
+      <td>Respuestas tardías de transportistas que retrasan el despacho y la decisión.</td>
+    </tr>
+    <tr>
+      <td>Cobertura por zonas</td>
+      <td>Transportistas que solo cubren norte/sur; obliga a buscar alternativas por ruta.</td>
+    </tr>
+    <tr>
+      <td>Incidencias en envío</td>
+      <td>Demoras, cajas maltratadas, direcciones erróneas y pérdidas reportadas.</td>
+    </tr>
+    <tr>
+      <td>Pagos con fricción</td>
+      <td>Exigencia de efectivo para montos altos o rechazo del medio preferido (Yape/Plin/tarjeta).</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 💡 Necesidades y Deseos -->
+<h3>💡 <strong>Necesidades y Deseos</strong></h3>
+<table align="center" style="margin:16px auto; border-collapse:collapse;" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Necesidad/Deseo</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cotización inmediata y clara</td>
+      <td>Mostrar precio por peso/volumen, “peso cobrable”, cobertura y tiempos estimados.</td>
+    </tr>
+    <tr>
+      <td>Seguro configurable</td>
+      <td>Contratar/activar seguro desde la app con monto y condiciones visibles.</td>
+    </tr>
+    <tr>
+      <td>Pagos digitales seguros</td>
+      <td>Yape, Plin, tarjeta y transferencia con comprobantes digitales automáticos.</td>
+    </tr>
+    <tr>
+      <td>Tracking en tiempo real</td>
+      <td>Seguimiento del envío con hitos (“recibido”, “en ruta”, “llegó”, “listo para recojo”).</td>
+    </tr>
+    <tr>
+      <td>Historial y documentos</td>
+      <td>Centralizar guías, boletas/facturas y comprobantes para control contable.</td>
+    </tr>
+    <tr>
+      <td>Confianza y comunicación</td>
+      <td>Reseñas verificadas del transportista y chat in-app para coordinar.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 🎯 Oportunidades Claras para Red Carga -->
+<h3>🎯 <strong>Oportunidades Claras para Red Carga</strong></h3>
+<table align="center" style="margin:0 auto; border-collapse:collapse;" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Oportunidad</th>
+      <th>Cómo se implementa</th>
+      <th>Beneficio esperado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Comparador estandarizado</td>
+      <td>Ficha de cotización con campos obligatorios (precio, peso/volumen, seguro, directo/derivado, cobertura, ETA).</td>
+      <td>Reduce ambigüedad y acelera la decisión.</td>
+    </tr>
+    <tr>
+      <td>Motor de cobertura por ruta</td>
+      <td>Filtro automático por origen/destino (norte/sur/todo Perú) antes de cotizar.</td>
+      <td>Evita cotizaciones inviables y ahorra tiempo.</td>
+    </tr>
+    <tr>
+      <td>Checkout de pago flexible</td>
+      <td>Compatibilidad visible con Yape/Plin/tarjeta/transferencia y emisión de comprobantes.</td>
+      <td>Disminuye fricción y rechazos en el pago.</td>
+    </tr>
+    <tr>
+      <td>Tracking + eventos</td>
+      <td>Geolocalización del proveedor y notificaciones de hitos del envío.</td>
+      <td>Transparencia y tranquilidad para el cliente.</td>
+    </tr>
+    <tr>
+      <td>Gestión documental guiada</td>
+      <td>Asistente para generar/adjuntar guía de remisión y comprobantes, con historial descargable.</td>
+      <td>Cumplimiento y orden contable.</td>
+    </tr>
+    <tr>
+      <td>Reputación y soporte</td>
+      <td>Ratings verificados, evidencia de envíos previos y chat in-app para incidencias.</td>
+      <td>Mayor confianza y resolución rápida de problemas.</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+---
 
 <div align="center">
 
