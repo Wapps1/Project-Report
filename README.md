@@ -2561,6 +2561,122 @@ En el siguiente apartado, analizaremos a nuestros segmentos objetivos para ident
   </tbody>
 </table>
 
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:15%;">Story ID</th>
+      <th>Title</th>
+    </tr>
+    <tr>
+      <td>SP03</td>
+      <td><strong>Evaluación de PSP (Payment Service Providers) y estrategia de webhooks para pagos y liquidaciones</strong></td>
+    </tr>
+    <tr><th colspan="2">Description</th></tr>
+    <tr>
+      <td colspan="2">Como equipo, quiero evaluar PSPs disponibles en Perú (Culqi, Niubiz, PayU, MercadoPago) comparando tarifas, métodos de pago, tiempos de liquidación y robustez de webhooks, para soportar US64-US70 con alta disponibilidad y reconciliación automática.</td>
+    </tr>
+    <tr><th colspan="2">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="2">
+        <strong>Criterio 1: Comparativa de PSPs</strong><br>
+        <strong>Dado que</strong> evaluamos 4 PSPs principales en Perú<br>
+        <strong>Cuando</strong> comparamos tarifas por transacción, métodos soportados (tarjetas/billeteras) y tiempos de settlement<br>
+        <strong>Entonces</strong> documentamos costos proyectados para 1,000/10,000 transacciones mensuales y tiempo hasta liquidación al proveedor.<br><br>
+        <strong>Criterio 2: Robustez de webhooks y reintentos</strong><br>
+        <strong>Dado que</strong> simulamos fallos de red y timeouts<br>
+        <strong>Cuando</strong> probamos el mecanismo de reintentos y verificación de firma de cada PSP<br>
+        <strong>Entonces</strong> validamos idempotencia, ordenamiento de eventos y capacidad de recuperación ante caídas.<br><br>
+        <strong>Criterio 3: Reconciliación y disputas</strong><br>
+        <strong>Dado que</strong> necesitamos conciliar pagos vs. liquidaciones automáticamente<br>
+        <strong>Cuando</strong> revisamos APIs de reporting y manejo de chargebacks<br>
+        <strong>Entonces</strong> diseñamos flujo de reconciliación diaria y estrategia de hold de fondos para disputas.<br><br>
+        <strong>Criterio 4: Prototipo de integración dual</strong><br>
+        <strong>Dado que</strong> consideramos usar 2 PSPs (principal + fallback)<br>
+        <strong>Cuando</strong> implementamos switching automático por fallos o límites<br>
+        <strong>Entonces</strong> validamos complejidad técnica y beneficios de redundancia vs. costo adicional.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:15%;">Story ID</th>
+      <th>Title</th>
+    </tr>
+    <tr>
+      <td>SP04</td>
+      <td><strong>Arquitectura de notificaciones multi-canal con delivery garantizado y throttling</strong></td>
+    </tr>
+    <tr><th colspan="2">Description</th></tr>
+    <tr>
+      <td colspan="2">Como equipo, quiero diseñar un sistema de notificaciones que combine FCM/APNs (push), SES/SendGrid (email), SMS y WebSockets (in-app) con colas resilientes, throttling por usuario y tracking de delivery, para soportar US33-US38 con alta confiabilidad.</td>
+    </tr>
+    <tr><th colspan="2">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="2">
+        <strong>Criterio 1: Proveedores y costos por canal</strong><br>
+        <strong>Dado que</strong> comparamos FCM vs. APNs, SES vs. SendGrid/Mailgun y SMS providers (Twilio/Plivo/local)<br>
+        <strong>Cuando</strong> proyectamos 50K usuarios activos con 10 notificaciones/usuario/mes<br>
+        <strong>Entonces</strong> documentamos costos, límites de rate y latencias esperadas por canal.<br><br>
+        <strong>Criterio 2: Colas y delivery garantizado</strong><br>
+        <strong>Dado que</strong> usamos colas (SQS/Redis/RabbitMQ) para delivery asíncrono<br>
+        <strong>Cuando</strong> simulamos fallos de providers y reintentos exponenciales<br>
+        <strong>Entonces</strong> validamos que ninguna notificación crítica se pierda y se respeten preferencias de usuario.<br><br>
+        <strong>Criterio 3: Throttling y anti-spam</strong><br>
+        <strong>Dado que</strong> implementamos rate limiting por usuario y tipo de notificación<br>
+        <strong>Cuando</strong> un evento genera múltiples notificaciones (ej: nuevas cotizaciones)<br>
+        <strong>Entonces</strong> se agregan inteligentemente y respetan ventanas de "No molestar".<br><br>
+        <strong>Criterio 4: Métricas y fallback</strong><br>
+        <strong>Dado que</strong> tracked delivery, opens, clicks y bounce rates<br>
+        <strong>Cuando</strong> un canal falla consistentemente para un usuario<br>
+        <strong>Entonces</strong> se switchea automáticamente a canal secundario y se alerta al equipo.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%;">
+  <tbody>
+    <tr>
+      <th style="width:15%;">Story ID</th>
+      <th>Title</th>
+    </tr>
+    <tr>
+      <td>SP05</td>
+      <td><strong>Integración con APIs fiscales peruanas (SUNAT) y emisores electrónicos para guías de remisión</strong></td>
+    </tr>
+    <tr><th colspan="2">Description</th></tr>
+    <tr>
+      <td colspan="2">Como equipo, quiero investigar la integración con SUNAT y OSE (Operadores de Servicios Electrónicos) para emitir guías de remisión electrónicas válidas, comparando costos, tiempos de respuesta y complejidad técnica, para soportar US79-US84 con cumplimiento legal total.</td>
+    </tr>
+    <tr><th colspan="2">Acceptance Criteria</th></tr>
+    <tr>
+      <td colspan="2">
+        <strong>Criterio 1: Comparativa SUNAT vs OSE</strong><br>
+        <strong>Dado que</strong> evaluamos integración directa con SUNAT vs. usar OSEs intermedios<br>
+        <strong>Cuando</strong> comparamos costos por guía, tiempos de certificación y complejidad técnica<br>
+        <strong>Entonces</strong> documentamos ventajas/desventajas y recomendación para MVP vs. escalamiento.<br><br>
+        <strong>Criterio 2: Flujo de emisión y validación</strong><br>
+        <strong>Dado que</strong> prototipamos emisión de guía electrónica con datos reales<br>
+        <strong>Cuando</strong> enviamos XML firmado y recibimos respuesta de SUNAT/OSE<br>
+        <strong>Entonces</strong> validamos estructura, certificados digitales requeridos y manejo de errores comunes.<br><br>
+        <strong>Criterio 3: Corrección y anulación</strong><br>
+        <strong>Dado que</strong> necesitamos modificar/anular guías según reglas de negocio<br>
+        <strong>Cuando</strong> probamos notas de corrección y procesos de anulación<br>
+        <strong>Entonces</strong> documentamos limitaciones temporales y estados que permiten cada operación.<br><br>
+        <strong>Criterio 4: Contingencia y cumplimiento</strong><br>
+        <strong>Dado que</strong> consideramos modo offline/contingencia<br>
+        <strong>Cuando</strong> SUNAT/OSE no responde en tiempo crítico<br>
+        <strong>Entonces</strong> definimos estrategia de guías físicas de emergencia y posterior regularización electrónica.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ### 2.4.2. Impact Mapping
 ### 2.4.3. Product Backlog
 
