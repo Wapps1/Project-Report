@@ -4833,7 +4833,7 @@ los servicios externos (autenticación, pagos, mapas, notificaciones, correo ele
 
 ## Conclusiones y recomendaciones
 
-###Conclusiones
+### Conclusiones
 Como equipo, confirmamos que Red Carga aborda un problema real de los remitentes: hoy la comparación de transportistas ocurre en canales informales, lo que dificulta obtener precios, tiempos y trazabilidad confiables. Nuestra solución integra cotización, negociación, pago y seguimiento en un solo flujo, reduciendo fricciones clave del “matching”.
 
 Sostenemos que el encadenado funcional Solicitud → Cotizaciones → Trato → Pago → Documentos → Tracking → Calificación es coherente con las necesidades del usuario y con un marketplace de dos lados. El “gating” por pago en la app ordena la operación, protege la comisión y deja evidencia auditable para resolver incidencias.
@@ -4845,7 +4845,7 @@ Valoramos que nuestra coordinación incremental (definición de BCs, eventos y c
 También aprendimos que la diversidad de roles en el equipo (negocio, UX, técnico) enriquece la calidad de las decisiones, siempre que exista una cadencia clara de revisión y un lenguaje común. La práctica de “cerrar” cada iteración con métricas y retroalimentación fortaleció nuestro aprendizaje colectivo.
 
 
-###Recomendaciones
+### Recomendaciones
 
 Recomendamos pilotear en corredores acotados y de alto volumen para equilibrar oferta y demanda, medir tiempos a primera cotización y conversión a trato, y ajustar UX y precios con datos reales. Esta estrategia nos permitirá priorizar funcionalidades con mayor impacto y optimizar costos operativos.
 
