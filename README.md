@@ -847,6 +847,166 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 
 <div align="center">
 
+<!-- =============================================== -->
+<!-- SEGMENTO: Remitentes que comparan transportistas -->
+<!-- =============================================== -->
+<hr>
+
+<h2>📊 <strong>Análisis del Segmento Objetivo #1</strong></h2>
+<p><strong>Dirigido a:</strong> Personas o representantes de empresas que desean enviar carga interprovincial y buscan seleccionar entre distintas propuestas el servicio más adecuado.</p>
+
+<p><em>Base: 3 entrevistas (Jocelyn, Alexander, Mariano)</em></p>
+---
+<!-- ========================= -->
+<!-- Características Objetivas -->
+<!-- ========================= -->
+<h3>🎯 <strong>Características Objetivas</strong></h3>
+
+<h4>👥 <strong>Demografía y rol</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Rango de edad</strong></td>
+    <td>19–25 años</td>
+  </tr>
+  <tr>
+    <td><strong>Ubicación</strong></td>
+    <td>Lima (100%)</td>
+  </tr>
+  <tr>
+    <td><strong>Actividad</strong></td>
+    <td>Venta mayorista/minorista (ropa importada, electrónicos, pesas/barras)</td>
+  </tr>
+</table>
+
+<h4>🌍 <strong>Ámbito y frecuencia</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Destino</strong></td>
+    <td>Provincias a nivel nacional (coberturas parciales por zonas en algunos casos)</td>
+  </tr>
+  <tr>
+    <td><strong>Frecuencia</strong></td>
+    <td>Diaria (1 caso), semanal 1–2 veces (1 caso), 6–8 envíos/mes (1 caso)</td>
+  </tr>
+  <tr>
+    <td><strong>Tipo/volumen de carga</strong></td>
+    <td>Pacas de 20–60 prendas; dispositivos electrónicos; pesas (10–15 kg) y barras (cajas grandes)</td>
+  </tr>
+</table>
+
+<h4>🔎 <strong>Búsqueda y selección</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Canales de descubrimiento</strong></td>
+    <td>Grupos de Facebook y WhatsApp; comunidades de vendedores; Google</td>
+  </tr>
+  <tr>
+    <td><strong>Contacto</strong></td>
+    <td>WhatsApp y llamadas (presencial para bultos muy grandes)</td>
+  </tr>
+  <tr>
+    <td><strong>Criba inicial</strong></td>
+    <td>Confiabilidad/renombre, precio y cobertura por ruta (norte/sur/todo Perú)</td>
+  </tr>
+  <tr>
+    <td><strong>Alternativas comparadas</strong></td>
+    <td>3–5 cotizaciones por envío</td>
+  </tr>
+  <tr>
+    <td><strong>Tiempo a decisión</strong></td>
+    <td>De 3–4 horas a 1–2 días</td>
+  </tr>
+</table>
+
+<h4>💳 <strong>Pagos</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Métodos usados</strong></td>
+    <td>Transferencia/depósito, tarjeta; Yape/Plin; efectivo en algunos casos</td>
+  </tr>
+  <tr>
+    <td><strong>Fricciones</strong></td>
+    <td>Exigencia de efectivo para montos altos; proveedores que no aceptan el medio elegido</td>
+  </tr>
+</table>
+
+<h4>📋 <strong>Documentación</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Requisitos comunes</strong></td>
+    <td>Guía de remisión (obligatoria), datos de remitente/destinatario; factura/boleta (según caso)</td>
+  </tr>
+  <tr>
+    <td><strong>Trabas típicas</strong></td>
+    <td>Cotizaciones confusas (peso vs. volumen, “peso cobrable”); claridad del seguro</td>
+  </tr>
+</table>
+
+<!-- ========================= -->
+<!-- Características Subjetivas -->
+<!-- ========================= -->
+<h3>🧠 <strong>Características Subjetivas</strong></h3>
+
+<h4>⭐ <strong>Valores y prioridades</strong></h4>
+<table align="center" style="margin:0 auto;">
+  <tr>
+    <td><strong>Top 1–3</strong></td>
+    <td>Seguridad del envío; precio competitivo; rapidez</td>
+  </tr>
+  <tr>
+    <td><strong>Servicio</strong></td>
+    <td>Atención clara y oportuna; reputación/renombre del transportista</td>
+  </tr>
+  <tr>
+    <td><strong>Tolerancias</strong></td>
+    <td>Admiten 3–5 días de tránsito si hay buen precio y seguro</td>
+  </tr>
+</table>
+
+<!-- ============================ -->
+<!-- Fricciones y puntos de dolor -->
+<!-- ============================ -->
+<h3>⚠️ <strong>Fricciones Operativas Identificadas</strong></h3>
+<ul style="max-width:900px;text-align:left;">
+  <li><strong>Cotizaciones incompletas</strong>: no siempre especifican si el cobro es por peso/volumen ni si incluye seguro; falta estandarización.</li>
+  <li><strong>Demora en respuestas</strong>: ralentiza despachos y alarga la decisión.</li>
+  <li><strong>Cobertura por zonas</strong>: algunos transportistas solo norte/sur; obliga a buscar alternativas.</li>
+  <li><strong>Incidencias</strong>: demoras, cajas maltratadas, direcciones erróneas y pérdidas reportadas.</li>
+  <li><strong>Pagos</strong>: exigencia de efectivo para montos altos o rechazo del medio preferido.</li>
+</ul>
+
+<!-- ===================== -->
+<!-- Necesidades y deseos -->
+<!-- ===================== -->
+<h3>💡 <strong>Necesidades y Deseos</strong></h3>
+<ul style="max-width:900px;text-align:left;">
+  <li><strong>Cotización inmediata</strong> con “peso cobrable” claro (peso vs. volumen), cobertura y tiempos.</li>
+  <li><strong>Seguro configurable</strong> y contratable desde la app.</li>
+  <li><strong>Pagos digitales seguros</strong>: Yape, Plin, tarjeta, transferencia (con comprobantes digitales).</li>
+  <li><strong>Seguimiento en tiempo real</strong> y notificaciones de hitos.</li>
+  <li><strong>Historial centralizado</strong> de envíos y documentos (guías, boletas/facturas) para control contable.</li>
+  <li><strong>Reputación/ratings verificables</strong> y <strong>chat in-app</strong> con el transportista.</li>
+</ul>
+
+<!-- ================== -->
+<!-- Oportunidades UX/UI -->
+<!-- ================== -->
+<h3>🎯 <strong>Oportunidades Claras para Red Carga</strong></h3>
+<ol style="max-width:900px;text-align:left;">
+  <li><strong>Comparador estandarizado</strong> (precio, peso/volumen, seguro, directo/derivado, cobertura, tiempo estimado).</li>
+  <li><strong>Motor de cobertura por ruta</strong> para filtrar proveedores aptos antes de cotizar.</li>
+  <li><strong>Checkout de pago flexible</strong> con compatibilidad visible y comprobantes automáticos.</li>
+  <li><strong>Tracking + eventos</strong> (“recibido”, “en ruta”, “llegó a destino”, “listo para recojo”).</li>
+  <li><strong>Gestión documental</strong> guiada (guía de remisión, comprobantes) e historial descargable.</li>
+  <li><strong>Confianza</strong>: reseñas verificadas, evidencia de envíos previos y chat integrado.</li>
+</ol>
+
+</div>
+
+---
+
+<div align="center">
+
 ## 📊 **Análisis del Segmento Objetivo #2**
 
 *Administradores de empresas que se encargan del transporte interprovincial de carga*
