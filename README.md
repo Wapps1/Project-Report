@@ -1995,6 +1995,11 @@ No aplican (flujos locales, un AR por TX).
 
 #### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
+- *BC Providers — Components: API*
+
+<img width="3870" height="6823" alt="image" src="https://github.com/user-attachments/assets/8be7b636-bc47-4756-8a7e-02bc1817dedb" />
+
+
 <br/>
 
 #### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
