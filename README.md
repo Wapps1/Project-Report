@@ -174,6 +174,8 @@
 Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 
 ## TB1
+En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo del proyecto , organizándose por secciones según el diseño de la idea, problemática y el contenido previamente establecidos. Las capturas de los analíticos de colaboración del repositorio oficial evidencian la participación de todos. <br>
+<img src="img/insights/insights.png" />
 
 <br>
 
