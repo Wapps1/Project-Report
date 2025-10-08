@@ -9308,6 +9308,42 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 #### 4.1. Software Configuration Management
 ##### 4.1.1. Software Development Environment Configuration
 ##### 4.1.2. Source Code Management
+
+
+<strong>Modelo GitFlow y Repositorios en GitHub</strong><br>
+Trabajaremos con <strong>GitFlow</strong> para mantener un ciclo de desarrollo ordenado y predecible. <strong>GitHub</strong> será nuestro repositorio central y el punto de colaboración para issues, PRs y revisiones de código.
+<br><br>
+
+<strong>Repositorios de GitHub</strong>
+<ul>
+  <li><strong>Organización</strong>: <a href="https://github.com/Wapps1">https://github.com/Wapps1</a></li>
+  <li><strong>Landing Page</strong>: <a href="https://github.com/Wapps1/RedCarga-Landing-Page">https://github.com/Wapps1/RedCarga-Landing-Page</a></li>
+  <li><strong>Informe del proyecto</strong>: <a href="https://github.com/Wapps1/Project-Report">https://github.com/Wapps1/Project-Report</a></li>
+  <li><strong>Frontend</strong>: <a href="https://github.com/Wapps1/Redcarga-Frontend">https://github.com/Wapps1/Redcarga-Frontend</a></li>
+  <li><strong>Backend</strong>: <a href="https://github.com/Wapps1/Redcarga-Backend">https://github.com/Wapps1/Redcarga-Backend</a></li>
+</ul>
+
+<strong>Flujo de trabajo con GitFlow</strong><br>
+Propuesto por Vincent Driessen, GitFlow define un esquema de ramas que facilita desarrollar nuevas features, preparar lanzamientos y atender urgencias sin perder estabilidad.
+<br><br>
+
+<strong>Ramas principales</strong>
+- `main`: solo versiones estables listas para producción.
+- `develop`: integración continua de funcionalidades aprobadas antes de preparar una release.
+
+<strong>Ramas de soporte</strong>
+- `feature/*`: se crean desde `develop` para cada funcionalidad o mejora. Al finalizar, se fusionan a `develop` mediante PR con revisión.
+- `release/*`: se abren desde `develop` para el afinado previo al lanzamiento (ajustes menores, corrección de bugs, actualización de versión y changelog). Al cerrar, se fusionan a `main` (con tag) y a `develop`.
+- `hotfix/*`: se crean desde `main` para resolver incidentes críticos en producción. Tras el fix, se fusionan a `main` (con tag) y también a `develop` para mantener coherencia.
+
+<strong>Versionamiento Semántico</strong><br>
+Para asignar identificadores claros a cada release, abrazamos el Semantic Versioning (`MAJOR.MINOR.PATCH`). Este esquema intuitivo comunica al instante la naturaleza de cada actualización—sea un cambio drástico, una mejora incremental o una corrección puntual—y aporta transparencia a nuestros usuarios y colaboradores.
+<br>
+
+<strong>Convenciones de Commits</strong><br>
+Adoptamos Conventional Commits, inspirados en las Angular Commit Guidelines, para que cada mensaje de commit sea un faro de claridad. Mediante un prefijo estandarizado (`feat`, `fix`, `chore`, `docs`, etc.) y una sintaxis uniforme, facilitamos la generación automática de changelogs, la trazabilidad de cambios y la colaboración ordenada.
+<br><br>
+
 ##### 4.1.3. Source Code Style Guide & Conventions
 ##### 4.1.4. Software Deployment Configuration
 #### 4.2. Landing Page & Mobile Application Implementation
