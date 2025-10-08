@@ -9610,6 +9610,18 @@ Durante este primer sprint, el equipo de desarrollo de Redcarga concentró sus e
 | https://github.com/Wapps1/Redcarga-Frontend | develop | 1cb6784 | feat:bc fleet | Implement fleet management module | 08/10/2025 |
 
 ###### 4.2.1.4. Testing Suite Evidence for Sprint Review
+
+Como parte del proceso de aseguramiento de la calidad del software, en este sprint se diseñaron y ejecutaron pruebas automatizadas para validar la funcionalidad, integridad y desempeño de los módulos implementados. Se realizaron unit tests, integration tests y acceptance tests para los servicios principales del backend, así como pruebas en la aplicación móvil. Estas actividades permitieron verificar el correcto funcionamiento de los endpoints, la persistencia de datos y la experiencia de usuario, asegurando que el sistema cumpla con los criterios de aceptación definidos en los User Stories del Sprint 1.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body  | Committed on (Date) |
+| ---------- | ------ | --------- | -------------- | -------------------- | ------------------- |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 893f1a2 | test: add unit tests for auth controller | Added Jest tests for signup and login controllers | 06/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | a5b21f4 | test: integration tests for request module | Implemented Supertest cases for /requests and /quotes endpoints | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | c9e32c9 | test: add BDD feature for create request | Added create_request.feature and step definitions | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 0ed456b | fix: test environment config | Updated test database connection and mock JWT tokens | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 19a0f44 | test: JUnit tests for login form validation | Added unit tests for field validation and empty inputs | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 4cfa6c1 | test: integration test navigation flow | Added Espresso test for navigation from Login to Home | 07/10/2025 |
+
 ###### 4.2.1.5. Execution Evidence for Sprint Review
 ###### 4.2.1.6. Services Documentation Evidence for Sprint Review
 ###### 4.2.1.7. Software Deployment Evidence for Sprint Review
