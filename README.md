@@ -264,6 +264,7 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
       - [Spikes stories](#spikes-stories)
     - [2.4.2. Impact Mapping](#242-impact-mapping)
     - [2.4.3. Product Backlog](#243-product-backlog)
+- [Product Backlog](#product-backlog)
   - [2.5. Strategic-Level Domain-Driven Design](#25-strategic-level-domain-driven-design)
     - [2.5.1. EventStorming](#251-eventstorming)
       - [2.5.1.1. Candidate Context Discovery](#2511-candidate-context-discovery)
@@ -347,189 +348,219 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
     - [🤝 **Deals**](#-deals)
     - [⚖️ **Disputes**](#️-disputes)
       - [2.5.1.2. Domain Message Flows Modeling](#2512-domain-message-flows-modeling)
+    - [📋 **Descripción**](#-descripción-6)
+    - [🔄 **Escenarios de Integración**](#-escenarios-de-integración)
+      - [1️⃣ **Alta de Cliente con Verificación KYC**](#1️⃣-alta-de-cliente-con-verificación-kyc)
+      - [2️⃣ **Onboarding de Proveedor (Empresa Habilitada)**](#2️⃣-onboarding-de-proveedor-empresa-habilitada)
+      - [3️⃣ **Alta de Vehículo y Disponibilidad Publicable**](#3️⃣-alta-de-vehículo-y-disponibilidad-publicable)
+      - [4️⃣ **Publicación de Solicitud de Envío**](#4️⃣-publicación-de-solicitud-de-envío)
+      - [5️⃣ **Cotización e Inicio de Trato**](#5️⃣-cotización-e-inicio-de-trato)
       - [2.5.1.3. Bounded Context Canvases](#2513-bounded-context-canvases)
+    - [📋 **Descripción**](#-descripción-7)
+    - [🏗️ **Bounded Contexts del Sistema**](#️-bounded-contexts-del-sistema)
+      - [💰 **Payments**](#-payments-1)
+      - [🤝 **Deals**](#-deals-1)
+      - [📦 **Requests**](#-requests-1)
+      - [📋 **Planning**](#-planning-1)
+      - [🛰️ **Trips**](#️-trips-1)
+      - [📋 **Waybills**](#-waybills-1)
+    - [📊 **Resumen de Bounded Contexts**](#-resumen-de-bounded-contexts)
     - [2.5.2. Context Mapping](#252-context-mapping)
     - [2.5.3. Software Architecture](#253-software-architecture)
       - [2.5.3.1. Software Architecture Context Level Diagrams](#2531-software-architecture-context-level-diagrams)
       - [2.5.3.2. Software Architecture Container Level Diagrams](#2532-software-architecture-container-level-diagrams)
       - [2.5.3.3. Software Architecture Deployment Diagrams](#2533-software-architecture-deployment-diagrams)
   - [2.6. Tactical-Level Domain-Driven Design](#26-tactical-level-domain-driven-design)
-
-    - [2.6.1. Bounded Context: IAM](#26x-bounded-context-nombre)
-      - [2.6.1.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.1.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.1.3. Application Layer](#26x3-application-layer)
-      - [2.6.1.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.1.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.1.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.1.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.1.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-    
-    - [2.6.2. Bounded Context: IDENTITY](#26x-bounded-context-nombre)
-      - [2.6.2.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.2.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.2.3. Application Layer](#26x3-application-layer)
-      - [2.6.2.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.2.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.2.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.2.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.2.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-       
-    - [2.6.3. Bounded Context: CUSTOMERS](#26x-bounded-context-nombre)
-      - [2.6.3.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.3.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.3.3. Application Layer](#26x3-application-layer)
-      - [2.6.3.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.3.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.3.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.3.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.3.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-       
-    - [2.6.4. Bounded Context: PROVIDERS](#26x-bounded-context-nombre)
-      - [2.6.4.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.4.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.4.3. Application Layer](#26x3-application-layer)
-      - [2.6.4.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.4.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.4.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.4.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.4.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-       
-     - [2.6.5. Bounded Context: FLEET](#26x-bounded-context-nombre)
-      - [2.6.5.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.5.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.5.3. Application Layer](#26x3-application-layer)
-      - [2.6.5.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.5.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.5.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.5.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.5.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-
-    - [2.6.6. Bounded Context: PLANNING](#26x-bounded-context-nombre)
-          - [2.6.6.1. Domain Layer](#26x1-domain-layer)
-          - [2.6.6.2. Interface Layer](#26x2-interface-layer)
-          - [2.6.6.3. Application Layer](#26x3-application-layer)
-          - [2.6.6.4. Infrastructure Layer](#26x4-infrastructure-layer)
-          - [2.6.6.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-          - [2.6.6.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-            - [2.6.6.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-            - [2.6.6.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-
-    - [2.6.7. Bounded Context: REQUESTS](#26x-bounded-context-nombre)
-      - [2.6.7.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.7.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.7.3. Application Layer](#26x3-application-layer)
-      - [2.6.7.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.7.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.7.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.7.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.7.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-
-    - [2.6.8. Bounded Context: DEALS](#26x-bounded-context-nombre)
-      - [2.6.8.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.8.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.8.3. Application Layer](#26x3-application-layer)
-      - [2.6.8.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.8.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.8.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.8.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.8.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-
-    - [2.6.9. Bounded Context: PAYMENTS](#26x-bounded-context-nombre)
-      - [2.6.9.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.9.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.9.3. Application Layer](#26x3-application-layer)
-      - [2.6.9.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.9.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.9.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.9.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.9.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-
-    - [2.6.10. Bounded Context: WAYBILLS](#26x-bounded-context-nombre)
-      - [2.6.10.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.10.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.10.3. Application Layer](#26x3-application-layer)
-      - [2.6.10.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.10.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.10.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.10.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.10.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-    
-    - [2.6.11. Bounded Context: TRIPS](#26x-bounded-context-nombre)
-      - [2.6.11.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.11.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.11.3. Application Layer](#26x3-application-layer)
-      - [2.6.11.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.11.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.11.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.11.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.11.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-       
-    - [2.6.12. Bounded Context: REPUTATION](#26x-bounded-context-nombre)
-      - [2.6.12.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.12.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.12.3. Application Layer](#26x3-application-layer)
-      - [2.6.12.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.12.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.12.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.12.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.12.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-
-    - [2.6.13. Bounded Context: NOTIFICATION](#26x-bounded-context-nombre)
-      - [2.6.13.1. Domain Layer](#26x1-domain-layer)
-      - [2.6.13.2. Interface Layer](#26x2-interface-layer)
-      - [2.6.13.3. Application Layer](#26x3-application-layer)
-      - [2.6.13.4. Infrastructure Layer](#26x4-infrastructure-layer)
-      - [2.6.13.5. Bounded Context Software Architecture Component Level Diagrams](#26x5-bounded-context-software-architecture-component-level-diagrams)
-      - [2.6.13.6. Bounded Context Software Architecture Code Level Diagrams](#26x6-bounded-context-software-architecture-code-level-diagrams)
-        - [2.6.13.6.1. Bounded Context Domain Layer Class Diagrams](#26x61-bounded-context-domain-layer-class-diagrams)
-        - [2.6.13.6.2. Bounded Context Database Design Diagram](#26x62-bounded-context-database-design-diagram)
-    
-    - [Capítulo III: Solution UI/UX Design](#3-solution-uiux-design)
-  - [3.1. Product design](#31-product-design)
-    - [3.1.1. Style Guidelines](#311-style-guidelines)
-      - [3.1.1.1. General Style Guidelines](#3111-general-style-guidelines)
-    - [3.1.2. Information Architecture](#312-information-architecture)
-      - [3.1.2.1. Organization Systems](#3121-organization-systems)
-      - [3.1.2.2. Labelling Systems](#3122-labelling-systems)
-      - [3.1.2.3. SEO Tags and Meta Tags](#3123-seo-tags-and-meta-tags)
-      - [3.1.2.4. Searching Systems](#3124-searching-systems)
-      - [3.1.2.5. Navigation Systems](#3125-navigation-systems)
-    - [3.1.3. Landing Page UI Design](#313-landing-page-ui-design)
-      - [3.1.3.1. Landing Page Wireframe](#3131-landing-page-wireframe)
-      - [3.1.3.2. Landing Page Mock-up](#3132-landing-page-mock-up)
-    - [3.1.4. Mobile Applications UX/UI Design](#314-mobile-applications-uxui-design)
-      - [3.1.4.1. Mobile Applications Wireframes](#3141-mobile-applications-wireframes)
-      - [3.1.4.2. Mobile Applications Wireflow Diagrams](#3142-mobile-applications-wireflow-diagrams)
-      - [3.1.4.3. Mobile Applications Mock-ups](#3143-mobile-applications-mock-ups)
-      - [3.1.4.4. Mobile Applications User Flow Diagrams](#3144-mobile-applications-user-flow-diagrams)
-      - [3.1.4.5. Mobile Applications Prototyping](#3145-mobile-applications-prototyping)
-
-- [Capítulo IV: Product Implementation & Validation](#4-product-implementation-validation)
-  - [4. Product Implementation & Validation](#4-product-implementation-validation)
-  - [4.1. Software Configuration Management](#41-software-configuration-management)
-    - [4.1.1. Software Development Environment Configuration](#411-software-development-environment-configuration)
-    - [4.1.2. Source Code Management](#412-source-code-management)
-    - [4.1.3. Source Code Style Guide & Conventions](#413-source-code-style-guide--conventions)
-    - [4.1.4. Software Deployment Configuration](#414-software-deployment-configuration)
-  - [4.2. Landing Page & Mobile Application Implementation](#42-landing-page--mobile-application-implementation)
-    - [4.2.1. Sprint n](#421-sprint-n)
-      - [4.2.1.1. Sprint Planning n](#4211-sprint-planning-n)
-      - [4.2.1.2. Sprint Backlog n](#4212-sprint-backlog-n)
-      - [4.2.1.3. Development Evidence for Sprint Review](#4213-development-evidence-for-sprint-review)
-      - [4.2.1.4. Testing Suite Evidence for Sprint Review](#4214-testing-suite-evidence-for-sprint-review)
-      - [4.2.1.5. Execution Evidence for Sprint Review](#4215-execution-evidence-for-sprint-review)
-      - [4.2.1.6. Services Documentation Evidence for Sprint Review](#4216-services-documentation-evidence-for-sprint-review)
-      - [4.2.1.7. Software Deployment Evidence for Sprint Review](#4217-software-deployment-evidence-for-sprint-review)
-      - [4.2.1.8. Team Collaboration Insights during Sprint](#4218-team-collaboration-insights-during-sprint)
-  - [4.3. Validation Interviews](#43-validation-interviews)
-    - [4.3.1. Diseño de Entrevistas](#431-diseno-de-entrevistas)
-    - [4.3.2. Registro de Entrevistas](#432-registro-de-entrevistas)
-    - [4.3.3. Evaluaciones según heurísticas](#433-evaluaciones-segun-heuristicas)
-
-    
+    - [2.6.1. Bounded Context: IAM](#261-bounded-context-iam)
+      - [2.6.1.1. Domain Layer](#2611-domain-layer)
+      - [2.6.1.2. Interface Layer](#2612-interface-layer)
+      - [2.6.1.3. Application Layer](#2613-application-layer)
+      - [2.6.1.4. Infrastructure Layer](#2614-infrastructure-layer)
+      - [2.6.1.5. Bounded Context Software Architecture Component Level Diagrams](#2615-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.1.6. Bounded Context Software Architecture Code Level Diagrams](#2616-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.1.6.1. Bounded Context Domain Layer Class Diagrams](#26161-bounded-context-domain-layer-class-diagrams)
+        - [2.6.1.6.2. Bounded Context Database Design Diagram](#26162-bounded-context-database-design-diagram)
+    - [2.6.2. Bounded Context: Identity \& KYC](#262-bounded-context-identity--kyc)
+      - [2.6.2.1. Domain Layer](#2621-domain-layer)
+      - [2.6.2.2. Interface Layer](#2622-interface-layer)
+      - [2.6.2.3. Application Layer](#2623-application-layer)
+      - [2.6.2.4. Infrastructure Layer](#2624-infrastructure-layer)
+      - [2.6.2.5. Bounded Context Software Architecture Component Level Diagrams](#2625-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.2.6. Bounded Context Software Architecture Code Level Diagrams](#2626-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.2.6.1. Bounded Context Domain Layer Class Diagrams](#26261-bounded-context-domain-layer-class-diagrams)
+        - [2.6.2.6.2. Bounded Context Database Design Diagram](#26262-bounded-context-database-design-diagram)
+    - [2.6.3. Bounded Context: Customers](#263-bounded-context-customers)
+      - [2.6.3.1. Domain Layer](#2631-domain-layer)
+      - [2.6.3.2. Interface Layer](#2632-interface-layer)
+      - [2.6.3.3. Application Layer](#2633-application-layer)
+      - [2.6.3.4. Infrastructure Layer](#2634-infrastructure-layer)
+      - [2.6.3.5. Bounded Context Software Architecture Component Level Diagrams](#2635-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.3.6. Bounded Context Software Architecture Code Level Diagrams](#2636-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.3.6.1. Bounded Context Domain Layer Class Diagrams](#26361-bounded-context-domain-layer-class-diagrams)
+        - [2.6.3.6.2. Bounded Context Database Design Diagram](#26362-bounded-context-database-design-diagram)
+    - [2.6.4. Bounded Context: Providers](#264-bounded-context-providers)
+      - [2.6.4.1. Domain Layer](#2641-domain-layer)
+      - [2.6.4.2. Interface Layer](#2642-interface-layer)
+      - [2.6.4.3. Application Layer](#2643-application-layer)
+      - [2.6.4.4. Infrastructure Layer](#2644-infrastructure-layer)
+      - [2.6.4.5. Bounded Context Software Architecture Component Level Diagrams](#2645-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.4.6. Bounded Context Software Architecture Code Level Diagrams](#2646-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.4.6.1. Bounded Context Domain Layer Class Diagrams](#26461-bounded-context-domain-layer-class-diagrams)
+        - [2.6.4.6.2. Bounded Context Database Design Diagram](#26462-bounded-context-database-design-diagram)
+    - [2.6.5. Bounded Context: Fleet](#265-bounded-context-fleet)
+      - [2.6.5.1. Domain Layer](#2651-domain-layer)
+- [2.6.x. Bounded Context: Fleet (Flota)](#26x-bounded-context-fleet-flota)
+- [Domain Layer](#domain-layer)
+      - [2.6.5.2. Interface Layer](#2652-interface-layer)
+      - [2.6.5.3. Application Layer](#2653-application-layer)
+      - [2.6.5.4. Infrastructure Layer](#2654-infrastructure-layer)
+      - [2.6.5.5. Bounded Context Software Architecture Component Level Diagrams](#2655-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.5.6. Bounded Context Software Architecture Code Level Diagrams](#2656-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.5.6.1. Bounded Context Domain Layer Class Diagrams](#26561-bounded-context-domain-layer-class-diagrams)
+        - [2.6.5.6.2. Bounded Context Database Design Diagram](#26562-bounded-context-database-design-diagram)
+    - [2.6.6. Bounded Context: Planning](#266-bounded-context-planning)
+      - [2.6.6.1. Domain Layer](#2661-domain-layer)
+      - [2.6.6.2. Interface Layer](#2662-interface-layer)
+      - [2.6.6.3. Application Layer](#2663-application-layer)
+      - [2.6.6.4. Infrastructure Layer](#2664-infrastructure-layer)
+      - [2.6.6.5. Bounded Context Software Architecture Component Level Diagrams](#2665-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.6.6. Bounded Context Software Architecture Code Level Diagrams](#2666-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.6.6.1. Bounded Context Domain Layer Class Diagrams](#26661-bounded-context-domain-layer-class-diagrams)
+        - [2.6.6.6.2. Bounded Context Database Design Diagram](#26662-bounded-context-database-design-diagram)
+    - [2.6.7. Bounded Context: Requests](#267-bounded-context-requests)
+      - [2.6.7.1. Domain Layer](#2671-domain-layer)
+      - [2.6.7.2. Interface Layer](#2672-interface-layer)
+      - [2.6.7.3. Application Layer](#2673-application-layer)
+      - [2.6.7.4. Infrastructure Layer](#2674-infrastructure-layer)
+      - [2.6.7.5. Bounded Context Software Architecture Component Level Diagrams](#2675-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.7.6. Bounded Context Software Architecture Code Level Diagrams](#2676-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.7.6.1. Bounded Context Domain Layer Class Diagrams](#26761-bounded-context-domain-layer-class-diagrams)
+        - [2.6.7.6.2. Bounded Context Database Design Diagram](#26762-bounded-context-database-design-diagram)
+    - [2.6.8. Bounded Context: Deals](#268-bounded-context-deals)
+      - [2.6.8.1. Domain Layer](#2681-domain-layer)
+      - [2.6.8.2. Interface Layer](#2682-interface-layer)
+      - [2.6.8.3. Application Layer](#2683-application-layer)
+      - [2.6.8.4. Infrastructure Layer](#2684-infrastructure-layer)
+      - [2.6.8.5. Bounded Context Software Architecture Component Level Diagrams](#2685-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.8.6. Bounded Context Software Architecture Code Level Diagrams](#2686-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.8.6.1. Bounded Context Domain Layer Class Diagrams](#26861-bounded-context-domain-layer-class-diagrams)
+        - [2.6.8.6.2. Bounded Context Database Design Diagram](#26862-bounded-context-database-design-diagram)
+    - [2.6.9. Bounded Context: Payments](#269-bounded-context-payments)
+      - [2.6.9.1. Domain Layer](#2691-domain-layer)
+      - [2.6.9.2. Interface Layer](#2692-interface-layer)
+      - [2.6.9.3. Application Layer](#2693-application-layer)
+      - [2.6.9.4. Infrastructure Layer](#2694-infrastructure-layer)
+      - [2.6.9.5. Bounded Context Software Architecture Component Level Diagrams](#2695-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.9.6. Bounded Context Software Architecture Code Level Diagrams](#2696-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.9.6.1. Bounded Context Domain Layer Class Diagrams](#26961-bounded-context-domain-layer-class-diagrams)
+        - [2.6.9.6.2. Bounded Context Database Design Diagram](#26962-bounded-context-database-design-diagram)
+    - [2.6.10. Bounded Context: Waybills](#2610-bounded-context-waybills)
+      - [2.6.10.1. Domain Layer](#26101-domain-layer)
+    - [Aggregates (AR)](#aggregates-ar)
+      - [1) Waybill (Aggregate Root)](#1-waybill-aggregate-root)
+      - [Entities / Value Objects](#entities--value-objects)
+      - [Domain Services](#domain-services)
+      - [Repositories (interfaces)](#repositories-interfaces)
+      - [Domain Events (payload mínimo)](#domain-events-payload-mínimo)
+      - [Ubiquitous Language (extracto)](#ubiquitous-language-extracto)
+      - [2.6.10.2. Interface Layer](#26102-interface-layer)
+    - [Endpoints](#endpoints)
+    - [Webhooks (filing provider)](#webhooks-filing-provider)
+    - [Contratos I/O (alto nivel)](#contratos-io-alto-nivel)
+    - [Versionado e Idempotencia](#versionado-e-idempotencia)
+      - [2.6.10.3. Application Layer](#26103-application-layer)
+    - [Capabilities → Casos de uso](#capabilities--casos-de-uso)
+    - [Command/Query Handlers](#commandquery-handlers)
+    - [Orquestaciones / Sagas](#orquestaciones--sagas)
+    - [Puertos (interfaces a Infra)](#puertos-interfaces-a-infra)
+    - [Idempotencia y control transaccional](#idempotencia-y-control-transaccional)
+    - [Event Handlers (integración)](#event-handlers-integración)
+      - [2.6.10.4. Infrastructure Layer](#26104-infrastructure-layer)
+    - [Repositorios (impl)](#repositorios-impl)
+    - [Adapters / Integraciones](#adapters--integraciones)
+    - [Mensajería / Confiabilidad](#mensajería--confiabilidad)
+    - [Configuración y secretos](#configuración-y-secretos)
+      - [2.6.10.5. Bounded Context Software Architecture Component Level Diagrams](#26105-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.10.6. Bounded Context Software Architecture Code Level Diagrams](#26106-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.10.6.1. Bounded Context Domain Layer Class Diagrams](#261061-bounded-context-domain-layer-class-diagrams)
+        - [2.6.10.6.2. Bounded Context Database Design Diagram](#261062-bounded-context-database-design-diagram)
+    - [2.6.11. Bounded Context: Trips](#2611-bounded-context-trips)
+      - [2.6.11.1. Domain Layer](#26111-domain-layer)
+      - [2.6.11.2. Interface Layer](#26112-interface-layer)
+- [2.6.x. Bounded Context: Trips (Viajes)](#26x-bounded-context-trips-viajes)
+      - [2.6.11.3. Application Layer](#26113-application-layer)
+      - [2.6.11.4. Infrastructure Layer](#26114-infrastructure-layer)
+      - [2.6.11.5. Bounded Context Software Architecture Component Level Diagrams](#26115-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.11.6. Bounded Context Software Architecture Code Level Diagrams](#26116-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.11.6.1. Bounded Context Domain Layer Class Diagrams](#261161-bounded-context-domain-layer-class-diagrams)
+        - [2.6.11.6.2. Bounded Context Database Design Diagram](#261162-bounded-context-database-design-diagram)
+    - [2.6.12. Bounded Context: Reviews](#2612-bounded-context-reviews)
+      - [2.6.12.1. Domain Layer](#26121-domain-layer)
+      - [2.6.12.2. Interface Layer](#26122-interface-layer)
+      - [2.6.12.3. Application Layer](#26123-application-layer)
+      - [2.6.12.4. Infrastructure Layer](#26124-infrastructure-layer)
+      - [2.6.12.5. Bounded Context Software Architecture Component Level Diagrams](#26125-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.12.6. Bounded Context Software Architecture Code Level Diagrams](#26126-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.12.6.1. Bounded Context Domain Layer Class Diagrams](#261261-bounded-context-domain-layer-class-diagrams)
+        - [2.6.12.6.2. Bounded Context Database Design Diagram](#261262-bounded-context-database-design-diagram)
+    - [2.6.13. Bounded Context: Notifications](#2613-bounded-context-notifications)
+      - [2.6.13.1. Domain Layer](#26131-domain-layer)
+      - [2.6.13.2. Interface Layer](#26132-interface-layer)
+      - [2.6.13.3. Application Layer](#26133-application-layer)
+      - [2.6.13.4. Infrastructure Layer](#26134-infrastructure-layer)
+      - [2.6.13.5. Bounded Context Software Architecture Component Level Diagrams](#26135-bounded-context-software-architecture-component-level-diagrams)
+      - [2.6.13.6. Bounded Context Software Architecture Code Level Diagrams](#26136-bounded-context-software-architecture-code-level-diagrams)
+        - [2.6.13.6.1. Bounded Context Domain Layer Class Diagrams](#261361-bounded-context-domain-layer-class-diagrams)
+        - [2.6.13.6.2. Bounded Context Database Design Diagram](#261362-bounded-context-database-design-diagram)
+  - [Capítulo III: Solution UI/UX Design](#capítulo-iii-solution-uiux-design)
+    - [3.1. Product design](#31-product-design)
+      - [3.1.1. Style Guidelines](#311-style-guidelines)
+        - [3.1.1.1. General Style Guidelines](#3111-general-style-guidelines)
+      - [3.1.2. Information Architecture](#312-information-architecture)
+        - [3.1.2.1. Organization Systems](#3121-organization-systems)
+        - [3.1.2.2. Labelling Systems](#3122-labelling-systems)
+        - [3.1.2.3. SEO Tags and Meta Tags](#3123-seo-tags-and-meta-tags)
+        - [3.1.2.4. Searching Systems](#3124-searching-systems)
+        - [3.1.2.5. Navigation Systems](#3125-navigation-systems)
+        - [3.1.2.1. Organization Systems](#3121-organization-systems-1)
+        - [3.1.2.2. Labelling Systems](#3122-labelling-systems-1)
+        - [3.1.2.3. SEO Tags and Meta Tags](#3123-seo-tags-and-meta-tags-1)
+        - [3.1.2.4. Searching Systems](#3124-searching-systems-1)
+        - [3.1.2.5. Navigation Systems](#3125-navigation-systems-1)
+      - [3.1.3. Landing Page UI Design](#313-landing-page-ui-design)
+        - [3.1.3.1. Landing Page Wireframe](#3131-landing-page-wireframe)
+        - [3.1.3.2. Landing Page Mock-up](#3132-landing-page-mock-up)
+      - [3.1.4. Mobile Applications UX/UI Design](#314-mobile-applications-uxui-design)
+        - [3.1.4.1. Mobile Applications Wireframes](#3141-mobile-applications-wireframes)
+        - [3.1.4.2. Mobile Applications Wireflow Diagrams](#3142-mobile-applications-wireflow-diagrams)
+        - [3.1.4.3. Mobile Applications Mock-ups](#3143-mobile-applications-mock-ups)
+        - [3.1.4.4. Mobile Applications User Flow Diagrams](#3144-mobile-applications-user-flow-diagrams)
+        - [3.1.4.5. Mobile Applications Prototyping](#3145-mobile-applications-prototyping)
+  - [Capítulo IV: Product Implementation \& Validation](#capítulo-iv-product-implementation--validation)
+    - [4. Product Implementation \& Validation](#4-product-implementation--validation)
+      - [4.1. Software Configuration Management](#41-software-configuration-management)
+        - [4.1.1. Software Development Environment Configuration](#411-software-development-environment-configuration)
+        - [4.1.2. Source Code Management](#412-source-code-management)
+        - [4.1.3. Source Code Style Guide \& Conventions](#413-source-code-style-guide--conventions)
+        - [4.1.4. Software Deployment Configuration](#414-software-deployment-configuration)
+      - [4.2. Landing Page \& Mobile Application Implementation](#42-landing-page--mobile-application-implementation)
+        - [4.2.1. Sprint n](#421-sprint-n)
+          - [4.2.1.1. Sprint Planning n](#4211-sprint-planning-n)
+          - [4.2.1.2. Sprint Backlog n](#4212-sprint-backlog-n)
+          - [4.2.1.3. Development Evidence for Sprint Review](#4213-development-evidence-for-sprint-review)
+          - [4.2.1.4. Testing Suite Evidence for Sprint Review](#4214-testing-suite-evidence-for-sprint-review)
+          - [4.2.1.5. Execution Evidence for Sprint Review](#4215-execution-evidence-for-sprint-review)
+          - [4.2.1.6. Services Documentation Evidence for Sprint Review](#4216-services-documentation-evidence-for-sprint-review)
+          - [4.2.1.7. Software Deployment Evidence for Sprint Review](#4217-software-deployment-evidence-for-sprint-review)
+          - [4.2.1.8. Team Collaboration Insights during Sprint](#4218-team-collaboration-insights-during-sprint)
+      - [4.3. Validation Interviews](#43-validation-interviews)
+        - [4.3.1. Diseño de Entrevistas](#431-diseño-de-entrevistas)
+        - [4.3.2. Registro de Entrevistas](#432-registro-de-entrevistas)
+        - [4.3.3. Evaluaciones según heurísticas](#433-evaluaciones-según-heurísticas)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
+    - [Conclusiones](#conclusiones-1)
+    - [Recomendaciones](#recomendaciones)
 - [Bibliografía](#bibliografía)
 - [Anexos](#anexos)
 
@@ -8871,6 +8902,127 @@ Notificación, Plantilla, Canal, Preferencias, Consentimiento, Quiet Hours, Fall
 #### 3.1.1. Style Guidelines
 ##### 3.1.1.1. General Style Guidelines
 #### 3.1.2. Information Architecture
+##### 3.1.2.1. Organization Systems
+La organización del contenido de la plataforma de transporte interprovincial está diseñada para guiar a clientes y proveedores hacia sus tareas principales de manera intuitiva. Se utiliza una estructura jerárquica simple que prioriza el ciclo de vida del servicio, manteniendo accesos contextuales a chat, documentos y notificaciones.
+
+Respecto a las pantallas de creación y gestión (solicitudes, cotizaciones y viajes), se plantea una jerarquía visual clara donde lo “accionable” aparece primero: estados activos, pendientes por completar y eventos críticos se muestran arriba. Se emplean CTA prominentes y badges de estado (Publicada, En negociación, Acordado, En ruta, Entregado) para orientar la interacción.
+
+Asimismo, se emplearán cuadrículas visuales para organizar los listados clave (solicitudes, cotizaciones, tratos, vehículos, rutas). En la parte superior se ubican elementos recientes o en curso; cada card muestra metadatos esenciales (origen–destino, fecha, peso/volumen, compatibilidades, contadores de mensajes/fotos) para favorecer decisiones rápidas.
+
+De igual modo, se emplearán esquemas de contenido para los siguientes casos:
+
+- **Categorización por Tópicos**:
+La categorización principal separa por dominios funcionales: Solicitudes, Cotizaciones/Tratos, Viajes/Tracking, Flota (vehículos, conductores, rutas/corredores), Pagos/Facturación y Liquidaciones, Notificaciones, Perfil/Empresa y Reputación. Adicionalmente, la vista y navegación se adaptan por audiencia interna (Cliente vs. Proveedor) mostrando primero las tareas propias de cada rol.
+
+- **Categorización Alfabética**:
+Listas con identificadores textuales —como conductores, vehículos (alias/placa), rutas/corredores (nombre), plantillas de ítems o clientes/empresas— podrán ordenarse alfabéticamente para facilitar la búsqueda cuando el usuario conoce el nombre.
+
+- **Categorización Cronológica**:
+Los contenidos operativos se priorizan por tiempo: “Recientes y Pendientes” primero. En solicitudes y cotizaciones, se muestran arriba las más nuevas y/o próximas a vencer; en viajes, los que están “En ruta” y luego el historial; en pagos y liquidaciones, las operaciones más recientes.
+
+- **Categorización según Audiencia**:
+Las opciones de plan y capacidades se muestran según el tipo de usuario. Por ejemplo, proveedores con operación activa verán planes con límites de flota/rutas y beneficios (tracking histórico, exportaciones), mientras que clientes verán opciones orientadas a número de solicitudes activas y servicios de soporte.
+
+<br>
+
+##### 3.1.2.2. Labelling Systems
+Para evitar confusión entre los usuarios, en RedCarga se utilizan etiquetados simples para los diversos contenidos . Son claros y contienen el mínimo número de palabras necesario para transmitir el mensaje. 
+
+| **Etiqueta**       | **Descripción**                                                             |
+| -------------- | ------------------------------------------------------------------------- |
+| Inicio         | Vuelve al dashboard principal según el rol (cliente/proveedor).       |
+| Notificaciones | Centro de avisos (solicitudes, cotizaciones, chat, tracking, documentos). |
+| Chat           | Acceso al inbox de mensajes por trato/solicitud.                      |
+| Perfil         | Configuración de cuenta, idioma, seguridad y empresa.                     |
+| Nueva solicitud    | Inicia el flujo para registrar ítems, ruta y peso. |
+| Usar plantilla     | Carga una plantilla de ítems o rutas guardadas.            |
+| Medir con IA       | Estima L×A×H y volumen; permite editar.                        |                         |
+| Activar tracking      | Comienza el envío de posiciones del viaje.                           |
+| Registrar evento      | Crea hitos operativos (recojo, salida, desvío, incidencia, llegada). |
+| Documentos del vehículo | Carga/validación (SOAT, CITV, tarjeta, fotos VIN).               |
+
+<br>
+
+##### 3.1.2.3. SEO Tags and Meta Tags
+**Landing Page** <br>
+Title: RedCarga | Transporte de carga interprovincial<br>
+Meta Description: Plataforma que conecta clientes y transportistas para publicar solicitudes, recibir cotizaciones y rastrear envíos interprovinciales en tiempo real.<br>
+Meta Keywords: transporte de carga, envíos interprovinciales, cotización de flete, logística, tracking, transportistas validados<br>
+Meta Author: Wapps
+<br>
+<br>
+
+**Aplicación móvil** <br>
+Title: RedCarga<br>
+Meta Description: Crea solicitudes, negocia cotizaciones, inicia tratos y realiza tracking con notificaciones desde la app.<br>
+Meta Keywords: gestión de envíos, solicitudes de carga, cotizaciones de transporte, tracking de carga, tratos, pagos<br>
+Meta Author: Wapps
+<br>
+
+##### 3.1.2.4. Searching Systems
+
+* **Búsqueda global contextual**
+  Campo “Buscar una solicitud” en listas de Solicitudes y Cotizaciones (cliente y proveedor). Soporta texto libre por: nombre del cliente/empresa, ID de solicitud, origen, destino.
+
+* **Filtros rápidos** 
+
+  * Estado: todas, aceptadas, en negociación, en marcha, entregadas, rechazadas.
+  * Fecha: hoy, esta semana, rango personalizado.
+  * Ubicación: origen/destino (autocompletar por distrito/provincia), rutas guardadas.
+  * Carga: tipo/etiqueta (frágil, volumétrico), cantidad, peso total.
+  * Precio: rango o ajuste ± en contraofertas.
+  * Proveedor (para cliente): reputación mínima, verificado, tiempo de respuesta.
+  * Operación (para proveedor):flota, conductor, placa, disponibilidad.
+
+* **Búsquedas dentro del detalle**
+
+  * Artículos:buscar por nombre y filtrar por medidas/peso.
+  * Documentos: DNI, RUC, guías, POD.
+  * Chat del trato: búsqueda por palabras clave de mensajes/actualizaciones.
+
+* **Resultados y ordenación**
+
+  * Orden por relevancia, fecha, precio propuesto o distancia estimada.
+  * Resumen visible: origen → destino, fecha, peso total, etiquetas de riesgo, X artículos.
+
+* **Persistencia y recientes**
+
+  * Historial de búsquedas y plantillas de solicitud reutilizables.
+  * Sugerencias basadas en últimas rutas y destinos frecuentes.
+
+
+##### 3.1.2.5. Navigation Systems
+**Navegación principal (tab bar, contextual por rol)**
+
+* Cliente:
+
+  1. Solicitudes (home): ver/crear solicitud, plantillas.
+  2. Cotizaciones: comparar, chatear y aceptar.
+  3. Seguimiento: mapa y estados (en marcha, entregado, calificar).
+  4. Pagos/Facturación: métodos, historial.
+  5. Perfil: configuración, reputación, ayuda, suscripciones.
+
+* Proveedor:
+
+  1. Solicitudes: bandeja para cotizar.
+  2. Cotizaciones: editar carga, contraoferta, cerrar trato.
+  3. Flota: rutas, conductores, vehículos (placas) y documentos.
+  4. Geolocalización: mapa, guía de remisión/transportista.
+  5. Perfil: empresa, verificación, reputación, suscripciones.
+
+**Navegación secundaria**
+
+* Acciones en contexto (chips/botones) dentro del trato: Ver cotización, Editar carga, Hacer contraoferta, Ver geolocalización, Cerrar trato, Registrar pago.
+* Menú de desbordamiento para documentos, reportes y cancelar/reabrir.
+* FAB “+” para crear solicitud (cliente) o registrar elementos de flota (proveedor).
+* Notificaciones deep-link a: nueva cotización, cambio de precio, hitos de viaje (salida, en ruta, incidente, llegada, entrega).
+
+**Patrones de continuidad**
+
+* Estados de progreso visibles (chips) y CTA principal adaptado al estado.
+* Confirmaciones modales para contrapropuesta, aceptar/cerrar trato y actualizar cotización.
+* Accesos directos desde tarjeta (listas) a chat y ver fotos de artículos.
+
 ##### 3.1.2.1. Organization Systems
 ##### 3.1.2.2. Labelling Systems
 ##### 3.1.2.3. SEO Tags and Meta Tags
