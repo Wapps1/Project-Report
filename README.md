@@ -9382,7 +9382,8 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 </p>
 
 <img src="./img/Chapter-4/Sprint_Backlog_Trello.png" alt="Trello Sprint 1 Redcarga">
-Link: <https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
+Link:
+<https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
 
 <table>
   <tr>
@@ -9577,7 +9578,36 @@ Link: <https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef293536
 
 ###### 4.2.1.3. Development Evidence for Sprint Review
 
+Durante este primer sprint, el equipo de desarrollo de Redcarga concentró sus esfuerzos en implementar las funcionalidades base del sistema, abarcando tanto el backend, la aplicación móvil y la landing page informativa. Se desarrollaron los principales módulos de autenticación, gestión de solicitudes, cotizaciones y procesamiento de pagos, garantizando la correcta integración entre los componentes del ecosistema. A continuación, se presenta la evidencia de commits realizados en los distintos repositorios del proyecto, que reflejan los avances técnicos alcanzados durante la iteración.
 
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|------------|--------|-----------|----------------|---------------------|---------------------|
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | 9de4d01 | Landing v1 | First version of landing page | 05/10/2025 |
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | df6d4fb | fix: Landing's bug | Error in landing | 05/10/2025 |
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | f22a171 | feat: read me | Add read me document | 05/10/2025 |
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | 4fd03fc | plans + faq | Add plans and faq | 06/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 0452033 | Initial clean commit without firebase secrets | Remove firebase configuration files | 30/09/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 1576125 | bc providers final registration step completed ñññ | Complete provider registration flow | 02/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 80f0e02 | bc planning+geoadmin | Add planning and geographic admin modules | 05/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 62915d9 | fix: flyway | Fix flyway migration configuration | 05/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | fe34368 | feat: add phone and ruc | Add phone number and RUC fields to user model | 05/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 02f5811 | feat: add providers route query | Implement query endpoint for providers route | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 5e52d27 | fix: controller and query | Fix controller logic and query parameters | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 1c5ba98 | fix: request for fields for planning/providers | Adjust request fields for planning and providers | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 1ab4003 | fix: manual dev | Fix manual development environment issues | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 473b8c7 | fix: provider controller variable names | Correct variable naming in provider controller | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 2aab86d | fix: authorization | Fix authorization middleware and permissions | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 40d5415 | feature: fleet bc | Implement fleet bounded context | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 55dbd02 | feat: add company information by id query | Add endpoint to get company info by id | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 46a33ba | feat: feet and planning | Add fleet and planning integration | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 2bd4f8a | playload correction | Fix payload structure and validation | 08/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | fdea72d | feat: add get all requests | Implement get all requests endpoint | 08/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 8a1d901 | feat: Setup project: HILT + ROOM + I18N | Configure dependency injection, database and internationalization | 29/09/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | e7648d6 | feat: auth bc welcome view | Implement welcome screen for auth module | 29/09/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 61d59b9 | feat: bc auth sign in, sign up client and provider | Add sign in and sign up views for both user types | 29/09/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 4abe4d5 | feature: auth bc integration | Integrate authentication with backend services | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | da3d751 | feature: auth bc integration 2 | Complete auth integration and error handling | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 1cb6784 | feat:bc fleet | Implement fleet management module | 08/10/2025 |
 
 ###### 4.2.1.4. Testing Suite Evidence for Sprint Review
 ###### 4.2.1.5. Execution Evidence for Sprint Review
