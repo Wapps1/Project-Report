@@ -9353,9 +9353,8 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 <p><strong>VisualParadigm Online:</strong> Edición en la nube de la suite Visual Paradigm, especializada en diseño de software y modelado de procesos (UML, BPMN, C4). <a href="https://online.visual-paradigm.com">https://online.visual-paradigm.com</a></p>
 
 <br>
+
 ##### 4.1.2. Source Code Management
-
-
 <strong>Modelo GitFlow y Repositorios en GitHub</strong><br>
 Trabajaremos con <strong>GitFlow</strong> para mantener un ciclo de desarrollo ordenado y predecible. <strong>GitHub</strong> será nuestro repositorio central y el punto de colaboración para issues, PRs y revisiones de código.
 <br><br>
