@@ -8992,6 +8992,9 @@ Finalizar trato:
 <img src="img/mock-ups/finalizar-trato.png" height="450px"></img>
 <br>
 
+Link del figma: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=0-1&t=XrPN4i8mx35qDjoQ-1
+
+
 ##### 3.1.4.4. Mobile Applications User Flow Diagrams
 ##### 3.1.4.5. Mobile Applications Prototyping
 
@@ -9073,3 +9076,4 @@ Link del Repositorio del Informe: https://github.com/Wapps1/Project-Report <br>
 Link del Repositorio del Proyecto: <br>
 Link del Repositorio del Backend: <br>
 Link de la Landing Page: https://redcarga-landing-page.vercel.app/ <br>
+Link del Figma: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=0-1&t=XrPN4i8mx35qDjoQ-1
