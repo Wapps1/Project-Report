@@ -9014,7 +9014,9 @@ El mock up es la aplicación del wireframe adicionando la identidad visual final
 </ul>
 <img src="img/user-flow-diagrams/userflow6.png" height="500px" />
 
-
+<br>
+Link del figma: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=351-70&t=XrPN4i8mx35qDjoQ-1
+<br>
 
 ##### 3.1.4.5. Mobile Applications Prototyping
 
