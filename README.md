@@ -8895,7 +8895,35 @@ Notificación, Plantilla, Canal, Preferencias, Consentimiento, Quiet Hours, Fall
 
 ### 3.1. Product design
 #### 3.1.1. Style Guidelines
+
+En los Style Guidelines definimos cómo se ve y se percibe Red Carga. El objetivo es concretar una marca consistente y cercana a nuestro público objetivo, transmitiendo calidez, confianza y simplicidad. Para ello utilizamos las herramientas como colores, tipografías y el propoio logotipo para asegurar una experiencia coherente en producto, marketing y soporte.
+
 ##### 3.1.1.1. General Style Guidelines
+
+**Paleta de Colores:**
+
+Utilizamos una paleta cálida reflejando cercanía y comodidad durante el uso de la app. Los colores principales son un rojo salmón #F26A6C, un terracota #EC8366 y un marfil suave #FFF9F5; juntos aportan personalidad a la aplicación sin llegar a ser agresivos. Como colores secundarios empleamos #F3C4BE y #FEC6A3 para variaciones sutiles, y #3D3D3D como gris profundo para textos y componentes con alto contraste. Para anotaciones y estados neutros, usamos #FFFFFF y #9D9D9D. En conjunto, estos colores mantiene una atmósfera cálida y amable, favoreciendo la legibilidad y la orientación visual en flujos clave.
+<br>
+<img src="img/style-guidelines/colores.png" width="500px"></img>
+
+<br>
+
+**Tipografía:**
+
+Para la tipografía combinamos Montserrat para títulos y Karla para párrafos, dos sans serif de formas redondeadas que mantienen una experiencia limpia y profesional. Dado el espacio limitado de una pantalla móvil, empleamos una escala con varios niveles para acentuar y priorizar sin saturar: Headings en Montserrat Bold en 36 px (H1), 26 px (H2), 22 px (H3), 18 px (H4) y 16 px (H5); y párrafos en Karla Regular en 18 px (P1) y 14 px (P2). Esta jerarquía garantiza títulos notorios, textos cómodos de leer y un ritmo visual consistente en pantallas móviles.
+<br>
+<img src="img/style-guidelines/tipografia.png" width="500px"></img>
+
+<br>
+
+**Logo:**
+
+El logotipo de Red Carga es simple e intuitivo, pensado para ser reconocible a primera vista. Definimos dos usos: sobre fondo claro se aplica el isotipo en el tono principal; para fondo oscuro no usamos “negativo” completo, sino que incorporamos un borde alrededor del símbolo, manteniendo la forma y legibilidad del logo sin perder su carácter. De esta manera preservamos la identidad en múltiples contextos, conservando contraste y claridad en tarjetas, banners y vistas dentro de la app.
+<br>
+<img src="img/style-guidelines/logo.png" width="500px"></img>
+<br>
+
+
 #### 3.1.2. Information Architecture
 ##### 3.1.2.1. Organization Systems
 La organización del contenido de la plataforma de transporte interprovincial está diseñada para guiar a clientes y proveedores hacia sus tareas principales de manera intuitiva. Se utiliza una estructura jerárquica simple que prioriza el ciclo de vida del servicio, manteniendo accesos contextuales a chat, documentos y notificaciones.
@@ -9019,13 +9047,117 @@ Meta Author: Wapps
 * Accesos directos desde tarjeta (listas) a chat y ver fotos de artículos.
 
 #### 3.1.3. Landing Page UI Design
+
+La landing de Redcarga está pensada para explicar en pocos minutos qué hace el producto y conducir al usuario a acceder/descargar. El diseño prioriza un recorrido vertical, iniciando con la navegación y selector de idioma, un hero con título, subtítulo e imagen principal, una sección de KPIs que refuerza confianza, el bloque “¿Qué es Redcarga?”, una sección de beneficios presentada en timeline para escaneo rápido, el comparativo de planes, una FAQ en acordeones y footer con enlaces. Todo el diseño es responsive, manteniendo los estilos y jerarquía anteriormente presentados. Además, utiliza CTAs consistentes (“Acceder/Descargar”) con smooth scroll y buenas áreas táctiles en móvil.
+
 ##### 3.1.3.1. Landing Page Wireframe
+
+Es un boceto estructural sin estilos donde resaltamos la jerarquía y el flujo: header, hero con CTA, KPIs, “¿Qué es?”, beneficios en timeline, planes, FAQ y footer; sirve para probar disposición y breakpoints antes del diseño final.
+<br>
+<img src="img/landing-page/landing-page-wireframe.png" width="500px"></img>
+<br>
+
 ##### 3.1.3.2. Landing Page Mock-up
+
+El mock up es la aplicación del wireframe adicionando la identidad visual final (paleta cálida, tipografía, ilustraciones y tratamiento del logo) , definiendo colores, tamaños y estados de UI para pasar directamente a implementación.
+<br>
+<img src="img/landing-page/landing-page-mock-up.png" width="500px"></img>
+<br>
+
 #### 3.1.4. Mobile Applications UX/UI Design
 ##### 3.1.4.1. Mobile Applications Wireframes
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
 ##### 3.1.4.3. Mobile Applications Mock-ups
 ##### 3.1.4.4. Mobile Applications User Flow Diagrams
+
+<!-- USER FLOW 1 -->
+<strong>User Goal:</strong> Crear cuenta como cliente<br>
+<strong>User:</strong> Cliente<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li> Seleccionar <i>Crear cuenta</i> → Seleccionar “Soy Cliente” → Completar los datos de correo, usuario ycontraseña → (2) Verifica correo desde enlace → (3) completa datos personales (nombre, teléfono, fecha, DNI; RUC opcional) → Ingresa a la pantalla de inicio</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>Correo ya registrado</li>
+  <li>Link de verificación vencido o servicio de correo caído → reenviar verificación.</li>
+  <li>Datos inválidos (DNI/RUC) → validación y edición.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow1.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 2 -->
+<strong>User Goal:</strong> Crear una solicitud (con o sin plantilla)<br>
+<strong>User:</strong> Cliente <br>
+<strong>Happy paths:</strong>
+<ul>
+  <li><b>Con plantilla:</b> Seleccionar “+” en navbar → Elige una plantilla → Completa el campo de "fecha" → Presiona Siguiente → Presiona Siguiente → Revisa la solicitud → Presiona <i>Enviar solicitud</i>.</li>
+  <li><b>Sin plantilla:</b> Seleccionar “+” en navbar → Completa los campos de origen, destino, fecha y selecciona si el pago será contraentrega → Presiona <i>Agregar artículo</i> → Completa el nombre del producto, peso y toma fotos del producto → la IA autocompleta las medidas→ Presiona Siguiente → Revisa la solicitud → Presiona <i>Enviar solicitud</i>.</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>IA no reconoce las medidas / fotos rechazadas → ingresar manualmente o repetir la toma</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow2.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 3 -->
+<strong>User Goal:</strong> Aceptar una cotización de su solicitud<br>
+<strong>User:</strong> Cliente<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Pantalla Cotizaciones → selecciona la solicitud en el selector → revisa ofertas por precio y calificacion de la empresa → Presiona en <i>Ver detalles</i> → Puede descargar el PDF de la cotización→ Presiona<i>Aceptar solicitud</i> → La solicitud cambia a estar en estado “En trato” → Presiona <i>Ir al chat</i>.</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>Rechaza cotización → se elimina de la lista para esa solicitud.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow3.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 4 -->
+<strong>User Goal:</strong> Ver geolocalización de su paquete<br>
+<strong>User:</strong> Cliente<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Pantalla inicio → Presiona <i>Ver rutas</i> → lista de rutas activas → Selecciona <i>Ver ruta</i> de su solicitud de interés → Observa el mapa con recorrido con los datos de origen, destino, empresa y conductor</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+    <li>-</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow4.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 5 -->
+<strong>User Goal:</strong> Cotizar una solicitud recibida<br>
+<strong>User:</strong> Proveedor/transportista<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Pantalla Solicitudes → Selecciona <i>Ver detalles</i> → (opcional) Ajusta las cantidades o artículos según la capacidad de su flota → Presiona <i>Realizar cotización</i> → Ingresa un precio → Adjunta un PDF → Selecciona <i>Enviar</i> (estado “Cotizada”).</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>Rechaza solicitud → se elimina de la lista para esa solicitud.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow5.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 6 -->
+<strong>User Goal:</strong> Formalizar un trato<br>
+<strong>User:</strong> Proveedor/transportista<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Chat del trato → Presiona <i>Aceptar acuerdo</i> → Asigna una flota y un conductor → Presiona confirmar → Cambia a la pestaña <i>Información</i> (ver unidad/chofer) → Genera y/o descarga la <b>Guía de Remisión</b> y <b>Guía de Transportista</b> → el estado del trato cambia a “Formalizado”.</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>El cliente no confirma / rechaza → trato cancelado o vuelve a negociación.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow6.png" height="500px" />
+
+
+
 ##### 3.1.4.5. Mobile Applications Prototyping
 
 ## Capítulo IV: Product Implementation & Validation
@@ -9105,3 +9237,4 @@ Saxena, D., Singh, N., Gupta, K., Verma, A., Mishra, V., Kumar, J., Gupta, I., P
 Link del Repositorio del Informe: https://github.com/Wapps1/Project-Report <br>
 Link del Repositorio del Proyecto: <br>
 Link del Repositorio del Backend: <br>
+Link de la Landing Page: https://redcarga-landing-page.vercel.app/ <br>
