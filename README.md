@@ -9307,51 +9307,6 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 ### 4. Product Implementation & Validation
 #### 4.1. Software Configuration Management
 ##### 4.1.1. Software Development Environment Configuration
-**Project Management**
-<p><strong>Trello:</strong> Plataforma visual de gestión Kanban que permite orquestar tareas, sprints y entregables mediante tableros dinámicos y tarjetas arrastrables. Ideal para mantener la cadencia del equipo y la transparencia en todo el ciclo de vida del proyecto. <a href="https://trello.com/es">https://trello.com/es</a></p>
-
-**Requirements Management**
-<p><strong>Miro:</strong> Lienzo colaborativo online perfecto para diseñar el event storming, delinear user-flows y construir diagramas de alto impacto visual. Favorece la cocreación en tiempo real entre diseñadores, analistas y stakeholders. <a href="https://miro.com/signup">https://miro.com/signup</a></p>
-<p><strong>Uxpressia:</strong> Plataforma especializada en customer journey maps, personas y impact maps, ideal para alinear equipos con plantillas guiadas, colaboración en tiempo real y exportaciones profesionales. Facilita la visualización de puntos de dolor, oportunidades y procesos a lo largo del recorrido del cliente. <a href="https://uxpressia.com/signup">https://uxpressia.com</a></p>
-
-**Product UX/UI Design**
-<p><strong>Figma:</strong> Suite de diseño colaborativo en la nube que permite prototipar en alta fidelidad, generar mock-ups responsivos y validar interacciones con usuarios antes de escribir una sola línea de código. <a href="https://www.figma.com/login">https://www.figma.com/login</a></p>
-
-**Software Development**
-<strong>Android Studio:</strong> IDE oficial para desarrollo de aplicaciones Android con soporte completo para Kotlin, Jetpack Compose, depuración avanzada, diseño visual de UI y gestión de emuladores. Herramienta fundamental para todo el ciclo de desarrollo móvil.
-<a href="https://developer.android.com/studio">https://developer.android.com/studio</a></p> 
-<p><strong>IntelliJ IDEA Community / Ultimate:</strong> Entorno integral para Java y Spring Boot que ofrece análisis de código, refactorizaciones contextuales y compatibilidad nativa con Spring Tooling para crear backends robustos. <a href="https://www.jetbrains.com/idea/download/">https://www.jetbrains.com/idea/download/</a></p>
-
-<strong>Jetpack Compose:</strong> Framework declarativo de Google para construir interfaces de usuario nativas en Android. Elimina XML tradicional y permite crear UIs reactivas y modernas con Material Design 3 mediante código Kotlin puro.
-<a href="https://developer.android.com/jetpack/compose">https://developer.android.com/jetpack/compose</a></p> 
-<strong>Spring Boot</strong> Framework integral de Java para crear aplicaciones empresariales que proporciona autoconfiguración, servidor embebido (Tomcat), inyección de dependencias, y un ecosistema completo de módulos (Security, Data JPA, Web, WebSocket, Mail).
-<a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a>
-<p><strong>Vue.js:</strong> Framework progresivo y ligero para la construcción de interfaces interactivas que se integra gradualmente: puedes emplearlo desde un widget aislado hasta una SPA completa. Su motor de reactividad profundo, combinado con un Virtual DOM eficiente, garantiza actualizaciones de UI ultrarrápidas. <a href="https://vuejs.org">https://vuejs.org</a></p>
-
-<p><strong>Maven / Gradle:</strong> Sistemas de build y gestión de dependencias que unifican el ciclo de vida del proyecto Spring Boot, simplificando compilación, pruebas y empaquetado.</p>
-<p><strong>Node.js & npm:</strong> Runtime basado en V8 y gestor de paquetes indispensable para compilar, servir y mantener la SPA desarrollada en Vue.js. <a href="https://nodejs.org/">https://nodejs.org/</a></p>
-<p><strong>TypeScript, CSS y HTML:</strong> Tridente tecnológico que sustenta la capa de presentación.</p>
-<ul>
-  <li><strong>TS:</strong> <a href="https://www.typescriptlang.org">https://www.typescriptlang.org</a></li>
-  <li><strong>CSS:</strong> <a href="https://developer.mozilla.org/es/docs/Web/CSS">https://developer.mozilla.org/es/docs/Web/CSS</a></li>
-  <li><strong>HTML:</strong> <a href="https://developer.mozilla.org/es/docs/Web/HTML">https://developer.mozilla.org/es/docs/Web/HTML</a></li>
-</ul>
-<p><strong>Postman:</strong> Suite de pruebas para APIs REST que permite enviar peticiones, automatizar colecciones y validar especificaciones Swagger, asegurando la calidad de los endpoints antes de desplegarlos. <a href="https://www.postman.com/downloads/">https://www.postman.com/downloads/</a></p>
-<strong>Firebase Authentication:</strong> Servicio de Google para gestión de autenticación de usuarios (registro, login, gestión de sesiones) integrado con múltiples proveedores de identidad.
-<a href="https://firebase.google.com/docs/auth">https://firebase.google.com/docs/auth</a></p> 
-
-
-**Software Deployment**
-<p><strong>Vercel:</strong> Plataforma de despliegue y hosting optimizada para frontends y funciones serverless. Ofrece previews automáticos por PR, CDN global en el edge, dominios personalizados, logs y analytics integrados. Ideal para proyectos con Next.js, React y APIs ligeras. <a href="https://vercel.com/signup">https://vercel.com/signup</a></p>
-
-**Software Documentation**
-<p><strong>Git:</strong> Sistema distribuido de control de versiones que permite gestionar historiales de cambios, ramificaciones (GitFlow) y fusiones de código con precisión milimétrica. <a href="https://git-scm.com/">https://git-scm.com/</a></p>
-<p><strong>GitHub:</strong> Plataforma SaaS líder que combina repositorios Git alojados en la nube con herramientas integradas de revisión de código, gestión de incidencias y pipelines de CI/CD. <a href="https://github.com">https://github.com</a></p>
-<p><strong>PlantUML:</strong> Herramienta basada en texto para generar diagramas UML de forma rápida y reproducible. Ideal para documentar arquitecturas, modelos de dominio y flujos técnicos dentro del código.</p>
-<p><strong>VisualParadigm Online:</strong> Edición en la nube de la suite Visual Paradigm, especializada en diseño de software y modelado de procesos (UML, BPMN, C4). <a href="https://online.visual-paradigm.com">https://online.visual-paradigm.com</a></p>
-
-<br>
-
 ##### 4.1.2. Source Code Management
 
 
