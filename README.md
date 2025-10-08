@@ -9382,12 +9382,7 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 </p>
 
 <img src="./img/Chapter-4/Sprint_Backlog_Trello.png" alt="Trello Sprint 1 Redcarga">
-
-<p>
-  link: <a href="https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles" target="_blank">
-    https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles
-  </a>
-</p>
+Link: <https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
 
 <table>
   <tr>
