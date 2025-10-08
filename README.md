@@ -9092,6 +9092,72 @@ Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
 
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
 ##### 3.1.4.3. Mobile Applications Mock-ups
+
+Iniciar sesión: 
+<br>
+<img src="img/mock-ups/iniciar-sesion.png" height="450px"></img>
+<br>
+Crear cuenta: 
+<br>
+<img src="img/mock-ups/crear-cuenta.png" height="450px"></img>
+<br>
+Inicio: 
+<br>
+<img src="img/mock-ups/home.png" height="450px"></img>
+<br>
+Ver cotizaciones:
+<br>
+<img src="img/mock-ups/ver-cotizaciones.png" height="450px"></img>
+<br>
+Ver Solicitudes:
+<br>
+<img src="img/mock-ups/ver-solicitudes.png" height="450px"></img>
+<br>
+Crear Solicitudes:
+<br>
+<img src="img/mock-ups/crear-solicitud.png" height="450px"></img>
+<br>
+Geolocalización cliente:
+<br>
+<img src="img/mock-ups/geolocalizacion-cliente.png" height="450px"></img>
+<br>
+Geolocalización proveedores:
+<br>
+<img src="img/mock-ups/geolocalizacion-proveedor.png" height="450px"></img>
+<br>
+Perfil cliente:
+<br>
+<img src="img/mock-ups/perfil-cliente.png" height="450px"></img>
+<br>
+Perfil proveedor:
+<br>
+<img src="img/mock-ups/perfil-proveedor.png" height="450px"></img>
+<br>
+Editar cotización:
+<br>
+<img src="img/mock-ups/editar-cotizacion.png" height="450px"></img>
+<br>
+Chats:
+<br>
+<img src="img/mock-ups/chats.png" height="450px"></img>
+<br>
+Contraoferta:
+<br>
+<img src="img/mock-ups/contraoferta.png" height="450px"></img>
+<br>
+Cerrar trato:
+<br>
+<img src="img/mock-ups/cerrar-trato.png" height="450px"></img>
+<br>
+Cancelar trato:
+<br>
+<img src="img/mock-ups/cancelar-trato.png" height="450px"></img>
+<br>
+Finalizar trato:
+<br>
+<img src="img/mock-ups/finalizar-trato.png" height="450px"></img>
+<br>
+
 ##### 3.1.4.4. Mobile Applications User Flow Diagrams
 
 <!-- USER FLOW 1 -->
