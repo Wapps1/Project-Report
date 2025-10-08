@@ -9307,6 +9307,7 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 ### 4. Product Implementation & Validation
 #### 4.1. Software Configuration Management
 ##### 4.1.1. Software Development Environment Configuration
+
 ##### 4.1.2. Source Code Management
 
 
