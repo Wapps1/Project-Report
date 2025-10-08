@@ -9110,7 +9110,7 @@ Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
 
 <strong>User Goal:</strong> Cotizar una solicitud recibida<br>
 <strong>User:</strong> Proveedor/transportista<br>
-<img src="img/wireflows-diagrams/userflow5 eemo.png" width="900px"></img><br>
+<img src="img/wireflows-diagrams/Userflow5 eemo.png" width="900px"></img><br>
 
 <strong>User Goal:</strong> Formalizar un trato<br>
 <strong>User:</strong> Proveedor/transportista<br>
