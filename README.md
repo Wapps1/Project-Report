@@ -9093,6 +9093,72 @@ Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
 
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
 ##### 3.1.4.3. Mobile Applications Mock-ups
+
+Iniciar sesión: 
+<br>
+<img src="img/mock-ups/iniciar-sesion.png" height="450px"></img>
+<br>
+Crear cuenta: 
+<br>
+<img src="img/mock-ups/crear-cuenta.png" height="450px"></img>
+<br>
+Inicio: 
+<br>
+<img src="img/mock-ups/home.png" height="450px"></img>
+<br>
+Ver cotizaciones:
+<br>
+<img src="img/mock-ups/ver-cotizaciones.png" height="450px"></img>
+<br>
+Ver Solicitudes:
+<br>
+<img src="img/mock-ups/ver-solicitudes.png" height="450px"></img>
+<br>
+Crear Solicitudes:
+<br>
+<img src="img/mock-ups/crear-solicitud.png" height="450px"></img>
+<br>
+Geolocalización cliente:
+<br>
+<img src="img/mock-ups/geolocalizacion-cliente.png" height="450px"></img>
+<br>
+Geolocalización proveedores:
+<br>
+<img src="img/mock-ups/geolocalizacion-proveedor.png" height="450px"></img>
+<br>
+Perfil cliente:
+<br>
+<img src="img/mock-ups/perfil-cliente.png" height="450px"></img>
+<br>
+Perfil proveedor:
+<br>
+<img src="img/mock-ups/perfil-proveedor.png" height="450px"></img>
+<br>
+Editar cotización:
+<br>
+<img src="img/mock-ups/editar-cotizacion.png" height="450px"></img>
+<br>
+Chats:
+<br>
+<img src="img/mock-ups/chats.png" height="450px"></img>
+<br>
+Contraoferta:
+<br>
+<img src="img/mock-ups/contraoferta.png" height="450px"></img>
+<br>
+Cerrar trato:
+<br>
+<img src="img/mock-ups/cerrar-trato.png" height="450px"></img>
+<br>
+Cancelar trato:
+<br>
+<img src="img/mock-ups/cancelar-trato.png" height="450px"></img>
+<br>
+Finalizar trato:
+<br>
+<img src="img/mock-ups/finalizar-trato.png" height="450px"></img>
+<br>
+
 ##### 3.1.4.4. Mobile Applications User Flow Diagrams
 
 <!-- USER FLOW 1 -->
@@ -9184,6 +9250,29 @@ Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
 
 
 ##### 3.1.4.5. Mobile Applications Prototyping
+
+En esta sección presentamos los prototipos de Redcarga para ambos segmentos objetivos, construidos a partir de los wireflows aprobados y ya con la identidad visual de la marca. Son prototipos de alta fidelidad elaborados en figma que buscan cubrir los flujos clave que realizarán los usuarios en la aplicación. <br><br>
+
+**Vista del proveedor:**
+<img width="959" height="599" alt="image" src="https://github.com/user-attachments/assets/04379c10-968f-494d-a312-be27625783e9" />
+<img width="959" height="599" alt="image" src="https://github.com/user-attachments/assets/e5b32145-ee41-4aaf-887c-c0a18201523c" />
+
+<br>Video del prototipo [0:00s - 1:57s]: https://upcedupe-my.sharepoint.com/:v:/g/personal/u202315044_upc_edu_pe/EbJ0qqb0HntGoLRm7tN9swABPXqYVXcyHKrTGNscjbUP6Q?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=vg7Ix8
+<br>Link del prototipo (figma): https://www.figma.com/proto/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=424-112&p=f&t=L0qY53jYbSjPTyou-1&scaling=min-zoom&content-scaling=fixed&page-id=378%3A197&starting-point-node-id=424%3A112&show-proto-sidebar=1
+
+<br>
+
+---
+<br>
+
+
+**Vista del cliente:**
+<img width="959" height="599" alt="image" src="https://github.com/user-attachments/assets/178d18c7-0729-4935-9660-e3e8fc2a3703" />
+<img width="959" height="599"  alt="image" src="https://github.com/user-attachments/assets/ebe2f660-9eef-4965-b336-a99863ac3291" />
+
+<br>Video del prototipo [1:57s - 3:35s]: https://upcedupe-my.sharepoint.com/:v:/g/personal/u202315044_upc_edu_pe/EbJ0qqb0HntGoLRm7tN9swABPXqYVXcyHKrTGNscjbUP6Q?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=vg7Ix8
+<br>Link del prototipo (figma): [https://www.figma.com/proto/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=424-112&p=f&t=L0qY53jYbSjPTyou-1&scaling=min-zoom&content-scaling=fixed&page-id=378%3A197&starting-point-node-id=424%3A112&show-proto-sidebar=1
+](https://www.figma.com/proto/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=378-198&p=f&t=L0qY53jYbSjPTyou-1&scaling=min-zoom&content-scaling=fixed&page-id=378%3A197&starting-point-node-id=378%3A198&show-proto-sidebar=1)
 
 ## Capítulo IV: Product Implementation & Validation
 ### 4. Product Implementation & Validation
