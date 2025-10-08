@@ -9092,6 +9092,30 @@ Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
 
 
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
+<strong>User Goal:</strong> Crear cuenta como cliente<br>
+<strong>User:</strong> Cliente<br>
+<img src="img/wireflows-diagrams/userflow1 emo.png" width="900px"></img><br>
+
+<strong>User Goal:</strong> Crear una solicitud (con o sin plantilla)<br>
+<strong>User:</strong> Cliente <br>
+<img src="img/wireflows-diagrams/userflow2 emom.png" width="900px"></img><br>
+
+<strong>User Goal:</strong> Aceptar una cotización de su solicitud<br>
+<strong>User:</strong> Cliente<br>
+<img src="img/wireflows-diagrams/Frame 304.png" width="900px"></img><br>
+
+<strong>User Goal:</strong> Ver geolocalización de su paquete<br>
+<strong>User:</strong> Cliente<br>
+<img src="img/wireflows-diagrams/userflow4 emo.png" width="900px"></img><br>
+
+<strong>User Goal:</strong> Cotizar una solicitud recibida<br>
+<strong>User:</strong> Proveedor/transportista<br>
+<img src="img/wireflows-diagrams/userflow5 eemo.png" width="900px"></img><br>
+
+<strong>User Goal:</strong> Formalizar un trato<br>
+<strong>User:</strong> Proveedor/transportista<br>
+<img src="img/wireflows-diagrams/userflow6 emo.png" width="900px"></img><br>
+
 ##### 3.1.4.3. Mobile Applications Mock-ups
 
 Iniciar sesión: 
