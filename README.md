@@ -8869,7 +8869,35 @@ Notificación, Plantilla, Canal, Preferencias, Consentimiento, Quiet Hours, Fall
 
 ### 3.1. Product design
 #### 3.1.1. Style Guidelines
+
+En los Style Guidelines definimos cómo se ve y se percibe Red Carga. El objetivo es concretar una marca consistente y cercana a nuestro público objetivo, transmitiendo calidez, confianza y simplicidad. Para ello utilizamos las herramientas como colores, tipografías y el propoio logotipo para asegurar una experiencia coherente en producto, marketing y soporte.
+
 ##### 3.1.1.1. General Style Guidelines
+
+**Paleta de Colores:**
+
+Utilizamos una paleta cálida reflejando cercanía y comodidad durante el uso de la app. Los colores principales son un rojo salmón #F26A6C, un terracota #EC8366 y un marfil suave #FFF9F5; juntos aportan personalidad a la aplicación sin llegar a ser agresivos. Como colores secundarios empleamos #F3C4BE y #FEC6A3 para variaciones sutiles, y #3D3D3D como gris profundo para textos y componentes con alto contraste. Para anotaciones y estados neutros, usamos #FFFFFF y #9D9D9D. En conjunto, estos colores mantiene una atmósfera cálida y amable, favoreciendo la legibilidad y la orientación visual en flujos clave.
+<br>
+<img src="img/style-guidelines/colores.png"></img>
+
+<br>
+
+**Tipografía:**
+
+Para la tipografía combinamos Montserrat para títulos y Karla para párrafos, dos sans serif de formas redondeadas que mantienen una experiencia limpia y profesional. Dado el espacio limitado de una pantalla móvil, empleamos una escala con varios niveles para acentuar y priorizar sin saturar: Headings en Montserrat Bold en 36 px (H1), 26 px (H2), 22 px (H3), 18 px (H4) y 16 px (H5); y párrafos en Karla Regular en 18 px (P1) y 14 px (P2). Esta jerarquía garantiza títulos notorios, textos cómodos de leer y un ritmo visual consistente en pantallas móviles.
+<br>
+<img src="img/style-guidelines/tipografia.png"></img>
+
+<br>
+
+**Logo:**
+
+El logotipo de Red Carga es simple e intuitivo, pensado para ser reconocible a primera vista. Definimos dos usos: sobre fondo claro se aplica el isotipo en el tono principal; para fondo oscuro no usamos “negativo” completo, sino que incorporamos un borde alrededor del símbolo, manteniendo la forma y legibilidad del logo sin perder su carácter. De esta manera preservamos la identidad en múltiples contextos, conservando contraste y claridad en tarjetas, banners y vistas dentro de la app.
+<br>
+<img src="img/style-guidelines/logo.png"></img>
+<br>
+
+
 #### 3.1.2. Information Architecture
 ##### 3.1.2.1. Organization Systems
 ##### 3.1.2.2. Labelling Systems
