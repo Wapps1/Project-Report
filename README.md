@@ -9054,18 +9054,42 @@ La landing de Redcarga está pensada para explicar en pocos minutos qué hace el
 
 Es un boceto estructural sin estilos donde resaltamos la jerarquía y el flujo: header, hero con CTA, KPIs, “¿Qué es?”, beneficios en timeline, planes, FAQ y footer; sirve para probar disposición y breakpoints antes del diseño final.
 <br>
-<img src="img/landing-page/landing-page-wireframe.png" width="500px"></img>
+<img src="img/landing-page/landing-page-wireframe.png" width="950px"></img>
 <br>
 
 ##### 3.1.3.2. Landing Page Mock-up
 
 El mock up es la aplicación del wireframe adicionando la identidad visual final (paleta cálida, tipografía, ilustraciones y tratamiento del logo) , definiendo colores, tamaños y estados de UI para pasar directamente a implementación.
 <br>
-<img src="img/landing-page/landing-page-mock-up.png" width="500px"></img>
+<img src="img/landing-page/landing-page-mock-up.png" width="950px"></img>
 <br>
 
 #### 3.1.4. Mobile Applications UX/UI Design
+La app móvil de RedCarga prioriza tareas clave y claridad por rol (cliente y proveedor). El diseño usa una barra inferior persistente, chips de estado y CTAs contextuales para guiar cada paso: crear solicitud, cotizar, negociar, seguir el viaje y cerrar trato. La jerarquía visual es limpia y táctil, con feedback inmediato y notificaciones de hitos. La identidad visual es consistente con la web (paleta cálida, iconografía amable) y es totalmente responsive para distintos tamaños de dispositivo. Se cuidan patrones de accesibilidad (contraste, etiquetas claras y estados focuseables).
+<br>
+
 ##### 3.1.4.1. Mobile Applications Wireframes
+Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
+- Home por rol: bandejas de solicitudes/cotizaciones y accesos rápidos.
+- Crear solicitud (cliente): plantilla de artículos, captura/ingreso de medidas, origen/destino y resumen.
+- Cotizar (proveedor): selección de artículos, propuesta de precio, contraoferta y chat.
+- Tratos/Chat: acciones en contexto (editar carga, ver geolocalización, aceptar/cerrar trato, registrar pago).
+- Seguimiento: mapa con estados y acceso a guías/documentos.
+- Gestión de proveedor: rutas, flota, conductores y documentos.
+- Perfil/Suscripciones/Facturación/Ayuda: configuración de cuenta y servicios.
+<br>
+<img src="img/wireframes/HOME.png" width="750px"></img><br>
+<img src="img/wireframes/PERFIL - CLIENTES.png" width="850px"></img><br>
+<img src="img/wireframes/PERFIL - PROVEEDORES.png" width="900px"></img><br>
+<img src="img/wireframes/CREAR SOLICITUD - CLIENTE.png" width="900px"></img><br>
+<img src="img/wireframes/VER COTIZACIONES - CLIENTE.png" width="850px"></img><br>
+<img src="img/wireframes/VER SOLICITUDES + COTIZAR - PROVEEDORES.png" width="900PX"></img><br>
+<img src="img/wireframes/GEOLOCALIZACIÓN - CLIENTE.png" width="750px"></img><br>
+<img src="img/wireframes/GEO + RUTAS + FLOTA + CONDUCTOR - PROVEEDOR.png" width="900PX"></img><br>
+<img src="img/wireframes/TRATOS - TODOS.png" width="850px"></img><br>
+<img src="img/wireframes/CHATS - TODOS.png" width="950px"></img><br>
+
+
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
 ##### 3.1.4.3. Mobile Applications Mock-ups
 ##### 3.1.4.4. Mobile Applications User Flow Diagrams
