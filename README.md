@@ -522,11 +522,6 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
         - [3.1.2.3. SEO Tags and Meta Tags](#3123-seo-tags-and-meta-tags)
         - [3.1.2.4. Searching Systems](#3124-searching-systems)
         - [3.1.2.5. Navigation Systems](#3125-navigation-systems)
-        - [3.1.2.1. Organization Systems](#3121-organization-systems-1)
-        - [3.1.2.2. Labelling Systems](#3122-labelling-systems-1)
-        - [3.1.2.3. SEO Tags and Meta Tags](#3123-seo-tags-and-meta-tags-1)
-        - [3.1.2.4. Searching Systems](#3124-searching-systems-1)
-        - [3.1.2.5. Navigation Systems](#3125-navigation-systems-1)
       - [3.1.3. Landing Page UI Design](#313-landing-page-ui-design)
         - [3.1.3.1. Landing Page Wireframe](#3131-landing-page-wireframe)
         - [3.1.3.2. Landing Page Mock-up](#3132-landing-page-mock-up)
@@ -9023,11 +9018,6 @@ Meta Author: Wapps
 * Confirmaciones modales para contrapropuesta, aceptar/cerrar trato y actualizar cotización.
 * Accesos directos desde tarjeta (listas) a chat y ver fotos de artículos.
 
-##### 3.1.2.1. Organization Systems
-##### 3.1.2.2. Labelling Systems
-##### 3.1.2.3. SEO Tags and Meta Tags
-##### 3.1.2.4. Searching Systems
-##### 3.1.2.5. Navigation Systems
 #### 3.1.3. Landing Page UI Design
 ##### 3.1.3.1. Landing Page Wireframe
 ##### 3.1.3.2. Landing Page Mock-up
