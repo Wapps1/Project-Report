@@ -8927,6 +8927,95 @@ El mock up es la aplicación del wireframe adicionando la identidad visual final
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
 ##### 3.1.4.3. Mobile Applications Mock-ups
 ##### 3.1.4.4. Mobile Applications User Flow Diagrams
+
+<!-- USER FLOW 1 -->
+<strong>User Goal:</strong> Crear cuenta como cliente<br>
+<strong>User:</strong> Cliente<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li> Seleccionar <i>Crear cuenta</i> → Seleccionar “Soy Cliente” → Completar los datos de correo, usuario ycontraseña → (2) Verifica correo desde enlace → (3) completa datos personales (nombre, teléfono, fecha, DNI; RUC opcional) → Ingresa a la pantalla de inicio</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>Correo ya registrado</li>
+  <li>Link de verificación vencido o servicio de correo caído → reenviar verificación.</li>
+  <li>Datos inválidos (DNI/RUC) → validación y edición.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow1.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 2 -->
+<strong>User Goal:</strong> Crear una solicitud (con o sin plantilla)<br>
+<strong>User:</strong> Cliente <br>
+<strong>Happy paths:</strong>
+<ul>
+  <li><b>Con plantilla:</b> Seleccionar “+” en navbar → Elige una plantilla → Completa el campo de "fecha" → Presiona Siguiente → Presiona Siguiente → Revisa la solicitud → Presiona <i>Enviar solicitud</i>.</li>
+  <li><b>Sin plantilla:</b> Seleccionar “+” en navbar → Completa los campos de origen, destino, fecha y selecciona si el pago será contraentrega → Presiona <i>Agregar artículo</i> → Completa el nombre del producto, peso y toma fotos del producto → la IA autocompleta las medidas→ Presiona Siguiente → Revisa la solicitud → Presiona <i>Enviar solicitud</i>.</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>IA no reconoce las medidas / fotos rechazadas → ingresar manualmente o repetir la toma</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow2.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 3 -->
+<strong>User Goal:</strong> Aceptar una cotización de su solicitud<br>
+<strong>User:</strong> Cliente<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Pantalla Cotizaciones → selecciona la solicitud en el selector → revisa ofertas por precio y calificacion de la empresa → Presiona en <i>Ver detalles</i> → Puede descargar el PDF de la cotización→ Presiona<i>Aceptar solicitud</i> → La solicitud cambia a estar en estado “En trato” → Presiona <i>Ir al chat</i>.</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>Rechaza cotización → se elimina de la lista para esa solicitud.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow3.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 4 -->
+<strong>User Goal:</strong> Ver geolocalización de su paquete<br>
+<strong>User:</strong> Cliente<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Pantalla inicio → Presiona <i>Ver rutas</i> → lista de rutas activas → Selecciona <i>Ver ruta</i> de su solicitud de interés → Observa el mapa con recorrido con los datos de origen, destino, empresa y conductor</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+    <li>-</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow4.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 5 -->
+<strong>User Goal:</strong> Cotizar una solicitud recibida<br>
+<strong>User:</strong> Proveedor/transportista<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Pantalla Solicitudes → Selecciona <i>Ver detalles</i> → (opcional) Ajusta las cantidades o artículos según la capacidad de su flota → Presiona <i>Realizar cotización</i> → Ingresa un precio → Adjunta un PDF → Selecciona <i>Enviar</i> (estado “Cotizada”).</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>Rechaza solicitud → se elimina de la lista para esa solicitud.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow5.png" height="500px" />
+<br><br>
+
+<!-- USER FLOW 6 -->
+<strong>User Goal:</strong> Formalizar un trato<br>
+<strong>User:</strong> Proveedor/transportista<br>
+<strong>Happy paths:</strong>
+<ul>
+  <li>Chat del trato → Presiona <i>Aceptar acuerdo</i> → Asigna una flota y un conductor → Presiona confirmar → Cambia a la pestaña <i>Información</i> (ver unidad/chofer) → Genera y/o descarga la <b>Guía de Remisión</b> y <b>Guía de Transportista</b> → el estado del trato cambia a “Formalizado”.</li>
+</ul>
+<strong>Unhappy paths:</strong>
+<ul>
+  <li>El cliente no confirma / rechaza → trato cancelado o vuelve a negociación.</li>
+</ul>
+<img src="img/user-flow-diagrams/userflow6.png" height="500px" />
+
+
+
 ##### 3.1.4.5. Mobile Applications Prototyping
 
 ## Capítulo IV: Product Implementation & Validation
