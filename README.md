@@ -9078,6 +9078,7 @@ Los wireframes muestran la estructura funcional sin estilos finales. Incluyen:
 - Gestión de proveedor: rutas, flota, conductores y documentos.
 - Perfil/Suscripciones/Facturación/Ayuda: configuración de cuenta y servicios.
 <br>
+<img src="img/wireframes/CREAR CUENTA INICIAR SESION - TODOS.png" width="850px"></img><br>
 <img src="img/wireframes/HOME.png" width="750px"></img><br>
 <img src="img/wireframes/PERFIL - CLIENTES.png" width="850px"></img><br>
 <img src="img/wireframes/PERFIL - PROVEEDORES.png" width="900px"></img><br>
