@@ -8905,8 +8905,23 @@ El logotipo de Red Carga es simple e intuitivo, pensado para ser reconocible a p
 ##### 3.1.2.4. Searching Systems
 ##### 3.1.2.5. Navigation Systems
 #### 3.1.3. Landing Page UI Design
+
+La landing de Redcarga está pensada para explicar en pocos minutos qué hace el producto y conducir al usuario a acceder/descargar. El diseño prioriza un recorrido vertical, iniciando con la navegación y selector de idioma, un hero con título, subtítulo e imagen principal, una sección de KPIs que refuerza confianza, el bloque “¿Qué es Redcarga?”, una sección de beneficios presentada en timeline para escaneo rápido, el comparativo de planes, una FAQ en acordeones y footer con enlaces. Todo el diseño es responsive, manteniendo los estilos y jerarquía anteriormente presentados. Además, utiliza CTAs consistentes (“Acceder/Descargar”) con smooth scroll y buenas áreas táctiles en móvil.
+
 ##### 3.1.3.1. Landing Page Wireframe
+
+Es un boceto estructural sin estilos donde resaltamos la jerarquía y el flujo: header, hero con CTA, KPIs, “¿Qué es?”, beneficios en timeline, planes, FAQ y footer; sirve para probar disposición y breakpoints antes del diseño final.
+<br>
+<img src="img/landing-page/landing-page-wireframe.png" width="500px"></img>
+<br>
+
 ##### 3.1.3.2. Landing Page Mock-up
+
+El mock up es la aplicación del wireframe adicionando la identidad visual final (paleta cálida, tipografía, ilustraciones y tratamiento del logo) , definiendo colores, tamaños y estados de UI para pasar directamente a implementación.
+<br>
+<img src="img/landing-page/landing-page-mock-up.png" width="500px"></img>
+<br>
+
 #### 3.1.4. Mobile Applications UX/UI Design
 ##### 3.1.4.1. Mobile Applications Wireframes
 ##### 3.1.4.2. Mobile Applications Wireflow Diagrams
@@ -8991,3 +9006,4 @@ Saxena, D., Singh, N., Gupta, K., Verma, A., Mishra, V., Kumar, J., Gupta, I., P
 Link del Repositorio del Informe: https://github.com/Wapps1/Project-Report <br>
 Link del Repositorio del Proyecto: <br>
 Link del Repositorio del Backend: <br>
+Link de la Landing Page: https://redcarga-landing-page.vercel.app/ <br>
