@@ -9002,7 +9002,7 @@ El mock up es la aplicación del wireframe adicionando la identidad visual final
 <br><br>
 
 <!-- USER FLOW 6 -->
-<strong>User Goal:</strong> Cerrar (formalizar) el trato<br>
+<strong>User Goal:</strong> Formalizar un trato<br>
 <strong>User:</strong> Proveedor/transportista<br>
 <strong>Happy paths:</strong>
 <ul>
