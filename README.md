@@ -8955,7 +8955,6 @@ El mock up es la aplicación del wireframe adicionando la identidad visual final
 <strong>Unhappy paths:</strong>
 <ul>
   <li>IA no reconoce las medidas / fotos rechazadas → ingresar manualmente o repetir la toma</li>
-  <li>Campos faltantes → se le solicita volver a ingresar los datos.</li>
 </ul>
 <img src="img/user-flow-diagrams/userflow2.png" height="500px" />
 <br><br>
