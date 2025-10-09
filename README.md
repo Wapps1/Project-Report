@@ -9624,6 +9624,24 @@ Como parte del proceso de aseguramiento de la calidad del software, en este spri
 
 ###### 4.2.1.5. Execution Evidence for Sprint Review
 ###### 4.2.1.6. Services Documentation Evidence for Sprint Review
+
+| Endpoint               | HTTP Method | Descripción                                              | Parámetros                                     | Ejemplo de Request                                                                           | Ejemplo de Response                                             |
+| ---------------------- | ----------- | -------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `/auth/signup`         | POST        | Registra un nuevo usuario (cliente o proveedor).         | `name`, `email`, `password`, `role`            | `{ "name": "Juan", "email": "juan@test.com", "password": "123456", "role": "client" }`       | `{ "id": "6711b3...", "message": "User created successfully" }` |
+| `/auth/login`          | POST        | Inicia sesión y devuelve token JWT.                      | `email`, `password`                            | `{ "email": "juan@test.com", "password": "123456" }`                                         | `{ "token": "eyJhbGciOiJIUzI1NiIsIn..." }`                      |
+| `/requests`            | POST        | Crea una nueva solicitud de carga.                       | `origin`, `destination`, `cargoType`, `weight` | `{ "origin": "Lima", "destination": "Arequipa", "cargoType": "Electrónicos", "weight": 20 }` | `{ "id": "64ffb...", "status": "pending" }`                     |
+| `/requests/user/{id}`  | GET         | Lista solicitudes creadas por un usuario.                | `id` (path)                                    | GET `/requests/user/6711b3...`                                                               | `[{"id":"...","status":"pending"}]`                             |
+| `/quotes/request/{id}` | GET         | Obtiene las cotizaciones disponibles para una solicitud. | `id` (path)                                    | GET `/quotes/request/64ffb...`                                                               | `[{"provider":"Ransa","price":500,"estimatedTime":"2 días"}]`   |
+| `/payments`            | POST        | Procesa el pago de una solicitud aceptada.               | `requestId`, `method`, `amount`                | `{ "requestId":"64ffb...", "method":"card", "amount": 500 }`                                 | `{ "status":"success", "transactionId":"TRX-00123" }`           |
+| `/providers`           | GET         | Obtiene información de proveedores.                      | query params opcionales                        | GET `/providers?city=Lima`                                                                   | `[{"name":"TransCargo","rating":4.5}]`                          |
+
+![Swagger 1](./img/Chapter-4/Sprint_Evidence_Swagger1.png)
+![Swagger 2](./img/Chapter-4/Sprint_Evidence_Swagger2.png)
+![Swagger 3](./img/Chapter-4/Sprint_Evidence_Swagger3.png)
+![Swagger 4](./img/Chapter-4/Sprint_Evidence_Swagger4.png)
+![Swagger 5](./img/Chapter-4/Sprint_Evidence_Swagger5.png)
+![Swagger 6](./img/Chapter-4/Sprint_Evidence_Swagger6.png)
+
 ###### 4.2.1.7. Software Deployment Evidence for Sprint Review
 ###### 4.2.1.8. Team Collaboration Insights during Sprint
 #### 4.3. Validation Interviews
