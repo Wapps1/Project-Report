@@ -9345,6 +9345,155 @@ Adoptamos Conventional Commits, inspirados en las Angular Commit Guidelines, par
 <br><br>
 
 ##### 4.1.3. Source Code Style Guide & Conventions
+
+
+
+<p>Todos los identificadores — archivos, clases, métodos, variables, etc. — deben redactarse exclusivamente en inglés para garantizar coherencia y evitar ambigüedades entre equipos multilingües.</p>
+
+<h3>1. HTML</h3>
+<ul>
+  <li>Etiquetas y atributos en minúsculas. Ejemplo: <code>&lt;section id="task-list"&gt;&lt;/section&gt;</code></li>
+  <li>Siempre cerrar los elementos: <code>&lt;img src="photo.jpg" alt="field-operation" /&gt;</code></li>
+  <li>Usar comillas dobles en los atributos: <code>&lt;button type="button" class="btn-primary"&gt;&lt;/button&gt;</code></li>
+  <li>Atributo <code>alt</code> obligatorio, usar <code>width</code> y <code>height</code> si aplica.</li>
+  <li>Indentación de 2 espacios.</li>
+</ul>
+
+<h3>2. CSS</h3>
+<ul>
+  <li>Clases e IDs en kebab-case: <code>.task-item</code>, <code>#map-container</code></li>
+  <li>Usar BEM para componentes complejos: <code>.card__header--highlight</code></li>
+</ul>
+
+<h3>3. TypeScript (Angular)</h3>
+<ul>
+  <li>Guía oficial de Angular Style Guide</li>
+  <li>Convenciones:
+    <ul>
+    <li>Clases/Servicios: <code>PascalCase → UserService</code></li>
+    <li>Interfaces/Tipos: <code>IUser</code></li>
+    <li>Variables y métodos: <code>camelCase → getUserData()</code></li>
+    <li>Constantes: <code>UPPER_SNAKE_CASE → MAX_RETRIES</code></li>
+    </ul>
+  </li>
+  <li>Archivos en kebab-case: <code>user-profile.component.ts</code></li>
+  <li>Siempre usar punto y coma.</li>
+  <li>Orden de imports: externos → internos → relativos</li>
+  <li>Evitar <code>any</code>, usar tipado estricto</li>
+  <li>Usar ESLint + Prettier con pre-commit hook</li>
+</ul>
+
+<h3>4. Java (Spring Boot)</h3>
+<ul>
+  <li>Google Java Style Guide. Indent 4; una instrucción por línea; sin imports con <code>*</code>; ancho máx. 120 cols.</li>
+
+  <li>Paquetes por bounded context y capas:
+    <code>com.wapps1.redcarga.&lt;bc&gt;.{domain,application.internal,infrastructure,interfaces.rest}</code>.
+  </li>
+
+  <li>Convenciones de nombres:
+    Clases/Enums <code>PascalCase</code> (p.ej., <code>ShipmentOrder</code>);
+    métodos/variables <code>camelCase</code> (<code>calculateEta()</code>);
+    constantes <code>UPPER_SNAKE_CASE</code> (<code>DEFAULT_TIMEOUT</code>);
+    paquetes en minúsculas.
+  </li>
+
+  <li>Capas DDD por BC:
+    <ul>
+      <li><code>domain/</code>: modelo puro (aggregates, VOs, repos contratos, servicios). Sin framework.</li>
+      <li><code>application/internal/</code>: casos de uso (CommandService <code>@Transactional</code>, QueryService <code>readOnly</code>), puertos/ACL y publicación de eventos.</li>
+      <li><code>infrastructure/</code>: JPA/JDBC y event publisher <em>after-commit</em>. Sin reglas de negocio.</li>
+      <li><code>interfaces/rest/</code>: controladores delgados + DTOs request/response con Bean Validation.</li>
+    </ul>
+  </li>
+
+  <li>REST: URIs kebab-case versionadas (<code>/api/v1/requests/{id}</code>); JSON <code>camelCase</code>;
+      mapping con MapStruct u otros mappers.</li>
+
+  <li>Persistencia: contrato de repo en <code>domain</code>; implementación Spring Data JPA en <code>infrastructure</code>.
+      JPA para aggregates; JDBC/SQL para proyecciones/lecturas especializadas.</li>
+
+  <li>Errores y logging: <code>@ControllerAdvice</code> con payload homogéneo
+      <code>{timestamp, path, code, message}</code>; SLF4J, sin <code>System.out</code>.</li>
+
+  <li>Llaves en la misma línea:
+    <pre><code>public class VehicleLoader {
+    public void load() {
+        // ...
+    }
+}</code></pre>
+  </li>
+</ul>
+
+<h3>5. Vue.js (Vue 3 + Vite)</h3>
+<ul>
+  <li>Usar <code>&lt;script setup lang="ts"&gt;</code> (Composition API). Orden SFC: <b>template → script → style</b>.</li>
+
+  <li>Nomenclatura:
+    <ul>
+      <li>Componentes (archivo = nombre del componente): <code>PascalCase → HeroComponent.vue</code>, <code>BenefitsComponent.vue</code> (<i>landing</i> en <code>/src/components/landing</code>).</li>
+      <li>Composables: <code>useXxx.ts</code> (ej. <code>useAuth.ts</code>), Stores Pinia: <code>useXxxStore</code> (id <code>'xxx'</code>).</li>
+      <li>Constantes: <code>UPPER_SNAKE_CASE</code>; variables/métodos: <code>camelCase</code>; clases CSS: <code>kebab-case</code> (BEM opcional).</li>
+    </ul>
+  </li>
+
+  <li>Props/Events tipados: <code>defineProps&lt;T&gt;</code> + <code>withDefaults</code>; <code>defineEmits</code> con firma tipada. Evitar <code>any</code>.</li>
+
+  <li>Imports: externos → alias <code>@/...</code> (utils) → composables → stores → componentes → assets. No usar imports con <code>*</code>.</li>
+
+  <li>Estado: Pinia. Solo persistir lo necesario; getters para estado derivado; acciones manejan async. No mutar estado fuera del store.</li>
+
+  <li>Plantillas accesibles: etiquetas semánticas, <code>aria-*</code>, <code>alt</code> obligatorio, foco/teclado correcto. Evitar lógica compleja en el template; no combinar <code>v-if</code> y <code>v-for</code> en el mismo nodo; usar <code>:key</code> estable.</li>
+
+  <li>Rutas (si aplica): paths en <code>kebab-case</code> (<code>/product-video</code>), nombres de ruta en <code>PascalCase</code>.</li>
+
+  <li>Estilos: preferir variables CSS de tema; <code>scoped</code> cuando el estilo sea local; evitar <code>::v-deep</code> salvo necesidad.</li>
+
+  <li>Calidad: ESLint + <code>eslint-plugin-vue</code> + Prettier (pre-commit con Husky); <code>tsconfig</code> estricto.</li>
+</ul>
+
+
+<h3>6. Kotlin (Android / Jetpack Compose)</h3>
+<ul>
+  <li>Seguir Kotlin Coding Conventions + Android Kotlin Style.</li>
+
+  <li>Nomenclatura:
+    <ul>
+      <li>Paquetes: <code>com.wapps1.redcarga.features.&lt;feature&gt;.&lt;layer&gt;</code> (minúsculas).</li>
+      <li>Clases/Enums/Composables: <code>PascalCase → RequestDetailViewModel, RequestCard()</code></li>
+      <li>Archivos: <code>RequestDetailViewModel.kt</code>, <code>request_list/RequestListScreen.kt</code></li>
+      <li>Funciones/variables: <code>camelCase → loadRequests()</code></li>
+      <li>Constantes: <code>UPPER_SNAKE_CASE → DEFAULT_PAGE_SIZE</code></li>
+      <li>Backing fields privados: <code>_state</code></li>
+    </ul>
+  </li>
+
+  <li>Arquitectura: Clean (domain → data → presentation → core). Sin I/O en Composables.</li>
+  <li>DI: Hilt (<code>@HiltAndroidApp</code>, <code>@AndroidEntryPoint</code>, módulos por feature).</li>
+  <li>Estado: <code>StateFlow</code>/<code>MutableStateFlow</code>, <code>sealed interface UiState/UiEvent</code>, eventos unidireccionales.</li>
+  <li>Compose: <code>modifier</code> primero, <code>@Preview</code> por componente, textos en <code>strings.xml</code>.</li>
+  <li>Navegación: rutas <code>snake_case</code> en <code>sealed class Route</code> (ej. <code>"request_detail/{id}"</code>).</li>
+  <li>Room: Entities en PascalCase; DAOs como <code>interface</code>; migraciones explícitas; mapear a DTOs para UI.</li>
+  <li>Formato/Lint: sin imports <code>*</code>, máx 120 cols; <code>ktlint</code> + <code>detekt</code> + Spotless (pre-commit).</li>
+  <li>Errores/Logging: mapear excepciones a <code>DomainError</code>; usar Timber/RcLogger (no <code>println</code>).</li>
+  <li>Tests: unitarios en <code>src/test</code>, instrumentados en <code>src/androidTest</code>; nombre <code>ClassNameTest.kt</code>.</li>
+</ul>
+<pre><code>@Composable
+fun RequestCard(
+  request: RequestUi,
+  onClick: () -&gt; Unit,
+  modifier: Modifier = Modifier
+) { /* UI sin I/O; estado viene de la VM */ }
+
+sealed class Route(val value: String) {
+  data object Home : Route("home")
+  data object RequestDetail : Route("request_detail/{id}")
+}
+</code></pre>
+
+<br>
+<br>
+
 ##### 4.1.4. Software Deployment Configuration
 #### 4.2. Landing Page & Mobile Application Implementation
 ##### 4.2.1. Sprint n
