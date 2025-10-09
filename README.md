@@ -9623,6 +9623,42 @@ Como parte del proceso de aseguramiento de la calidad del software, en este spri
 | https://github.com/Wapps1/Redcarga-Frontend | develop | 4cfa6c1 | test: integration test navigation flow | Added Espresso test for navigation from Login to Home | 07/10/2025 |
 
 ###### 4.2.1.5. Execution Evidence for Sprint Review
+
+Durante este primer Sprint se logró implementar los módulos funcionales principales del sistema Redcarga, enfocándose en la integración entre el backend y la aplicación móvil. Se implementaron y probaron exitosamente los flujos de autenticación, registro de usuarios (cliente y proveedor), creación de solicitudes de carga, visualización de cotizaciones y procesamiento de pagos simulados.
+
+Asimismo, se completó la Landing Page informativa, que presenta la propuesta de valor, beneficios y planes del servicio, asegurando una comunicación clara con los potenciales usuarios.
+
+Las siguientes capturas muestran algunas de las vistas y funcionalidades desarrolladas durante este Sprint:
+
+**Inicio**
+![](./img/Chapter-4/RedCarga1%20-%20Inicio.png)
+![](./img/Chapter-4/RedCarga%20-%20Inicio%20de%20Sesion.jpeg)
+![](./img/Chapter-4/Redcarga2%20-%20Crear%20Cuenta.png)
+
+
+**Cliente**
+![](./img/Chapter-4/RedCarga3%20-%20CC%20Cliente%20Paso1.png)
+![](./img/Chapter-4/RedCarga4%20-%20CC%20Cliente%20Paso2.png)
+![](./img/Chapter-4/RedCarga5%20-%20CC%20Cliente%20Paso3.png)
+![](./img/Chapter-4/RedCarga%20-%20Cliente%20Inicio.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Cliente%20Crear%20Solicitud.jpeg)
+
+**Proveedor**
+![](./img/Chapter-4/RedCarga8%20-%20CC%20Proveedor%20Paso2.png)
+![](./img/Chapter-4/RedCarga9%20-%20CC%20Proveedor%20Paso3.png)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Inicio.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Rutas%201.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Rutas%202.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Rutas%203.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedores%20Conductores%201.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedores%20Conductores%202.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedores%20Conductores%203.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Vehiculos%201.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Vehiculos%202.jpeg)
+![](./img/Chapter-4/RedCarga%20-%20Proveedor%20Vehiculos%203.jpeg)
+
+Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa5Ih93eUVb7v9cBbMH9ZRexeEjXVBrM4kErkg?e=VH2DiO>
+
 ###### 4.2.1.6. Services Documentation Evidence for Sprint Review
 
 | Endpoint               | HTTP Method | Descripción                                              | Parámetros                                     | Ejemplo de Request                                                                           | Ejemplo de Response                                             |
