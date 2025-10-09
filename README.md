@@ -582,27 +582,42 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <td>
         <strong>Ariana Cecilia Agreda Sobrino</strong> <br>
         <strong>TB1: </strong><br>
-          Durante TB1, presenté y sustenté entregables clave: diseño y análisis de entrevistas, User Stories y Arquitectura de Software con diagramas del C4 Model. Para ello actualicé y apliqué conocimientos en         requisitos (planificación y codificación de hallazgos), redacción de historias con criterios de aceptación y modelado C4. Usé estrategias de aprendizaje como revisión de fuentes especializadas, práctica con herramientas (p. ej., Structurizr) y retroalimentación del equipo, evidenciando actualización continua para el proyecto y mi desarrollo profesional.
+          Durante TB1, presenté y sustenté entregables clave: diseño y análisis de entrevistas, User Stories y Arquitectura de Software con diagramas del C4 Model. Para ello actualicé y apliqué conocimientos en         requisitos (planificación y codificación de hallazgos), redacción de historias con criterios de aceptación y modelado C4. Usé estrategias de aprendizaje como revisión de fuentes especializadas, práctica con herramientas (p. ej., Structurizr) y retroalimentación del equipo, evidenciando actualización continua para el proyecto y mi desarrollo profesional.<br>
+          <strong>TP1: </strong><br>
+          Elaboré las <em>General Style Guidelines</em>, los <em>Mock-ups</em>, <em>User Flow Diagrams</em> y <em>Prototyping</em>, y apoyé <em>Software Configuration Management</em>. Actualicé y apliqué conocimientos en sistemas de diseño (tokens de color y tipografía, escalas, componentes), accesibilidad y contraste, trazado de flujos de usuario y prototipos navegables. En SCM apliqué GitFlow y buenas prácticas de PR. Estrategias de aprendizaje: benchmarking de design systems, revisión de heurísticas, pruebas con usuarios a baja escala y ciclos de crítica de diseño con el equipo. 
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong> <br>
         <strong>TB1: </strong><br>
-          Durante TB1, presenté y sustenté entregables clave: el análisis competitivo con estrategias y tácticas frente a competidores, la redacción de User Stories y el diseño táctico DDD mediante Bounded Contexts. Para ello actualicé y apliqué conocimientos en análisis comparativo de mercado y propuesta de valor, criterios de aceptación y trazabilidad, así como en delimitación de contextos y responsabilidades del dominio. Utilicé estrategias de aprendizaje como revisión de fuentes especializadas, contraste de casos, práctica con story/context mapping y retroalimentación del equipo, fortaleciendo mi desarrollo profesional y el avance del proyecto.
+          Durante TB1, presenté y sustenté entregables clave: el análisis competitivo con estrategias y tácticas frente a competidores, la redacción de User Stories y el diseño táctico DDD mediante Bounded Contexts. Para ello actualicé y apliqué conocimientos en análisis comparativo de mercado y propuesta de valor, criterios de aceptación y trazabilidad, así como en delimitación de contextos y responsabilidades del dominio. Utilicé estrategias de aprendizaje como revisión de fuentes especializadas, contraste de casos, práctica con story/context mapping y retroalimentación del equipo, fortaleciendo mi desarrollo profesional y el avance del proyecto.<br>
+        <strong>TP1: </strong><br>
+          Implementé la creación de <em>bounded contexts</em> en el backend, la comunicación en tiempo real mediante <em>WebSockets</em> y los <em>CRUDs</em> principales. Actualicé y apliqué conocimientos en modularización con DDD (paquetes/módulos coherentes), configuración de canales WebSocket y estandarización de endpoints. Estrategias: lectura de documentación oficial, <em>spikes</em> técnicos, pruebas con clientes de mensajería y revisiones por pares para validar diseño e implementación.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong> <br>
         <strong>TB1: </strong><br>
-          Durante TB1, presenté y sustenté entregables clave como la Descripción de la Startup, los Perfiles del equipo, el registro de entrevistas, las User Stories y los artefactos de modelado (EventStorming, Context Mapping y diseño táctico DDD con Bounded Contexts). Para elaborarlos, actualicé y apliqué conocimientos en síntesis de propuesta de valor, investigación cualitativa, trazabilidad requisito–modelo y diseño dirigido por dominio, utilizando estrategias de aprendizaje como revisión de guías especializadas, práctica con plantillas y validación por retroalimentación.
+          Durante TB1, presenté y sustenté entregables clave como la Descripción de la Startup, los Perfiles del equipo, el registro de entrevistas, las User Stories y los artefactos de modelado (EventStorming, Context Mapping y diseño táctico DDD con Bounded Contexts). Para elaborarlos, actualicé y apliqué conocimientos en síntesis de propuesta de valor, investigación cualitativa, trazabilidad requisito–modelo y diseño dirigido por dominio, utilizando estrategias de aprendizaje como revisión de guías especializadas, práctica con plantillas y validación por retroalimentación.<br>
+        <strong>TP1: </strong><br>
+          Desarrollé pantallas de la app móvil, integré con el backend (consumo de endpoints, manejo de estados y errores) y colaboré en parte de los endpoints y <em>CRUDs</em>. Apliqué conocimientos actualizados en patrones de UI móvil, navegación, manejo de datos remotos y contratos API. Estrategias: prototipos funcionales, pruebas de integración, lectura de documentación y depuración iterativa con el equipo.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
          En la práctica, sinteticé el problema y sus causas, definí hipótesis y métricas, caractericé segmentos, prioricé épicas y tareas en el backlog y redacté historias verificables alineadas al valor. Estas actividades revelaron áreas a profundizar (experimentación Lean, métricas de impacto, técnicas de priorización), que abordé con estudio sistemático, iteración y validación continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+        <br>
+          <strong>TP1: </strong><br>
+          Diseñé la <em>Landing Page UI</em>, conduje el <em>Sprint Planning</em> y el <em>Sprint Backlog</em>, y colaboré en parte de los endpoints del backend. Actualicé y apliqué conocimientos en diseño responsive orientado a conversión (estructura, jerarquía y CTAs), planificación ágil y desglose de trabajo, además de estandarización de contratos API. Estrategias: consulta de guías de diseño y Scrum, uso de plantillas, sesiones de refinamiento y validación con el equipo.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong> <br>
         <strong>TB1: </strong><br>
            Durante TB1, presenté y sustenté entregables clave: Needfinding (User Personas, User Task Mapping, Empathy Map, Impact Mapping) y User Stories. Para ello actualicé y apliqué conocimientos en investigación centrada en el usuario, mapeo de tareas, empatía e impacto, y redacción de historias con criterios de aceptación; utilicé revisión de fuentes, análisis de casos y práctica con plantillas, fortaleciendo capacidades necesarias para el proyecto y mi desarrollo profesional.
+      <br>
+        <strong>TP1: </strong><br>
+          Desarrollé la <em>Information Architecture</em>, la <em>Landing Page UI Design</em>, <em>Mobile Applications Wireframes</em> y <em>Wireflow Diagrams</em>, y apoyé <em>Software Configuration Management</em>. Actualicé y apliqué conocimientos en sistemas de organización/etiquetado y navegación, wireframing y flujos, así como en prácticas de versionado colaborativo. Estrategias: análisis comparativo de IA, pruebas internas de recorrido, y guías de mensajes de commit/PR en el repositorio.
       </td>
       <td>
         <strong>TB1: </strong><br>
         Como equipo, durante TB1 actualizamos y aplicamos conocimientos clave en entrevistas, User Stories, arquitectura con C4 y diseño del dominio con DDD. Nos apoyamos en estrategias de aprendizaje concretas: revisión de fuentes, contraste de casos, práctica con herramientas y retroalimentación continua. Gracias a ello, convertimos hallazgos en historias priorizadas, una arquitectura coherente y límites contextuales claros, además de definir tácticas frente a competidores. Esto evidencia una actualización constante orientada tanto a nuestro desarrollo profesional como a elevar la calidad y viabilidad del proyecto de software.
+      <br><br>
+        <strong>TP1: </strong><br>
+        En TP1 actualizamos y aplicamos conocimientos prácticos para avanzar en la solución: arquitectura de la información, guías de estilo, wireframes/wireflows, mock-ups y prototipos; pantallas móviles e integración con backend; delimitación de bounded contexts, endpoints y <em>CRUDs</em>; y mensajería en tiempo real con WebSockets. Las estrategias incluyeron <em>spikes</em> técnicos, benchmarking de diseño, pruebas de integración, GitFlow con revisiones por pares y sesiones de crítica de diseño. Esto consolidó entregables funcionales y alineados al valor del producto, fortaleciendo nuestras competencias profesionales.
       </td>
     </tr>
     <tr>
@@ -612,26 +627,44 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <strong>Ariana Cecilia Agreda Sobrino</strong>  <br>
         <strong>TB1: </strong><br>
         En la práctica, ejecuté entrevistas, sintetizándolas en funcionalidades priorizadas; redacté historias verificables y modelé la arquitectura para comunicar alcance y responsabilidades. Estas tareas expusieron brechas que abordé con estudio sistemático, experimentación y validación iterativa, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto.
+        <br>
+        <strong>TP1: </strong><br>
+        Las decisiones de diseño (accesibilidad, consistencia, escalabilidad del sistema de estilos) evidenciaron la necesidad de aprendizaje continuo en internacionalización, diseño inclusivo y mantenimiento de librerías de componentes. Abordé estas brechas con estudio focalizado, prototipos y revisiones periódicas con el equipo, reafirmando el aprendizaje permanente como práctica.
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong>  <br>
         <strong>TB1: </strong><br>
          En la práctica, estructuré el panorama competitivo, identifiqué oportunidades y riesgos, las traduje en tácticas priorizadas y epics, detallé historias verificables y definí contextos funcionales coherentes con los objetivos del producto. Estas tareas revelaron áreas de mejora que abordé con estudio sistemático, experimentación guiada y validación iterativa, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución sostenida de proyectos de software.
+        <br>
+        <strong>TP1: </strong><br>
+        La implementación de WebSockets y <em>CRUDs</em> en BCs mostró retos de concurrencia, seguridad y observabilidad. Reconozco la necesidad de profundizar continuamente en patrones de integración, pruebas automatizadas y monitoreo, aplicando lecturas dirigidas, <em>spikes</em> y code reviews como estrategia sostenida.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong>  <br>
         <strong>TB1: </strong><br>
           En la práctica, definí la visión y alcance del producto, caractericé roles y responsabilidades, documenté hallazgos de entrevistas y los convertí en historias verificables; además, mapeé eventos del dominio y establecí límites contextuales coherentes. Estas actividades evidenciaron brechas que abordé con estudio sistemático, experimentación con herramientas de modelado y ciclos de mejora continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional sólido y la evolución del proyecto de software.
+        <br>
+        <strong>TP1: </strong><br>
+        La integración app-backend evidenció brechas en manejo de estados, errores y resiliencia frente a fallos de red. Fortalezco un plan de aprendizaje continuo en pruebas de UI/integración, patrones de sincronización y mejora del rendimiento, con iteraciones guiadas por métricas y retroalimentación.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
           En la práctica, sinteticé el problema y sus causas, definí hipótesis y métricas, caractericé segmentos, prioricé épicas y tareas en el backlog y redacté historias verificables alineadas al valor. Estas actividades revelaron áreas a profundizar (experimentación Lean, métricas de impacto, técnicas de priorización), que abordé con estudio sistemático, iteración y validación continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+        <br>
+        <strong>TP1: </strong><br>
+        El diseño de la landing y la gestión del Sprint mostraron oportunidades de mejora en SEO, performance y estimación ágil. Reconozco la necesidad de seguir aprendiendo en medición de conversión, <em>slicing</em> vertical y optimización de entregables, mediante estudio guiado y retroalimentación continua.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong>  <br>
         <strong>TB1: </strong><br>
           En la práctica, caractericé perfiles y tareas, modelé motivaciones/dolores y objetivos de impacto, y traduje los hallazgos en historias priorizadas y verificables. Este ciclo reveló áreas a profundizar que atendí con estudio sistemático, experimentación y validación continua, por lo que reconozco la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+      <br>
+        <strong>TP1: </strong><br>
+        La arquitectura de información y los wireflows requirieron iterar nomenclaturas y rutas, y validar encontrabilidad. Mantengo un enfoque de aprendizaje continuo en pruebas de usabilidad, patrones de navegación y documentación colaborativa, usando revisiones y experimentación controlada como estrategia.
       </td>
       <td>
         <strong>TB1: </strong><br>
         En TB1 confirmamos que el progreso del proyecto exige aprendizaje continuo: perfeccionamos técnicas de entrevista y síntesis, formulación de historias verificables, arquitectura con C4 y límites contextuales con DDD, además de análisis competitivo, segmentación y métricas Lean. Detectamos brechas y las abordamos con estudio sistemático, experimentación y validación iterativa. Asumimos el aprendizaje permanente como práctica de equipo —lecturas focalizadas, pruebas con herramientas, revisión por pares y retroalimentación continua— para sostener un desempeño profesional competente y la evolución del proyecto de software.
+      <br><br>
+        <strong>TP1: </strong><br>
+        En TP1 reafirmamos el aprendizaje permanente ante retos concretos: accesibilidad y consistencia del sistema de estilos, integración móvil-backend, definición de BCs y diseño de endpoints/CRUDs, comunicación en tiempo real con WebSockets, y planeación ágil efectiva. Como estrategia, institucionalizamos <em>spikes</em>, checklists de PR, sesiones de crítica de diseño, pruebas de integración y documentación viva. Esto fortalece nuestra capacidad de adquirir y aplicar nuevos conocimientos de forma continua, elevando la calidad del producto.
       </td>
     </tr>
   </tbody>
