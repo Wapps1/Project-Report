@@ -9644,6 +9644,36 @@ Como parte del proceso de aseguramiento de la calidad del software, en este spri
 
 ###### 4.2.1.7. Software Deployment Evidence for Sprint Review
 ###### 4.2.1.8. Team Collaboration Insights during Sprint
+
+Durante el desarrollo del Sprint 1, todos los miembros del equipo participaron activamente en la implementación de los componentes principales del sistema Redcarga, distribuyendo responsabilidades entre las áreas de backend, frontend móvil y landing page.
+La comunicación se mantuvo constante a través de Discord y GitHub, asegurando la correcta integración entre los módulos y la consistencia en los avances del sprint.
+El trabajo colaborativo se centró en garantizar la conectividad entre la app móvil y los servicios del backend, así como en el desarrollo de una landing page funcional que transmita la propuesta de valor del producto.
+
+| **Nombre**                               | **Actividad**                                                                                                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hernández Uchuya, María Patricia**     | Implementación de endpoints en el backend (identidad, solicitudes, proveedores), configuración de Swagger y coordinación técnica del sprint.       |
+| **Agreda Sobrino, Ariana Cecilia**       | Desarrollo de controladores, queries y documentación de servicios (Swagger/OpenAPI). Soporte en pruebas de integración backend–frontend.               |
+| **Elera Rodríguez, Mauricio Daniel**     | Implementación de pantallas móviles (login, registro, solicitudes, cotizaciones) e integración con los endpoints del backend.                          |
+| **Saldaña Ayala, Fabiola del Rocío**     | Diseño y validación UX/UI de la app móvil y apoyo en la creación de vistas informativas de la landing page.                                            |
+| **Belledonne Espinoza, Claudia Valeria** | Implementación de la mayoría de bounded contexts del backend (fleet, planning, providers, geoadmin), desarrollo de endpoints y lógica de negocio. |
+
+A continuación, se presentan ejemplos de métricas de participación desde los repositorios oficiales, evidenciando la contribución de cada miembro del equipo en los diferentes módulos del proyecto.
+
+**Landing Page**
+![](./img/Chapter-4/Team_Collaboration_Pulse_LandingPage.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_LandingPage.png)
+![](./img/Chapter-4/Team_Collaboration_Network_LandingPage.png)
+
+**Backend**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Backend.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_Backend.png)
+![](./img/Chapter-4/Team_Collaboration_Network_Backend.png)
+
+**Frontend**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Frontend.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_Frontend.png)
+![](./img/Chapter-4/Team_Collaboration_Network_Frontend.png)
+
 #### 4.3. Validation Interviews
 ##### 4.3.1. Diseño de Entrevistas
 ##### 4.3.2. Registro de Entrevistas
