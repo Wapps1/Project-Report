@@ -282,14 +282,14 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
       - [1.2.2.3. Lean UX Hypothesis Statements](#1223-lean-ux-hypothesis-statements)
       - [1.2.2.4. Lean UX Canvas](#1224-lean-ux-canvas)
   - [1.3. Segmentos objetivo](#13-segmentos-objetivo)
-    - [🎯 Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial](#-segmento-objetivo-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
-      - [📊 Aspectos Demográficos](#-aspectos-demográficos)
-      - [🌍 Aspectos Geográficos](#-aspectos-geográficos)
-      - [🧠 Aspectos Psicográficos](#-aspectos-psicográficos)
-    - [🚛 Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga](#-segmento-objetivo-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
-      - [📊 Aspectos Demográficos](#-aspectos-demográficos-1)
-      - [🌍 Aspectos Geográficos](#-aspectos-geográficos-1)
-      - [🧠 Aspectos Psicográficos](#-aspectos-psicográficos-1)
+    - [Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial](#segmento-objetivo-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
+      - [Aspectos Demográficos](#aspectos-demográficos)
+      - [Aspectos Geográficos](#aspectos-geográficos)
+      - [Aspectos Psicográficos](#aspectos-psicográficos)
+    - [Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga](#segmento-objetivo-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
+      - [Aspectos Demográficos](#aspectos-demográficos-1)
+      - [Aspectos Geográficos](#aspectos-geográficos-1)
+      - [Aspectos Psicográficos](#aspectos-psicográficos-1)
     - [2.1.2. Estrategias y tácticas frente a competidores](#212-estrategias-y-tácticas-frente-a-competidores)
   - [2.2. Entrevistas](#22-entrevistas)
     - [2.2.1. Diseño de entrevistas](#221-diseño-de-entrevistas)
@@ -297,31 +297,31 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
       - [**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**](#segmento-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
     - [2.2.2. Registro de entrevistas](#222-registro-de-entrevistas)
   - [📊 **Análisis del Segmento Objetivo #1**](#-análisis-del-segmento-objetivo-1)
-  - [📋 **Entrevista #1**](#-entrevista-1)
-    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista)
-    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista)
-  - [📋 **Entrevista #2**](#-entrevista-2)
-    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-1)
-    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-1)
-  - [📋 **Entrevista #3**](#-entrevista-3)
-    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-2)
-    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-2)
-  - [📊 **Análisis del Segmento Objetivo #2**](#-análisis-del-segmento-objetivo-2)
-  - [📋 **Entrevista #4**](#-entrevista-4)
-    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-3)
-    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-3)
-  - [📋 **Entrevista #5**](#-entrevista-5)
-    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-4)
-    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-4)
-  - [📋 **Entrevista #6**](#-entrevista-6)
-    - [📸 **Imagen de la Entrevista**](#-imagen-de-la-entrevista-5)
-    - [📝 **Resumen de la Entrevista**](#-resumen-de-la-entrevista-5)
+  - [**Entrevista #1**](#entrevista-1)
+    - [**Imagen de la Entrevista**](#imagen-de-la-entrevista)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista)
+  - [**Entrevista #2**](#entrevista-2)
+    - [**Imagen de la Entrevista**](#imagen-de-la-entrevista-1)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-1)
+  - [**Entrevista #3**](#entrevista-3)
+    - [**Imagen de la Entrevista**](#imagen-de-la-entrevista-2)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-2)
+  - [**Análisis del Segmento Objetivo #2**](#análisis-del-segmento-objetivo-2)
+  - [**Entrevista #4**](#entrevista-4)
+    - [**Imagen de la Entrevista**](#imagen-de-la-entrevista-3)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-3)
+  - [**Entrevista #5**](#entrevista-5)
+    - [**Imagen de la Entrevista**](#imagen-de-la-entrevista-4)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-4)
+  - [**Entrevista #6**](#entrevista-6)
+    - [**Imagen de la Entrevista**](#imagen-de-la-entrevista-5)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-5)
     - [2.2.3. Análisis de entrevistas](#223-análisis-de-entrevistas)
-  - [📊 **Análisis del Segmento Objetivo #2**](#-análisis-del-segmento-objetivo-2-1)
-    - [🎯 **Características Objetivas**](#-características-objetivas)
-      - [👥 **Demografía y Rol**](#-demografía-y-rol)
-      - [🌍 **Ámbito Geográfico**](#-ámbito-geográfico)
-      - [📦 **Portafolio de Carga**](#-portafolio-de-carga)
+  - [**Análisis del Segmento Objetivo #2**](#análisis-del-segmento-objetivo-2-1)
+    - [**Características Objetivas**](#características-objetivas)
+      - [**Demografía y Rol**](#demografía-y-rol)
+      - [**Ámbito Geográfico**](#ámbito-geográfico)
+      - [**Portafolio de Carga**](#portafolio-de-carga)
       - [🔄 **Proceso Actual (de consulta a envío)**](#-proceso-actual-de-consulta-a-envío)
       - [📞 **Canales de Captación y Atención**](#-canales-de-captación-y-atención)
       - [💰 **Pagos**](#-pagos)
@@ -403,50 +403,50 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
     - [🔐 **Sesiones y Seguridad**](#-sesiones-y-seguridad-2)
     - [📦 **Solicitud de Envío de Carga**](#-solicitud-de-envío-de-carga-2)
     - [🤝 **Trato (Negociación \& Chat)**](#-trato-negociación--chat-1)
-    - [💰 **Pago**](#-pago-2)
-    - [📋 **Documentación (Guías)**](#-documentación-guías-2)
-    - [🔔 **Notificaciones**](#-notificaciones-2)
-    - [📝 **Plantillas**](#-plantillas-2)
-    - [💬 **Cotizaciones (Ofertas)**](#-cotizaciones-ofertas)
-    - [⚖️ **Disputas**](#️-disputas-2)
-    - [⭐ **Calificaciones (Reputación)**](#-calificaciones-reputación)
-    - [🔄 **Cambio Post-Pago (Ajustes)**](#-cambio-post-pago-ajustes)
+    - [**Pago**](#pago)
+    - [**Documentación (Guías)**](#documentación-guías)
+    - [**Notificaciones**](#notificaciones)
+    - [**Plantillas**](#plantillas)
+    - [**Cotizaciones (Ofertas)**](#cotizaciones-ofertas)
+    - [**Disputas**](#disputas)
+    - [**Calificaciones (Reputación)**](#calificaciones-reputación)
+    - [**Cambio Post-Pago (Ajustes)**](#cambio-post-pago-ajustes)
     - [🛰️ **Tracking (Viajes)**](#️-tracking-viajes-1)
-  - [🏗️ **Step 5 — Project to Bounded Contexts**](#️-step-5--project-to-bounded-contexts)
-    - [📋 **Descripción**](#-descripción-5)
-    - [📊 **Mapa de Bounded Contexts**](#-mapa-de-bounded-contexts)
-    - [🔐 **IAM (Identity \& Access Management)**](#-iam-identity--access-management)
-    - [👤 **Identity (Identity \& KYC)**](#-identity-identity--kyc)
-    - [🔔 **Notifications**](#-notifications)
-    - [👥 **Customers**](#-customers)
-    - [🏢 **Providers**](#-providers)
-    - [🚛 **Fleet**](#-fleet)
-    - [📋 **Planning**](#-planning)
-    - [📦 **Requests**](#-requests)
-    - [⭐ **Reviews**](#-reviews)
-    - [🛰️ **Trips**](#️-trips)
-    - [📋 **Waybills**](#-waybills)
-    - [💰 **Payments**](#-payments)
-    - [🤝 **Deals**](#-deals)
-    - [⚖️ **Disputes**](#️-disputes)
+  - [**Step 5 — Project to Bounded Contexts**](#step-5--project-to-bounded-contexts)
+    - [**Descripción**](#descripción)
+    - [**Mapa de Bounded Contexts**](#mapa-de-bounded-contexts)
+    - [**IAM (Identity \& Access Management)**](#iam-identity--access-management)
+  - [**Identity (Identity \& KYC)**](#identity-identity--kyc)
+    - [**Notifications**](#notifications)
+    - [**Customers**](#customers)
+    - [**Providers**](#providers)
+    - [**Fleet**](#fleet)
+    - [**Planning**](#planning)
+    - [**Requests**](#requests)
+    - [**Reviews**](#reviews)
+    - [**Trips**](#trips)
+    - [**Waybills**](#waybills)
+    - [**Payments**](#payments)
+    - [**Deals**](#deals)
+    - [**Disputes**](#disputes)
       - [2.5.1.2. Domain Message Flows Modeling](#2512-domain-message-flows-modeling)
-    - [📋 **Descripción**](#-descripción-6)
-    - [🔄 **Escenarios de Integración**](#-escenarios-de-integración)
-      - [1️⃣ **Alta de Cliente con Verificación KYC**](#1️⃣-alta-de-cliente-con-verificación-kyc)
-      - [2️⃣ **Onboarding de Proveedor (Empresa Habilitada)**](#2️⃣-onboarding-de-proveedor-empresa-habilitada)
-      - [3️⃣ **Alta de Vehículo y Disponibilidad Publicable**](#3️⃣-alta-de-vehículo-y-disponibilidad-publicable)
-      - [4️⃣ **Publicación de Solicitud de Envío**](#4️⃣-publicación-de-solicitud-de-envío)
-      - [5️⃣ **Cotización e Inicio de Trato**](#5️⃣-cotización-e-inicio-de-trato)
+    - [**Descripción**](#descripción-1)
+    - [**Escenarios de Integración**](#escenarios-de-integración)
+      - [**Alta de Cliente con Verificación KYC**](#alta-de-cliente-con-verificación-kyc)
+      - [**Onboarding de Proveedor (Empresa Habilitada)**](#onboarding-de-proveedor-empresa-habilitada)
+      - [**Alta de Vehículo y Disponibilidad Publicable**](#alta-de-vehículo-y-disponibilidad-publicable)
+      - [**Publicación de Solicitud de Envío**](#publicación-de-solicitud-de-envío)
+      - [**Cotización e Inicio de Trato**](#cotización-e-inicio-de-trato)
       - [2.5.1.3. Bounded Context Canvases](#2513-bounded-context-canvases)
-    - [📋 **Descripción**](#-descripción-7)
-    - [🏗️ **Bounded Contexts del Sistema**](#️-bounded-contexts-del-sistema)
-      - [💰 **Payments**](#-payments-1)
-      - [🤝 **Deals**](#-deals-1)
-      - [📦 **Requests**](#-requests-1)
-      - [📋 **Planning**](#-planning-1)
-      - [🛰️ **Trips**](#️-trips-1)
-      - [📋 **Waybills**](#-waybills-1)
-    - [📊 **Resumen de Bounded Contexts**](#-resumen-de-bounded-contexts)
+    - [**Descripción**](#descripción-2)
+    - [**Bounded Contexts del Sistema**](#bounded-contexts-del-sistema)
+      - [**Payments**](#payments-1)
+      - [**Deals**](#deals-1)
+      - [**Requests**](#requests-1)
+      - [**Planning**](#planning-1)
+      - [**Trips**](#trips-1)
+      - [**Waybills**](#waybills-1)
+    - [**Resumen de Bounded Contexts**](#resumen-de-bounded-contexts)
     - [2.5.2. Context Mapping](#252-context-mapping)
     - [2.5.3. Software Architecture](#253-software-architecture)
       - [2.5.3.1. Software Architecture Context Level Diagrams](#2531-software-architecture-context-level-diagrams)
@@ -836,6 +836,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
 # Capítulo I: Presentación
 
 ## 1.1. Startup Profile
+A continuación, presentaremos al startup, a los miembros del equipo y nuestra solución tecnológica. 
 ### 1.1.1. Descripción de la Startup
 
 **Descripción.**  
@@ -921,6 +922,7 @@ Convertirnos en una empresa tecnológica referente en Latinoamérica, reconocida
 </table>
 
 ## 1.2. Solution Profile
+A continuación, analizaremos la problemática y nuestros segmentos objetivos.
 ### 1.2.1. Antecedentes y problemática
 
 **What (Qué)**
@@ -1059,19 +1061,19 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 
 ## 1.3. Segmentos objetivo
 
-### 🎯 Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial
+### Segmento Objetivo #1: Personas o empresas que quieren transportar carga de forma interprovincial
 
-#### 📊 Aspectos Demográficos
+#### Aspectos Demográficos
 - **Sexo:** Masculino y Femenino
 - **Edades:** 18 a 65+ años (personas naturales) y responsables de logística/administración en empresas
 - **Nivel socioeconómico:** Clases A, B, C, D y E
 
-#### 🌍 Aspectos Geográficos
+#### Aspectos Geográficos
 - **Nacionalidad:** Peruana
 - **Zona geográfica:** Urbana y rural
 - **Departamento:** Todos los departamentos del Perú (incluida Lima Metropolitana y Callao)
 
-#### 🧠 Aspectos Psicográficos
+#### Aspectos Psicográficos
 - Valoran comparar precios y tiempos de entrega para optimizar costo/beneficio
 - Buscan formalidad (emisión de guía de remisión cuando corresponda) y trazabilidad en tiempo real
 - Prefieren procesos simples desde el móvil: solicitud → cotización → trato → pago en la app
@@ -1080,19 +1082,19 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 
 ---
 
-### 🚛 Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga
+### Segmento Objetivo #2: Administradores de empresas que se encargan del transporte interprovincial de carga
 
-#### 📊 Aspectos Demográficos
+#### Aspectos Demográficos
 - **Sexo:** Masculino y Femenino
 - **Edades:** 21 a 65+ años (conductores y administradores/operadores de flota)
 - **Nivel socioeconómico:** Clases A, B, C, D y E (predominio de micro, pequeñas y medianas empresas; compatible con grandes flotas)
 
-#### 🌍 Aspectos Geográficos
+#### Aspectos Geográficos
 - **Nacionalidad:** Peruana
 - **Zona geográfica:** Urbana y rural
 - **Departamento:** Todos los departamentos del Perú (incluida Lima Metropolitana y Callao)
 
-#### 🧠 Aspectos Psicográficos
+#### Aspectos Psicográficos
 - Quieren captar demanda formal y estable para mejorar ocupación y flujo de caja
 - Valoran una app que facilite cotizar rápido, chatear con el cliente y gestionar documentos (guía de transportista)
 - Necesitan activar geolocalización para generar confianza y cumplir con hitos operativos (recogido/en ruta/entregado)
@@ -1558,6 +1560,7 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 <br>
 
 ## 2.2. Entrevistas
+Para conocer las necesidades de nuestros segmentos objetivos, realizamos entrevistas las cuales presentaremos en este punto.
 ### 2.2.1. Diseño de entrevistas
 
 #### **Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
@@ -1616,7 +1619,7 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 ## 📊 **Análisis del Segmento Objetivo #1**
 
 *Personas o empresas que quieren transportar carga de forma interprovincial*
-## 📋 **Entrevista #1**
+## **Entrevista #1**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -1645,15 +1648,15 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
   </tr>
 </table>
 
-### 📸 **Imagen de la Entrevista**
+### **Imagen de la Entrevista**
 
 <img src="img/entrevistas-img/entrevista-2.png" alt="Entrevista 2 - Jocelyn Damaly Almerco Rojas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 📝 **Resumen de la Entrevista**
+### **Resumen de la Entrevista**
 Jocelyn Damaly Almerco, de 22 años y residente de Lima, es dueña de un negocio mayorista de ropa importada que vende a boutiques, ferias y emprendedores en provincias; realiza envíos interprovinciales todas las semanas (6 a 8 al mes), generalmente en bultos grandes o “pacas” de 20 a 60 prendas por caja. Para encontrar transporte recurre a recomendaciones en grupos de Facebook y WhatsApp y, a veces, a Google; compara precio, seguridad y rapidez, solicita entre 3 y 4 cotizaciones y demora de 1 a 2 días en decidir, contactando sobre todo por WhatsApp y llamadas (y de manera presencial si el envío es muy grande). Suele lidiar con cotizaciones confusas porque no siempre queda claro si cobran por peso o por volumen ni si incluyen seguro. Asimismo con trámites de guía de remisión, factura y comprobantes; paga por transferencia o depósito y le incomoda cuando le exigen efectivo para montos altos. Sus prioridades son la seguridad, la rapidez, un precio competitivo y una buena atención al cliente; ha sufrido demoras de varios días, cajas maltratadas e incluso la pérdida total de un paquete. Para una app ideal, considera imprescindibles la cotización inmediata por peso/volumen (con el “peso cobrable” claro), contratar seguro desde la app, pagos digitales seguros (Yape, Plin, tarjeta, transferencia), seguimiento en tiempo real y un historial con comprobantes digitales para su control contable.
 
 ---
-## 📋 **Entrevista #2**
+## **Entrevista #2**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -1682,18 +1685,18 @@ Jocelyn Damaly Almerco, de 22 años y residente de Lima, es dueña de un negocio
   </tr>
 </table>
 
-### 📸 **Imagen de la Entrevista**
+### **Imagen de la Entrevista**
 
 <img src="img/entrevistas-img/entrevista-1.png" alt="Entrevista 1 - Alexander Miranda Vivanco" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 📝 **Resumen de la Entrevista**
+### **Resumen de la Entrevista**
 Alexander Miranda Vivanco, 25 años, radicado en Lima, vende dispositivos electrónicos y realiza envíos interprovinciales a diario. Para encontrar transporte recurre a redes sociales, priorizando empresas con buenas referencias, y suele cerrar acuerdos en un día. Se comunica principalmente por teléfono o WhatsApp y compara entre cuatro y cinco cotizaciones antes de decidirse. Sus principales fricciones son la comparación entre propuestas,a veces poco claras entre sí, y la demora en las respuestas de los transportistas, lo que termina retrasando sus despachos. Le solicitan guía de remisión; paga por transferencia o tarjeta sin mayores inconvenientes. Valora por encima de todo la seguridad y la rapidez, seguidas de un precio competitivo y una atención al cliente eficaz; ha experimentado demoras e incluso la pérdida de un paquete en ruta. En una app ideal, considera indispensables la cotización inmediata y el seguimiento en tiempo real de sus envíos.
 
 
 
 ---
 
-## 📋 **Entrevista #3**
+## **Entrevista #3**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -1722,20 +1725,20 @@ Alexander Miranda Vivanco, 25 años, radicado en Lima, vende dispositivos electr
   </tr>
 </table>
 
-### 📸 **Imagen de la Entrevista**
+### **Imagen de la Entrevista**
 
 <img src="img/entrevistas-img/entrevista-3.png" alt="Entrevista 3 - Mariano Oblitas" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 📝 **Resumen de la Entrevista**
+### **Resumen de la Entrevista**
 Mariano Oblitas, de 19 años y residente en Lima, tiene un emprendimiento de venta de pesas y barras y realiza envíos interprovinciales una o dos veces por semana. Sus paquetes suelen pesar 10–15 kg y, cuando incluye barras, viajan en cajas grandes. Para elegir transportistas busca referencias en comunidades de vendedores (Mercado Libre y grupos de Facebook) y prioriza la confiabilidad/renombre porque, según cuenta, algunas empresas pequeñas no cumplen, llegan tarde, malogran el paquete o mandan a la dirección equivocada. El tiempo para encontrar una empresa adecuada puede ser de 3–4 horas, en especial por coberturas parciales (hay transportistas que solo van al norte o al sur). Suele contactar a 3–4 proveedores del “ranking” compartido por la comunidad y decide combinando fiabilidad y precio. Cotizar no es sencillo: frecuentemente no responden rápido o brindan información incompleta (dicen solo el precio, no aclaran si incluye seguro, si el envío es directo o si lo derivan, etc.). En requisitos, le piden Guía de Remisión, DNI del remitente, datos de origen (para asignarle almacén de despacho) y datos del destinatario. Paga con efectivo y Yape/Plin, pero a veces el transportista no acepta el medio elegido, obligándolo a buscar una alternativa. En prioridades, valora todo (seguridad, precio, rapidez y atención), pero pone por delante el precio y la seguridad: puede tolerar 3–5 días de tránsito si el costo no le genera pérdidas y si el producto viaja asegurado para cubrir daños o robos. Para una app ideal, quiere comparar precios fácilmente, ver reseñas reales de clientes, contar con seguimiento en tiempo real tipo “tracking” y chatear con el transportista dentro de la plataforma.
 
 
 ---
-## 📊 **Análisis del Segmento Objetivo #2**
+## **Análisis del Segmento Objetivo #2**
 
 *Administradores de empresas que se encargan del transporte interprovincial de carga*
 
-## 📋 **Entrevista #4**
+## **Entrevista #4**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -1764,11 +1767,11 @@ Mariano Oblitas, de 19 años y residente en Lima, tiene un emprendimiento de ven
   </tr>
 </table>
 
-### 📸 **Imagen de la Entrevista**
+### **Imagen de la Entrevista**
 
 <img src="img/entrevistas-img/entrevista-4.png" alt="Entrevista 4 - Vladimir Rogel Elera Ozeta" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 📝 **Resumen de la Entrevista**
+### **Resumen de la Entrevista**
 
 Vladimir Rogel Elera Ozeta, de 51 años, es administrador de una empresa que opera principalmente en Chiclayo y Tumbes. Señala que gestionan todo tipo de carga incluyendo motos, mototaxis, autos y paquetería y que el proceso actual va de forma directa y presencial: los clientes llegan a la oficina, realizan la consulta y allí mismo se coordina el envío.
 
@@ -1778,7 +1781,7 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
 
 ---
 
-## 📋 **Entrevista #5**
+## **Entrevista #5**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -1807,11 +1810,11 @@ Para captar clientes, su principal canal sigue siendo el boca a boca, aunque rec
   </tr>
 </table>
 
-### 📸 **Imagen de la Entrevista**
+### **Imagen de la Entrevista**
 
 <img src="img/entrevistas-img/entrevista-5.png" alt="Entrevista 5" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 📝 **Resumen de la Entrevista**
+### **Resumen de la Entrevista**
 
 Antonieta Ayra (67), gerente de una empresa con operación en Chiclayo, explica que reciben con mayor frecuencia mototaxis, motos lineales, motores, televisores nuevos, mudanzas y mercadería diversa. El flujo actual es presencial: el cliente se acerca a la oficina, solicita el precio y, si acepta, deja boleta o factura para que la empresa emita su guía de transportes. Señala que la tramitación en sí no suele generar demoras; los atrasos aparecen al arribo cuando el consignatario no recoge la carga y esta puede quedar 2–3 días en la oficina de destino. Resalta que la captación de clientes se apoya en la antigüedad de la empresa y en la seguridad del servicio: muchos usuarios confían su producto al local de Chiclayo para el traslado "con todo seguro".
 
@@ -1819,7 +1822,7 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
 
 ---
 
-## 📋 **Entrevista #6**
+## **Entrevista #6**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -1848,11 +1851,11 @@ En materia documentaria, subraya la formalidad: boleta para persona natural y fa
   </tr>
 </table>
 
-### 📸 **Imagen de la Entrevista**
+### **Imagen de la Entrevista**
 
 <img src="img/entrevistas-img/entrevista-6.png" alt="Entrevista 6" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 📝 **Resumen de la Entrevista**
+### **Resumen de la Entrevista**
 
 Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente paquetería, mudanzas, mototaxis y motos lineales, con un flujo operativo breve y puntual al que aplican un seguimiento riguroso para asegurar que todo marche bien. Señala que los retrasos más habituales provienen de la verificación de que la encomienda efectivamente llegue a destino en el tiempo previsto. Para captar clientes usan atención directa en los counters, WhatsApp y teléfono; los más efectivos son WhatsApp y el trato personal en mostrador. Afirma que los eligen por puntualidad, rapidez y precio. En lo documentario, cada envío debe ir con declaración jurada, boleta, guía de remisión o factura; la fricción típica surge por la informalidad de algunos clientes, a quienes piden firmar una declaración jurada si no cuentan con los papeles exactos. No reporta problemas en contratos, pagos o facturación. El seguimiento se realiza por GPS. Sobre una aplicación, valora centralizar cotizaciones, contratos, pagos y tracking para atraer y atender a más clientes.
 
@@ -1871,7 +1874,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 <!-- =============================================== -->
 <hr>
 
-<h2>📊 <strong>Análisis del Segmento Objetivo #1</strong></h2>
+<h2><strong>Análisis del Segmento Objetivo #1</strong></h2>
 <p><strong>Dirigido a:</strong> Personas o representantes de empresas que desean enviar carga interprovincial y buscan seleccionar entre distintas propuestas el servicio más adecuado.</p>
 
 <p><em>Base: 3 entrevistas (Jocelyn, Alexander, Mariano)</em></p>
@@ -1882,9 +1885,9 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 <!-- ========================= -->
 <!-- Características Objetivas -->
 <!-- ========================= -->
-<h3>🎯 <strong>Características Objetivas</strong></h3>
+<h3><strong>Características Objetivas</strong></h3>
 
-<h4>👥 <strong>Demografía y rol</strong></h4>
+<h4><strong>Demografía y rol</strong></h4>
 <table align="center" style="margin:0 auto;">
   <tr>
     <td><strong>Rango de edad</strong></td>
@@ -1900,7 +1903,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
   </tr>
 </table>
 
-<h4>🌍 <strong>Ámbito y frecuencia</strong></h4>
+<h4><strong>Ámbito y frecuencia</strong></h4>
 <table align="center" style="margin:0 auto;">
   <tr>
     <td><strong>Destino</strong></td>
@@ -1916,7 +1919,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
   </tr>
 </table>
 
-<h4>🔎 <strong>Búsqueda y selección</strong></h4>
+<h4><strong>Búsqueda y selección</strong></h4>
 <table align="center" style="margin:0 auto;">
   <tr>
     <td><strong>Canales de descubrimiento</strong></td>
@@ -1940,7 +1943,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
   </tr>
 </table>
 
-<h4>💳 <strong>Pagos</strong></h4>
+<h4><strong>Pagos</strong></h4>
 <table align="center" style="margin:0 auto;">
   <tr>
     <td><strong>Métodos usados</strong></td>
@@ -1952,7 +1955,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
   </tr>
 </table>
 
-<h4>📋 <strong>Documentación</strong></h4>
+<h4><strong>Documentación</strong></h4>
 <table align="center" style="margin:0 auto;">
   <tr>
     <td><strong>Requisitos comunes</strong></td>
@@ -1967,9 +1970,9 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 <!-- ========================= -->
 <!-- Características Subjetivas -->
 <!-- ========================= -->
-<h3>🧠 <strong>Características Subjetivas</strong></h3>
+<h3><strong>Características Subjetivas</strong></h3>
 
-<h4>⭐ <strong>Valores y prioridades</strong></h4>
+<h4><strong>Valores y prioridades</strong></h4>
 <table align="center" style="margin:0 auto;">
   <tr>
     <td><strong>Top 1–3</strong></td>
@@ -1989,7 +1992,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 <!-- Fricciones y puntos de dolor -->
 <!-- ============================ -->
 <!-- ⚠️ Fricciones Operativas Identificadas -->
-<h3>⚠️ <strong>Fricciones Operativas Identificadas</strong></h3>
+<h3><strong>Fricciones Operativas Identificadas</strong></h3>
 <table align="center" style="margin:0 auto; border-collapse:collapse;" border="1" cellpadding="8">
   <thead>
     <tr>
@@ -2022,7 +2025,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 </table>
 
 <!-- 💡 Necesidades y Deseos -->
-<h3>💡 <strong>Necesidades y Deseos</strong></h3>
+<h3><strong>Necesidades y Deseos</strong></h3>
 <table align="center" style="margin:16px auto; border-collapse:collapse;" border="1" cellpadding="8">
   <thead>
     <tr>
@@ -2059,7 +2062,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 </table>
 
 <!-- 🎯 Oportunidades Claras para Red Carga -->
-<h3>🎯 <strong>Oportunidades Claras para Red Carga</strong></h3>
+<h3><strong>Oportunidades Claras para Red Carga</strong></h3>
 <table align="center" style="margin:0 auto; border-collapse:collapse;" border="1" cellpadding="8">
   <thead>
     <tr>
@@ -2108,15 +2111,15 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
 
 <div align="center">
 
-## 📊 **Análisis del Segmento Objetivo #2**
+## **Análisis del Segmento Objetivo #2**
 
 *Administradores de empresas que se encargan del transporte interprovincial de carga*
 
 ---
 
-### 🎯 **Características Objetivas**
+### **Características Objetivas**
 
-#### 👥 **Demografía y Rol**
+#### **Demografía y Rol**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -2129,7 +2132,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
   </tr>
 </table>
 
-#### 🌍 **Ámbito Geográfico**
+#### **Ámbito Geográfico**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -2142,7 +2145,7 @@ Erika Rodríguez, 46 años, administradora, comenta que gestionan principalmente
   </tr>
 </table>
 
-#### 📦 **Portafolio de Carga**
+#### **Portafolio de Carga**
 
 <table align="center" style="margin: 0 auto;">
   <tr>
@@ -5101,7 +5104,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** WS/Push, MediaStore, Notificaciones y hand-off a Pagos
 
-### 💰 **Pago**
+###  **Pago**
 
 <img src="img/event-storming/step4/pago.png" alt="Pago - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5113,7 +5116,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** Webhooks con PSP, Notificaciones; eventos conducen a Trato formalizado y programan liquidaciones
 
-### 📋 **Documentación (Guías)**
+###  **Documentación (Guías)**
 
 <img src="img/event-storming/step4/documentacion.png" alt="Documentación - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5125,7 +5128,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** Autoridad Fiscal/OSE, MediaStore, Notificaciones; hand-off para habilitar Viajes
 
-### 🔔 **Notificaciones**
+###  **Notificaciones**
 
 <img src="img/event-storming/step4/notificaciones.png" alt="Notificaciones - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5137,7 +5140,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** FCM/APNs, SES/Email, SMS, in-app/WS con webhooks para entrega/fallo
 
-### 📝 **Plantillas**
+###  **Plantillas**
 
 <img src="img/event-storming/step4/plantillas.png" alt="Plantillas - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5149,7 +5152,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** MediaStore y Geocoding; triggers desde Solicitudes para autoguardado
 
-### 💬 **Cotizaciones (Ofertas)**
+###  **Cotizaciones (Ofertas)**
 
 <img src="img/event-storming/step4/cotizaciones.png" alt="Cotizaciones - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5161,7 +5164,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** Matching/Index y Notificaciones
 
-### ⚖️ **Disputas**
+###  **Disputas**
 
 <img src="img/event-storming/step4/disputas.png" alt="Disputas - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5173,7 +5176,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** MediaStore, Notificaciones, y hand-offs a Pagos y Reputación
 
-### ⭐ **Calificaciones (Reputación)**
+###  **Calificaciones (Reputación)**
 
 <img src="img/event-storming/step4/calificaciones.png" alt="Calificaciones - Orchestration" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5185,7 +5188,7 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** Moderation/NLP, Notificaciones; cálculo de métricas y badges tras desbloqueo
 
-### 🔄 **Cambio Post-Pago (Ajustes)**
+###  **Cambio Post-Pago (Ajustes)**
 
 <img src="img/event-storming/step4/cambio-post-pag-1.png" alt="Cambio Post-Pago - Orchestration 1" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5211,17 +5214,17 @@ En esta cuarta fase del Event Storming, para cada timeline añadimos Commands (i
 
 **Sistemas Externos:** Telemática, Maps, MediaStore, Notificaciones; hand-offs a Reputación, Disputas y Liquidaciones
 
-## 🏗️ **Step 5 — Project to Bounded Contexts**
+##  **Step 5 — Project to Bounded Contexts**
 
-### 📋 **Descripción**
+###  **Descripción**
 
 En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en Bounded Contexts (IAM, Identity, Customers, Providers, Fleet, Planning, Requests, Deals, Payments, Waybills, Trips, Reviews, Disputes, Notifications), definiendo para cada BC qué timelines contiene y el orden operativo interno, más los eventos publicados/consumidos entre BCs. El resultado es un mapa de contextos listo para arquitectura modular o microservicios.
 
-### 📊 **Mapa de Bounded Contexts**
+###  **Mapa de Bounded Contexts**
 
 <img src="img/event-storming/step-5.png" alt="Step 5 - Bounded Contexts" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 🔐 **IAM (Identity & Access Management)**
+###  **IAM (Identity & Access Management)**
 
 <img src="img/event-storming/step5/iam.png" alt="IAM - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5234,7 +5237,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 
 **Eventos Emitidos:** Identidad autenticada para el resto
 
-### 👤 **Identity (Identity & KYC)**
+## **Identity (Identity & KYC)**
 
 <img src="img/event-storming/step5/identity.png" alt="Identity - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5245,7 +5248,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Validación documento + name/age match → PIN
 - Si todo OK, "PersonaVerificada" para Customers/Providers
 
-### 🔔 **Notifications**
+###  **Notifications**
 
 <img src="img/event-storming/step5/notifications.png" alt="Notifications - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5256,7 +5259,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Render plantilla → Fan-out por canal (push/email/SMS/in-app)
 - Enviada/entregada/fallida con reintentos y fallback
 
-### 👥 **Customers**
+###  **Customers**
 
 <img src="img/event-storming/step5/customers.png" alt="Customers - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5267,7 +5270,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - CRUD de Plantilla de ítem/ruta con versionado y normalización de unidades
 - Expuesto a Requests
 
-### 🏢 **Providers**
+###  **Providers**
 
 <img src="img/event-storming/step5/providers.png" alt="Providers - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5278,7 +5281,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Solicitud de habilitación → Aprobado/rechazado
 - Si aprobado, habilita Fleet/Planning
 
-### 🚛 **Fleet**
+###  **Fleet**
 
 <img src="img/event-storming/step5/fleet.png" alt="Fleet - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5290,7 +5293,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Recalcular disponibilidad
 - Propaga cambios a Planning/Deals
 
-### 📋 **Planning**
+###  **Planning**
 
 <img src="img/event-storming/step5/planning.png" alt="Planning - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5301,7 +5304,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Disponibilidad actualizada
 - Publica ofertabilidad hacia Deals (cotizaciones)
 
-### 📦 **Requests**
+###  **Requests**
 
 <img src="img/event-storming/step5/requests.png" alt="Requests - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5312,7 +5315,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Cierre por cancelación/expiración o por inicio de trato
 - Dispara elegibilidad a Deals
 
-### ⭐ **Reviews**
+###  **Reviews**
 
 <img src="img/event-storming/step5/reviews.png" alt="Reviews - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5324,7 +5327,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Desbloqueo al completar/expirar
 - Recalcular métricas y badges
 
-### 🛰️ **Trips**
+###  **Trips**
 
 <img src="img/event-storming/step5/trips.png" alt="Trips - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5336,7 +5339,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Arribo → Confirmaciones/PoD → Desactivar tracking
 - Abre ventana de Reviews y agenda liquidación
 
-### 📋 **Waybills**
+###  **Waybills**
 
 <img src="img/event-storming/step5/waybills.png" alt="Waybills - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5348,7 +5351,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Pueden corregirse/anularse con ventanas legales
 - Habilitan inicio de viaje en Trips
 
-### 💰 **Payments**
+###  **Payments**
 
 <img src="img/event-storming/step5/payments.png" alt="Payments - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5361,7 +5364,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 **Flujo Ajustes:**
 - Propuesta → (Aceptado: top-up cobrado / reembolso ejecutado → comisión ajustada | Rechazado: continuidad/cancelación)
 
-### 🤝 **Deals**
+###  **Deals**
 
 <img src="img/event-storming/step5/deals.png" alt="Deals - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5372,7 +5375,7 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 - Cliente inicia trato → Chat/negociación → Acuerdo
 - Listo para pago (handoff a Payments) o cancelaciones (cierra chat y libera capacidad)
 
-### ⚖️ **Disputes**
+###  **Disputes**
 
 <img src="img/event-storming/step5/dispute.png" alt="Disputes - Bounded Context" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5386,14 +5389,14 @@ En esta quinta fase del Event Storming, agrupamos y alineamos los timelines en B
 
 #### 2.5.1.2. Domain Message Flows Modeling
 
-### 📋 **Descripción**
+###  **Descripción**
 
 En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostrando cómo interactúan los diferentes dominios del sistema a través de eventos y comandos. Cada flujo representa un escenario de negocio completo que involucra múltiples contextos y sus interacciones.
 
 
-### 🔄 **Escenarios de Integración**
+###  **Escenarios de Integración**
 
-#### 1️⃣ **Alta de Cliente con Verificación KYC**
+####  **Alta de Cliente con Verificación KYC**
 
 <img src="img/event-storming/domain-message-flows-modeling/alta-cliente-verificacion.jpg" alt="Alta de Cliente con Verificación KYC" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5409,7 +5412,7 @@ En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostr
 
 ---
 
-#### 2️⃣ **Onboarding de Proveedor (Empresa Habilitada)**
+####  **Onboarding de Proveedor (Empresa Habilitada)**
 
 <img src="img/event-storming/domain-message-flows-modeling/onboarding-proveedor.jpg" alt="Onboarding de Proveedor" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5426,7 +5429,7 @@ En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostr
 
 ---
 
-#### 3️⃣ **Alta de Vehículo y Disponibilidad Publicable**
+####  **Alta de Vehículo y Disponibilidad Publicable**
 
 <img src="img/event-storming/domain-message-flows-modeling/alta-vehiculo.jpg" alt="Alta de Vehículo y Disponibilidad" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5442,7 +5445,7 @@ En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostr
 
 ---
 
-#### 4️⃣ **Publicación de Solicitud de Envío**
+####  **Publicación de Solicitud de Envío**
 
 <img src="img/event-storming/domain-message-flows-modeling/publicacion-solicitud.jpg" alt="Publicación de Solicitud de Envío" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5458,7 +5461,7 @@ En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostr
 
 ---
 
-#### 5️⃣ **Cotización e Inicio de Trato**
+####  **Cotización e Inicio de Trato**
 
 <img src="img/event-storming/domain-message-flows-modeling/cotizacion-trato.jpg" alt="Cotización e Inicio de Trato" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5476,13 +5479,13 @@ En esta sección se modelan los flujos de mensajes entre Bounded Contexts, mostr
 
 #### 2.5.1.3. Bounded Context Canvases
 
-### 📋 **Descripción**
+###  **Descripción**
 
 En esta sección se presentan los Bounded Context Canvases, que definen los límites y responsabilidades de cada contexto del dominio. Cada canvas detalla el propósito, funcionalidades clave, integraciones y eventos de cada Bounded Context, proporcionando una visión clara de cómo se organiza el sistema en dominios cohesivos.
 
-### 🏗️ **Bounded Contexts del Sistema**
+###  **Bounded Contexts del Sistema**
 
-#### 💰 **Payments**
+####  **Payments**
 
 <img src="img/event-storming/bc-canvases/payments.png" alt="Payments - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5499,7 +5502,7 @@ Orquesta todo el cobro al cliente (autorización/captura), calcula y aplica la c
 
 ---
 
-#### 🤝 **Deals**
+####  **Deals**
 
 <img src="img/event-storming/bc-canvases/deals.png" alt="Deals - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5515,7 +5518,7 @@ Gestiona la negociación: recepción de cotizaciones, aceptación parcial, arran
 
 ---
 
-#### 📦 **Requests**
+####  **Requests**
 
 <img src="img/event-storming/bc-canvases/requestes.png" alt="Requests - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5532,7 +5535,7 @@ Crea y publica solicitudes de envío con ítems, medidas estimadas por IA, peso 
 
 ---
 
-#### 📋 **Planning**
+####  **Planning**
 
 <img src="img/event-storming/bc-canvases/planning.png" alt="Planning - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5549,7 +5552,7 @@ Calcula disponibilidad publicable combinando rutas operativas, capacidad y calen
 
 ---
 
-#### 🛰️ **Trips**
+####  **Trips**
 
 <img src="img/event-storming/bc-canvases/trips.png" alt="Trips - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5566,7 +5569,7 @@ Administra el ciclo de vida del viaje formal: asignación de unidad, activación
 
 ---
 
-#### 📋 **Waybills**
+####  **Waybills**
 
 <img src="img/event-storming/bc-canvases/waybills.png" alt="Waybills - Bounded Context Canvas" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
@@ -5581,7 +5584,7 @@ Emite, corrige y anula la guía de remisión del cliente y la guía de transport
 - Mantenimiento de idempotencia
 - Notificación a Trips y Notifications
 
-### 📊 **Resumen de Bounded Contexts**
+###  **Resumen de Bounded Contexts**
 
 | Contexto | Tipo | Responsabilidad Principal | Integraciones Clave |
 |----------|------|-------------------------|-------------------|
@@ -9423,8 +9426,13 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 
 ## Capítulo IV: Product Implementation & Validation
 ### 4. Product Implementation & Validation
+Se describirá cómo se ha implementado el producto y cómo se valida su calidad y cumplimiento. Incluye criterios de aceptación, evidencias de pruebas y trazabilidad con los requisitos.
+
 #### 4.1. Software Configuration Management
+A continuación, se definirán procesos y herramientas para controlar versiones, cambios y releases.
+
 ##### 4.1.1. Software Development Environment Configuration
+
 **Project Management**
 <p><strong>Trello:</strong> Plataforma visual de gestión Kanban que permite orquestar tareas, sprints y entregables mediante tableros dinámicos y tarjetas arrastrables. Ideal para mantener la cadencia del equipo y la transparencia en todo el ciclo de vida del proyecto. <a href="https://trello.com/es">https://trello.com/es</a></p>
 
@@ -9668,7 +9676,9 @@ Pasos:
 
 
 #### 4.2. Landing Page & Mobile Application Implementation
+Se describirá la implementación técnica de la landing y la app móvil: arquitectura, componentes, integraciones, CI/CD y configuraciones por ambiente.
 ##### 4.2.1. Sprint 1
+Se detallará el backlog ejecutado, evidencias (ramas, PRs, despliegues/preview), riesgos encontrados, retrospectiva y próximos pasos.
 ###### 4.2.1.1. Sprint Planning 1
 
 <table>
@@ -10093,5 +10103,6 @@ Link del Repositorio del Proyecto: https://github.com/Wapps1/Project-Report<br>
 Link del Repositorio del Backend: https://github.com/Wapps1/Redcarga-Backend<br>
 Link del Repositorio de la Landing Page: https://github.com/Wapps1/RedCarga-Landing-Page<br>
 Link de la Landing Page: https://redcarga-landing-page.vercel.app/ <br>
+Link del Backend Desplegado: redcarga-api-br01.azurewebsites.net <br>
 Link del Figma wireframes: https://www.figma.com/design/d8HuBb2ghZAFg0ed2YpmOp/Red-Carga-Borrador--Copy-?node-id=2023-340&t=SxNGwgIyilDw7GEy-1<br>
 Link del Figma mock-ups: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=0-1&t=XrPN4i8mx35qDjoQ-1 <br>
