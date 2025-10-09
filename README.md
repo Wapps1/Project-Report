@@ -9631,11 +9631,13 @@ Asimismo, se completó la Landing Page informativa, que presenta la propuesta de
 Las siguientes capturas muestran algunas de las vistas y funcionalidades desarrolladas durante este Sprint:
 
 **Inicio**
+
 <img src="./img/Chapter-4/RedCarga1%20-%20Inicio.png" alt="RedCarga Inicio" height="500">
 <img src="./img/Chapter-4/RedCarga%20-%20Inicio%20de%20Sesion.jpeg" alt="RedCarga Inicio de Sesión" height="500">
 <img src="./img/Chapter-4/Redcarga2%20-%20Crear%20Cuenta.png" alt="RedCarga Crear Cuenta" height="500">
 
 **Cliente**
+
 <img src="./img/Chapter-4/RedCarga3%20-%20CC%20Cliente%20Paso1.png" alt="RedCarga Cliente Paso 1" height="500">
 <img src="./img/Chapter-4/RedCarga4%20-%20CC%20Cliente%20Paso2.png" alt="RedCarga Cliente Paso 2" height="500">
 <img src="./img/Chapter-4/RedCarga5%20-%20CC%20Cliente%20Paso3.png" alt="RedCarga Cliente Paso 3" height="500">
@@ -9643,6 +9645,7 @@ Las siguientes capturas muestran algunas de las vistas y funcionalidades desarro
 <img src="./img/Chapter-4/RedCarga%20-%20Cliente%20Crear%20Solicitud.jpeg" alt="RedCarga Cliente Crear Solicitud" height="500">
 
 **Proveedor**
+
 <img src="./img/Chapter-4/RedCarga8%20-%20CC%20Proveedor%20Paso2.png" alt="RedCarga Proveedor Paso 2" height="500">
 <img src="./img/Chapter-4/RedCarga9%20-%20CC%20Proveedor%20Paso3.png" alt="RedCarga Proveedor Paso 3" height="500">
 <img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Inicio.jpeg" alt="RedCarga Proveedor Inicio" height="500">
