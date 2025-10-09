@@ -51,10 +51,10 @@
 </div>
 
 <p align="center">
-    <strong>Septiembre, 2025</strong>
+    <strong>Octubre, 2025</strong>
 </p>
 <br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 
 <div style="text-align:center;">
     <h1 align="center">Registro de versiones del Informe</h1>
@@ -168,13 +168,80 @@
             <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
             <td>Revisión general, limpieza de formato, numeración final y cierre de versión para entrega.</td>
         </tr>
+     <tr>
+            <td>17</td>
+            <td>24/09/2025</td>
+            <td>Claudia Valeria Belledonne Espinoza</td>
+            <td>Estructura base del backend por <b>Bounded Contexts</b>; convenciones generales de módulos y endpoints iniciales.</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>28/09/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez</td>
+            <td>Integración preliminar app–backend para flujos principales; verificación de consumo básico.</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>30/09/2025</td>
+            <td>María Patricia Hernández Uchuya</td>
+            <td><b>Sprint Planning</b> y <b>Sprint Backlog</b> de TP1; documentación de API a alto nivel.</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>1/10/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>General Style Guidelines v1</b>: tokens, tipografía y componentes; ajustes de estilo del informe.</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>1/10/2025</td>
+            <td>Fabiola Del Rocio Saldaña Ayala</td>
+            <td><b>Information Architecture v1</b>: sitemap y navegación general.</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>3/10/2025</td>
+            <td>Claudia Valeria Belledonne Espinoza</td>
+            <td>Habilitación de <b>WebSockets</b> para notificaciones básicas; línea base de CRUDs.</td>
+        </tr>
+        <tr>
+            <td>23</td>
+            <td>3/10/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>Mock-ups</b> iniciales y <b>User Flow Diagrams</b> de pantallas clave.</td>
+        </tr>
+        <tr>
+            <td>24</td>
+            <td>4/10/2025</td>
+            <td>Fabiola Del Rocio Saldaña Ayala</td>
+            <td><b>Mobile Applications Wireframes</b> y <b>Wireflow Diagrams</b> (cliente y proveedor).</td>
+        </tr>
+        <tr>
+            <td>25</td>
+            <td>8/10/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td><b>Prototyping</b> navegable; soporte en <b>Software Configuration Management</b>.</td>
+        </tr>
+        <tr>
+            <td>26</td>
+            <td>8/10/2025</td>
+            <td>Fabiola Del Rocio Saldaña Ayala</td>
+            <td>Consolidación de IA y <b>Landing Page UI</b>; apoyo en SCM y checklist de contenido.</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td>8/10/2025</td>
+            <td>Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya</td>
+            <td>Cierre TP1 backend: endpoints y CRUDs estabilizados, WebSockets operativo y documentación verificada.</td>
+        </tr>
     </table>
 <div>
 
-<br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
 
 # Project Report Collaboration Insights
 Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
@@ -182,11 +249,16 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ## TB1
 En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo del proyecto , organizándose por secciones según el diseño de la idea, problemática y el contenido previamente establecidos. Las capturas de los analíticos de colaboración del repositorio oficial evidencian la participación de todos. <br>
 <img src="img/insights/insights.png" />
+<br><br><br><br>
+## TP1
+En esta entrega, cada miembro del equipo contribuyó activamente a la consolidación de la solución, organizándose por frentes según el diseño y alcance definidos. Las capturas de Collaboration Insights de los repositorios oficiales evidencian la participación de todos.
+<img src="img/insights/insights-tp1.png" />
 <br><br><br><br><br><br>
 <br><br><br><br><br><br>
 <br><br><br><br>
 <br><br><br><br>
-<br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 
 # Contenido
 [Student Outcome](#student-outcome)
@@ -194,6 +266,7 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
 - [Project Report](#project-report)
 - [Project Report Collaboration Insights](#project-report-collaboration-insights)
   - [TB1](#tb1)
+  - [TP1](#tp1)
 - [Contenido](#contenido)
 - [Student Outcome](#student-outcome)
 - [Objetivos SMART](#objetivos-smart)
@@ -571,7 +644,8 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
   
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 # Student Outcome
 
 ABET - EAC - Student Outcome 7: La capacidad de adquirir y aplicar nuevos
@@ -679,7 +753,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </tbody>
 </table>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <br>
 <br>
@@ -758,7 +832,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </tbody>
 </table>
 
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 # Capítulo I: Presentación
 
 ## 1.1. Startup Profile
@@ -10015,7 +10089,9 @@ Saxena, D., Singh, N., Gupta, K., Verma, A., Mishra, V., Kumar, J., Gupta, I., P
 # Anexos
 
 Link del Repositorio del Informe: https://github.com/Wapps1/Project-Report <br>
-Link del Repositorio del Proyecto: <br>
-Link del Repositorio del Backend: <br>
+Link del Repositorio del Proyecto: https://github.com/Wapps1/Project-Report<br>
+Link del Repositorio del Backend: https://github.com/Wapps1/Redcarga-Backend<br>
+Link del Repositorio de la Landing Page: https://github.com/Wapps1/RedCarga-Landing-Page<br>
 Link de la Landing Page: https://redcarga-landing-page.vercel.app/ <br>
-Link del Figma: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=0-1&t=XrPN4i8mx35qDjoQ-1
+Link del Figma wireframes: https://www.figma.com/design/d8HuBb2ghZAFg0ed2YpmOp/Red-Carga-Borrador--Copy-?node-id=2023-340&t=SxNGwgIyilDw7GEy-1<br>
+Link del Figma mock-ups: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=0-1&t=XrPN4i8mx35qDjoQ-1 <br>
