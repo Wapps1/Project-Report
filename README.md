@@ -9480,14 +9480,10 @@ Adoptamos Conventional Commits, inspirados en las Angular Commit Guidelines, par
 </ul>
 <pre><code>@Composable
 fun RequestCard(
-  request: RequestUi,
-  onClick: () -&gt; Unit,
+  onClick: (),
   modifier: Modifier = Modifier
-) { /* UI sin I/O; estado viene de la VM */ }
-
-sealed class Route(val value: String) {
-  data object Home : Route("home")
-  data object RequestDetail : Route("request_detail/{id}")
+) { 
+    // ...
 }
 </code></pre>
 
