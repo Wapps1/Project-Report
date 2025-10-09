@@ -9664,7 +9664,7 @@ fun RequestCard(
 
 ##### 4.1.4. Software Deployment Configuration
 
-**Landing Page Deployment**
+###### **Landing Page Deployment**
 Pasos:
 1. Ingrese a vercel.com con una cuenta y haz New Project → Import Git Repository.
 2. Autoriza el acceso a la organización/repositorio.
@@ -9672,7 +9672,123 @@ Pasos:
 4. Configure el framework y carpeta de salida (Vercel suele hacerlo automáticamente).
 5. Haga clic en Deploy. Vercel hará el build y publicará tu preview.
 
-**Backend Deployment**
+###### **Backend Deployment**
+####### Despliegue de **RedCarga-Backend** – Guía Resumida (Windows 10/11)
+
+1. **Configuración de repositorio remoto:**  
+   * **Sistema de control de versiones:** Git + GitHub  
+   * **Repositorio oficial del backend:** [redcarga-backend](https://github.com/Wapps1/Redcarga-Backend.git)
+
+2. **Creación de entorno de despliegue local:**  
+   * **Stack:** Spring Boot 3, Swagger UI, PostreSQL, Docker  
+   * **Archivo `docker-compose.yml`:**  
+     ```yml
+     services:
+       redcarga-db:
+         image: postgresql:8
+         environment:
+           POSTGRESQL_ROOT_PASSWORD: 123456789
+           POSTGRESQL_DATABASE: redcarga
+           POSTGRESQL_USER: dev
+         ports:
+           - "3306:3306"
+
+       redcarga-backend:
+         image: redcarga-backend:0.0.1
+         build:
+           context: .
+           dockerfile: Dockerfile
+         ports:
+           - "8080:8080"
+         environment:
+           - SPRING_PROFILES_ACTIVE=dev
+           - DB_PASSWORD=123456789
+         depends_on:
+           - redcarga-db
+     ```
+
+3. **Ejecución local exitosa:**  
+   * **Comando para levantar el entorno:**  
+     ```powershell
+     docker-compose up --build
+     ```  
+   * **Acceso al Swagger:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+4. **Variables de entorno de Spring Profiles:**  
+   * **Variables a configurar en Windows:**  
+     ```powershell
+     setx SPRING_PROFILES_ACTIVE "prod"
+     setx DB_PASSWORD "123456789"
+     ```  
+   * **Configuración de `application-dev.properties` y `application-prod.properties` para MySQL.**
+
+5. **Empaquetado y dockerización:**  
+   * **Generación del JAR:**  
+     ```powershell
+     mvn clean package
+     ```  
+   * **Dockerfile:**  
+     ```dockerfile
+     FROM openjdk:17-jdk-slim
+     VOLUME /tmp
+     EXPOSE 8080
+     COPY target/redcarga-backend-0.0.1-SNAPSHOT.jar app.jar
+     ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+     ```  
+   * **Ignorar archivos de build:**  
+     ```
+     .git
+     target/
+     .mvn/
+     mvnw*
+     ```
+
+6. **Recursos de Azure (CLI Windows PowerShell):**  
+   * **Pasos para la configuración de Azure:**  
+     ```powershell
+     az login
+     az group create --name RedcargaRG --location "Central US"
+     az provider register --namespace Microsoft.ContainerRegistry
+     az acr create -g RedcargaRG -n redcargacr --sku Basic --admin-enabled true
+     az acr login -n redcargacr
+     ```
+
+7. **Publicación de la imagen Docker:**  
+   * **Etiquetar y subir la imagen Docker a ACR:**  
+     ```powershell
+     docker tag redcarga-backend:0.0.1 redcargacr.azurecr.io/redcarga-backend:0.0.1
+     docker push redcargacr.azurecr.io/redcarga-backend:0.0.1
+     ```
+
+8. **Creación de Azure Web App for Containers:**  
+   * **Crear App Service Plan + Web App:**  
+     ```powershell
+     az appservice plan create --name RedcargaPlan --resource-group RedcargaRG --is-linux --sku B1
+     az webapp create --resource-group RedcargaRG --plan RedcargaPlan --name redcarga-api --deployment-container-image-name redcargaacr.azurecr.io/redcarga-backend:0.0.1
+     ```
+
+   * **Vincular ACR & actualizar variables de entorno:**  
+     ```powershell
+     az webapp config container set --name redcarga-api --resource-group RedcargaRG --docker-custom-image-name redcargaacr.azurecr.io/redcarga-backend:0.0.1 --docker-registry-server-url https://redcargaacr.azurecr.io
+     az webapp config appsettings set --name redcarga-api --resource-group RedcargaRG --settings SPRING_PROFILES_ACTIVE=prod DB_PASSWORD=123456789 PORT=8080
+     ```
+
+   * **Desactivar soporte Sidecar y configurar puerto 8080.**
+
+9. **Verificación en producción:**  
+   * **URL de prueba:**  
+     redcarga-api-br01.azurewebsites.net/swagger-ui/index.html
+   Confirmar que la aplicación esté funcionando con el perfil **prod** y la conexión a Azure MySQL.
+
+10. **Capturas del Proceso de Deployment**
+
+<img width="1457" height="917" alt="image" src="https://github.com/user-attachments/assets/f245dc08-e8e3-41f5-821e-a29a6fcb7ed7" />
+<img width="1357" height="841" alt="image" src="https://github.com/user-attachments/assets/70b9a3c5-0e1a-4079-89ab-650fcb957891" />
+<img width="1520" height="507" alt="Diseño sin título (16)" src="https://github.com/user-attachments/assets/0a105190-8a14-4397-9b21-f10b77d3820d" />
+<img width="1600" height="445" alt="Diseño sin título (17)" src="https://github.com/user-attachments/assets/cad123c8-4176-4283-8f03-ca24773c14ad" />
+<img width="1200" height="417" alt="Diseño sin título (18)" src="https://github.com/user-attachments/assets/cc3ade36-5ce7-4c8c-bd1f-b7d8fa5aa91c" />
+<img width="835" height="910" alt="Diseño sin título (19)" src="https://github.com/user-attachments/assets/558bba47-03c2-4363-937d-872fa530fbf8" />
+<img width="1837" height="951" alt="Diseño sin título (20)" src="https://github.com/user-attachments/assets/e68b93bd-07e6-4bf7-b0f2-a0ff01186219" />
 
 
 #### 4.2. Landing Page & Mobile Application Implementation
@@ -9990,6 +10106,44 @@ Como parte del proceso de aseguramiento de la calidad del software, en este spri
 | https://github.com/Wapps1/Redcarga-Frontend | develop | 4cfa6c1 | test: integration test navigation flow | Added Espresso test for navigation from Login to Home | 07/10/2025 |
 
 ###### 4.2.1.5. Execution Evidence for Sprint Review
+
+Durante este primer Sprint se logró implementar los módulos funcionales principales del sistema Redcarga, enfocándose en la integración entre el backend y la aplicación móvil. Se implementaron y probaron exitosamente los flujos de autenticación, registro de usuarios (cliente y proveedor), creación de solicitudes de carga, visualización de cotizaciones y procesamiento de pagos simulados.
+
+Asimismo, se completó la Landing Page informativa, que presenta la propuesta de valor, beneficios y planes del servicio, asegurando una comunicación clara con los potenciales usuarios.
+
+Las siguientes capturas muestran algunas de las vistas y funcionalidades desarrolladas durante este Sprint:
+
+**Inicio**
+
+<img src="./img/Chapter-4/RedCarga1%20-%20Inicio.png" alt="RedCarga Inicio" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Inicio%20de%20Sesion.jpeg" alt="RedCarga Inicio de Sesión" height="500">
+<img src="./img/Chapter-4/Redcarga2%20-%20Crear%20Cuenta.png" alt="RedCarga Crear Cuenta" height="500">
+
+**Cliente**
+
+<img src="./img/Chapter-4/RedCarga3%20-%20CC%20Cliente%20Paso1.png" alt="RedCarga Cliente Paso 1" height="500">
+<img src="./img/Chapter-4/RedCarga4%20-%20CC%20Cliente%20Paso2.png" alt="RedCarga Cliente Paso 2" height="500">
+<img src="./img/Chapter-4/RedCarga5%20-%20CC%20Cliente%20Paso3.png" alt="RedCarga Cliente Paso 3" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Cliente%20Inicio.jpeg" alt="RedCarga Cliente Inicio" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Cliente%20Crear%20Solicitud.jpeg" alt="RedCarga Cliente Crear Solicitud" height="500">
+
+**Proveedor**
+
+<img src="./img/Chapter-4/RedCarga8%20-%20CC%20Proveedor%20Paso2.png" alt="RedCarga Proveedor Paso 2" height="500">
+<img src="./img/Chapter-4/RedCarga9%20-%20CC%20Proveedor%20Paso3.png" alt="RedCarga Proveedor Paso 3" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Inicio.jpeg" alt="RedCarga Proveedor Inicio" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Rutas%201.jpeg" alt="RedCarga Proveedor Rutas 1" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Rutas%202.jpeg" alt="RedCarga Proveedor Rutas 2" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Rutas%203.jpeg" alt="RedCarga Proveedor Rutas 3" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedores%20Conductores%201.jpeg" alt="RedCarga Proveedores Conductores 1" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedores%20Conductores%202.jpeg" alt="RedCarga Proveedores Conductores 2" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedores%20Conductores%203.jpeg" alt="RedCarga Proveedores Conductores 3" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Vehiculos%201.jpeg" alt="RedCarga Proveedor Vehículos 1" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Vehiculos%202.jpeg" alt="RedCarga Proveedor Vehículos 2" height="500">
+<img src="./img/Chapter-4/RedCarga%20-%20Proveedor%20Vehiculos%203.jpeg" alt="RedCarga Proveedor Vehículos 3" height="500">
+
+Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa5Ih93eUVb7v9cBbMH9ZRexeEjXVBrM4kErkg?e=VH2DiO>
+
 ###### 4.2.1.6. Services Documentation Evidence for Sprint Review
 
 | Endpoint               | HTTP Method | Descripción                                              | Parámetros                                     | Ejemplo de Request                                                                           | Ejemplo de Response                                             |
