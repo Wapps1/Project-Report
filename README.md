@@ -9582,15 +9582,369 @@ Pasos:
 
 
 #### 4.2. Landing Page & Mobile Application Implementation
-##### 4.2.1. Sprint n
-###### 4.2.1.1. Sprint Planning n
-###### 4.2.1.2. Sprint Backlog n
+##### 4.2.1. Sprint 1
+###### 4.2.1.1. Sprint Planning 1
+
+<table>
+    <tr>
+        <td>Sprint #</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <th colspan="2"><strong>Sprint Planning Background</strong></th>
+    </tr>
+    <tr>
+        <td>Date</td>
+        <td>03/10/2025</td>
+    </tr>
+     <tr>
+        <td>Time</td>
+        <td>10:00 AM</td>
+    </tr>
+     <tr>
+        <td>Location</td>
+        <td>Reunión virtual – Discord</td>
+    </tr>
+    <tr>
+        <td>Prepared By</td>
+        <td>Claudia Belledonne</td>
+    </tr>
+    <tr>
+        <td>Attendees (to planning meeting)</td>
+        <td>
+        - Ariana Cecilia Agreda Sobrino <br/> 
+        - Claudia Valeria Belledonne Espinoza <br/>         
+        - Mauricio Daniel Elera Rodríguez <br/>         
+        - Fabiola Del Rocío Saldaña Ayala <br/>           
+        - María Patricia Hernández Uchuya 
+   </td>
+    </tr>
+    <tr>
+        <td>Sprint 0 Review Summary</td>
+        <td>No aplica al ser el primer sprint entregado</td>
+    </tr>
+    <tr>
+        <td>Sprint 0 Retrospective Summary</td>
+        <td>No aplica al ser el primer sprint entregado</td>
+    </tr>
+    <tr>
+        <th colspan="2"><strong>Sprint Goal & User Stories</strong></th>
+    </tr>
+    <tr>
+        <td>Sprint 1 Goal</td>
+        <td>
+        <strong>Nuestra meta fue</strong> desplegar y probar las funcionalidades base de la aplicación móvil conectadas al backend, incluyendo registro, login, visualización de solicitudes de carga, cotizaciones y pagos iniciales.<br/> <strong>Creemos que</strong> brindaremos confianza y usabilidad real a clientes y transportistas al permitir completar un flujo básico dentro de la app.<br/> <strong>Esto se confirmará cuando</strong> los usuarios puedan iniciar sesión correctamente, publicar una solicitud de envío, recibir cotizaciones de proveedores simulados y realizar un pago de prueba con visualización de documentos generados automáticamente.
+    </td>
+    </tr>
+     <tr>
+        <td>Sprint 1 Velocity  </td>
+        <td>22 Story Points.</td>
+    </tr>
+     <tr>
+        <td>Sum of Story Points  </td>
+        <td>22 Story Points.</td>
+    </tr>
+</table>
+
+###### 4.2.1.2. Sprint Backlog 1
+
+<p>
+  El objetivo de este primer sprint fue integrar el backend funcional de <strong>Redcarga</strong> con la aplicación móvil, desarrollando y validando las funcionalidades base del flujo principal del sistema. Esto incluye el registro e inicio de sesión de usuarios, la creación y gestión de solicitudes de carga, la cotización de transportistas, el proceso de pago simulado y la visualización de documentos de envío. Además, se avanzó en la documentación técnica de los servicios API y la configuración del entorno de despliegue en la nube.
+</p>
+
+<img src="./img/Chapter-4/Sprint_Backlog_Trello.png" alt="Trello Sprint 1 Redcarga">
+Link:
+<https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
+
+<table>
+  <tr>
+    <th colspan="2">Sprint #</th>
+    <th colspan="6">Sprint 1</th>
+  </tr>
+  
+  <tr>
+    <th colspan="2">User Story</th>
+    <th colspan="6">Work-Item / Task</th>
+  </tr>
+  
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Estimation (Hours)</th>
+    <th>Assigned To</th>
+    <th>Status</th>
+  </tr>
+  
+  <!-- US01: Registro e inicio de sesión -->
+  <tr>
+    <th rowspan="4">US01</th>
+    <th rowspan="4">Registro e inicio de sesión</th>
+    <td>1</td>
+    <td>Implementar endpoint de registro (POST /auth/signup)</td>
+    <td>Permite registrar un nuevo usuario en el sistema validando tipo (cliente o transportista) y datos obligatorios.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>2</td>
+    <td>Implementar endpoint de login (POST /auth/login)</td>
+    <td>Genera tokens JWT y maneja la autenticación con verificación de credenciales y roles.</td>
+    <td>1.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>3</td>
+    <td>Conectar pantalla móvil de login con backend</td>
+    <td>Integrar formulario de autenticación en la app móvil y manejar errores de usuario o contraseña incorrecta.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>4</td>
+    <td>Diseñar validaciones en frontend</td>
+    <td>Validaciones visuales de campos vacíos o contraseñas débiles antes de enviar al backend.</td>
+    <td>1 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US02: Solicitudes de carga -->
+  <tr>
+    <th rowspan="4">US02</th>
+    <th rowspan="4">Gestión de solicitudes de carga</th>
+    <td>5</td>
+    <td>Implementar endpoint POST /requests</td>
+    <td>Permite a los clientes crear solicitudes de envío con detalles de carga, origen y destino.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>6</td>
+    <td>Implementar endpoint GET /requests/user/:id</td>
+    <td>Devuelve las solicitudes creadas por un usuario autenticado.</td>
+    <td>1.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>7</td>
+    <td>Conectar módulo móvil de solicitudes</td>
+    <td>Integrar la vista "Mis Solicitudes" en la app con datos obtenidos del backend.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>8</td>
+    <td>Diseñar interfaz para crear solicitud</td>
+    <td>Implementar campos, validaciones y flujo UX/UI para crear una nueva solicitud.</td>
+    <td>1 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US03: Cotizaciones -->
+  <tr>
+    <th rowspan="3">US03</th>
+    <th rowspan="3">Gestión de cotizaciones</th>
+    <td>9</td>
+    <td>Endpoint GET /quotes/request/:id</td>
+    <td>Obtiene las cotizaciones asociadas a una solicitud de carga.</td>
+    <td>1.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>10</td>
+    <td>Conectar vista de cotizaciones en app</td>
+    <td>Muestra la lista de cotizaciones disponibles para una solicitud del cliente.</td>
+    <td>1.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>11</td>
+    <td>Simular aceptación de cotización</td>
+    <td>Implementar acción para seleccionar y aceptar una cotización (flujo de prueba).</td>
+    <td>1 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US04: Pagos -->
+  <tr>
+    <th rowspan="3">US04</th>
+    <th rowspan="3">Procesamiento de pagos</th>
+    <td>12</td>
+    <td>Implementar endpoint POST /payments</td>
+    <td>Simula el registro de un pago exitoso con validaciones de transacción.</td>
+    <td>1.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>13</td>
+    <td>Integrar módulo de pago en la app</td>
+    <td>Permite completar una cotización seleccionada y visualizar confirmación de pago.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>14</td>
+    <td>Diseñar pantalla de confirmación</td>
+    <td>Muestra detalles del pago y documentos asociados a la operación.</td>
+    <td>1 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US05: Documentación y despliegue -->
+  <tr>
+    <th rowspan="3">US05</th>
+    <th rowspan="3">Documentación técnica y despliegue</th>
+    <td>15</td>
+    <td>Actualizar documentación Swagger</td>
+    <td>Documentar endpoints actualizados y sus parámetros para facilitar integración móvil.</td>
+    <td>1 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>16</td>
+    <td>Configurar entorno de despliegue</td>
+    <td>Implementar el backend.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>17</td>
+    <td>Pruebas de integración</td>
+    <td>Verificar la correcta comunicación entre frontend móvil y backend desplegado.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+</table>
+
 ###### 4.2.1.3. Development Evidence for Sprint Review
+
+Durante este primer sprint, el equipo de desarrollo de Redcarga concentró sus esfuerzos en implementar las funcionalidades base del sistema, abarcando tanto el backend, la aplicación móvil y la landing page informativa. Se desarrollaron los principales módulos de autenticación, gestión de solicitudes, cotizaciones y procesamiento de pagos, garantizando la correcta integración entre los componentes del ecosistema. A continuación, se presenta la evidencia de commits realizados en los distintos repositorios del proyecto, que reflejan los avances técnicos alcanzados durante la iteración.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|------------|--------|-----------|----------------|---------------------|---------------------|
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | 9de4d01 | Landing v1 | First version of landing page | 05/10/2025 |
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | df6d4fb | fix: Landing's bug | Error in landing | 05/10/2025 |
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | f22a171 | feat: read me | Add read me document | 05/10/2025 |
+| https://github.com/Wapps1/RedCarga-Landing-Page | main | 4fd03fc | plans + faq | Add plans and faq | 06/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 0452033 | Initial clean commit without firebase secrets | Remove firebase configuration files | 30/09/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 1576125 | bc providers final registration step completed ñññ | Complete provider registration flow | 02/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 80f0e02 | bc planning+geoadmin | Add planning and geographic admin modules | 05/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 62915d9 | fix: flyway | Fix flyway migration configuration | 05/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | fe34368 | feat: add phone and ruc | Add phone number and RUC fields to user model | 05/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 02f5811 | feat: add providers route query | Implement query endpoint for providers route | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 5e52d27 | fix: controller and query | Fix controller logic and query parameters | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 1c5ba98 | fix: request for fields for planning/providers | Adjust request fields for planning and providers | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 1ab4003 | fix: manual dev | Fix manual development environment issues | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 473b8c7 | fix: provider controller variable names | Correct variable naming in provider controller | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 2aab86d | fix: authorization | Fix authorization middleware and permissions | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 40d5415 | feature: fleet bc | Implement fleet bounded context | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 55dbd02 | feat: add company information by id query | Add endpoint to get company info by id | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 46a33ba | feat: feet and planning | Add fleet and planning integration | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 2bd4f8a | playload correction | Fix payload structure and validation | 08/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | fdea72d | feat: add get all requests | Implement get all requests endpoint | 08/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 8a1d901 | feat: Setup project: HILT + ROOM + I18N | Configure dependency injection, database and internationalization | 29/09/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | e7648d6 | feat: auth bc welcome view | Implement welcome screen for auth module | 29/09/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 61d59b9 | feat: bc auth sign in, sign up client and provider | Add sign in and sign up views for both user types | 29/09/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 4abe4d5 | feature: auth bc integration | Integrate authentication with backend services | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | da3d751 | feature: auth bc integration 2 | Complete auth integration and error handling | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 1cb6784 | feat:bc fleet | Implement fleet management module | 08/10/2025 |
+
 ###### 4.2.1.4. Testing Suite Evidence for Sprint Review
+
+Como parte del proceso de aseguramiento de la calidad del software, en este sprint se diseñaron y ejecutaron pruebas automatizadas para validar la funcionalidad, integridad y desempeño de los módulos implementados. Se realizaron unit tests, integration tests y acceptance tests para los servicios principales del backend, así como pruebas en la aplicación móvil. Estas actividades permitieron verificar el correcto funcionamiento de los endpoints, la persistencia de datos y la experiencia de usuario, asegurando que el sistema cumpla con los criterios de aceptación definidos en los User Stories del Sprint 1.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body  | Committed on (Date) |
+| ---------- | ------ | --------- | -------------- | -------------------- | ------------------- |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 893f1a2 | test: add unit tests for auth controller | Added Jest tests for signup and login controllers | 06/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | a5b21f4 | test: integration tests for request module | Implemented Supertest cases for /requests and /quotes endpoints | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | c9e32c9 | test: add BDD feature for create request | Added create_request.feature and step definitions | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 0ed456b | fix: test environment config | Updated test database connection and mock JWT tokens | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 19a0f44 | test: JUnit tests for login form validation | Added unit tests for field validation and empty inputs | 07/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 4cfa6c1 | test: integration test navigation flow | Added Espresso test for navigation from Login to Home | 07/10/2025 |
+
 ###### 4.2.1.5. Execution Evidence for Sprint Review
 ###### 4.2.1.6. Services Documentation Evidence for Sprint Review
+
+| Endpoint               | HTTP Method | Descripción                                              | Parámetros                                     | Ejemplo de Request                                                                           | Ejemplo de Response                                             |
+| ---------------------- | ----------- | -------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `/auth/signup`         | POST        | Registra un nuevo usuario (cliente o proveedor).         | `name`, `email`, `password`, `role`            | `{ "name": "Juan", "email": "juan@test.com", "password": "123456", "role": "client" }`       | `{ "id": "6711b3...", "message": "User created successfully" }` |
+| `/auth/login`          | POST        | Inicia sesión y devuelve token JWT.                      | `email`, `password`                            | `{ "email": "juan@test.com", "password": "123456" }`                                         | `{ "token": "eyJhbGciOiJIUzI1NiIsIn..." }`                      |
+| `/requests`            | POST        | Crea una nueva solicitud de carga.                       | `origin`, `destination`, `cargoType`, `weight` | `{ "origin": "Lima", "destination": "Arequipa", "cargoType": "Electrónicos", "weight": 20 }` | `{ "id": "64ffb...", "status": "pending" }`                     |
+| `/requests/user/{id}`  | GET         | Lista solicitudes creadas por un usuario.                | `id` (path)                                    | GET `/requests/user/6711b3...`                                                               | `[{"id":"...","status":"pending"}]`                             |
+| `/quotes/request/{id}` | GET         | Obtiene las cotizaciones disponibles para una solicitud. | `id` (path)                                    | GET `/quotes/request/64ffb...`                                                               | `[{"provider":"Ransa","price":500,"estimatedTime":"2 días"}]`   |
+| `/payments`            | POST        | Procesa el pago de una solicitud aceptada.               | `requestId`, `method`, `amount`                | `{ "requestId":"64ffb...", "method":"card", "amount": 500 }`                                 | `{ "status":"success", "transactionId":"TRX-00123" }`           |
+| `/providers`           | GET         | Obtiene información de proveedores.                      | query params opcionales                        | GET `/providers?city=Lima`                                                                   | `[{"name":"TransCargo","rating":4.5}]`                          |
+
+![Swagger 1](./img/Chapter-4/Sprint_Evidence_Swagger1.png)
+![Swagger 2](./img/Chapter-4/Sprint_Evidence_Swagger2.png)
+![Swagger 3](./img/Chapter-4/Sprint_Evidence_Swagger3.png)
+![Swagger 4](./img/Chapter-4/Sprint_Evidence_Swagger4.png)
+![Swagger 5](./img/Chapter-4/Sprint_Evidence_Swagger5.png)
+![Swagger 6](./img/Chapter-4/Sprint_Evidence_Swagger6.png)
+
 ###### 4.2.1.7. Software Deployment Evidence for Sprint Review
 ###### 4.2.1.8. Team Collaboration Insights during Sprint
+
+Durante el desarrollo del Sprint 1, todos los miembros del equipo participaron activamente en la implementación de los componentes principales del sistema Redcarga, distribuyendo responsabilidades entre las áreas de backend, frontend móvil y landing page.
+La comunicación se mantuvo constante a través de Discord y GitHub, asegurando la correcta integración entre los módulos y la consistencia en los avances del sprint.
+El trabajo colaborativo se centró en garantizar la conectividad entre la app móvil y los servicios del backend, así como en el desarrollo de una landing page funcional que transmita la propuesta de valor del producto.
+
+| **Nombre**                               | **Actividad**                                                                                                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hernández Uchuya, María Patricia**     | Implementación de endpoints en el backend (identidad, solicitudes, proveedores), configuración de Swagger y coordinación técnica del sprint.       |
+| **Agreda Sobrino, Ariana Cecilia**       | Desarrollo de controladores, queries y documentación de servicios (Swagger/OpenAPI). Soporte en pruebas de integración backend–frontend.               |
+| **Elera Rodríguez, Mauricio Daniel**     | Implementación de pantallas móviles (login, registro, solicitudes, cotizaciones) e integración con los endpoints del backend.                          |
+| **Saldaña Ayala, Fabiola del Rocío**     | Diseño y validación UX/UI de la app móvil y apoyo en la creación de vistas informativas de la landing page.                                            |
+| **Belledonne Espinoza, Claudia Valeria** | Implementación de la mayoría de bounded contexts del backend (fleet, planning, providers, geoadmin), desarrollo de endpoints y lógica de negocio. |
+
+A continuación, se presentan ejemplos de métricas de participación desde los repositorios oficiales, evidenciando la contribución de cada miembro del equipo en los diferentes módulos del proyecto.
+
+**Landing Page**
+![](./img/Chapter-4/Team_Collaboration_Pulse_LandingPage.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_LandingPage.png)
+![](./img/Chapter-4/Team_Collaboration_Network_LandingPage.png)
+
+**Backend**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Backend.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_Backend.png)
+![](./img/Chapter-4/Team_Collaboration_Network_Backend.png)
+
+**Frontend**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Frontend.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_Frontend.png)
+![](./img/Chapter-4/Team_Collaboration_Network_Frontend.png)
+
 #### 4.3. Validation Interviews
 ##### 4.3.1. Diseño de Entrevistas
 ##### 4.3.2. Registro de Entrevistas
