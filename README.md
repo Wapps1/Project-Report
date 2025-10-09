@@ -9536,6 +9536,18 @@ fun RequestCard(
 <br>
 
 ##### 4.1.4. Software Deployment Configuration
+
+**Landing Page Deployment**
+Pasos:
+1. Ingrese a vercel.com con una cuenta y haz New Project → Import Git Repository.
+2. Autoriza el acceso a la organización/repositorio.
+3. Selecciona el repo de la landing y continúa con Import.
+4. Configure el framework y carpeta de salida (Vercel suele hacerlo automáticamente).
+5. Haga clic en Deploy. Vercel hará el build y publicará tu preview.
+
+**Backend Deployment**
+
+
 #### 4.2. Landing Page & Mobile Application Implementation
 ##### 4.2.1. Sprint n
 ###### 4.2.1.1. Sprint Planning n
