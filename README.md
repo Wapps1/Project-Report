@@ -627,26 +627,44 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <strong>Ariana Cecilia Agreda Sobrino</strong>  <br>
         <strong>TB1: </strong><br>
         En la práctica, ejecuté entrevistas, sintetizándolas en funcionalidades priorizadas; redacté historias verificables y modelé la arquitectura para comunicar alcance y responsabilidades. Estas tareas expusieron brechas que abordé con estudio sistemático, experimentación y validación iterativa, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto.
+        <br>
+        <strong>TP1: </strong><br>
+        Las decisiones de diseño (accesibilidad, consistencia, escalabilidad del sistema de estilos) evidenciaron la necesidad de aprendizaje continuo en internacionalización, diseño inclusivo y mantenimiento de librerías de componentes. Abordé estas brechas con estudio focalizado, prototipos y revisiones periódicas con el equipo, reafirmando el aprendizaje permanente como práctica.
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong>  <br>
         <strong>TB1: </strong><br>
          En la práctica, estructuré el panorama competitivo, identifiqué oportunidades y riesgos, las traduje en tácticas priorizadas y epics, detallé historias verificables y definí contextos funcionales coherentes con los objetivos del producto. Estas tareas revelaron áreas de mejora que abordé con estudio sistemático, experimentación guiada y validación iterativa, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución sostenida de proyectos de software.
+        <br>
+        <strong>TP1: </strong><br>
+        La implementación de WebSockets y <em>CRUDs</em> en BCs mostró retos de concurrencia, seguridad y observabilidad. Reconozco la necesidad de profundizar continuamente en patrones de integración, pruebas automatizadas y monitoreo, aplicando lecturas dirigidas, <em>spikes</em> y code reviews como estrategia sostenida.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong>  <br>
         <strong>TB1: </strong><br>
           En la práctica, definí la visión y alcance del producto, caractericé roles y responsabilidades, documenté hallazgos de entrevistas y los convertí en historias verificables; además, mapeé eventos del dominio y establecí límites contextuales coherentes. Estas actividades evidenciaron brechas que abordé con estudio sistemático, experimentación con herramientas de modelado y ciclos de mejora continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional sólido y la evolución del proyecto de software.
+        <br>
+        <strong>TP1: </strong><br>
+        La integración app-backend evidenció brechas en manejo de estados, errores y resiliencia frente a fallos de red. Fortalezco un plan de aprendizaje continuo en pruebas de UI/integración, patrones de sincronización y mejora del rendimiento, con iteraciones guiadas por métricas y retroalimentación.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
           En la práctica, sinteticé el problema y sus causas, definí hipótesis y métricas, caractericé segmentos, prioricé épicas y tareas en el backlog y redacté historias verificables alineadas al valor. Estas actividades revelaron áreas a profundizar (experimentación Lean, métricas de impacto, técnicas de priorización), que abordé con estudio sistemático, iteración y validación continua, reconociendo la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+        <br>
+        <strong>TP1: </strong><br>
+        El diseño de la landing y la gestión del Sprint mostraron oportunidades de mejora en SEO, performance y estimación ágil. Reconozco la necesidad de seguir aprendiendo en medición de conversión, <em>slicing</em> vertical y optimización de entregables, mediante estudio guiado y retroalimentación continua.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong>  <br>
         <strong>TB1: </strong><br>
           En la práctica, caractericé perfiles y tareas, modelé motivaciones/dolores y objetivos de impacto, y traduje los hallazgos en historias priorizadas y verificables. Este ciclo reveló áreas a profundizar que atendí con estudio sistemático, experimentación y validación continua, por lo que reconozco la necesidad de aprendizaje permanente para un desempeño profesional competente y la evolución del proyecto de software.
+      <br>
+        <strong>TP1: </strong><br>
+        La arquitectura de información y los wireflows requirieron iterar nomenclaturas y rutas, y validar encontrabilidad. Mantengo un enfoque de aprendizaje continuo en pruebas de usabilidad, patrones de navegación y documentación colaborativa, usando revisiones y experimentación controlada como estrategia.
       </td>
       <td>
         <strong>TB1: </strong><br>
         En TB1 confirmamos que el progreso del proyecto exige aprendizaje continuo: perfeccionamos técnicas de entrevista y síntesis, formulación de historias verificables, arquitectura con C4 y límites contextuales con DDD, además de análisis competitivo, segmentación y métricas Lean. Detectamos brechas y las abordamos con estudio sistemático, experimentación y validación iterativa. Asumimos el aprendizaje permanente como práctica de equipo —lecturas focalizadas, pruebas con herramientas, revisión por pares y retroalimentación continua— para sostener un desempeño profesional competente y la evolución del proyecto de software.
+      <br><br>
+        <strong>TP1: </strong><br>
+        En TP1 reafirmamos el aprendizaje permanente ante retos concretos: accesibilidad y consistencia del sistema de estilos, integración móvil-backend, definición de BCs y diseño de endpoints/CRUDs, comunicación en tiempo real con WebSockets, y planeación ágil efectiva. Como estrategia, institucionalizamos <em>spikes</em>, checklists de PR, sesiones de crítica de diseño, pruebas de integración y documentación viva. Esto fortalece nuestra capacidad de adquirir y aplicar nuevos conocimientos de forma continua, elevando la calidad del producto.
       </td>
     </tr>
   </tbody>
