@@ -1,5 +1,9 @@
 # <center>Project Report</center>
 
+<br><br><br><br>
+<br><br><br><br>
+<br><br>
+
 <p align="center">
     <strong>Universidad Peruana de Ciencias Aplicadas</strong><br>
     <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/UPC_logo_transparente.png"></img><br>
@@ -49,8 +53,8 @@
 <p align="center">
     <strong>Septiembre, 2025</strong>
 </p>
-
-<br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 
 <div style="text-align:center;">
     <h1 align="center">Registro de versiones del Informe</h1>
@@ -167,8 +171,10 @@
     </table>
 <div>
 
-
-<br>
+<br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
 
 # Project Report Collaboration Insights
 Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
@@ -176,8 +182,11 @@ Link del repositorio del reporte: https://github.com/Wapps1/Project-Report
 ## TB1
 En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo del proyecto , organizándose por secciones según el diseño de la idea, problemática y el contenido previamente establecidos. Las capturas de los analíticos de colaboración del repositorio oficial evidencian la participación de todos. <br>
 <img src="img/insights/insights.png" />
-
-<br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br>
 
 # Contenido
 [Student Outcome](#student-outcome)
@@ -539,9 +548,9 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
         - [4.1.3. Source Code Style Guide \& Conventions](#413-source-code-style-guide--conventions)
         - [4.1.4. Software Deployment Configuration](#414-software-deployment-configuration)
       - [4.2. Landing Page \& Mobile Application Implementation](#42-landing-page--mobile-application-implementation)
-        - [4.2.1. Sprint n](#421-sprint-n)
-          - [4.2.1.1. Sprint Planning n](#4211-sprint-planning-n)
-          - [4.2.1.2. Sprint Backlog n](#4212-sprint-backlog-n)
+        - [4.2.1. Sprint 1](#421-sprint-1)
+          - [4.2.1.1. Sprint Planning 1](#4211-sprint-planning-1)
+          - [4.2.1.2. Sprint Backlog 1](#4212-sprint-backlog-1)
           - [4.2.1.3. Development Evidence for Sprint Review](#4213-development-evidence-for-sprint-review)
           - [4.2.1.4. Testing Suite Evidence for Sprint Review](#4214-testing-suite-evidence-for-sprint-review)
           - [4.2.1.5. Execution Evidence for Sprint Review](#4215-execution-evidence-for-sprint-review)
@@ -560,9 +569,9 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
 - [Anexos](#anexos)
 
   
-<br>
-<br>
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 # Student Outcome
 
 ABET - EAC - Student Outcome 7: La capacidad de adquirir y aplicar nuevos
@@ -670,6 +679,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </tbody>
 </table>
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <br>
 <br>
@@ -748,6 +758,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </tbody>
 </table>
 
+<br><br><br><br><br><br><br><br><br><br>
 # Capítulo I: Presentación
 
 ## 1.1. Startup Profile
@@ -9384,6 +9395,7 @@ En esta sección presentamos los prototipos de Redcarga para ambos segmentos obj
 <p><strong>VisualParadigm Online:</strong> Edición en la nube de la suite Visual Paradigm, especializada en diseño de software y modelado de procesos (UML, BPMN, C4). <a href="https://online.visual-paradigm.com">https://online.visual-paradigm.com</a></p>
 
 <br>
+
 
 ##### 4.1.2. Source Code Management
 
