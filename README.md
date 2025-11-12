@@ -10195,15 +10195,25 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 ![](./img/Chapter-4/Team_Collaboration_Network_Frontend.png)
 
 <br>
+
 ##### 4.2.2. Sprint 2
+
 ###### 4.2.2.1. Sprint Planning 2
+
 ###### 4.2.2.2. Sprint Backlog 2
+
 ###### 4.2.2.3. Development Evidence for Sprint Review
+
 ###### 4.2.2.4. Testing Suite Evidence for Sprint Review
+
 ###### 4.2.2.5. Execution Evidence for Sprint Review
+
 ###### 4.2.2.6. Services Documentation Evidence for Sprint Review
+
 ###### 4.2.2.7. Software Deployment Evidence for Sprint Review
+
 ###### 4.2.2.8. Team Collaboration Insights during Sprint
+
 
 <br>
 
