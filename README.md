@@ -10246,13 +10246,14 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
     <th colspan="2"><strong>Sprint Goal & User Stories</strong></th>
   </tr>
   <tr>
-    <td>Sprint 2 Goal</td>
-    <td>
-      <strong>Nuestra meta es</strong> llevar la app Android a estado de <em>release candidate</em> (flujo principal consolidado y pulido), completar el <strong>backend (terminado)</strong> y lograr un <strong>avance de Flutter</strong> (onboarding + base de conexión).<br/>
-      <strong>Creemos que</strong> esto permitirá cerrar el ciclo funcional (trato → documentos → tracking) y preparar el entorno multi-cliente (Android/Flutter).<br/>
-      <strong>Esto se confirmará cuando</strong> el backend esté desplegado con Deals/Waybills/Trips listos, Android ejecute el flujo end-to-end sin bloqueantes y Flutter muestre sus primeras pantallas conectadas al mismo backend.
-    </td>
-  </tr>
+  <td>Sprint 2 Goal</td>
+  <td>
+    <strong>Nuestra meta es</strong> terminar la aplicación Android (lista para release) con el flujo de punta a punta operando sobre el <strong>backend terminado y desplegado</strong>, y mostrar un <strong>avance visible en Flutter</strong> (pantallas iniciales conectadas).<br/>
+    <strong>Creemos que</strong> esto permitirá a los usuarios completar el ciclo completo (cotización → trato → documentos → tracking) con estabilidad, mientras preparamos la segunda app (Flutter) sobre la misma API productiva.<br/>
+    <strong>Esto se confirmará cuando</strong> Android ejecute el flujo sin bloqueos críticos, el backend esté disponible en producción con Deals/Waybills/Trips documentados en Swagger, y Flutter muestre al menos onboarding y 1–2 pantallas consumiendo endpoints reales.
+  </td>
+</tr>
+
   <tr>
     <td>Sprint 2 Velocity</td>
     <td>26 Story Points</td>
@@ -10272,11 +10273,29 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 
 ###### 4.2.2.5. Execution Evidence for Sprint Review
 
+Durante este segundo Sprint se consolidó el flujo posterior a la cotización en el sistema Redcarga, logrando la formalización de tratos (**Deals**), la emisión de documentos de envío (**Waybills**) y la trazabilidad del viaje (**Trips**) sobre el **backend terminado y desplegado**. En la aplicación **Android** se dejó el flujo principal en un estado cercano a release (sin bloqueos críticos), puliendo validaciones, mensajes y navegación para ejecutar el ciclo completo de extremo a extremo.
+
+Asimismo, se avanzó con la aplicación **Flutter**, habilitando el onboarding y primeras pantallas conectadas al backend productivo (consumo real de endpoints) para preparar el soporte multi-cliente. Este progreso asegura continuidad funcional desde la aceptación de una cotización hasta la entrega, incluyendo la generación de documentos y el seguimiento del viaje.
+
+Las siguientes capturas muestran algunas de las vistas y funcionalidades desarrolladas durante este Sprint:
+
 ###### 4.2.2.6. Services Documentation Evidence for Sprint Review
 
 ###### 4.2.2.7. Software Deployment Evidence for Sprint Review
 
 ###### 4.2.2.8. Team Collaboration Insights during Sprint
+
+Durante el desarrollo del **Sprint 2**, el equipo concentró esfuerzos en cerrar el flujo pos-cotización y habilitar el soporte multi-cliente. La coordinación se mantuvo por **Discord** y **GitHub** con PRs pequeños y revisiones cruzadas. El trabajo colaborativo se organizó en tres frentes: **backend** (Claudia y María), **Android** (Mauricio) y **Flutter** (Fabiola, María y Ariana), asegurando la integración continua y la consistencia funcional end-to-end.
+
+| **Nombre**                               | **Actividad**                                                                                                                     |
+|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| **Belledonne Espinoza, Claudia Valeria** | Backend: implementación de **Deals/Waybills/Trips**, políticas de transición, actualización de **Swagger** y soporte de despliegue. |
+| **Hernández Uchuya, María Patricia**     | Backend: endpoints y validaciones para **Deals/Trips**, pruebas de servicios y coordinación técnica de la integración.             |
+| **Elera Rodríguez, Mauricio Daniel**     | Android: integración end-to-end (login → solicitudes → cotización → trato → documentos → tracking) y pulido para **release**.     |
+| **Saldaña Ayala, Fabiola del Rocío**     | Flutter: onboarding, primeras pantallas conectadas al backend y ajustes de **UX** (validaciones, estados y navegación).            |
+| **Agreda Sobrino, Ariana Cecilia**       | Flutter: consumo de endpoints, manejo de estado y componentes reutilizables; apoyo en pruebas de integración.                      |
+
+> Evidencias sugeridas: capturas de PRs y métricas de actividad por repositorio (contribuidores, red de colaboración y pulse) en `./img/Chapter-4/Sprint2_*`.
 
 
 <br>
