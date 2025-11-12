@@ -10200,6 +10200,70 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 
 ###### 4.2.2.1. Sprint Planning 2
 
+<table>
+  <tr>
+    <td>Sprint #</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <th colspan="2"><strong>Sprint Planning Background</strong></th>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td>24/10/2025</td>
+  </tr>
+  <tr>
+    <td>Time</td>
+    <td>10:00 AM</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>Reunión virtual – Discord</td>
+  </tr>
+  <tr>
+    <td>Prepared By</td>
+    <td>Mauricio Daniel Elera Rodríguez</td>
+  </tr>
+  <tr>
+    <td>Attendees (to planning meeting)</td>
+    <td>
+      - Ariana Cecilia Agreda Sobrino <br/>
+      - Claudia Valeria Belledonne Espinoza <br/>
+      - Mauricio Daniel Elera Rodríguez <br/>
+      - Fabiola Del Rocío Saldaña Ayala <br/>
+      - María Patricia Hernández Uchuya
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 1 Review Summary</td>
+    <td>Autenticación, solicitudes, cotizaciones y pago simulado integrados móvil–backend; landing operativa y endpoints documentados.</td>
+  </tr>
+  <tr>
+    <td>Sprint 1 Retrospective Summary</td>
+    <td>Fortalezas: coordinación Discord/GitHub, integración continua. Mejoras: criterios de aceptación más explícitos, pruebas E2E y checklist de despliegue.</td>
+  </tr>
+  <tr>
+    <th colspan="2"><strong>Sprint Goal & User Stories</strong></th>
+  </tr>
+  <tr>
+    <td>Sprint 2 Goal</td>
+    <td>
+      <strong>Nuestra meta es</strong> llevar la app Android a estado de <em>release candidate</em> (flujo principal consolidado y pulido), completar el <strong>backend (terminado)</strong> y lograr un <strong>avance de Flutter</strong> (onboarding + base de conexión).<br/>
+      <strong>Creemos que</strong> esto permitirá cerrar el ciclo funcional (trato → documentos → tracking) y preparar el entorno multi-cliente (Android/Flutter).<br/>
+      <strong>Esto se confirmará cuando</strong> el backend esté desplegado con Deals/Waybills/Trips listos, Android ejecute el flujo end-to-end sin bloqueantes y Flutter muestre sus primeras pantallas conectadas al mismo backend.
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Velocity</td>
+    <td>26 Story Points</td>
+  </tr>
+  <tr>
+    <td>Sum of Story Points</td>
+    <td>26 Story Points</td>
+  </tr>
+</table>
+
+
 ###### 4.2.2.2. Sprint Backlog 2
 
 ###### 4.2.2.3. Development Evidence for Sprint Review
