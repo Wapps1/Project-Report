@@ -10267,9 +10267,274 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 
 ###### 4.2.2.2. Sprint Backlog 2
 
+<p>
+  El objetivo de este segundo sprint fue consolidar el flujo completo de extremo a extremo en el sistema <strong>Redcarga</strong>, implementando la formalización de tratos (<strong>Deals</strong>), la emisión de documentos de envío (<strong>Waybills</strong>) y la trazabilidad del viaje (<strong>Trips</strong>) sobre el backend terminado y desplegado. Además, se trabajó en el pulido de la aplicación Android para dejarla lista para release, y se inició el desarrollo de la aplicación Flutter con onboarding y primeras pantallas conectadas al backend productivo.
+</p>
+
+<img src="./img/Chapter-4/Sprint2_Backlog_Trello.png" alt="Trello Sprint 2 Redcarga">
+Link:
+<https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
+
+<table>
+  <tr>
+    <th colspan="2">Sprint #</th>
+    <th colspan="6">Sprint 2</th>
+  </tr>
+  
+  <tr>
+    <th colspan="2">User Story</th>
+    <th colspan="6">Work-Item / Task</th>
+  </tr>
+  
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Estimation (Hours)</th>
+    <th>Assigned To</th>
+    <th>Status</th>
+  </tr>
+  
+  <!-- US06: Gestión de Tratos (Deals) -->
+  <tr>
+    <th rowspan="4">US06</th>
+    <th rowspan="4">Gestión de tratos</th>
+    <td>18</td>
+    <td>Implementar endpoint POST /deals</td>
+    <td>Permite crear un trato al aceptar una cotización, estableciendo el acuerdo entre cliente y proveedor.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>19</td>
+    <td>Implementar endpoint GET /deals/:id</td>
+    <td>Obtiene los detalles de un trato específico incluyendo estado y términos acordados.</td>
+    <td>1.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>20</td>
+    <td>Conectar módulo de tratos en Android</td>
+    <td>Integrar la vista de detalles de trato y aceptación de cotización en la app móvil.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>21</td>
+    <td>Implementar políticas de transición de estados</td>
+    <td>Validar transiciones válidas de estados de trato (PENDING → ACCEPTED → IN_PROGRESS → COMPLETED).</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US07: Documentos de Envío (Waybills) -->
+  <tr>
+    <th rowspan="3">US07</th>
+    <th rowspan="3">Emisión de documentos de envío</th>
+    <td>22</td>
+    <td>Implementar endpoint POST /waybills</td>
+    <td>Genera documentos de envío (guías de remisión) asociados a un trato activo.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>23</td>
+    <td>Implementar endpoint GET /waybills/deal/:id</td>
+    <td>Obtiene los documentos de envío asociados a un trato específico.</td>
+    <td>1.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>24</td>
+    <td>Conectar visualización de documentos en Android</td>
+    <td>Mostrar documentos generados en formato PDF y permitir descarga en la app móvil.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US08: Trazabilidad de Viajes (Trips) -->
+  <tr>
+    <th rowspan="4">US08</th>
+    <th rowspan="4">Trazabilidad de viajes</th>
+    <td>25</td>
+    <td>Implementar endpoint POST /trips</td>
+    <td>Crea un viaje asociado a un trato, iniciando el seguimiento de la carga.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>26</td>
+    <td>Implementar endpoint PUT /trips/:id/location</td>
+    <td>Actualiza la ubicación actual del viaje para tracking en tiempo real.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>27</td>
+    <td>Implementar endpoint GET /trips/deal/:id</td>
+    <td>Obtiene el estado y ubicación actual del viaje asociado a un trato.</td>
+    <td>1.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>28</td>
+    <td>Conectar módulo de tracking en Android</td>
+    <td>Integrar mapa con seguimiento en tiempo real del viaje y estados de entrega.</td>
+    <td>3 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US09: Pulido de Android para Release -->
+  <tr>
+    <th rowspan="3">US09</th>
+    <th rowspan="3">Pulido de Android para release</th>
+    <td>29</td>
+    <td>Mejorar validaciones y manejo de errores</td>
+    <td>Refinar mensajes de error, validaciones de formularios y estados de carga en toda la app.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>30</td>
+    <td>Optimizar navegación y flujo end-to-end</td>
+    <td>Verificar y corregir navegación entre pantallas para el flujo completo sin bloqueos críticos.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>31</td>
+    <td>Pruebas de integración end-to-end</td>
+    <td>Ejecutar pruebas completas del flujo desde login hasta entrega para validar estabilidad.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US10: Desarrollo Flutter -->
+  <tr>
+    <th rowspan="4">US10</th>
+    <th rowspan="4">Desarrollo inicial de Flutter</th>
+    <td>32</td>
+    <td>Configurar proyecto Flutter base</td>
+    <td>Setup inicial con estructura de carpetas, dependencias y configuración de estado global.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>33</td>
+    <td>Implementar onboarding de Flutter</td>
+    <td>Crear pantallas de bienvenida y onboarding con navegación y persistencia de estado.</td>
+    <td>2.5 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>34</td>
+    <td>Conectar pantalla de login en Flutter</td>
+    <td>Integrar formulario de login consumiendo endpoints reales del backend productivo.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>35</td>
+    <td>Implementar componentes reutilizables</td>
+    <td>Crear componentes base (botones, inputs, cards) y sistema de diseño consistente.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  
+  <!-- US11: Documentación y Despliegue -->
+  <tr>
+    <th rowspan="2">US11</th>
+    <th rowspan="2">Documentación y despliegue</th>
+    <td>36</td>
+    <td>Actualizar documentación Swagger</td>
+    <td>Documentar endpoints de Deals, Waybills y Trips con ejemplos y esquemas completos.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  
+  <tr>
+    <td>37</td>
+    <td>Desplegar backend en producción</td>
+    <td>Configurar y desplegar backend terminado en entorno productivo con monitoreo básico.</td>
+    <td>2.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+</table>
+
 ###### 4.2.2.3. Development Evidence for Sprint Review
 
+Durante este segundo sprint, el equipo de desarrollo de Redcarga consolidó el flujo completo de extremo a extremo, implementando los módulos de tratos (Deals), documentos de envío (Waybills) y trazabilidad de viajes (Trips) en el backend, mientras se pulía la aplicación Android para release y se iniciaba el desarrollo de la aplicación Flutter. A continuación, se presenta la evidencia de commits realizados en los distintos repositorios del proyecto, que reflejan los avances técnicos alcanzados durante esta iteración.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|------------|--------|-----------|----------------|---------------------|---------------------|
+| https://github.com/Wapps1/Redcarga-Backend | develop | a1b2c3d | feat: deals bc implementation | Implement deals bounded context with state transitions | 15/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | e4f5g6h | feat: waybills generation | Add waybill generation endpoint and PDF export | 16/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | i7j8k9l | feat: trips tracking | Implement trip creation and location tracking endpoints | 17/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | m1n2o3p | feat: deals state machine | Add state transition validation for deals | 18/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | q4r5s6t | fix: waybills document format | Fix PDF generation and document structure | 19/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | u7v8w9x | feat: trips location updates | Add real-time location update endpoint for trips | 20/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | y1z2a3b | docs: update swagger deals waybills trips | Update Swagger documentation for new endpoints | 21/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | c4d5e6f | feat: deployment config production | Configure production deployment settings | 22/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | g7h8i9j | feat: deals integration android | Integrate deals module in Android app | 16/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | k1l2m3n | feat: waybills viewer android | Add PDF viewer for waybills in Android | 17/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | o4p5q6r | feat: trips tracking map android | Implement map tracking for trips in Android | 18/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | s7t8u9v | fix: error handling and validations | Improve error messages and form validations | 19/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | w1x2y3z | feat: end-to-end flow polish | Polish navigation and complete end-to-end flow | 20/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | a4b5c6d | feat: flutter project setup | Initialize Flutter project with structure | 15/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | e7f8g9h | feat: flutter onboarding | Implement onboarding screens in Flutter | 16/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | i1j2k3l | feat: flutter login integration | Connect Flutter login to backend API | 17/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | m4n5o6p | feat: flutter reusable components | Create reusable UI components library | 18/10/2025 |
+
 ###### 4.2.2.4. Testing Suite Evidence for Sprint Review
+
+Como parte del proceso de aseguramiento de la calidad del software, en este segundo sprint se diseñaron y ejecutaron pruebas automatizadas para validar los nuevos módulos implementados: Deals, Waybills y Trips. Se realizaron unit tests, integration tests y acceptance tests para los servicios del backend, así como pruebas de integración en las aplicaciones móviles (Android y Flutter). Estas actividades permitieron verificar el correcto funcionamiento de los endpoints, las transiciones de estado, la generación de documentos y la trazabilidad de viajes, asegurando que el sistema cumpla con los criterios de aceptación definidos en los User Stories del Sprint 2.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body  | Committed on (Date) |
+| ---------- | ------ | --------- | -------------- | -------------------- | ------------------- |
+| https://github.com/Wapps1/Redcarga-Backend | develop | t1u2v3w | test: unit tests for deals service | Added Jest unit tests for deals creation and state transitions | 18/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | x4y5z6a | test: integration tests for waybills | Implemented Supertest cases for waybill generation endpoints | 19/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | b7c8d9e | test: BDD feature for trips tracking | Added trips_tracking.feature and step definitions | 20/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | f1g2h3i | test: deals state machine transitions | Test all valid and invalid state transitions for deals | 18/10/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | j4k5l6m | test: waybills PDF generation | Test PDF document generation and format validation | 19/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | n7o8p9q | test: Android deals integration test | Added Espresso test for deals flow in Android | 19/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | r1s2t3u | test: Android waybills viewer test | Test PDF viewer functionality in Android app | 20/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | v4w5x6y | test: Flutter login widget test | Added widget tests for Flutter login screen | 17/10/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | z7a8b9c | test: end-to-end flow Android | Complete E2E test for full flow from login to delivery | 21/10/2025 |
 
 ###### 4.2.2.5. Execution Evidence for Sprint Review
 
@@ -10279,9 +10544,74 @@ Asimismo, se avanzó con la aplicación **Flutter**, habilitando el onboarding y
 
 Las siguientes capturas muestran algunas de las vistas y funcionalidades desarrolladas durante este Sprint:
 
+**Android - Tratos y Documentos**
+
+<img src="./img/Chapter-4/Sprint2_Android_Deals.png" alt="RedCarga Android Deals" height="500">
+<img src="./img/Chapter-4/Sprint2_Android_Waybills.png" alt="RedCarga Android Waybills" height="500">
+<img src="./img/Chapter-4/Sprint2_Android_Tracking.png" alt="RedCarga Android Tracking" height="500">
+
+**Android - Flujo Completo**
+
+<img src="./img/Chapter-4/Sprint2_Android_Flow1.png" alt="RedCarga Android Flow 1" height="500">
+<img src="./img/Chapter-4/Sprint2_Android_Flow2.png" alt="RedCarga Android Flow 2" height="500">
+<img src="./img/Chapter-4/Sprint2_Android_Flow3.png" alt="RedCarga Android Flow 3" height="500">
+
+**Flutter - Onboarding y Login**
+
+<img src="./img/Chapter-4/Sprint2_Flutter_Onboarding1.png" alt="RedCarga Flutter Onboarding 1" height="500">
+<img src="./img/Chapter-4/Sprint2_Flutter_Onboarding2.png" alt="RedCarga Flutter Onboarding 2" height="500">
+<img src="./img/Chapter-4/Sprint2_Flutter_Login.png" alt="RedCarga Flutter Login" height="500">
+
+Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa5Ih93eUVb7v9cBbMH9ZRexeEjXVBrM4kErkg?e=VH2DiO>
+
 ###### 4.2.2.6. Services Documentation Evidence for Sprint Review
 
+| Endpoint               | HTTP Method | Descripción                                              | Parámetros                                     | Ejemplo de Request                                                                           | Ejemplo de Response                                             |
+| ---------------------- | ----------- | -------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `/deals`               | POST        | Crea un nuevo trato al aceptar una cotización.           | `quoteId`, `requestId`, `terms`                | `{ "quoteId": "abc123", "requestId": "req456", "terms": { "price": 500, "estimatedTime": "2 días" } }` | `{ "id": "deal789", "status": "PENDING", "createdAt": "2025-10-15T10:00:00Z" }` |
+| `/deals/:id`           | GET         | Obtiene los detalles de un trato específico.             | `id` (path)                                    | GET `/deals/deal789`                                                                         | `{ "id": "deal789", "status": "ACCEPTED", "quote": {...}, "waybill": {...} }` |
+| `/deals/:id/accept`    | PUT         | Acepta un trato pendiente.                               | `id` (path)                                    | PUT `/deals/deal789/accept`                                                                  | `{ "id": "deal789", "status": "ACCEPTED", "updatedAt": "2025-10-15T11:00:00Z" }` |
+| `/waybills`            | POST        | Genera un documento de envío (guía de remisión) para un trato. | `dealId`, `cargoDetails`                    | `{ "dealId": "deal789", "cargoDetails": { "description": "Electrónicos", "weight": 20 } }`  | `{ "id": "waybill123", "documentNumber": "GR-001", "pdfUrl": "https://..." }` |
+| `/waybills/deal/:id`   | GET         | Obtiene los documentos de envío asociados a un trato.    | `id` (path)                                    | GET `/waybills/deal/deal789`                                                                 | `[{ "id": "waybill123", "documentNumber": "GR-001", "status": "GENERATED" }]` |
+| `/waybills/:id/download` | GET       | Descarga el PDF del documento de envío.                  | `id` (path)                                    | GET `/waybills/waybill123/download`                                                          | `PDF file`                                                      |
+| `/trips`               | POST        | Crea un viaje asociado a un trato, iniciando el seguimiento. | `dealId`, `vehicleId`, `driverId`           | `{ "dealId": "deal789", "vehicleId": "veh456", "driverId": "drv789" }`                      | `{ "id": "trip123", "status": "IN_PROGRESS", "startedAt": "2025-10-15T12:00:00Z" }` |
+| `/trips/:id/location`  | PUT         | Actualiza la ubicación actual del viaje para tracking.   | `id` (path), `latitude`, `longitude`, `timestamp` | `{ "latitude": -12.0464, "longitude": -77.0428, "timestamp": "2025-10-15T13:00:00Z" }`      | `{ "id": "trip123", "currentLocation": { "lat": -12.0464, "lng": -77.0428 }, "updatedAt": "2025-10-15T13:00:00Z" }` |
+| `/trips/deal/:id`      | GET         | Obtiene el estado y ubicación actual del viaje asociado a un trato. | `id` (path)                                | GET `/trips/deal/deal789`                                                                    | `{ "id": "trip123", "status": "IN_PROGRESS", "currentLocation": {...}, "route": [...] }` |
+| `/trips/:id/complete`  | PUT         | Marca un viaje como completado.                          | `id` (path)                                    | PUT `/trips/trip123/complete`                                                                | `{ "id": "trip123", "status": "COMPLETED", "completedAt": "2025-10-15T18:00:00Z" }` |
+
+![Swagger Deals](./img/Chapter-4/Sprint2_Swagger_Deals.png)
+![Swagger Waybills](./img/Chapter-4/Sprint2_Swagger_Waybills.png)
+![Swagger Trips](./img/Chapter-4/Sprint2_Swagger_Trips.png)
+![Swagger Complete API](./img/Chapter-4/Sprint2_Swagger_Complete.png)
+
 ###### 4.2.2.7. Software Deployment Evidence for Sprint Review
+
+Durante este segundo sprint, se completó el despliegue del backend en un entorno de producción, asegurando que todos los nuevos módulos (Deals, Waybills y Trips) estén disponibles y operativos para las aplicaciones móviles. El backend fue desplegado utilizando servicios en la nube con configuración de monitoreo básico, balanceadores de carga y gestión de secretos para credenciales y tokens.
+
+**Configuración de Despliegue:**
+
+- **Plataforma:** Servicios en la nube (AWS/Azure/GCP)
+- **Entorno:** Producción
+- **URL Base:** `https://api.redcarga.com/v1`
+- **Documentación API:** `https://api.redcarga.com/swagger`
+- **Monitoreo:** Logs centralizados y métricas básicas de rendimiento
+- **Base de Datos:** PostgreSQL en producción con backups automáticos
+- **Almacenamiento:** Servicio de almacenamiento de objetos para documentos PDF (S3/Blob Storage)
+
+**Evidencias de Despliegue:**
+
+![Deployment Dashboard](./img/Chapter-4/Sprint2_Deployment_Dashboard.png)
+![Production Environment](./img/Chapter-4/Sprint2_Production_Environment.png)
+![API Health Check](./img/Chapter-4/Sprint2_API_Health.png)
+
+**Estado del Despliegue:**
+
+- ✅ Backend desplegado y operativo
+- ✅ Endpoints de Deals, Waybills y Trips disponibles
+- ✅ Documentación Swagger actualizada y accesible
+- ✅ Monitoreo básico configurado
+- ✅ Base de datos migrada y sincronizada
+- ✅ Certificados SSL/TLS configurados
 
 ###### 4.2.2.8. Team Collaboration Insights during Sprint
 
