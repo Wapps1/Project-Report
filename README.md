@@ -235,13 +235,13 @@
             <td>Cierre TP1 backend: endpoints y CRUDs estabilizados, WebSockets operativo y documentación verificada.</td>
         </tr>
         <tr>
-            <td>33</td>
+            <td>28</td>
             <td>11/11/2025</td>
             <td>María Patricia Hernández Uchuya</td>
             <td>Registro de <b>Sprint 2</b> en el informe: consolidación de avances y evidencias.</td>
         </tr>
         <tr>
-            <td>34</td>
+            <td>29</td>
             <td>26/10/2025</td>
             <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
             <td>Correcciones globales del trabajo: ajustes de estilo, consistencia y observaciones de revisión.</td>
