@@ -51,7 +51,7 @@
 </div>
 
 <p align="center">
-    <strong>Octubre, 2025</strong>
+    <strong>Noviembre, 2025</strong>
 </p>
 <br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br>
@@ -233,6 +233,18 @@
             <td>8/10/2025</td>
             <td>Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya</td>
             <td>Cierre TP1 backend: endpoints y CRUDs estabilizados, WebSockets operativo y documentación verificada.</td>
+        </tr>
+        <tr>
+            <td>28</td>
+            <td>11/11/2025</td>
+            <td>María Patricia Hernández Uchuya</td>
+            <td>Registro de <b>Sprint 2</b> en el informe: consolidación de avances y evidencias.</td>
+        </tr>
+        <tr>
+            <td>29</td>
+            <td>26/10/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
+            <td>Correcciones globales del trabajo: ajustes de estilo, consistencia y observaciones de revisión.</td>
         </tr>
     </table>
 <div>
@@ -668,18 +680,26 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
           Durante TB1, presenté y sustenté entregables clave: diseño y análisis de entrevistas, User Stories y Arquitectura de Software con diagramas del C4 Model. Para ello actualicé y apliqué conocimientos en         requisitos (planificación y codificación de hallazgos), redacción de historias con criterios de aceptación y modelado C4. Usé estrategias de aprendizaje como revisión de fuentes especializadas, práctica con herramientas (p. ej., Structurizr) y retroalimentación del equipo, evidenciando actualización continua para el proyecto y mi desarrollo profesional.<br>
           <strong>TP1: </strong><br>
           Elaboré las <em>General Style Guidelines</em>, los <em>Mock-ups</em>, <em>User Flow Diagrams</em> y <em>Prototyping</em>, y apoyé <em>Software Configuration Management</em>. Actualicé y apliqué conocimientos en sistemas de diseño (tokens de color y tipografía, escalas, componentes), accesibilidad y contraste, trazado de flujos de usuario y prototipos navegables. En SCM apliqué GitFlow y buenas prácticas de PR. Estrategias de aprendizaje: benchmarking de design systems, revisión de heurísticas, pruebas con usuarios a baja escala y ciclos de crítica de diseño con el equipo. 
+        <br>
+        <strong>TB2: </strong><br>
+          Implementé pantallas en Flutter para <em>chat</em>, <em>tratos</em>, eventos y <em>cotizaciones</em>. Actualicé conocimientos en gestión de estado, navegación, manejo de datos en tiempo real y pruebas instrumentadas; usé prototipos, documentación oficial y revisiones por pares.
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong> <br>
         <strong>TB1: </strong><br>
           Durante TB1, presenté y sustenté entregables clave: el análisis competitivo con estrategias y tácticas frente a competidores, la redacción de User Stories y el diseño táctico DDD mediante Bounded Contexts. Para ello actualicé y apliqué conocimientos en análisis comparativo de mercado y propuesta de valor, criterios de aceptación y trazabilidad, así como en delimitación de contextos y responsabilidades del dominio. Utilicé estrategias de aprendizaje como revisión de fuentes especializadas, contraste de casos, práctica con story/context mapping y retroalimentación del equipo, fortaleciendo mi desarrollo profesional y el avance del proyecto.<br>
         <strong>TP1: </strong><br>
-          Implementé la creación de <em>bounded contexts</em> en el backend, la comunicación en tiempo real mediante <em>WebSockets</em> y los <em>CRUDs</em> principales. Actualicé y apliqué conocimientos en modularización con DDD (paquetes/módulos coherentes), configuración de canales WebSocket y estandarización de endpoints. Estrategias: lectura de documentación oficial, <em>spikes</em> técnicos, pruebas con clientes de mensajería y revisiones por pares para validar diseño e implementación.
+          Implementé la creación de <em>bounded contexts</em> en el backend, la comunicación en tiempo real mediante <em>WebSockets</em> y los <em>CRUDs</em> principales. Actualicé y apliqué conocimientos en modularización con DDD (paquetes/módulos coherentes), configuración de canales WebSocket y estandarización de endpoints. Estrategias: lectura de documentación oficial, <em>spikes</em> técnicos, pruebas con clientes de mensajería y revisiones por pares para validar diseño e implementación.<br>
+        <strong>TB2: </strong><br>
+          Amplié soporte backend para el flujo principal (solicitudes, cotizaciones, tratos, rutas) y estabilicé la mensajería en tiempo real. Apliqué aprendizaje incremental con iteraciones cortas, pruebas y code reviews.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong> <br>
         <strong>TB1: </strong><br>
           Durante TB1, presenté y sustenté entregables clave como la Descripción de la Startup, los Perfiles del equipo, el registro de entrevistas, las User Stories y los artefactos de modelado (EventStorming, Context Mapping y diseño táctico DDD con Bounded Contexts). Para elaborarlos, actualicé y apliqué conocimientos en síntesis de propuesta de valor, investigación cualitativa, trazabilidad requisito–modelo y diseño dirigido por dominio, utilizando estrategias de aprendizaje como revisión de guías especializadas, práctica con plantillas y validación por retroalimentación.<br>
         <strong>TP1: </strong><br>
           Desarrollé pantallas de la app móvil, integré con el backend (consumo de endpoints, manejo de estados y errores) y colaboré en parte de los endpoints y <em>CRUDs</em>. Apliqué conocimientos actualizados en patrones de UI móvil, navegación, manejo de datos remotos y contratos API. Estrategias: prototipos funcionales, pruebas de integración, lectura de documentación y depuración iterativa con el equipo.
+        <br>
+        <strong>TB2: </strong><br>
+          Concluí la app Android con el flujo principal: conexión cliente–proveedor, solicitudes, cotizaciones, tratos y rutas. Profundicé en navegación, manejo de estados/errores y pruebas de integración end-to-end.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
@@ -687,6 +707,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
           <strong>TP1: </strong><br>
           Diseñé la <em>Landing Page UI</em>, conduje el <em>Sprint Planning</em> y el <em>Sprint Backlog</em>, y colaboré en parte de los endpoints del backend. Actualicé y apliqué conocimientos en diseño responsive orientado a conversión (estructura, jerarquía y CTAs), planificación ágil y desglose de trabajo, además de estandarización de contratos API. Estrategias: consulta de guías de diseño y Scrum, uso de plantillas, sesiones de refinamiento y validación con el equipo.
+        <br>
+        <strong>TB2: </strong><br>
+          Implementé pantallas de <em>flotas</em> y <em>conductores</em> y avancé en <em>solicitudes</em> en Flutter. Registré el Sprint 2 en el informe. Actualicé conocimientos en formularios, validación y navegación.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong> <br>
         <strong>TB1: </strong><br>
@@ -694,6 +717,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br>
         <strong>TP1: </strong><br>
           Desarrollé la <em>Information Architecture</em>, la <em>Landing Page UI Design</em>, <em>Mobile Applications Wireframes</em> y <em>Wireflow Diagrams</em>, y apoyé <em>Software Configuration Management</em>. Actualicé y apliqué conocimientos en sistemas de organización/etiquetado y navegación, wireframing y flujos, así como en prácticas de versionado colaborativo. Estrategias: análisis comparativo de IA, pruebas internas de recorrido, y guías de mensajes de commit/PR en el repositorio.
+      <br>
+        <strong>TB2: </strong><br>
+          Desarrollé pantallas de <em>login</em> y <em>registro</em> conectadas al backend, además de <em>solicitudes</em> y <em>home</em> en Flutter. Apliqué buenas prácticas en autenticación, manejo de errores y estados.
       </td>
       <td>
         <strong>TB1: </strong><br>
@@ -701,6 +727,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br><br>
         <strong>TP1: </strong><br>
         En TP1 actualizamos y aplicamos conocimientos prácticos para avanzar en la solución: arquitectura de la información, guías de estilo, wireframes/wireflows, mock-ups y prototipos; pantallas móviles e integración con backend; delimitación de bounded contexts, endpoints y <em>CRUDs</em>; y mensajería en tiempo real con WebSockets. Las estrategias incluyeron <em>spikes</em> técnicos, benchmarking de diseño, pruebas de integración, GitFlow con revisiones por pares y sesiones de crítica de diseño. Esto consolidó entregables funcionales y alineados al valor del producto, fortaleciendo nuestras competencias profesionales.
+      <br><br>
+        <strong>TB2: </strong><br>
+        En TB2 se actualizó y aplicó conocimiento para cerrar el flujo principal de la solución: pantallas Flutter (chat, tratos, solicitudes, flotas/conductores, autenticación), app Android completa y backend alineado. Se reforzaron prácticas de pruebas, gestión de estado, mensajería en tiempo real y documentación del sprint.
       </td>
     </tr>
     <tr>
@@ -713,6 +742,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TP1: </strong><br>
         Las decisiones de diseño (accesibilidad, consistencia, escalabilidad del sistema de estilos) evidenciaron la necesidad de aprendizaje continuo en internacionalización, diseño inclusivo y mantenimiento de librerías de componentes. Abordé estas brechas con estudio focalizado, prototipos y revisiones periódicas con el equipo, reafirmando el aprendizaje permanente como práctica.
+        <br>
+        <strong>TB2: </strong><br>
+        El desarrollo de chat/tratos en tiempo real demandó profundizar en sincronización, reconexión y pruebas de UI; consolidé un plan de mejora continua en estado, navegación y calidad visual.
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong>  <br>
         <strong>TB1: </strong><br>
@@ -720,6 +752,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TP1: </strong><br>
         La implementación de WebSockets y <em>CRUDs</em> en BCs mostró retos de concurrencia, seguridad y observabilidad. Reconozco la necesidad de profundizar continuamente en patrones de integración, pruebas automatizadas y monitoreo, aplicando lecturas dirigidas, <em>spikes</em> y code reviews como estrategia sostenida.
+        <br>
+        <strong>TB2: </strong><br>
+        El cierre del flujo backend evidenció la necesidad de seguir profundizando en consistencia transaccional, idempotencia y observabilidad; mantengo ciclos de aprendizaje con pruebas y revisiones.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong>  <br>
         <strong>TB1: </strong><br>
@@ -727,6 +762,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TP1: </strong><br>
         La integración app-backend evidenció brechas en manejo de estados, errores y resiliencia frente a fallos de red. Fortalezco un plan de aprendizaje continuo en pruebas de UI/integración, patrones de sincronización y mejora del rendimiento, con iteraciones guiadas por métricas y retroalimentación.
+        <br>
+        <strong>TB2: </strong><br>
+        El cierre del flujo Android expuso casos límite de red y usabilidad; priorizo aprendizaje en pruebas automatizadas, manejo offline y monitoreo de rendimiento.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
@@ -734,6 +772,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TP1: </strong><br>
         El diseño de la landing y la gestión del Sprint mostraron oportunidades de mejora en SEO, performance y estimación ágil. Reconozco la necesidad de seguir aprendiendo en medición de conversión, <em>slicing</em> vertical y optimización de entregables, mediante estudio guiado y retroalimentación continua.
+         <br>
+        <strong>TB2: </strong><br>
+        Las pantallas de flotas/conductores y solicitudes mostraron retos de usabilidad y validación; continúo aprendiendo patrones de formularios, accesibilidad y gestión de datos.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong>  <br>
         <strong>TB1: </strong><br>
@@ -741,6 +782,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br>
         <strong>TP1: </strong><br>
         La arquitectura de información y los wireflows requirieron iterar nomenclaturas y rutas, y validar encontrabilidad. Mantengo un enfoque de aprendizaje continuo en pruebas de usabilidad, patrones de navegación y documentación colaborativa, usando revisiones y experimentación controlada como estrategia.
+       <br>
+        <strong>TB2: </strong><br>
+        Los flujos de autenticación y pantallas iniciales exigieron reforzar seguridad, manejo de errores y estados; sigo profundizando en buenas prácticas de auth y telemetría de UX.
       </td>
       <td>
         <strong>TB1: </strong><br>
@@ -748,6 +792,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br><br>
         <strong>TP1: </strong><br>
         En TP1 reafirmamos el aprendizaje permanente ante retos concretos: accesibilidad y consistencia del sistema de estilos, integración móvil-backend, definición de BCs y diseño de endpoints/CRUDs, comunicación en tiempo real con WebSockets, y planeación ágil efectiva. Como estrategia, institucionalizamos <em>spikes</em>, checklists de PR, sesiones de crítica de diseño, pruebas de integración y documentación viva. Esto fortalece nuestra capacidad de adquirir y aplicar nuevos conocimientos de forma continua, elevando la calidad del producto.
+      <br><br>
+        <strong>TB2: </strong><br>
+        En TB2 reconocimos la necesidad de aprendizaje permanente para cerrar el flujo principal y mejorar calidad: profundizamos en estado y navegación en Flutter/Android, robustecimos backend en tiempo real, fortalecimos pruebas y documentamos Sprint 2. Mantuvimos ciclos de mejora con revisiones por pares y correcciones globales del trabajo.
       </td>
     </tr>
   </tbody>
