@@ -10496,6 +10496,279 @@ Link:
   </tr>
 </table>
 
+###### 4.2.2.2. Sprint Backlog 2
+
+<p>
+  En este segundo sprint, el equipo priorizó cerrar el flujo de punta a punta sobre Android (desde la publicación de solicitudes con estimación por IA hasta el cierre del viaje con POD), robustecer el backend con los nuevos módulos de <strong>requests, quotes/deals, chat y trips</strong>, e incorporar un primer entregable visible en <strong>Flutter</strong> (onboarding y secciones base de solicitudes, deals, fleet, trips y waybills) reutilizando la misma API desplegada en producción.
+</p>
+
+<img src="./img/Chapter-4/Sprint2_Backlog_Trello.png" alt="Trello Sprint 2 Redcarga">
+Link: <>
+
+<table>
+  <tr>
+    <th colspan="2">Sprint #</th>
+    <th colspan="6">Sprint 2</th>
+  </tr>
+  <tr>
+    <th colspan="2">User Story</th>
+    <th colspan="6">Work-Item / Task</th>
+  </tr>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Estimation (Hours)</th>
+    <th>Assigned To</th>
+    <th>Status</th>
+  </tr>
+  <!-- US21: Registrar medidas por IA o manual -->
+  <tr>
+    <th rowspan="3">US21</th>
+    <th rowspan="3">Registrar medidas por IA o manual con edición</th>
+    <td>1</td>
+    <td>Implementar estimación de dimensiones (POST /requests/dimensions/:estimate)</td>
+    <td>Se implementó el <em>dimensions-estimation-controller</em> para estimar largo, ancho, alto y peso volumétrico a partir de fotos mediante sidecar de IA.</td>
+    <td>3 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Flujo Android de captura de medidas IA / manual</td>
+    <td>Se construyó en Android el formulario de medidas con selección de modo IA/manual, vista de resultados sugeridos y soporte para edición antes de guardar.</td>
+    <td>3 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Formulario Flutter de medidas y peso volumétrico</td>
+    <td>Se creó en Flutter una pantalla de medidas que consume el endpoint de estimación, permite editar valores y recalcula peso volumétrico en tiempo real.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  <!-- US25: Publicar solicitud y confirmar exactitud -->
+  <tr>
+    <th rowspan="3">US25</th>
+    <th rowspan="3">Publicar solicitud y confirmar medidas/peso</th>
+    <td>4</td>
+    <td>Extender requests-controller para publicación</td>
+    <td>Se añadieron los endpoints <code>POST /requests/create-request</code>, <code>GET /requests</code> y <code>GET /requests/{requestId}</code> para soportar el flujo completo de creación y consulta de solicitudes.</td>
+    <td>3 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Wizard Android de creación y resumen de solicitud</td>
+    <td>Se implementó en Android un wizard con resumen final de ítems, ruta y pesos, incluyendo la confirmación explícita de exactitud antes de publicar.</td>
+    <td>3 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Home y listado de solicitudes en Flutter</td>
+    <td>Se desarrolló el Home de cliente y la vista “Mis solicitudes” en Flutter, consumiendo <code>GET /requests</code> en modo lectura inicial.</td>
+    <td>2.5 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  <!-- US22: Capturar fotos de ítems con reglas de calidad -->
+  <tr>
+    <th rowspan="3">US22</th>
+    <th rowspan="3">Capturar fotos de ítems con reglas de calidad</th>
+    <td>7</td>
+    <td>Media upload a Cloudinary (POST /media/uploads:image)</td>
+    <td>Se implementó el <em>media-upload-controller</em> para subir imágenes a Cloudinary desde el backend, devolviendo URLs firmadas asociables a la solicitud.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Cámara y validación básica en Android</td>
+    <td>Se agregó en Android el flujo de captura de fotos con validación de mínimo de tomas y tamaño, integrando la subida vía <code>/media/uploads:image</code>.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>UI Flutter para captura guiada de fotos</td>
+    <td>Se construyó en Flutter una pantalla de captura de fotos con guía visual y mensajes cuando no se cumplen las reglas mínimas de calidad.</td>
+    <td>1.5 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  <!-- US28: Iniciar trato desde cotización y habilitar chat -->
+  <tr>
+    <th rowspan="3">US28</th>
+    <th rowspan="3">Iniciar trato desde cotización y habilitar chat contextual</th>
+    <td>10</td>
+    <td>Endpoints de quotes y bandeja de solicitudes</td>
+    <td>Se implementaron <code>GET/POST /api/deals/quotes</code>, <code>POST /api/deals/quotes/{quoteId}:start-negotiation</code>, <code>POST /api/deals/quotes/{quoteId}:reject</code>, <code>PATCH /api/deals/quotes/{quoteId}/items</code> y <code>GET /planning/companies/{companyId}/request-inbox</code> para soportar el inicio de tratos.</td>
+    <td>3 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>Módulo Android de cotizaciones e inicio de trato</td>
+    <td>Se desarrolló en Android la vista de cotizaciones por solicitud con la acción “Iniciar trato”, enlazando al detalle del trato creado.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>Pantalla Flutter de deals (lista y detalle)</td>
+    <td>Se creó en Flutter la pantalla de deals con listado de tratos y vista de detalle básica, consumiendo la API de cotizaciones y tratos.</td>
+    <td>2.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  <!-- US29: Mensajería del trato -->
+  <tr>
+    <th rowspan="3">US29</th>
+    <th rowspan="3">Mensajería del trato: enviar y leer mensajes</th>
+    <td>13</td>
+    <td>Implementar chat-controller</td>
+    <td>Se habilitaron los endpoints <code>GET /api/deals/quotes/{quoteId}/chat</code>, <code>POST /api/deals/quotes/{quoteId}/chat/messages</code> y <code>PUT /api/deals/quotes/{quoteId}/chat/read</code> para mensajería y lectura.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>Pantalla de chat de trato en Android</td>
+    <td>Se implementó en Android la pantalla de chat contextual al trato, con envío de mensajes, refresco de mensajes y marcado de mensajes leídos.</td>
+    <td>3 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>Pantalla de chat en Flutter (REST)</td>
+    <td>Se construyó en Flutter la vista de chat del trato consumiendo los endpoints REST; la suscripción WebSocket queda diseñada para un siguiente sprint.</td>
+    <td>2.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  <!-- US13: Asignar unidad/placa a un trato formal -->
+  <tr>
+    <th rowspan="3">US13</th>
+    <th rowspan="3">Asignar unidad/placa a un trato formal</th>
+    <td>16</td>
+    <td>Lógica backend de asignación de vehículo al trip</td>
+    <td>Se extendieron los servicios de Fleet/Trips para vincular una unidad habilitada a un trato formal y exponer la asignación en las respuestas del viaje.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>Asignación de vehículo desde Android</td>
+    <td>Se añadió en Android la pantalla de detalle del trato con selector de vehículo, validando disponibilidad y guardando la asignación.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>Listado Flutter de vehículos para selección</td>
+    <td>Se desarrolló en Flutter un listado de vehículos reutilizable para selección en los flujos de viaje.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  <!-- US14: Activar tracking del viaje -->
+  <tr>
+    <th rowspan="3">US14</th>
+    <th rowspan="3">Activar tracking del viaje y enviar posición</th>
+    <td>19</td>
+    <td>Servicios backend de activación y tracking</td>
+    <td>Se implementaron servicios en Trips para activar tracking de un viaje y registrar posiciones periódicas asociadas al trip.</td>
+    <td>3 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>Tracking básico en Android</td>
+    <td>Se integró en Android la activación de tracking desde el detalle del viaje y el envío periódico de coordenadas en ambiente de prueba.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>Pantalla Flutter de Trips</td>
+    <td>Se creó en Flutter la pantalla de Trips con listado y detalle del viaje, consumiendo el estado de tracking desde el backend.</td>
+    <td>2.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  <!-- US16: Confirmar entrega y adjuntar POD -->
+  <tr>
+    <th rowspan="3">US16</th>
+    <th rowspan="3">Confirmar entrega y adjuntar prueba de entrega (POD)</th>
+    <td>22</td>
+    <td>Endpoints de confirmación de entrega y POD</td>
+    <td>Se añadieron servicios en el backend para marcar una entrega como completada y registrar la prueba de entrega (foto/firma/documento) vinculada al viaje.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>Pantalla Android de confirmación de entrega</td>
+    <td>Se implementó en Android la pantalla para confirmar entrega en destino, subir POD y cerrar el viaje.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>Pantalla Flutter de Waybills</td>
+    <td>Se desarrolló en Flutter la vista de Waybills con listado y detalle de documentos asociados al viaje y a la confirmación de entrega.</td>
+    <td>2.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+  <!-- US39: Dar de alta vehículo y validar placa única -->
+  <tr>
+    <th rowspan="3">US39</th>
+    <th rowspan="3">Dar de alta vehículo y validar placa única</th>
+    <td>25</td>
+    <td>Ajustes backend para alta de vehículos desde apps</td>
+    <td>Se expusieron en el backend los atributos mínimos de vehículo (placa, tipo, capacidad) y reglas de unicidad de placa reutilizables por las apps móviles.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>Pantallas Flutter de alta y edición de vehículo</td>
+    <td>Se crearon en Flutter las pantallas de alta/edición de vehículo con validación de placa única y estados básicos de la unidad.</td>
+    <td>2.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>Ajustes de navegación y componentes compartidos en Flutter</td>
+    <td>Se ajustaron la navegación, estilos y componentes comunes (botones, cards) utilizados por Fleet, Trips y Waybills para mantener una experiencia consistente.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+</table>
+
 ###### 4.2.2.3. Development Evidence for Sprint Review
 
 Durante este segundo sprint, el equipo de desarrollo de Redcarga consolidó el flujo completo de extremo a extremo, implementando los módulos de tratos (Deals), documentos de envío (Waybills) y trazabilidad de viajes (Trips) en el backend, mientras se pulía la aplicación Android para release y se iniciaba el desarrollo de la aplicación Flutter. A continuación, se presenta la evidencia de commits realizados en los distintos repositorios del proyecto, que reflejan los avances técnicos alcanzados durante esta iteración.
