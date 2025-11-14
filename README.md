@@ -10841,9 +10841,10 @@ Durante este segundo sprint, se completó el despliegue del backend en un entorn
 
 **Evidencias de Despliegue:**
 
-![Deployment Dashboard](./img/Chapter-4/Sprint2_Deployment_Dashboard.png)
-![Production Environment](./img/Chapter-4/Sprint2_Production_Environment.png)
-![API Health Check](./img/Chapter-4/Sprint2_API_Health.png)
+<img width="1858" height="968" alt="image" src="https://github.com/user-attachments/assets/35f4d8af-acb2-4278-9b3e-7f82a24192ba" />
+
+<img width="1861" height="833" alt="image" src="https://github.com/user-attachments/assets/cb843410-dd86-48c4-b5ea-c677ae46c108" />
+
 
 **Estado del Despliegue:**
 
