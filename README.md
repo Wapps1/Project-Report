@@ -620,6 +620,8 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
         - [4.1.2. Source Code Management](#412-source-code-management)
         - [4.1.3. Source Code Style Guide \& Conventions](#413-source-code-style-guide--conventions)
         - [4.1.4. Software Deployment Configuration](#414-software-deployment-configuration)
+          - [**Landing Page Deployment**](#landing-page-deployment)
+          - [**Backend Deployment**](#backend-deployment)
       - [4.2. Landing Page \& Mobile Application Implementation](#42-landing-page--mobile-application-implementation)
         - [4.2.1. Sprint 1](#421-sprint-1)
           - [4.2.1.1. Sprint Planning 1](#4211-sprint-planning-1)
@@ -1107,12 +1109,10 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
 <!-- Capítulo II: Requirements Elicitation & Analysis -->
 <h1>2.1. Competidores</h1>
 <h2>2.1.1. Análisis competitivo</h2>
-
 <table border="1" cellspacing="0" cellpadding="6" width="100%">
   <tr>
     <th colspan="6">Competitive Analysis Landscape</th>
   </tr>
-
   <tr>
     <td align="center"><b>¿Por qué llevar a cabo este análisis?</b></td>
     <td colspan="5" align="center">
@@ -1120,8 +1120,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       qué funcionalidades y tácticas priorizar, y qué riesgos/amenazas debemos mitigar.
     </td>
   </tr>
-
-
   <tr>
     <th colspan="2" align="center">Nombre y logo</th>
     <th align="center">Su startup: <b>RedCarga</b></th>
@@ -1129,31 +1127,26 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
     <th align="center">Competidor 2: <b>DeltaX (LatAm)</b></th>
     <th align="center">Competidor 3: <b>MiCarga (Tracklink, Perú)</b></th>
   </tr>
-
 <tr class="table-logos">
   <th colspan="2" align="center">Nombre y logo</th>
-
   <th align="center">
     <div class="cell-logo">
     <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/97977d5e-9d18-414d-989e-23719a459403" />
       <div>Su startup: <b>RedCarga</b></div>
     </div>
   </th>
-
   <th align="center">
     <div class="cell-logo">
       <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/a097e4f4-ea7a-4d84-b1ea-1be1660544ed" />
       <div>Competidor 1: <b>Efletex (Perú)</b></div>
     </div>
   </th>
-
   <th align="center">
     <div class="cell-logo">
       <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/901b3423-02cf-4356-9627-b7d7122ed527" />
       <div>Competidor 2: <b>DeltaX (LatAm)</b></div>
     </div>
   </th>
-
   <th align="center">
     <div class="cell-logo">
         <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/114aa992-8c81-453f-b707-2ddae12f4515" />
@@ -1161,8 +1154,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
     </div>
   </th>
 </tr>
-
-  <!-- PERFIL -->
   <tr>
     <th rowspan="2" align="center">Perfil</th>
     <td align="center"><b>Overview</b></td>
@@ -1192,7 +1183,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </p>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Ventaja competitiva<br/>¿Qué valor ofrece?</b></td>
     <td>
@@ -1227,8 +1217,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
-  <!-- PERFIL DE MARKETING -->
   <tr>
     <th rowspan="2" align="center">Perfil de marketing</th>
     <td align="center"><b>Mercado objetivo</b></td>
@@ -1259,7 +1247,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Estrategias de marketing</b></td>
     <td>
@@ -1292,8 +1279,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
-  <!-- PERFIL DEL PRODUCTO -->
   <tr>
     <th rowspan="3" align="center">Perfil del producto</th>
     <td align="center"><b>Productos &amp; Servicios</b></td>
@@ -1327,7 +1312,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Precios &amp; Costos</b></td>
     <td>
@@ -1357,7 +1341,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Canales de distribución<br/>(Web y/o Móvil)</b></td>
     <td>
@@ -1386,8 +1369,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
-  <!-- SWOT -->
   <tr>
     <th rowspan="4" align="center">Análisis SWOT</th>
     <td align="center"><b>Fortalezas</b></td>
@@ -1423,7 +1404,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Debilidades</b></td>
     <td>
@@ -1457,7 +1437,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Oportunidades</b></td>
     <td>
@@ -1489,7 +1468,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
       </ul>
     </td>
   </tr>
-
   <tr>
     <td align="center"><b>Amenazas</b></td>
     <td>
@@ -1521,8 +1499,6 @@ Cuando la tasa de disputas disminuya en al menos un 20% respecto a tratos sin us
     </td>
   </tr>
 </table>
-
-
 
 ### 2.1.2. Estrategias y tácticas frente a competidores
 
@@ -9673,7 +9649,7 @@ Pasos:
 5. Haga clic en Deploy. Vercel hará el build y publicará tu preview.
 
 ###### **Backend Deployment**
-####### Despliegue de **RedCarga-Backend** – Guía Resumida (Windows 10/11)
+**Despliegue de RedCarga-Backend** – Guía Resumida (Windows 10/11)
 
 1. **Configuración de repositorio remoto:**  
    * **Sistema de control de versiones:** Git + GitHub  
@@ -9873,12 +9849,10 @@ Link:
     <th colspan="2">Sprint #</th>
     <th colspan="6">Sprint 1</th>
   </tr>
-  
   <tr>
     <th colspan="2">User Story</th>
     <th colspan="6">Work-Item / Task</th>
   </tr>
-  
   <tr>
     <th>Id</th>
     <th>Title</th>
@@ -9889,8 +9863,6 @@ Link:
     <th>Assigned To</th>
     <th>Status</th>
   </tr>
-  
-  <!-- US01: Registro e inicio de sesión -->
   <tr>
     <th rowspan="4">US01</th>
     <th rowspan="4">Registro e inicio de sesión</th>
@@ -9901,7 +9873,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>2</td>
     <td>Implementar endpoint de login (POST /auth/login)</td>
@@ -9910,7 +9881,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>3</td>
     <td>Conectar pantalla móvil de login con backend</td>
@@ -9919,7 +9889,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>4</td>
     <td>Diseñar validaciones en frontend</td>
@@ -9928,8 +9897,6 @@ Link:
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US02: Solicitudes de carga -->
   <tr>
     <th rowspan="4">US02</th>
     <th rowspan="4">Gestión de solicitudes de carga</th>
@@ -9940,7 +9907,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>6</td>
     <td>Implementar endpoint GET /requests/user/:id</td>
@@ -9949,7 +9915,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>7</td>
     <td>Conectar módulo móvil de solicitudes</td>
@@ -9958,7 +9923,6 @@ Link:
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>8</td>
     <td>Diseñar interfaz para crear solicitud</td>
@@ -9967,8 +9931,6 @@ Link:
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US03: Cotizaciones -->
   <tr>
     <th rowspan="3">US03</th>
     <th rowspan="3">Gestión de cotizaciones</th>
@@ -9979,7 +9941,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>10</td>
     <td>Conectar vista de cotizaciones en app</td>
@@ -9988,7 +9949,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>11</td>
     <td>Simular aceptación de cotización</td>
@@ -9997,8 +9957,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US04: Pagos -->
   <tr>
     <th rowspan="3">US04</th>
     <th rowspan="3">Procesamiento de pagos</th>
@@ -10009,7 +9967,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>13</td>
     <td>Integrar módulo de pago en la app</td>
@@ -10018,7 +9975,6 @@ Link:
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>14</td>
     <td>Diseñar pantalla de confirmación</td>
@@ -10027,8 +9983,6 @@ Link:
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US05: Documentación y despliegue -->
   <tr>
     <th rowspan="3">US05</th>
     <th rowspan="3">Documentación técnica y despliegue</th>
@@ -10039,7 +9993,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>16</td>
     <td>Configurar entorno de despliegue</td>
@@ -10048,7 +10001,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>17</td>
     <td>Pruebas de integración</td>
