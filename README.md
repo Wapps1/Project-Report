@@ -10861,8 +10861,33 @@ Durante el desarrollo del **Sprint 2**, el equipo concentró esfuerzos en cerrar
 | **Saldaña Ayala, Fabiola del Rocío**     | Flutter: onboarding, primeras pantallas conectadas al backend y ajustes de **UX** (validaciones, estados y navegación).            |
 | **Agreda Sobrino, Ariana Cecilia**       | Flutter: consumo de endpoints, manejo de estado y componentes reutilizables; apoyo en pruebas de integración.                      |
 
-> Evidencias sugeridas: capturas de PRs y métricas de actividad por repositorio (contribuidores, red de colaboración y pulse) en `./img/Chapter-4/Sprint2_*`.
 
+A continuación, se presentan ejemplos de métricas de participación desde los repositorios oficiales, evidenciando la contribución de cada miembro del equipo en los diferentes módulos del proyecto.
+
+**Landing Page**
+![](./img/Chapter-4/Team_Collaboration_Pulse_LandingPage.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_LandingPage.png)
+![](./img/Chapter-4/Team_Collaboration_Network_LandingPage.png)
+
+**Backend**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Backend2.png)
+*Hubieron 3 contribuidores, pero el github no muestra a Maria Hernandez.
+
+![](./img/Chapter-4/Team_Collaboration_Contributors_Backend2.png)
+![](./img/Chapter-4/Team_Collaboration_Network_Backend2.png)
+
+**Frontend Android**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Frontend_A.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_Frontend_A.png)
+![](./img/Chapter-4/Team_Collaboration_Network_Frontend_A.png)
+
+
+**Frontend Flutter**
+![](./img/Chapter-4/Team_Collaboration_Pulse_Frontend_F.png)
+![](./img/Chapter-4/Team_Collaboration_Contributors_Frontend_F.png)
+*Hubieron 3 contribuidores, pero el github no muestra a Ariana Agreda.
+![](./img/Chapter-4/Team_Collaboration_Network_Frontend_F.png)
+<br>
 
 <br>
 
