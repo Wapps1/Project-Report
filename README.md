@@ -620,6 +620,8 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
         - [4.1.2. Source Code Management](#412-source-code-management)
         - [4.1.3. Source Code Style Guide \& Conventions](#413-source-code-style-guide--conventions)
         - [4.1.4. Software Deployment Configuration](#414-software-deployment-configuration)
+          - [**Landing Page Deployment**](#landing-page-deployment)
+          - [**Backend Deployment**](#backend-deployment)
       - [4.2. Landing Page \& Mobile Application Implementation](#42-landing-page--mobile-application-implementation)
         - [4.2.1. Sprint 1](#421-sprint-1)
           - [4.2.1.1. Sprint Planning 1](#4211-sprint-planning-1)
@@ -630,9 +632,10 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
           - [4.2.1.6. Services Documentation Evidence for Sprint Review](#4216-services-documentation-evidence-for-sprint-review)
           - [4.2.1.7. Software Deployment Evidence for Sprint Review](#4217-software-deployment-evidence-for-sprint-review)
           - [4.2.1.8. Team Collaboration Insights during Sprint](#4218-team-collaboration-insights-during-sprint)
-      - [4.2.2. Sprint 2](#423-sprint-2)
-          - [4.2.2.1. Sprint Planning 2](#4221-sprint-planning-1)
-          - [4.2.2.2. Sprint Backlog 2](#4222-sprint-backlog-1)
+        - [4.2.2. Sprint 2](#422-sprint-2)
+          - [4.2.2.1. Sprint Planning 2](#4221-sprint-planning-2)
+          - [4.2.2.2. Sprint Backlog 2](#4222-sprint-backlog-2)
+          - [4.2.2.2. Sprint Backlog 2](#4222-sprint-backlog-2-1)
           - [4.2.2.3. Development Evidence for Sprint Review](#4223-development-evidence-for-sprint-review)
           - [4.2.2.4. Testing Suite Evidence for Sprint Review](#4224-testing-suite-evidence-for-sprint-review)
           - [4.2.2.5. Execution Evidence for Sprint Review](#4225-execution-evidence-for-sprint-review)
@@ -10253,7 +10256,6 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
     <strong>Esto se confirmará cuando</strong> Android ejecute el flujo sin bloqueos críticos, el backend esté disponible en producción con Deals/Waybills/Trips documentados en Swagger, y Flutter muestre al menos onboarding y 1–2 pantallas consumiendo endpoints reales.
   </td>
 </tr>
-
   <tr>
     <td>Sprint 2 Velocity</td>
     <td>26 Story Points</td>
@@ -10270,7 +10272,6 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 <p>
   El objetivo de este segundo sprint fue consolidar el flujo completo de extremo a extremo en el sistema <strong>Redcarga</strong>, implementando la formalización de tratos (<strong>Deals</strong>), la emisión de documentos de envío (<strong>Waybills</strong>) y la trazabilidad del viaje (<strong>Trips</strong>) sobre el backend terminado y desplegado. Además, se trabajó en el pulido de la aplicación Android para dejarla lista para release, y se inició el desarrollo de la aplicación Flutter con onboarding y primeras pantallas conectadas al backend productivo.
 </p>
-
 <img src="./img/Chapter-4/Sprint2_Backlog_Trello.png" alt="Trello Sprint 2 Redcarga">
 Link:
 <https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
@@ -10280,12 +10281,10 @@ Link:
     <th colspan="2">Sprint #</th>
     <th colspan="6">Sprint 2</th>
   </tr>
-  
   <tr>
     <th colspan="2">User Story</th>
     <th colspan="6">Work-Item / Task</th>
   </tr>
-  
   <tr>
     <th>Id</th>
     <th>Title</th>
@@ -10296,8 +10295,6 @@ Link:
     <th>Assigned To</th>
     <th>Status</th>
   </tr>
-  
-  <!-- US06: Gestión de Tratos (Deals) -->
   <tr>
     <th rowspan="4">US06</th>
     <th rowspan="4">Gestión de tratos</th>
@@ -10308,7 +10305,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>19</td>
     <td>Implementar endpoint GET /deals/:id</td>
@@ -10317,7 +10313,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>20</td>
     <td>Conectar módulo de tratos en Android</td>
@@ -10326,7 +10321,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>21</td>
     <td>Implementar políticas de transición de estados</td>
@@ -10335,8 +10329,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US07: Documentos de Envío (Waybills) -->
   <tr>
     <th rowspan="3">US07</th>
     <th rowspan="3">Emisión de documentos de envío</th>
@@ -10347,7 +10339,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>23</td>
     <td>Implementar endpoint GET /waybills/deal/:id</td>
@@ -10356,7 +10347,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>24</td>
     <td>Conectar visualización de documentos en Android</td>
@@ -10365,8 +10355,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US08: Trazabilidad de Viajes (Trips) -->
   <tr>
     <th rowspan="4">US08</th>
     <th rowspan="4">Trazabilidad de viajes</th>
@@ -10377,7 +10365,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>26</td>
     <td>Implementar endpoint PUT /trips/:id/location</td>
@@ -10386,7 +10373,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>27</td>
     <td>Implementar endpoint GET /trips/deal/:id</td>
@@ -10395,7 +10381,6 @@ Link:
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>28</td>
     <td>Conectar módulo de tracking en Android</td>
@@ -10404,8 +10389,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US09: Pulido de Android para Release -->
   <tr>
     <th rowspan="3">US09</th>
     <th rowspan="3">Pulido de Android para release</th>
@@ -10416,7 +10399,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>30</td>
     <td>Optimizar navegación y flujo end-to-end</td>
@@ -10425,7 +10407,6 @@ Link:
     <td>Mauricio Elera</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>31</td>
     <td>Pruebas de integración end-to-end</td>
@@ -10434,8 +10415,6 @@ Link:
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US10: Desarrollo Flutter -->
   <tr>
     <th rowspan="4">US10</th>
     <th rowspan="4">Desarrollo inicial de Flutter</th>
@@ -10446,7 +10425,6 @@ Link:
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>33</td>
     <td>Implementar onboarding de Flutter</td>
@@ -10455,7 +10433,6 @@ Link:
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>34</td>
     <td>Conectar pantalla de login en Flutter</td>
@@ -10464,7 +10441,6 @@ Link:
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>35</td>
     <td>Implementar componentes reutilizables</td>
@@ -10473,8 +10449,6 @@ Link:
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  
-  <!-- US11: Documentación y Despliegue -->
   <tr>
     <th rowspan="2">US11</th>
     <th rowspan="2">Documentación y despliegue</th>
@@ -10485,7 +10459,6 @@ Link:
     <td>Claudia Belledone</td>
     <td>Done</td>
   </tr>
-  
   <tr>
     <td>37</td>
     <td>Desplegar backend en producción</td>
@@ -10524,7 +10497,6 @@ Link: <>
     <th>Assigned To</th>
     <th>Status</th>
   </tr>
-  <!-- US21: Registrar medidas por IA o manual -->
   <tr>
     <th rowspan="3">US21</th>
     <th rowspan="3">Registrar medidas por IA o manual con edición</th>
@@ -10551,7 +10523,6 @@ Link: <>
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  <!-- US25: Publicar solicitud y confirmar exactitud -->
   <tr>
     <th rowspan="3">US25</th>
     <th rowspan="3">Publicar solicitud y confirmar medidas/peso</th>
@@ -10578,7 +10549,6 @@ Link: <>
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  <!-- US22: Capturar fotos de ítems con reglas de calidad -->
   <tr>
     <th rowspan="3">US22</th>
     <th rowspan="3">Capturar fotos de ítems con reglas de calidad</th>
@@ -10605,7 +10575,6 @@ Link: <>
     <td>Fabiola Saldaña</td>
     <td>Done</td>
   </tr>
-  <!-- US28: Iniciar trato desde cotización y habilitar chat -->
   <tr>
     <th rowspan="3">US28</th>
     <th rowspan="3">Iniciar trato desde cotización y habilitar chat contextual</th>
@@ -10632,7 +10601,6 @@ Link: <>
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  <!-- US29: Mensajería del trato -->
   <tr>
     <th rowspan="3">US29</th>
     <th rowspan="3">Mensajería del trato: enviar y leer mensajes</th>
@@ -10659,7 +10627,6 @@ Link: <>
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  <!-- US13: Asignar unidad/placa a un trato formal -->
   <tr>
     <th rowspan="3">US13</th>
     <th rowspan="3">Asignar unidad/placa a un trato formal</th>
@@ -10686,7 +10653,6 @@ Link: <>
     <td>María Hernández</td>
     <td>Done</td>
   </tr>
-  <!-- US14: Activar tracking del viaje -->
   <tr>
     <th rowspan="3">US14</th>
     <th rowspan="3">Activar tracking del viaje y enviar posición</th>
@@ -10713,7 +10679,6 @@ Link: <>
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  <!-- US16: Confirmar entrega y adjuntar POD -->
   <tr>
     <th rowspan="3">US16</th>
     <th rowspan="3">Confirmar entrega y adjuntar prueba de entrega (POD)</th>
@@ -10740,7 +10705,6 @@ Link: <>
     <td>Ariana Agreda</td>
     <td>Done</td>
   </tr>
-  <!-- US39: Dar de alta vehículo y validar placa única -->
   <tr>
     <th rowspan="3">US39</th>
     <th rowspan="3">Dar de alta vehículo y validar placa única</th>
@@ -10838,7 +10802,6 @@ Las siguientes capturas muestran algunas de las vistas y funcionalidades desarro
 Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa5Ih93eUVb7v9cBbMH9ZRexeEjXVBrM4kErkg?e=VH2DiO>
 
 ###### 4.2.2.6. Services Documentation Evidence for Sprint Review
-
 | Endpoint               | HTTP Method | Descripción                                              | Parámetros                                     | Ejemplo de Request                                                                           | Ejemplo de Response                                             |
 | ---------------------- | ----------- | -------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
 | `/deals`               | POST        | Crea un nuevo trato al aceptar una cotización.           | `quoteId`, `requestId`, `terms`                | `{ "quoteId": "abc123", "requestId": "req456", "terms": { "price": 500, "estimatedTime": "2 días" } }` | `{ "id": "deal789", "status": "PENDING", "createdAt": "2025-10-15T10:00:00Z" }` |
