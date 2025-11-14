@@ -10794,11 +10794,32 @@ Las siguientes capturas muestran algunas de las vistas y funcionalidades desarro
 <img src="./img/Chapter-4/Sprint2_Android_Flow2.png" alt="RedCarga Android Flow 2" height="500">
 <img src="./img/Chapter-4/Sprint2_Android_Flow3.png" alt="RedCarga Android Flow 3" height="500">
 
-**Flutter - Onboarding y Login**
+**Flutter**
 
-<img src="./img/Chapter-4/Sprint2_Flutter_Onboarding1.png" alt="RedCarga Flutter Onboarding 1" height="500">
-<img src="./img/Chapter-4/Sprint2_Flutter_Onboarding2.png" alt="RedCarga Flutter Onboarding 2" height="500">
-<img src="./img/Chapter-4/Sprint2_Flutter_Login.png" alt="RedCarga Flutter Login" height="500">
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_1.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_2.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_2.2.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_3.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_4.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_5.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_6.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_7.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_8.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_9.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_10.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_11.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_12.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_13.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_14.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_15.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_16.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_17.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_18.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_19.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_20.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_21.png)
+![](./img/Chapter-4/Sprint2-ExecutionEvidence_22.png)
+
 
 Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa5Ih93eUVb7v9cBbMH9ZRexeEjXVBrM4kErkg?e=VH2DiO>
 
