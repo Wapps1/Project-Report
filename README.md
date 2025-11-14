@@ -10815,10 +10815,14 @@ Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa
 | `/trips/deal/:id`      | GET         | Obtiene el estado y ubicación actual del viaje asociado a un trato. | `id` (path)                                | GET `/trips/deal/deal789`                                                                    | `{ "id": "trip123", "status": "IN_PROGRESS", "currentLocation": {...}, "route": [...] }` |
 | `/trips/:id/complete`  | PUT         | Marca un viaje como completado.                          | `id` (path)                                    | PUT `/trips/trip123/complete`                                                                | `{ "id": "trip123", "status": "COMPLETED", "completedAt": "2025-10-15T18:00:00Z" }` |
 
-![Swagger Deals](./img/Chapter-4/Sprint2_Swagger_Deals.png)
-![Swagger Waybills](./img/Chapter-4/Sprint2_Swagger_Waybills.png)
-![Swagger Trips](./img/Chapter-4/Sprint2_Swagger_Trips.png)
-![Swagger Complete API](./img/Chapter-4/Sprint2_Swagger_Complete.png)
+<img width="1843" height="938" alt="image" src="https://github.com/user-attachments/assets/9d96f8de-2f55-44c2-8adb-777f53fd3f55" />
+
+<img width="1813" height="438" alt="image" src="https://github.com/user-attachments/assets/a2e5eb36-cf0c-4fe7-b05d-f60beb070dc8" />
+
+<img width="1845" height="823" alt="image" src="https://github.com/user-attachments/assets/05e74cd3-5df3-404a-8360-97d81759f3a6" />
+
+<img width="1832" height="962" alt="image" src="https://github.com/user-attachments/assets/056b90f4-8d7f-4ec3-b78a-c32c4177c517" />
+
 
 ###### 4.2.2.7. Software Deployment Evidence for Sprint Review
 
