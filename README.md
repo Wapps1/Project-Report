@@ -1044,9 +1044,9 @@ Asimismo, en el año 2024 se realizaron 1 109 510 intervenciones a vehículos de
 ### 1.2.2. Lean UX Process
 #### 1.2.2.1. Lean UX Problem Statements
 
-Nuestro servicio ofrece un aplicativo móvil que conecta a clientes que desean transportar carga interprovincial con proveedores que cuentan con flotas disponibles para realizar dicho servicio. La aplicación busca centralizar solicitudes, cotizaciones, pagos y trazabilidad en un solo espacio confiable.
+Nuestro servicio ofrece un aplicativo móvil que conecta a clientes que desean transportar carga interprovincial con proveedores que cuentan con flotas disponibles para realizar dicho servicio. La aplicación busca centralizar solicitudes, cotizaciones y trazabilidad en un solo espacio confiable.
 
-Hemos observado un factor crítico que afecta la confianza y satisfacción de los usuarios: actualmente, el proceso de solicitar transporte y coordinar con proveedores es informal, fragmentado y poco transparente. Los clientes enfrentan dificultades para obtener cotizaciones rápidas y confiables, mientras que los proveedores carecen de herramientas para gestionar sus flotas, pagos y documentación de manera eficiente. Esto genera demoras, desconfianza en los pagos y problemas en la trazabilidad de la carga.
+Hemos observado un factor crítico que afecta la confianza y satisfacción de los usuarios: actualmente, el proceso de solicitar transporte y coordinar con proveedores es informal, fragmentado y poco transparente. Los clientes enfrentan dificultades para obtener cotizaciones rápidas y confiables, mientras que los proveedores carecen de herramientas para gestionar sus flotas y documentación de manera eficiente. Esto genera demoras, desconfianza en los pagos y problemas en la trazabilidad de la carga.
 
 ¿Cómo podemos mejorar la confianza, rapidez y transparencia en la gestión del transporte interprovincial, asegurando que tanto clientes como proveedores cumplan sus objetivos con una experiencia clara, segura y satisfactoria dentro del aplicativo móvil?
 
@@ -1055,15 +1055,15 @@ Hemos observado un factor crítico que afecta la confianza y satisfacción de lo
 **Business Assumptions**
 
 - Creo que mis clientes necesitan una forma rápida, segura y confiable de coordinar el transporte de carga interprovincial con proveedores verificados.
-- Estas necesidades se pueden resolver con un aplicativo móvil que centralice solicitudes, cotizaciones en tiempo real, pagos seguros y trazabilidad mediante geolocalización.
+- Estas necesidades se pueden resolver con un aplicativo móvil que centralice solicitudes, cotizaciones en tiempo real y trazabilidad mediante geolocalización.
 - Mis clientes iniciales serán pequeñas y medianas empresas, comerciantes y personas naturales que requieren enviar carga entre provincias.
 - El valor #1 que un cliente quiere de mi servicio es confianza y transparencia en el proceso de contratación y transporte.
-- El cliente también puede obtener beneficios adicionales como rapidez en recibir cotizaciones, facilidad de pago, gestión automatizada de documentos de transporte y soporte en disputas.
+- El cliente también puede obtener beneficios adicionales como rapidez en recibir cotizaciones, gestión automatizada de documentos de transporte y soporte en disputas.
 - Voy a adquirir la mayoría de mis clientes a través de campañas digitales, asociaciones con cámaras de comercio, y marketing de boca a boca de los primeros usuarios satisfechos.
 - Haré dinero a través de una comisión del 1% sobre cada transacción pagada dentro de la app.
 - Mi competencia principal en el mercado serán servicios tradicionales de transporte y marketplaces informales de transporte.
 - Los venceremos debido a la seguridad en pagos, la trazabilidad de la carga, la facilidad de uso y la formalidad al emitir documentos automáticamente.
-- Mi mayor riesgo de producto es que los usuarios intenten realizar el pago fuera de la app para evitar la comisión.
+<!--- Mi mayor riesgo de producto es que los usuarios intenten realizar el pago fuera de la app para evitar la comisión.-->
 - Resolveremos esto a través de beneficios exclusivos solo disponibles con el pago en la app.
 
 **User Assumptions**
@@ -1073,7 +1073,7 @@ Clientes que necesitan transportar carga interprovincial y proveedores.
 - ¿Dónde encaja nuestro producto en su trabajo o vida?<br>
 En la organización de sus envíos y operaciones logísticas, reemplazando la informalidad actual por un sistema digital confiable.
 - ¿Qué problemas tiene nuestro producto que resolver?<br>
-Falta de transparencia en precios, informalidad en la documentación, inseguridad en pagos y dificultad en el seguimiento de la carga.
+Falta de transparencia en precios, informalidad en la documentación <!--, inseguridad en pagos--> y dificultad en el seguimiento de la carga.
 - ¿Cuándo y cómo es nuestro producto usado?<br>
 Los clientes lo usan al generar solicitudes de transporte y pagar servicios; los proveedores al responder cotizaciones, gestionar flotas y coordinar envíos. Ambos lo usan en tiempo real para chatear y dar seguimiento a cargas en tránsito.
 - ¿Qué características son importantes?<br>
@@ -1083,7 +1083,7 @@ Debe tener una interfaz móvil intuitiva, clara y confiable, con notificaciones 
 
 **Feature Assumptions**
 
-- Creemos que la aplicación debe incluir una pasarela de pagos segura que incentive a los clientes a realizar transacciones dentro de la app, garantizando que se cobre la comisión.
+<!--- Creemos que la aplicación debe incluir una pasarela de pagos segura que incentive a los clientes a realizar transacciones dentro de la app, garantizando que se cobre la comisión.-->
 - Creemos que la aplicación debe contar con un sistema de geolocalización en tiempo real para que los clientes puedan seguir la trazabilidad de sus envíos.
 - Creemos que la aplicación debe generar documentos automáticos (guía de remisión y guía de transportista) tras el pago, lo que dará formalidad y confianza al servicio.
 - Creemos que la aplicación debe permitir chat en tiempo real entre cliente y proveedor para coordinar ajustes de última hora en sus envíos.
@@ -1091,9 +1091,9 @@ Debe tener una interfaz móvil intuitiva, clara y confiable, con notificaciones 
 
 #### 1.2.2.3. Lean UX Hypothesis Statements
 
-- Creemos que los clientes usarán la pasarela de pagos dentro del aplicativo móvil cuando vean que al hacerlo obtienen automáticamente sus documentos de transporte.<br>
+<!--- Creemos que los clientes usarán la pasarela de pagos dentro del aplicativo móvil cuando vean que al hacerlo obtienen automáticamente sus documentos de transporte.<br>
 Sabremos que hemos tenido éxito<br>
-Cuando al menos el 80% de los pagos de tratos formales se realicen dentro de la app y recibamos comentarios positivos sobre la facilidad del trámite de documentos.
+Cuando al menos el 80% de los pagos de tratos formales se realicen dentro de la app y recibamos comentarios positivos sobre la facilidad del trámite de documentos.-->
 - Creemos que los clientes valorarán la trazabilidad en tiempo real de su carga a través de geolocalización.<br>
 Sabremos que hemos tenido éxito<br>
 Cuando al menos el 70% de los clientes consulte la vista de trazabilidad en cada envío y un 60% de ellos la califique como “muy útil”.
