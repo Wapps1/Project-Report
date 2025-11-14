@@ -10782,17 +10782,17 @@ Asimismo, se avanzó con la aplicación **Flutter**, habilitando el onboarding y
 
 Las siguientes capturas muestran algunas de las vistas y funcionalidades desarrolladas durante este Sprint:
 
-**Android - Tratos y Documentos**
+**Android**
 
-<img src="./img/Chapter-4/Sprint2_Android_Deals.png" alt="RedCarga Android Deals" height="500">
-<img src="./img/Chapter-4/Sprint2_Android_Waybills.png" alt="RedCarga Android Waybills" height="500">
-<img src="./img/Chapter-4/Sprint2_Android_Tracking.png" alt="RedCarga Android Tracking" height="500">
-
-**Android - Flujo Completo**
-
-<img src="./img/Chapter-4/Sprint2_Android_Flow1.png" alt="RedCarga Android Flow 1" height="500">
-<img src="./img/Chapter-4/Sprint2_Android_Flow2.png" alt="RedCarga Android Flow 2" height="500">
-<img src="./img/Chapter-4/Sprint2_Android_Flow3.png" alt="RedCarga Android Flow 3" height="500">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_23.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_24.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_25.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_26.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_27.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_28.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_29.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_30.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_31.png" width="388">
 
 **Flutter**
 
