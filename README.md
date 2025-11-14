@@ -10796,29 +10796,29 @@ Las siguientes capturas muestran algunas de las vistas y funcionalidades desarro
 
 **Flutter**
 
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_1.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_2.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_2.2.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_3.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_4.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_5.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_6.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_7.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_8.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_9.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_10.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_11.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_12.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_13.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_14.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_15.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_16.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_17.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_18.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_19.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_20.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_21.png)
-![](./img/Chapter-4/Sprint2-ExecutionEvidence_22.png)
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_1.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_2.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_2.2.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_3.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_4.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_5.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_6.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_7.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_8.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_9.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_10.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_11.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_12.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_13.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_14.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_15.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_16.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_17.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_18.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_19.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_20.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_21.png" width="388">
+<img src="./img/Chapter-4/Sprint2-ExecutionEvidence_22.png" width="388">
 
 
 Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa5Ih93eUVb7v9cBbMH9ZRexeEjXVBrM4kErkg?e=VH2DiO>
