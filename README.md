@@ -10272,9 +10272,10 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 <p>
   El objetivo de este segundo sprint fue consolidar el flujo completo de extremo a extremo en el sistema <strong>Redcarga</strong>, implementando la formalización de tratos (<strong>Deals</strong>), la emisión de documentos de envío (<strong>Waybills</strong>) y la trazabilidad del viaje (<strong>Trips</strong>) sobre el backend terminado y desplegado. Además, se trabajó en el pulido de la aplicación Android para dejarla lista para release, y se inició el desarrollo de la aplicación Flutter con onboarding y primeras pantallas conectadas al backend productivo.
 </p>
-<img src="./img/Chapter-4/Sprint2_Backlog_Trello.png" alt="Trello Sprint 2 Redcarga">
+<img width="1918" height="971" alt="image" src="https://github.com/user-attachments/assets/177df9ea-64a2-4103-b86a-718433208e36" />
+
 Link:
-<https://trello.com/invite/b/68e6e2d7acf29fad285535b3/ATTIe6ad5761ef2935368979dd98734611d486C2AF45/aplicaciones-moviles>
+https://trello.com/invite/b/6809859e0eeb459935939fdd/ATTIbd99f0fb344dbb6087c9b4fca8759803429C15BE/apps-moviles-sprint-2
 
 <table>
   <tr>
