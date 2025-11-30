@@ -249,6 +249,18 @@
             <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
             <td>Correcciones globales del trabajo: ajustes de estilo, consistencia y observaciones de revisión.</td>
         </tr>
+         <tr>
+            <td>30</td>
+            <td>5/11/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
+            <td>Culminación del proyecto en Android Studio.</td>
+        </tr>
+        <tr>
+            <td>31</td>
+            <td>29/11/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
+            <td>Culminación del proyecto en Android Studio.</td>
+        </tr>
     </table>
 <div>
 
