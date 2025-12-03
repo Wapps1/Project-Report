@@ -260,6 +260,42 @@
             <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
             <td>Culminación del proyecto en Android Studio.</td>
         </tr>
+        <tr>
+            <td>32</td>
+            <td>30/11/2025</td>
+            <td>Fabiola Del Rocio Saldaña Ayala</td>
+            <td>Sección de <b>Heurísticas de Usabilidad</b> (formato de evaluación), redacción de hallazgos y anexos correspondientes.</td>
+        </tr>
+        <tr>
+            <td>33</td>
+            <td>30/11/2025</td>
+            <td>Ariana Cecilia Agreda Sobrino</td>
+            <td>Redacción de <b>Entrevistas de validación</b>: guion, transcripciones, síntesis y conclusiones; correcciones de estilo.</td>
+        </tr>
+        <tr>
+            <td>34</td>
+            <td>01/12/2025</td>
+            <td>Claudia Valeria Belledonne Espinoza</td>
+            <td>Registro de <b>Sprint 3</b> en el informe y actualización de requisitos documentados con trazabilidad al flujo principal.</td>
+        </tr>
+        <tr>
+            <td>35</td>
+            <td>01/12/2025</td>
+            <td>Mauricio Daniel Elera Rodríguez</td>
+            <td>Sección <b>Collaboration Insights</b>: capturas del repositorio, descripción de PRs/ramas y resumen de métricas de contribución.</td>
+        </tr>
+        <tr>
+            <td>36</td>
+            <td>02/12/2025</td>
+            <td>María Patricia Hernández Uchuya</td>
+            <td>Revisión integral del informe: normalización de tablas/figuras, referencias y numeración; mejoras de redacción.</td>
+        </tr>
+        <tr>
+            <td>37</td>
+            <td>03/12/2025</td>
+            <td>Equipo</td>
+            <td>Cierre TF del informe: correcciones finales, índice actualizado, anexos consolidados y preparación de versión de entrega.</td>
+        </tr>
     </table>
 <div>
 <div style="page-break-after: always;"></div>
