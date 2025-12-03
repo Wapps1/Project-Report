@@ -56,8 +56,7 @@
 <p align="center">
     <strong>Diciembre, 2025</strong>
 </p>
-<br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br>
+<div style="page-break-after: always;"></div>
 
 <div style="text-align:center;">
     <h1 align="center">Registro de versiones del Informe</h1>
@@ -263,10 +262,7 @@
         </tr>
     </table>
 <div>
-
-<br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div style="page-break-after: always;"></div>
 
 
 
@@ -673,6 +669,12 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
         - [4.3.1. Diseño de Entrevistas](#431-diseño-de-entrevistas)
         - [4.3.2. Registro de Entrevistas](#432-registro-de-entrevistas)
         - [4.3.3. Evaluaciones según heurísticas](#433-evaluaciones-según-heurísticas)
+    - [**PROBLEMA #1: Botón de 3 puntos no ejecuta ninguna acción**](#problema-1-botón-de-3-puntos-no-ejecuta-ninguna-acción)
+    - [**PROBLEMA #2: El módulo “Últimos tratos activos” no es interactivo** ](#problema-2-el-módulo-últimos-tratos-activos-no-es-interactivo-)
+  - [**PROBLEMA #3: El encabezado “Solicitudes” no respeta el margen global**](#problema-3-el-encabezado-solicitudes-no-respeta-el-margen-global)
+  - [**PROBLEMA #4: Texto rosa del login se pierde por el fondo degradado**](#problema-4-texto-rosa-del-login-se-pierde-por-el-fondo-degradado)
+  - [**PROBLEMA #5: El color verde de las cotizaciones no respeta la paleta de la app**](#problema-5-el-color-verde-de-las-cotizaciones-no-respeta-la-paleta-de-la-app)
+  - [**PROBLEMA #6: El botón “Cerrar sesión” del perfil no cierra sesión realmente**](#problema-6-el-botón-cerrar-sesión-del-perfil-no-cierra-sesión-realmente)
 - [Conclusiones](#conclusiones)
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
     - [Conclusiones](#conclusiones-1)
@@ -684,9 +686,8 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
 - [Anexos](#anexos)
 
   
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div style="page-break-after: always;"></div>
+
 
 # Student Outcome
 
@@ -830,7 +831,7 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </tbody>
 </table>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div style="page-break-after: always;"></div>
 
 <br>
 <br>
@@ -909,7 +910,8 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
   </tbody>
 </table>
 
-<br><br><br><br><br><br><br><br>
+<div style="page-break-after: always;"></div>
+
 # Capítulo I: Presentación
 
 ## 1.1. Startup Profile
@@ -10948,9 +10950,178 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 ##### 4.3.2. Registro de Entrevistas
 ##### 4.3.3. Evaluaciones según heurísticas
 
+**UX Heuristics & Principles Evaluation**
+**Usability – Inclusive Design – Information Architecture**
+
+**CARRERA**   : Ingeniería de Software  
+**CURSO**     : Aplicaciones para Dispositivos Móviles
+**SECCIÓN**   : 1807  
+**PROFESOR**: Jorge Mayta <br>
+**AUDITOR**   : Grupo 3 <br>
+**CLIENTE(S)**: Grupo 3 <br>
+
+---
+
+**SITE o APP A EVALUAR:**
+
+Nombre de App: RedCarga
+
+---
+
+**TAREAS A EVALUAR:**
+
+El alcance de esta evaluación incluye la revisión de la usabilidad de las siguientes tareas en dispositivos Android e IOS:
+
+1. Dashboard de Proveedores y Clientes
+2. Módulo de Solicitudes 
+3. Pantalla de Inicio de Sesión
+4. Listado de Cotizaciones de Proveedores y Clientes
+5. Pantalla de Perfil
+
+---
+
+**ESCALA DE SEVERIDAD:**
+
+Los errores serán puntuados tomando en cuenta la siguiente escala de severidad:
+
+| Nivel | Descripción |
+|-------|-------------|
+| 1 | Problema superficial: puede ser fácilmente superado por el usuario o ocurre con muy poca frecuencia. No necesita ser arreglado a no ser que exista disponibilidad de tiempo. |
+| 2 | Problema menor: puede ocurrir un poco más frecuentemente o es un poco más difícil de superar para el usuario. Se le debería asignar una prioridad baja resolverlo de cara al siguiente release. |
+| 3 | Problema mayor: ocurre frecuentemente o los usuarios no son capaces de resolverlo. Es importante que sea corregido y se le debe asignar una prioridad alta. |
+| 4 | Problema muy grave: un error de gran impacto que impide al usuario continuar con el uso de la herramienta. Es imperativo que sea corregido antes del lanzamiento. |
+
+---
+
+**TABLA RESUMEN**
+
+| # | Problema                                                               | Severidad | Heurística violada                                                 |
+| - | ---------------------------------------------------------------------- | --------- | ------------------------------------------------------------------ |
+| 1 | Botón de 3 puntos sin funcionalidad (Dashboard proveedor)              | 2         | Visibilidad del estado del sistema / Control del usuario           |
+| 2 | “Últimos tratos activos” no reacciona al toque                         | 3         | Retroalimentación / Control del usuario                            |
+| 3 | Título “Solicitudes” no respeta márgenes globales                      | 1         | Consistencia y estándares                                          |
+| 4 | Texto rosa en login pierde contraste con el fondo                      | 2         | Accesibilidad / Confort visual                                     |
+| 5 | Tarjetas verdes de cotización rompen la paleta visual                  | 1         | Consistencia visual                                                |
+| 6 | Botón “Cerrar sesión” dentro del perfil NO cierra sesión correctamente | 3         | Correspondencia entre sistema y mundo real / Prevención de errores |
+
+
+**Descripción detallada de problemas**
+
+---
+<br>
+
+### **PROBLEMA #1: Botón de 3 puntos no ejecuta ninguna acción**
+
+**Pantalla:** Dashboard proveedor <br>
+**Severidad:** 2<br>
+**Heurística violada:** Usabilidad – Visibilidad del estado del sistema<br>
+<img src="./img/Chapter-4/heuristic1.png" width="320">
+
+**Problema:**<br>
+El botón de menú (⋮) ubicado en la parte superior derecha no realiza ninguna acción. El usuario espera que abra opciones como configuración o ayuda, pero actualmente no muestra retroalimentación ni interacción, generando confusión.<br>
+
+**Recomendación:**<br>
+
+* Implementar un menú contextual funcional.
+* Si aún no se usará, ocultarlo para no crear expectativas falsas.
+
+---
+
+### **PROBLEMA #2: El módulo “Últimos tratos activos” no es interactivo** <br>
+
+**Pantalla:** Dashboard proveedor<br>
+**Severidad:** 3 <br>
+**Heurística violada:** Libertad y control del usuario / Retroalimentación <br>
+<img src="./img/Chapter-4/heuristic4.png" width="320">
+
+**Problema:**<br>
+Las tarjetas de “Últimos tratos activos” se ven como botones, pero al tocarlas no sucede nada. Esto frena el flujo natural del usuario que espera continuar o ver detalles del trato.
+
+**Recomendación:**<br>
+
+* Hacer que cada tarjeta abra el detalle correspondiente al trato.
+* Si no será interactivo, mostrar estilo de tarjeta pasiva (sin elevación/hover).
+
+---
+
+
+## **PROBLEMA #3: El encabezado “Solicitudes” no respeta el margen global**<br>
+
+**Pantalla:** Lista de Solicitudes<br>
+**Severidad:** 1<br>
+**Heurística violada:** Consistencia y estándares<br>
+<img src="./img/Chapter-4/heuristic2.png" width="320">
+
+**Problema:**<br>
+El título “Solicitudes” aparece alineado demasiado a la izquierda sin seguir los márgenes utilizados en el resto de pantallas, rompiendo la armonía visual.
+
+**Recomendación:**<br>
+
+* Aplicar los márgenes estándar de la app (16–20px).
+* Revisar padding del contenedor principal.
+
+---
+
+## **PROBLEMA #4: Texto rosa del login se pierde por el fondo degradado**<br>
+
+**Pantalla:** Inicio de sesión<br>
+**Severidad:** 2<br>
+**Heurística violada:** Accesibilidad / Confort visual<br>
+<img src="./img/Chapter-4/heuristic3.png" width="320">
+
+**Problema:**<br>
+El texto rosa “¿No tienes cuenta? Regístrate” tiene poco contraste con el fondo rosado, lo que lo vuelve difícil de identificar, especialmente para usuarios con baja visión o brillo bajo.
+
+**Recomendación:**<br>
+
+* Cambiar ese texto a un color más oscuro o contrastante.
+* Agregar subrayado o icono para denotar interacción.
+
+---
+
+## **PROBLEMA #5: El color verde de las cotizaciones no respeta la paleta de la app**<br>
+
+**Pantalla:** Cotizaciones (proveedor)<br>
+**Severidad:** 1<br>
+**Heurística violada:** Consistencia y estándares<br>
+<img src="./img/Chapter-4/heuristic5.png" width="320">
+
+**Problema:**<br>
+La tarjeta verde con indicador “COTIZADA” se ve fuera de lugar dentro de la paleta cromática de Red Carga (rosados, naranjas, cremas). Pareciera tomada de otro sistema visual.
+
+**Recomendación:**<br>
+
+* Ajustar el color del badge para alinearlo a la paleta principal.
+* Usar tonos suaves o derivados del tema principal.
+
+---
+
+## **PROBLEMA #6: El botón “Cerrar sesión” del perfil no cierra sesión realmente**<br>
+
+**Pantalla:** Perfil<br>
+**Severidad:** 3<br>
+**Heurística violada:** Correspondencia entre sistema y mundo real / Manejo de errores<br>
+<img src="./img/Chapter-4/heuristic6.png" width="320">
+<img src="./img/Chapter-4/heuristic4.png" width="320">
+
+
+
+**Problema:**<br>
+El botón grande de “Cerrar sesión” solo regresa a la pantalla anterior (o dashboard), pero no elimina la sesión. El usuario cree haber cerrado sesión cuando en realidad se mantiene logueado.
+
+El único botón que sí cierra sesión es el de la última foto (posiblemente otro flujo).
+
+**Recomendación:**<br>
+
+* Hacer que ambos botones invoquen el mismo método de logout.
+* Asegurar borrado de token, cierre de sesión local y navegación a login.
+* Si uno no es “logout”, renombrarlo a “Volver”.
+
 
 <br/>
 <br/>
+
+<div style="page-break-after: always;"></div>
 
 # Conclusiones
 
