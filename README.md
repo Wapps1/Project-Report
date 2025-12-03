@@ -293,7 +293,7 @@
         <tr>
             <td>37</td>
             <td>03/12/2025</td>
-            <td>Equipo</td>
+            <td>Ariana Cecilia Agreda Sobrino, Claudia Valeria Belledonne Espinoza, Mauricio Daniel Elera Rodríguez, María Patricia Hernández Uchuya, Fabiola Del Rocio Saldaña Ayala</td>
             <td>Cierre TF del informe: revisión cruzada final, normalización de tablas/figuras, anexos y numeración; preparación de versión de entrega.</td>
         </tr>
     </table>
