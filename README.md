@@ -677,6 +677,9 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
   - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
     - [Conclusiones](#conclusiones-1)
     - [Recomendaciones](#recomendaciones)
+    - [Video App Validation](#video-app-validation)
+    - [Video Abouth the Product](#video-abouth-the-product)
+    - [Video About the Team](#video-about-the-team)
 - [Bibliografía](#bibliografía)
 - [Anexos](#anexos)
 
@@ -10977,6 +10980,23 @@ Optimizar la gestión del tiempo y recursos en tareas críticas, especialmente a
 
 Continuar promoviendo las retrospectivas internas de equipo, lo que ha demostrado ser útil para identificar obstáculos y mejorar la dinámica de trabajo.
 
+<br>
+<br>
+
+### Video App Validation
+![](./img/)
+<br>
+<br>
+
+### Video Abouth the Product
+![](./img/landing-page/about_the_product.png)
+Link de Video Abouth the Product: <https://www.youtube.com/watch?v=plMw4Gsu8_U&t=1s>
+<br>
+<br>
+
+### Video About the Team
+![](./img/landing-page/about_the_team.png)
+Link de Video About the Team: <https://www.youtube.com/watch?v=lZEPgVxrYl0>
 <br>
 <br>
 
