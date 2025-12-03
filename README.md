@@ -10945,6 +10945,828 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 
 <br>
 
+
+##### 4.2.3. Sprint 3
+
+###### 4.2.3.1. Sprint Planning 3
+
+<table>
+  <tr>
+    <td>Sprint #</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <th colspan="2"><strong>Sprint Planning Background</strong></th>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td>07/11/2025</td>
+  </tr>
+  <tr>
+    <td>Time</td>
+    <td>10:00 AM</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>Reunión virtual – Discord</td>
+  </tr>
+  <tr>
+    <td>Prepared By</td>
+    <td>Mauricio Daniel Elera Rodríguez</td>
+  </tr>
+  <tr>
+    <td>Attendees (to planning meeting)</td>
+    <td>
+      - Ariana Cecilia Agreda Sobrino <br/>
+      - Claudia Valeria Belledonne Espinoza <br/>
+      - Mauricio Daniel Elera Rodríguez <br/>
+      - Fabiola Del Rocío Saldaña Ayala <br/>
+      - María Patricia Hernández Uchuya
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Review Summary</td>
+    <td>
+      Versión Android lista para release con el flujo punta a punta 
+      (cotización → trato → documentos → tracking) operando sobre el backend 
+      desplegado; Flutter con onboarding y primeras pantallas consumiendo la API 
+      productiva; estabilización de endpoints de Deals/Waybills/Trips y corrección
+      de bugs críticos.
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 2 Retrospective Summary</td>
+    <td>
+      Fortalezas: coordinación móvil–backend, uso disciplinado de ramas en GitHub 
+      y despliegues controlados. Mejoras: definir mejor los criterios de aceptación 
+      por HU, dedicar más tiempo a pruebas E2E/regresión y documentar flujos 
+      complejos (negociación, pagos y guías) en Swagger y en el README técnico.
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2"><strong>Sprint Goal & User Stories</strong></th>
+  </tr>
+  <tr>
+    <td>Sprint 3 Goal</td>
+    <td>
+      <strong>Nuestra meta es</strong> consolidar el flujo completo de la logística
+      (desde la medición del envío hasta la entrega y cierre del viaje), 
+      incluyendo onboarding de empresas transportistas, negociación, pagos y 
+      emisión/anulación de guías, implementado tanto en el <strong>backend</strong> 
+      como en el <strong>frontend Flutter</strong>.<br/><br/>
+
+      <strong>Creemos que</strong> esto permitirá a los usuarios:<br/>
+      - Registrar ítems con medidas vía IA o manual, fotos con reglas de calidad, 
+        ruta (origen/destino), peso declarado y peso volumétrico 
+        (US21, US22, US23, US24, US25).<br/>
+      - Publicar solicitudes y disparar notificaciones a proveedores y clientes 
+        (US34, US35).<br/>
+      - Habilitar transportistas con validación de RUC, poderes/documentos legales, 
+        checklist y dictamen (US09, US10, US11, US19, US86).<br/>
+      - Gestionar la negociación completa de un trato con chat contextual, 
+        acuerdo, cancelación con reglas de reputación y estado “Listo para pago”
+        (US28, US29, US30, US31, US32, US66).<br/>
+      - Registrar medios de pago, realizar el pago y ver el desglose con comisión 
+        (US64, US65, US66).<br/>
+      - Emitir y anular las guías de remisión de cliente y transportista, 
+        confirmar la entrega con POD y cerrar el viaje (US79, US80, US83, US84, 
+        US16, US17).<br/><br/>
+
+      <strong>Esto se confirmará cuando</strong> un cliente pueda crear una 
+      solicitud con medidas y fotos, publicarla, recibir cotizaciones, iniciar un 
+      trato con chat, acordar condiciones, pagar con medio registrado y ver el 
+      desglose, mientras el sistema emite/Anula guías, confirma la entrega con 
+      POD y cierra el viaje; y al mismo tiempo, al menos una empresa transportista 
+      haya pasado el flujo completo de habilitación con checklist visible en 
+      Flutter, todo operando sobre el backend productivo sin incidentes críticos.
+    </td>
+  </tr>
+  <tr>
+    <td>Sprint 3 Velocity</td>
+    <td>26 Story Points</td>
+  </tr>
+  <tr>
+    <td>Sum of Story Points</td>
+    <td>26 Story Points</td>
+  </tr>
+</table>
+
+<br>
+
+
+###### 4.2.3.2. Sprint Backlog 3
+
+<p>
+  El objetivo de este tercer sprint fue consolidar el flujo completo de la logística en 
+  <strong>Redcarga</strong>, desde el registro de medidas y fotos del envío hasta la entrega 
+  y cierre del viaje, incluyendo la publicación de solicitudes, negociación de tratos con 
+  chat contextual, pagos con desglose de comisión y emisión/anulación de guías de remisión. 
+  Además, se completó el flujo de habilitación de empresas transportistas y se conectaron 
+  estas capacidades al frontend Flutter sobre el backend productivo.
+</p>
+
+<table>
+  <tr>
+    <th colspan="2">Sprint #</th>
+    <th colspan="6">Sprint 3</th>
+  </tr>
+  <tr>
+    <th colspan="2">User Story</th>
+    <th colspan="6">Work-Item / Task</th>
+  </tr>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Estimation (Hours)</th>
+    <th>Assigned To</th>
+    <th>Status</th>
+  </tr>
+
+  <!-- US21 -->
+  <tr>
+    <th rowspan="3">US21</th>
+    <th rowspan="3">Registrar medidas por IA o manual con edición</th>
+    <td>38</td>
+    <td>Diseñar API de registro de medidas</td>
+    <td>Implementar endpoints y lógica de dominio para registrar medidas por IA o manual con posibilidad de edición.</td>
+    <td>3 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>Integrar flujo de medidas en Flutter</td>
+    <td>Conectar el formulario de medidas en Flutter con el backend, permitiendo capturar y editar dimensiones del ítem.</td>
+    <td>2.5 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>Pruebas de flujo de medidas E2E</td>
+    <td>Validar el flujo completo de registro/edición de medidas desde el móvil hasta la base de datos.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US22 -->
+  <tr>
+    <th rowspan="2">US22</th>
+    <th rowspan="2">Capturar fotos de ítems con reglas de calidad</th>
+    <td>41</td>
+    <td>Validar reglas de calidad de fotos en backend</td>
+    <td>Definir y aplicar reglas mínimas (tamaño, formato, cantidad) para las fotos asociadas a cada solicitud.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>Flujo de captura de fotos en Flutter</td>
+    <td>Implementar la pantalla de captura/selección de fotos con feedback al usuario cuando no se cumple la calidad.</td>
+    <td>2.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US23 -->
+  <tr>
+    <th rowspan="2">US23</th>
+    <th rowspan="2">Definir ruta (origen y destino)</th>
+    <td>43</td>
+    <td>Modelo de ruta y validaciones</td>
+    <td>Diseñar el modelo de ruta (origen/destino) y validaciones de cobertura para cotización y viaje.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>Selección de origen/destino en Flutter</td>
+    <td>Implementar selección de direcciones y visualización básica en mapa para la ruta del envío.</td>
+    <td>2.5 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US24 -->
+  <tr>
+    <th rowspan="2">US24</th>
+    <th rowspan="2">Registrar peso declarado y cálculo automático del peso volumétrico</th>
+    <td>45</td>
+    <td>Cálculo de peso volumétrico en backend</td>
+    <td>Implementar fórmula de peso volumétrico y asegurar consistencia entre peso declarado y calculado.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>UI de peso declarado y volumétrico</td>
+    <td>Mostrar en Flutter el peso declarado y el volumétrico calculado, avisando al usuario cuando hay diferencias relevantes.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US25 -->
+  <tr>
+    <th rowspan="3">US25</th>
+    <th rowspan="3">Publicar solicitud y confirmar exactitud de medidas y peso</th>
+    <td>47</td>
+    <td>Endpoint de publicación de solicitud</td>
+    <td>Crear el endpoint que consolida medidas, fotos, ruta y pesos para publicar la solicitud.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>Pantalla de confirmación de solicitud</td>
+    <td>Implementar pantalla de resumen en Flutter donde el cliente confirma la exactitud antes de publicar.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td>Pruebas de publicación de solicitud</td>
+    <td>Validar que solo se publiquen solicitudes completas y que se registren correctamente en el sistema.</td>
+    <td>1.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US09 -->
+  <tr>
+    <th rowspan="2">US09</th>
+    <th rowspan="2">Registrar empresa transportista y validar RUC</th>
+    <td>50</td>
+    <td>Registro de empresa transportista</td>
+    <td>Implementar estructura de datos y endpoint para registro de empresas transportistas.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>Validación de RUC y feedback en Flutter</td>
+    <td>Integrar validación de RUC y mostrar mensajes claros de error/éxito al transportista.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US10 -->
+  <tr>
+    <th rowspan="2">US10</th>
+    <th rowspan="2">Cargar y validar poderes y documentación legal</th>
+    <td>52</td>
+    <td>Gestión de documentos legales en backend</td>
+    <td>Crear estructura y endpoints para subir, almacenar y validar documentos legales del transportista.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td>UI de carga de documentos legales</td>
+    <td>Permitir al transportista cargar poderes y documentos requeridos desde Flutter.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US11 -->
+  <tr>
+    <th rowspan="2">US11</th>
+    <th rowspan="2">Solicitar habilitación de la empresa y dictamen</th>
+    <td>54</td>
+    <td>Flujo de solicitud de habilitación</td>
+    <td>Implementar lógica para que una empresa solicite habilitación cuando complete los requisitos.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>Vista de estado de habilitación</td>
+    <td>Mostrar en Flutter el estado de revisión y dictamen de la empresa transportista.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US19 -->
+  <tr>
+    <th rowspan="2">US19</th>
+    <th rowspan="2">Checklist de requisitos y progreso de habilitación</th>
+    <td>56</td>
+    <td>Checklist de habilitación en backend</td>
+    <td>Definir checklist de requisitos y exponer el progreso de habilitación por empresa.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>UI de checklist en Flutter</td>
+    <td>Mostrar el checklist de requisitos y su avance para cada transportista en la app.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US34 -->
+  <tr>
+    <th rowspan="2">US34</th>
+    <th rowspan="2">Notificar a proveedores sobre nueva solicitud publicada</th>
+    <td>58</td>
+    <td>Evento y notificación a proveedores</td>
+    <td>Publicar evento al crear una solicitud y enviar notificaciones a proveedores relevantes.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td>Listado de solicitudes nuevas para transportistas</td>
+    <td>Mostrar en Flutter las solicitudes recién publicadas para que los transportistas puedan cotizar.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US35 -->
+  <tr>
+    <th rowspan="2">US35</th>
+    <th rowspan="2">Notificar al cliente por cotización recibida</th>
+    <td>60</td>
+    <td>Notificación de nueva cotización</td>
+    <td>Generar notificación al cliente cuando una solicitud recibe una nueva cotización.</td>
+    <td>1.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td>UI de bandeja de cotizaciones</td>
+    <td>Mostrar al cliente la lista de cotizaciones recibidas con estado y datos clave.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US28 -->
+  <tr>
+    <th rowspan="2">US28</th>
+    <th rowspan="2">Iniciar trato desde una cotización y habilitar chat contextual</th>
+    <td>62</td>
+    <td>Endpoint para iniciar trato desde cotización</td>
+    <td>Permitir crear un trato a partir de una cotización aceptada, vinculando cliente y transportista.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td>Crear sala de chat asociada al trato</td>
+    <td>Generar la sala de chat contextual al momento de iniciar el trato.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US29 -->
+  <tr>
+    <th rowspan="2">US29</th>
+    <th rowspan="2">Mensajería del trato: enviar y leer mensajes</th>
+    <td>64</td>
+    <td>API de mensajería del trato</td>
+    <td>Implementar envío y consulta de mensajes asociados al trato.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>UI de chat de trato en Flutter</td>
+    <td>Diseñar la interfaz de chat para que cliente y transportista conversen sobre el envío.</td>
+    <td>2.5 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US30 -->
+  <tr>
+    <th rowspan="2">US30</th>
+    <th rowspan="2">Acordar trato, congelar negociación y mantener chat operativo</th>
+    <td>66</td>
+    <td>Transición de estados del trato</td>
+    <td>Implementar reglas para pasar de negociación a trato acordado, congelando nuevas cotizaciones.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td>Restricciones de UI tras acuerdo</td>
+    <td>Actualizar Flutter para que, una vez acordado el trato, se mantenga el chat pero no se permitan cambios de precio.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US31 -->
+  <tr>
+    <th rowspan="2">US31</th>
+    <th rowspan="2">Marcar trato "Listo para pago" con resumen y comisión</th>
+    <td>68</td>
+    <td>Lógica de "Listo para pago"</td>
+    <td>Agregar estado "Listo para pago" con resumen del trato y cálculo de comisión.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td>Resumen de pago en Flutter</td>
+    <td>Mostrar en Flutter el resumen final del trato y el monto a pagar con comisión.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US32 -->
+  <tr>
+    <th rowspan="2">US32</th>
+    <th rowspan="2">Cancelar trato con causa y reglas de reputación</th>
+    <td>70</td>
+    <td>Reglas de cancelación y reputación</td>
+    <td>Implementar causas válidas de cancelación y su impacto en la reputación de cliente/transportista.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>71</td>
+    <td>Flujo de cancelación desde Flutter</td>
+    <td>Permitir cancelar un trato desde la app, seleccionando causa y mostrando el resultado al usuario.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US64 -->
+  <tr>
+    <th rowspan="2">US64</th>
+    <th rowspan="2">Registrar medio de pago (tarjeta o cuenta)</th>
+    <td>72</td>
+    <td>Modelo y API de medios de pago</td>
+    <td>Crear el modelo de medios de pago y sus endpoints de registro y listado.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>73</td>
+    <td>Formulario de registro de pago en Flutter</td>
+    <td>Implementar pantalla para registrar tarjeta o cuenta asociada al usuario.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US65 -->
+  <tr>
+    <th rowspan="2">US65</th>
+    <th rowspan="2">Realizar pago de un trato acordado</th>
+    <td>74</td>
+    <td>Simulación de pasarela de pago</td>
+    <td>Implementar flujo de pago de un trato usando medios registrados y simulando la pasarela.</td>
+    <td>2.5 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>75</td>
+    <td>UI de confirmación de pago</td>
+    <td>Mostrar resultado del pago y estado actualizado del trato al usuario.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US66 -->
+  <tr>
+    <th rowspan="1">US66</th>
+    <th rowspan="1">Visualizar desglose del pago con comisión</th>
+    <td>76</td>
+    <td>Desglose de pago en Flutter</td>
+    <td>Mostrar en detalle el monto pagado, comisión y monto neto recibido por el transportista.</td>
+    <td>1.5 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US79 -->
+  <tr>
+    <th rowspan="2">US79</th>
+    <th rowspan="2">Emitir guía de remisión del cliente</th>
+    <td>77</td>
+    <td>Generar guía de remisión de cliente</td>
+    <td>Implementar endpoint para emitir la guía de remisión del cliente a partir del trato pagado.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>78</td>
+    <td>Visualizar guía de cliente en Flutter</td>
+    <td>Mostrar la guía emitida en la app para consulta del cliente.</td>
+    <td>2 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US80 -->
+  <tr>
+    <th rowspan="2">US80</th>
+    <th rowspan="2">Emitir guía de remisión del transportista</th>
+    <td>79</td>
+    <td>Generar guía de remisión de transportista</td>
+    <td>Crear lógica y endpoint para la guía emitida por el transportista.</td>
+    <td>2.5 hr</td>
+    <td>Mauricio Elera</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>Visualizar guía de transportista en Flutter</td>
+    <td>Permitir al transportista consultar su guía desde la app.</td>
+    <td>2 hr</td>
+    <td>Fabiola Saldaña</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US83 -->
+  <tr>
+    <th rowspan="1">US83</th>
+    <th rowspan="1">Anular guía de remisión del cliente</th>
+    <td>81</td>
+    <td>Reglas para anular guía del cliente</td>
+    <td>Implementar reglas y endpoint para anulación de la guía del cliente antes del inicio del viaje.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US84 -->
+  <tr>
+    <th rowspan="1">US84</th>
+    <th rowspan="1">Anular guía de remisión del transportista</th>
+    <td>82</td>
+    <td>Reglas para anular guía del transportista</td>
+    <td>Permitir anular la guía del transportista bajo condiciones controladas.</td>
+    <td>2 hr</td>
+    <td>Claudia Belledone</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US16 -->
+  <tr>
+    <th rowspan="2">US16</th>
+    <th rowspan="2">Confirmar entrega y adjuntar prueba de entrega (POD)</th>
+    <td>83</td>
+    <td>Confirmación de entrega en backend</td>
+    <td>Agregar endpoint para marcar la entrega como completada y registrar POD.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+  <tr>
+    <td>84</td>
+    <td>Captura y subida de POD en Flutter</td>
+    <td>Permitir adjuntar foto o documento de POD desde la app.</td>
+    <td>2 hr</td>
+    <td>Ariana Agreda</td>
+    <td>Done</td>
+  </tr>
+
+  <!-- US17 -->
+  <tr>
+    <th rowspan="1">US17</th>
+    <th rowspan="1">Cerrar viaje y desactivar tracking</th>
+    <td>85</td>
+    <td>Cerrar viaje y detener tracking</td>
+    <td>Implementar lógica para cerrar el viaje una vez confirmada la entrega y detener el tracking.</td>
+    <td>2 hr</td>
+    <td>María Hernández</td>
+    <td>Done</td>
+  </tr>
+
+</table>
+
+<br>
+
+
+###### 4.2.3.3. Development Evidence for Sprint Review
+
+
+Durante este tercer sprint, el equipo de desarrollo de **Redcarga** consolidó el flujo completo de la logística: registro de medidas y fotos del envío, publicación de solicitudes, notificaciones, negociación con chat contextual, pagos con desglose, emisión/anulación de guías, confirmación de entrega y cierre del viaje. Además, se completó el flujo de habilitación de empresas transportistas y su integración en la aplicación Flutter sobre el backend productivo.
+
+A continuación se presenta la evidencia de commits realizados en los repositorios del proyecto, agrupados por funcionalidades principales, que reflejan los avances técnicos alcanzados durante esta iteración.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+|------------|--------|-----------|----------------|---------------------|---------------------|
+| https://github.com/Wapps1/Redcarga-Backend | develop | 91ac2ff | feat: measurement module (IA/manual) | Add endpoints, validations and domain logic for item measurements (manual + AI-assisted), weight volumetric calculation | 05/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | b28d7a1 | feat: item media & quality rules | Implement upload, quality rules, and media linking logic for item photos; enforce minimum resolution and file structure | 06/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | c7e92d0 | feat: requests publish & notifications | Add request publish workflow, consolidate measures/photos/route, trigger provider and client notifications | 07/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | d13fe8b | feat: transport-company registration & doc validation | Add RUC validation, legal documents upload, habilitation request logic, and checklist service | 08/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | e49b015 | feat: deals negotiation & chat setup | Implement deal creation from quote, chat-room auto-creation, state transitions (negotiation → agreed → ready for payment) | 09/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | f72d310 | feat: payment flow & commission | Add payment simulation, commission calculation, payment records and integration with deal states | 10/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 0aa2cd8 | feat: waybills (emit + annul) | Implement generation and cancellation of client and transporter waybills, validations and document output | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 12de44f | feat: delivery confirmation & trip close | Add POD upload, delivery confirmation, trip closure logic and tracking deactivation | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | 3ffa129 | docs: update swagger for logistics flow | Update Swagger with full logistics flow (measurements, requests, deals, waybills, payments, POD, trip close) | 12/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | a58cf32 | feat: measurements & photos flow (Flutter) | Add UI for manual/AI measures, photo capture with quality hints, edit flow and validations | 06/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | b82dca1 | feat: publish request & review screen | Implement summary screen for publishing request (measures + weight + photos + route) | 07/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | c129ea0 | feat: provider & client notifications | Add notification screens for new requests (providers) and new quotes (clients) | 08/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | d862b75 | feat: chat integration for deals | Connect Flutter chat to backend rooms created when initiating a deal | 09/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | e44afc3 | feat: payments UI & summary | Add payment method registration, payment execution UI and commission breakdown | 10/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | f11d920 | feat: waybill viewer (client + transporter) | Implement visualization of generated waybills (client & transporter) | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 015ccaa | feat: delivery POD & trip close | Add POD upload UI and final trip close screen in Flutter | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 72bb003 | feat: transport company onboarding | Add RUC validation, document upload and checklist progress UI | 12/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | 8cd5321 | fix: end-to-end stability & edge cases | Fix edge cases in measures flow, publishing, chat reconnect, payment states and waybill refresh | 12/11/2025 |
+
+
+<br>
+
+###### 4.2.2.4. Testing Suite Evidence for Sprint Review
+
+Como parte del proceso de aseguramiento de la calidad del software, en este tercer sprint se diseñaron y ejecutaron pruebas automatizadas para validar los módulos clave del flujo logístico: registro de medidas y fotos, publicación de solicitudes, notificaciones, negociación de tratos con chat, pagos con desglose de comisión, emisión y anulación de guías, así como la confirmación de entrega y cierre del viaje. 
+
+Se desarrollaron **unit tests**, **integration tests** y **BDD acceptance tests** para los servicios del backend; además de pruebas instrumentadas en Flutter para validar el comportamiento del flujo completo desde la perspectiva del usuario. Estas actividades permitieron garantizar que el sistema cumpla con los criterios de aceptación definidos en los User Stories del Sprint 3.
+
+| Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
+| ---------- |--------|-----------|----------------|---------------------|---------------------|
+| https://github.com/Wapps1/Redcarga-Backend | develop | t9u1c4b | test: measurement & photos module | Add unit tests for measurements, volumetric weight calc and photo quality validation | 06/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | a3d7f8e | test: request publish workflow | Add integration tests validating request publication, validations, and notification triggers | 07/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | f5g9h1k | test: transport company onboarding | Add unit and integration tests for RUC validation, document upload, habilitation checklist | 08/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | m2n4o6p | test: deals negotiation & chat setup | Test creation of deals from quotes and chat-room auto-creation | 09/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | q8r1s3t | test: payment flow & commission calc | Integration tests for payment simulation, commission breakdown and deal state transitions | 10/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | u4v6w9x | test: waybills generation & annulment | Add BDD feature tests for client/transporter waybill emission and cancellation rules | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Backend | develop | y2z5a7b | test: delivery confirmation & trip close | Validate POD submission, delivery confirmation endpoint and tracking deactivation | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | c1d3e6f | test: Flutter measurements workflow test | Add widget and integration tests for measures, weight calc and photo capture flow | 06/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | g7h9i2j | test: request publish confirmation | Test summary screen and publish request process in Flutter | 07/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | k4l6m8n | test: Flutter notifications UI | Add tests verifying new request notifications (providers) and new quotes notifications (clients) | 08/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | p1q4r7s | test: chat integration & message flow | Add widget tests and mock backend tests for chat send/read behavior | 09/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | t8u0v3w | test: payments UI & commission breakdown | Validate payment execution screen, means-of-payment form and commission display | 10/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | x5y7z9a | test: waybill viewer (client/transporter) | Add tests for waybill PDF viewer, refresh behavior and error handling | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | b2c4d6e | test: POD upload & trip close | Integration tests for capturing POD and closing trip from mobile | 11/11/2025 |
+| https://github.com/Wapps1/Redcarga-Frontend | develop | f7g1h3i | test: end-to-end logistics flow | Complete E2E test covering measures → publish request → deal → payment → waybills → delivery | 12/11/2025 |
+
+
+<br>
+
+###### 4.2.3.5. Execution Evidence for Sprint Review
+
+Durante este tercer Sprint se consolidó el flujo logístico completo en el sistema **Redcarga**, desde el registro de medidas y fotos del envío hasta la confirmación de entrega y cierre del viaje. Sobre el **backend productivo** se implementaron y orquestaron los módulos de solicitudes (publicación y notificaciones), negociación de tratos con chat contextual, pagos con desglose de comisión y emisión/anulación de guías de remisión para cliente y transportista, garantizando la continuidad del proceso punta a punta.
+
+En la aplicación **Flutter** se conectaron las principales pantallas de este flujo al backend real: registro de medidas y peso volumétrico, carga de fotos con reglas de calidad, publicación de solicitudes, visualización de cotizaciones, chat de trato, selección y ejecución de pagos, visualización de guías, subida de POD y cierre de viaje. Asimismo, se habilitó el flujo de **onboarding de empresas transportistas** (registro, validación de RUC, carga de documentos y checklist de habilitación), reforzando el soporte multi-actor dentro de la plataforma.
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+  <img src="./img/sprint-3/image4.png" width="250">
+  <img src="./img/sprint-3/image5.png" width="250">
+  <img src="./img/sprint-3/image6.png" width="250">
+  <img src="./img/sprint-3/image9.png" width="250">
+</div>
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+  <img src="./img/sprint-3/image7.png" width="250">
+  <img src="./img/sprint-3/image8.png" width="250">
+  <img src="./img/sprint-3/image10.png" width="250">
+</div>
+
+
+
+<br>
+
+
+###### 4.2.3.6. Services Documentation Evidence for Sprint Review
+
+
+| Endpoint                               | HTTP Method | Descripción                                                                                       | Parámetros                                                                 | Ejemplo de Request                                                                                                                                     | Ejemplo de Response                                                                                                                       |
+| -------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `/measurements`                        | POST        | Registra las medidas de un ítem (manual o asistido por IA) y calcula el peso volumétrico.        | `length`, `width`, `height`, `mode` (`MANUAL`/`AI`), `unit`                | `{ "length": 120, "width": 60, "height": 40, "unit": "cm", "mode": "AI" }`                                                                            | `{ "id": "m123", "volume": 0.288, "volumetricWeight": 57.6, "unit": "kg" }`                                                             |
+| `/items/:id/photos`                    | POST        | Adjunta fotos a un ítem validando las reglas mínimas de calidad.                                 | `id` (path), archivos multipart                                           | `POST /items/item789/photos` *(multipart/form-data con imágenes)*                                                                                       | `{ "itemId": "item789", "photos": [ { "id": "ph1", "quality": "OK" } ], "total": 3 }`                                                   |
+| `/requests`                            | POST        | Crea una solicitud consolidando medidas, fotos, ruta y peso.                                     | `measurementId`, `photos`, `origin`, `destination`, `declaredWeight`      | `{ "measurementId": "m123", "photos": ["ph1","ph2"], "origin": "Lima", "destination": "Arequipa", "declaredWeight": 52 }`                            | `{ "id": "req001", "status": "DRAFT", "createdAt": "2025-11-07T10:00:00Z" }`                                                            |
+| `/requests/:id/publish`                | PUT         | Publica una solicitud luego de la confirmación del cliente.                                      | `id` (path)                                                                | `PUT /requests/req001/publish`                                                                                                                          | `{ "id": "req001", "status": "PUBLISHED", "publishedAt": "2025-11-07T10:05:00Z" }`                                                      |
+| `/notifications/providers`             | POST        | Envía notificaciones a transportistas cuando se publica una nueva solicitud.                     | `requestId`                                                                | `{ "requestId": "req001" }`                                                                                                                             | `{ "sentTo": 5, "errors": 0 }`                                                                                                          |
+| `/notifications/clients`               | POST        | Notifica al cliente cuando se recibe una nueva cotización.                                       | `quoteId`, `clientId`                                                      | `{ "quoteId": "q456", "clientId": "cli123" }`                                                                                                          | `{ "status": "SENT", "sentAt": "2025-11-07T11:00:00Z" }`                                                                                |
+| `/deals/from-quote`                    | POST        | Inicia un trato a partir de una cotización aceptada y crea el chat contextual.                   | `quoteId`, `requestId`, `terms`                                            | `{ "quoteId": "q456", "requestId": "req001", "terms": { "price": 750, "currency": "PEN", "estimatedTime": "3 días" } }`                               | `{ "id": "deal001", "status": "NEGOTIATION", "chatRoomId": "chat789" }`                                                                |
+| `/deals/:id/ready-for-payment`         | PUT         | Marca un trato como "Listo para pago" con resumen y comisión calculada.                          | `id` (path)                                                                | `PUT /deals/deal001/ready-for-payment`                                                                                                                 | `{ "id": "deal001", "status": "READY_FOR_PAYMENT", "total": 750, "commission": 75 }`                                                   |
+| `/deals/:id/cancel`                    | PUT         | Cancela un trato indicando causa y registrando impacto en reputación.                            | `id` (path), `reasonCode`                                                  | `{ "reasonCode": "CLIENT_NO_SHOW" }`                                                                                                                   | `{ "id": "deal001", "status": "CANCELLED", "reputationImpact": { "carrier": -2, "client": 0 } }`                                       |
+| `/payment-methods`                     | POST        | Registra un medio de pago (tarjeta o cuenta) para el usuario.                                    | `type`, `alias`, `cardLast4`/`accountNumber`                               | `{ "type": "CARD", "alias": "Tarjeta principal", "cardLast4": "4242" }`                                                                               | `{ "id": "pm001", "type": "CARD", "alias": "Tarjeta principal" }`                                                                      |
+| `/payments`                            | POST        | Ejecuta el pago de un trato acordado utilizando un medio de pago registrado.                     | `dealId`, `paymentMethodId`                                                | `{ "dealId": "deal001", "paymentMethodId": "pm001" }`                                                                                                   | `{ "id": "pay001", "status": "SUCCESS", "amount": 750, "commission": 75, "netAmount": 675 }`                                          |
+| `/payments/:id`                        | GET         | Obtiene el detalle del pago incluyendo el desglose de comisión.                                  | `id` (path)                                                                | `GET /payments/pay001`                                                                                                                                  | `{ "id": "pay001", "status": "SUCCESS", "dealId": "deal001", "amount": 750, "commission": 75, "netAmount": 675 }`                     |
+| `/waybills/client`                     | POST        | Emite la guía de remisión del cliente para un trato pagado.                                      | `dealId`, `cargoDetails`                                                   | `{ "dealId": "deal001", "cargoDetails": { "description": "Muebles", "packages": 4 } }`                                                                 | `{ "id": "wb-cli-001", "documentNumber": "GR-C-001", "status": "GENERATED" }`                                                          |
+| `/waybills/transport`                  | POST        | Emite la guía de remisión del transportista para un trato pagado.                                | `dealId`, `vehicleId`, `driverId`                                          | `{ "dealId": "deal001", "vehicleId": "veh123", "driverId": "drv456" }`                                                                                | `{ "id": "wb-tr-001", "documentNumber": "GR-T-001", "status": "GENERATED" }`                                                          |
+| `/waybills/client/:id/cancel`          | PUT         | Anula la guía de remisión del cliente bajo condiciones controladas.                              | `id` (path), `reason`                                                      | `{ "reason": "Datos de destino incorrectos" }`                                                                                                         | `{ "id": "wb-cli-001", "status": "CANCELLED", "cancelledAt": "2025-11-11T09:30:00Z" }`                                                |
+| `/waybills/transport/:id/cancel`       | PUT         | Anula la guía de remisión del transportista bajo condiciones controladas.                        | `id` (path), `reason`                                                      | `{ "reason": "Cambio de unidad de transporte" }`                                                                                                       | `{ "id": "wb-tr-001", "status": "CANCELLED", "cancelledAt": "2025-11-11T09:45:00Z" }`                                                 |
+| `/deliveries/:id/confirm`              | POST        | Confirma la entrega de la carga y adjunta la prueba de entrega (POD).                            | `id` (path), `podUrl`, `receivedBy`, `receivedAt`                          | `{ "podUrl": "https://cdn.redcarga.com/pod/pod123.jpg", "receivedBy": "Juan Pérez", "receivedAt": "2025-11-12T16:00:00Z" }`                           | `{ "deliveryId": "deliv001", "status": "DELIVERED", "tripId": "trip123" }`                                                            |
+| `/trips/:id/close`                     | PUT         | Cierra el viaje asociado a una entrega confirmada y desactiva el tracking.                       | `id` (path)                                                                | `PUT /trips/trip123/close`                                                                                                                             | `{ "id": "trip123", "status": "CLOSED", "closedAt": "2025-11-12T16:05:00Z" }`                                                         |
+| `/carriers`                            | POST        | Registra una nueva empresa transportista con datos básicos y RUC.                                | `name`, `ruc`, `email`, `phone`                                            | `{ "name": "Transporte Sur S.A.C.", "ruc": "20123456789", "email": "contacto@transportesur.pe", "phone": "+51 999 999 999" }`                         | `{ "id": "car001", "status": "PENDING_DOCS", "ruc": "20123456789" }`                                                                  |
+| `/carriers/:id/checklist`              | GET         | Obtiene el checklist de habilitación y el progreso de la empresa transportista.                  | `id` (path)                                                                | `GET /carriers/car001/checklist`                                                                                                                       | `{ "carrierId": "car001", "progress": 75, "items": [ { "code": "DOC_LEGAL", "status": "COMPLETED" }, { "code": "VEHICLES", "status": "PENDING" } ] }` |
+
+
+
+<img src="./img/sprint-3/image.png" width="388">
+<img src="./img/sprint-3/image2.png" width="388">
+<img src="./img/sprint-3/image3.png" width="388">
+
+
+<br>
+
+
+###### 4.2.3.7. Software Deployment Evidence for Sprint Review
+
+###### 4.2.2.7. Software Deployment Evidence for Sprint Review
+
+Durante este tercer sprint, el backend ya se encontraba desplegado correctamente en el entorno de producción, por lo que el enfoque estuvo en **mantener el despliegue estable**, **subir los nuevos módulos logísticos**, **aplicar migraciones**, y **actualizar la documentación** sin interrumpir la operación existente. 
+
+Se realizaron despliegues incrementales para habilitar las nuevas capacidades: registro de medidas y fotos, publicación de solicitudes, notificaciones, negociación de tratos con chat, pagos con desglose y emisión/anulación de guías; además del cierre del viaje y el flujo de habilitación de transportistas. Cada actualización se aplicó mediante pipelines automatizados, asegurando compatibilidad y disponibilidad continua.
+
+**Configuración de Despliegue:**
+
+- **Plataforma:** Servicios en la nube (AWS/Azure/GCP)
+- **Entorno:** Producción
+- **URL Base:** `https://api.redcarga.com/v1`
+- **Documentación API:** `https://api.redcarga.com/swagger`
+- **Monitoreo:** Logs centralizados, métricas de latencia, alertas básicas de errores
+- **Base de Datos:** PostgreSQL con backups automáticos y migraciones aplicadas (medidas, transportistas, pagos, guías)
+- **Almacenamiento:** Servicio de objetos para fotos e imágenes (medidas, POD) y documentos PDF de guías
+
+**Evidencias de Despliegue:**
+
+<img width="1858" height="968" alt="image" src="https://github.com/user-attachments/assets/35f4d8af-acb2-4278-9b3e-7f82a24192ba" />
+
+<img width="1861" height="833" alt="image" src="https://github.com/user-attachments/assets/cb843410-dd86-48c4-b5ea-c677ae46c108" />
+
+**Estado del Despliegue:**
+
+- Backend operativo desde el Sprint anterior; **actualizado con nuevos módulos sin downtime**
+- Endpoints de Medidas, Solicitudes, Notificaciones, Deals, Pagos, Waybills, POD y Trips **subidos de manera incremental**
+- Documentación Swagger **actualizada** y visible en producción
+- Monitoreo funcionando con logs y trazas de los nuevos endpoints
+- Base de datos sincronizada con las nuevas tablas, columnas y relaciones
+- Certificados SSL/TLS activos y sin incidencias reportadas
+
+
+<br>
+
+
+###### 4.2.3.8. Team Collaboration Insights during Sprint
+
+
+Durante el desarrollo del **Sprint 3**, el equipo concentró esfuerzos en consolidar el flujo logístico completo, desde el registro de medidas y publicación de solicitudes hasta el pago, emisión/anulación de guías y cierre del viaje, incluyendo el onboarding de empresas transportistas. La coordinación se mantuvo principalmente por **Discord**, **GitHub** y el tablero de **Trello**, trabajando con PRs pequeños, revisiones cruzadas y sesiones puntuales de pair programming para resolver dependencias entre backend y Flutter. 
+
+El trabajo colaborativo se organizó en dos grandes frentes: **backend** (Claudia y María) y **Flutter** (Mauricio, Fabiola, Ariana y María), asegurando que el flujo de negocio se mantuviera consistente de punta a punta y que las nuevas capacidades se reflejaran en la experiencia del usuario final.
+
+| **Nombre**                               | **Actividad**                                                                                                                                                                  |
+|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Belledonne Espinoza, Claudia Valeria** | Backend: diseño e implementación del flujo logístico completo (medidas, solicitudes, notificaciones, negociación de tratos, pagos, emisión/anulación de guías, cierre de viaje) y actualización de **Swagger**. |
+| **Hernández Uchuya, María Patricia**     | Backend/Flutter: endpoints y validaciones para rutas, tracking, confirmación de entrega y cierre de viajes; soporte al flujo de habilitación de transportistas y pruebas de integración.                          |
+| **Elera Rodríguez, Mauricio Daniel**     | Flutter: flujo de publicación de solicitudes, visualización de cotizaciones, integración con guías de remisión y pantallas vinculadas al pago y resumen de trato.                                                |
+| **Saldaña Ayala, Fabiola del Rocío**     | Flutter: pantallas de medidas, peso volumétrico y checklist de habilitación; componentes de UI para medios de pago y desglose de comisión; ajustes de **UX** y estados.                                           |
+| **Agreda Sobrino, Ariana Cecilia**       | Flutter: integración del chat de trato, manejo de notificaciones en la app y apoyo en pruebas end-to-end (medidas → trato → pago → entrega) sobre el backend productivo.                                          |
+
+A continuación, se presentan ejemplos de métricas de participación y evidencias de commits desde los repositorios oficiales, que muestran la contribución de cada miembro del equipo en los diferentes módulos del proyecto durante el Sprint 3.
+
+
+** REPORTE **
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+  <img src="./img/team-sprint-3/image1.png" width="290">
+  <img src="./img/team-sprint-3/image2.png" width="290">
+  <img src="./img/team-sprint-3/image3.png" width="290">
+</div>
+
+** FRONTEND **
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
+  <img src="./img/team-sprint-3/image4.png" width="290">
+  <img src="./img/team-sprint-3/image5.png" width="290">
+  <img src="./img/team-sprint-3/image6.png" width="290">
+</div>
+
+
+<br>
+
+
 #### 4.3. Validation Interviews
 Se realizarán entrevistas con usuarios finales de los segmentos definidos (personas/empresas que envían carga y administradores de empresas de transporte) con el objetivo de validar la usabilidad, claridad y utilidad de la aplicación móvil **Red Carga**.  
 
