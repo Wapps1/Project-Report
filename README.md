@@ -11011,10 +11011,11 @@ Durante estas entrevistas se mostrará el prototipo funcional con los principale
 
 **UX Heuristics & Principles Evaluation**
 **Usability – Inclusive Design – Information Architecture**
+<br>
 
-**CARRERA**   : Ingeniería de Software  
-**CURSO**     : Aplicaciones para Dispositivos Móviles
-**SECCIÓN**   : 1807  
+**CARRERA**   : Ingeniería de Software  <br>
+**CURSO**     : Aplicaciones para Dispositivos Móviles<br>
+**SECCIÓN**   : 1807  <br>
 **PROFESOR**: Jorge Mayta <br>
 **AUDITOR**   : Grupo 3 <br>
 **CLIENTE(S)**: Grupo 3 <br>
