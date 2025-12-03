@@ -276,11 +276,8 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
 ## TP1
 En esta entrega, cada miembro del equipo contribuyó activamente a la consolidación de la solución, organizándose por frentes según el diseño y alcance definidos. Las capturas de Collaboration Insights de los repositorios oficiales evidencian la participación de todos.
 <img src="img/insights/insights-tp1.png" />
-<br><br><br><br><br><br>
-<br><br><br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<div style="page-break-after: always;"></div>
 
 
 # Contenido
@@ -667,6 +664,10 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
           - [4.2.2.8. Team Collaboration Insights during Sprint](#4228-team-collaboration-insights-during-sprint)
       - [4.3. Validation Interviews](#43-validation-interviews)
         - [4.3.1. Diseño de Entrevistas](#431-diseño-de-entrevistas)
+    - [Preguntas sobre la Aplicación (Red Carga)](#preguntas-sobre-la-aplicación-red-carga)
+      - [Para Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial](#para-segmento-1-personas-o-empresas-que-quieren-transportar-carga-de-forma-interprovincial)
+      - [Para Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga](#para-segmento-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
+    - [Cierre de Entrevista](#cierre-de-entrevista)
         - [4.3.2. Registro de Entrevistas](#432-registro-de-entrevistas)
         - [4.3.3. Evaluaciones según heurísticas](#433-evaluaciones-según-heurísticas)
     - [**PROBLEMA #1: Botón de 3 puntos no ejecuta ninguna acción**](#problema-1-botón-de-3-puntos-no-ejecuta-ninguna-acción)
@@ -676,12 +677,11 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
   - [**PROBLEMA #5: El color verde de las cotizaciones no respeta la paleta de la app**](#problema-5-el-color-verde-de-las-cotizaciones-no-respeta-la-paleta-de-la-app)
   - [**PROBLEMA #6: El botón “Cerrar sesión” del perfil no cierra sesión realmente**](#problema-6-el-botón-cerrar-sesión-del-perfil-no-cierra-sesión-realmente)
 - [Conclusiones](#conclusiones)
-  - [Conclusiones y recomendaciones](#conclusiones-y-recomendaciones)
-    - [Conclusiones](#conclusiones-1)
-    - [Recomendaciones](#recomendaciones)
-    - [Video App Validation](#video-app-validation)
-    - [Video Abouth the Product](#video-abouth-the-product)
-    - [Video About the Team](#video-about-the-team)
+  - [**Conclusiones**](#conclusiones-1)
+  - [**Recomendaciones**](#recomendaciones)
+    - [**Video App Validation**](#video-app-validation)
+    - [**Video Abouth the Product**](#video-abouth-the-product)
+    - [**Video About the Team**](#video-about-the-team)
 - [Bibliografía](#bibliografía)
 - [Anexos](#anexos)
 
@@ -10896,12 +10896,12 @@ Durante este segundo sprint, se completó el despliegue del backend en un entorn
 
 **Estado del Despliegue:**
 
-- ✅ Backend desplegado y operativo
-- ✅ Endpoints de Deals, Waybills y Trips disponibles
-- ✅ Documentación Swagger actualizada y accesible
-- ✅ Monitoreo básico configurado
-- ✅ Base de datos migrada y sincronizada
-- ✅ Certificados SSL/TLS configurados
+-  Backend desplegado y operativo
+-  Endpoints de Deals, Waybills y Trips disponibles
+-  Documentación Swagger actualizada y accesible
+-  Monitoreo básico configurado
+-  Base de datos migrada y sincronizada
+-  Certificados SSL/TLS configurados
 
 ###### 4.2.2.8. Team Collaboration Insights during Sprint
 
@@ -10946,8 +10946,67 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
 <br>
 
 #### 4.3. Validation Interviews
+Se realizarán entrevistas con usuarios finales de los segmentos definidos (personas/empresas que envían carga y administradores de empresas de transporte) con el objetivo de validar la usabilidad, claridad y utilidad de la aplicación móvil **Red Carga**.  
+
 ##### 4.3.1. Diseño de Entrevistas
+
+Durante estas entrevistas se mostrará el prototipo funcional con los principales flujos para cada tipo de usuario:
+
+**Flujos para Clientes (Segmento 1):**
+- Registro e inicio de sesión  
+- Completar perfil y datos de contacto  
+- Creación de solicitud de transporte  
+- Revisión de cotizaciones y selección de proveedor  
+- Uso del chat para negociar condiciones y llegar a un acuerdo  
+- Seguimiento del envío en tiempo real  
+- Apertura y seguimiento de disputas en caso de incidentes  
+
+**Flujos para Proveedores / Administradores de empresa (Segmento 2):**
+- Registro, validación y aprobación de cuenta proveedor  
+- Configuración de rutas operativas y disponibilidad de flota  
+- Recepción y gestión de solicitudes / cotizaciones  
+- Uso del chat para coordinar, negociar y cerrar tratos con el cliente  
+- Asignación de unidades al trato y activación de tracking  
+- Gestión de disputas y carga de evidencias  
+
+### Preguntas sobre la Aplicación (Red Carga)  
+
+
+#### Para Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial  
+
+1. ¿Qué tan fácil fue crear tu cuenta e iniciar sesión en Red Carga por primera vez?  
+2. ¿El proceso para completar tu perfil y datos de contacto te resultó claro o hubo campos que no entendiste?  
+3. Al crear una solicitud de transporte, ¿te pareció sencillo ingresar el origen, destino y los datos de la carga?  
+4. ¿Qué tan claro te resultó comparar las cotizaciones de distintos proveedores y elegir una?  
+5. ¿Te resultó fácil encontrar y usar el chat con el proveedor para aclarar dudas sobre la cotización y los detalles del envío?  
+6. ¿Entendiste bien para qué sirve cada una de las acciones que aparecen debajo del chat (ver cotización actual, hacer contraoferta, aceptar acuerdo, cancelar trato)?  
+7. Durante el viaje, ¿la pantalla de seguimiento (tracking) te ayudó a entender dónde estaba tu carga en cada momento?  
+8. ¿Hubo algún mensaje, icono o pantalla que te haya resultado confuso o que no sabías qué significaba?  
+9.  Pensando en tus envíos reales, ¿qué parte de Red Carga crees que usarías con más frecuencia (solicitudes, cotizaciones, chat, tracking, disputas, etc.) y qué mejorarías para que el proceso de pedir transporte sea aún más rápido y seguro?  
+
+---
+
+#### Para Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga  
+
+1. ¿El proceso de registro y validación de tu cuenta como proveedor te pareció claro y acorde a cómo trabajan normalmente con clientes?  
+2. ¿Qué tan fácil fue configurar tus rutas operativas y ver la disponibilidad de tu flota dentro de la app?  
+3. Cuando llegan nuevas solicitudes, ¿la pantalla de listado te ayuda a priorizar en cuáles cotizar primero (por fecha, ruta, tipo de carga, etc.)?  
+4. ¿Te resultó sencillo enviar una cotización y luego ver su estado (pendiente, aceptada, rechazada, etc.)?  
+5. ¿Qué tan cómodo te sentiste usando el chat para negociar condiciones (precio, fechas, cambios en la carga) con el cliente?  
+6. ¿Las acciones que aparecen junto al chat (ver cotización, hacer contraoferta, aceptar, cancelar trato) son claras y se ajustan a cómo negocian hoy con sus clientes?  
+7. ¿El flujo para asignar un vehículo y un conductor a un trato te pareció intuitivo y acorde a cómo gestionan sus operaciones hoy?  
+8. ¿La vista de tracking te aporta información suficiente para monitorear los viajes activos (desvíos, incidencias, entrega, etc.)?  
+9. En caso de disputa con un cliente, ¿crees que la carga de evidencias (fotos, comentarios) y el seguimiento del caso son claros y ordenados?  
+10. ¿Sientes que Red Carga (especialmente el chat y el tracking) podría ayudarte a reducir llamadas/WhatsApp con tus clientes? ¿Qué le agregarías para que se adapte completamente a la forma en la que gestionas hoy tus operaciones?  
+
+
+### Cierre de Entrevista  
+- En general, ¿qué fue lo que más te gustó de Red Carga?  
+- ¿Hay algo que cambiarías para que sea más fácil de usar o más visualmente clara?  
+- Si tuvieras que recomendar Red Carga a alguien, ¿qué dirías que es su mayor ventaja frente a cómo trabajas hoy (llamadas, WhatsApp, Excel, etc.)?  
+  
 ##### 4.3.2. Registro de Entrevistas
+
 ##### 4.3.3. Evaluaciones según heurísticas
 
 **UX Heuristics & Principles Evaluation**
@@ -11124,10 +11183,7 @@ El único botón que sí cierra sesión es el de la última foto (posiblemente o
 <div style="page-break-after: always;"></div>
 
 # Conclusiones
-
-## Conclusiones y recomendaciones
-
-### Conclusiones
+## **Conclusiones**
 Como equipo, confirmamos que Red Carga aborda un problema real de los remitentes: hoy la comparación de transportistas ocurre en canales informales, lo que dificulta obtener precios, tiempos y trazabilidad confiables. Nuestra solución integra cotización, negociación, pago y seguimiento en un solo flujo, reduciendo fricciones clave del “matching”.
 
 Sostenemos que el encadenado funcional Solicitud → Cotizaciones → Trato → Pago → Documentos → Tracking → Calificación es coherente con las necesidades del usuario y con un marketplace de dos lados. El “gating” por pago en la app ordena la operación, protege la comisión y deja evidencia auditable para resolver incidencias.
@@ -11139,7 +11195,7 @@ Valoramos que nuestra coordinación incremental (definición de BCs, eventos y c
 También aprendimos que la diversidad de roles en el equipo (negocio, UX, técnico) enriquece la calidad de las decisiones, siempre que exista una cadencia clara de revisión y un lenguaje común. La práctica de “cerrar” cada iteración con métricas y retroalimentación fortaleció nuestro aprendizaje colectivo.
 
 
-### Recomendaciones
+## **Recomendaciones**
 
 Recomendamos pilotear en corredores acotados y de alto volumen para equilibrar oferta y demanda, medir tiempos a primera cotización y conversión a trato, y ajustar UX y precios con datos reales. Esta estrategia nos permitirá priorizar funcionalidades con mayor impacto y optimizar costos operativos.
 
@@ -11154,18 +11210,18 @@ Continuar promoviendo las retrospectivas internas de equipo, lo que ha demostrad
 <br>
 <br>
 
-### Video App Validation
+### **Video App Validation**
 ![](./img/)
 <br>
 <br>
 
-### Video Abouth the Product
+### **Video Abouth the Product**
 ![](./img/landing-page/about_the_product.png)
 Link de Video Abouth the Product: <https://www.youtube.com/watch?v=plMw4Gsu8_U&t=1s>
 <br>
 <br>
 
-### Video About the Team
+### **Video About the Team**
 ![](./img/landing-page/about_the_team.png)
 Link de Video About the Team: <https://www.youtube.com/watch?v=lZEPgVxrYl0>
 <br>
