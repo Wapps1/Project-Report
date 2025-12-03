@@ -714,6 +714,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TB2: </strong><br>
           Implementé pantallas en Flutter para <em>chat</em>, <em>tratos</em>, eventos y <em>cotizaciones</em>. Actualicé conocimientos en gestión de estado, navegación, manejo de datos en tiempo real y pruebas instrumentadas; usé prototipos, documentación oficial y revisiones por pares.
+        <br>
+        <strong>TF: </strong><br>
+          Desarrollé pantallas en Flutter y su conexión con backend para <em>tratos</em> y eventos dentro del <em>chat</em>; realicé entrevista de validación y revisé/corrigí el informe. Apliqué conocimientos en UI dirigida por eventos, sincronización en tiempo real y depuración orientada a la experiencia.
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong> <br>
         <strong>TB1: </strong><br>
@@ -722,6 +725,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
           Implementé la creación de <em>bounded contexts</em> en el backend, la comunicación en tiempo real mediante <em>WebSockets</em> y los <em>CRUDs</em> principales. Actualicé y apliqué conocimientos en modularización con DDD (paquetes/módulos coherentes), configuración de canales WebSocket y estandarización de endpoints. Estrategias: lectura de documentación oficial, <em>spikes</em> técnicos, pruebas con clientes de mensajería y revisiones por pares para validar diseño e implementación.<br>
         <strong>TB2: </strong><br>
           Amplié soporte backend para el flujo principal (solicitudes, cotizaciones, tratos, rutas) y estabilicé la mensajería en tiempo real. Apliqué aprendizaje incremental con iteraciones cortas, pruebas y code reviews.
+        <br>
+        <strong>TF: </strong><br>
+          Actualicé requerimientos del <em>flujo principal</em> y añadí integración con <em>geolocalización</em> en el backend; revisé y corregí el informe y gestioné el <em>Sprint 3</em>. Apliqué prácticas de versionado, trazabilidad y servicios de ubicación.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong> <br>
         <strong>TB1: </strong><br>
@@ -731,6 +737,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TB2: </strong><br>
           Concluí la app Android con el flujo principal: conexión cliente–proveedor, solicitudes, cotizaciones, tratos y rutas. Profundicé en navegación, manejo de estados/errores y pruebas de integración end-to-end.
+        <br>
+        <strong>TF: </strong><br>
+          Implementé pantallas y conexión con backend en Android, completando el flujo con <em>WebSockets</em>; realicé entrevista de validación y revisé/corrigí el informe. Apliqué conocimientos en tiempo real, ciclo de vida y resiliencia de red.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
@@ -741,6 +750,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TB2: </strong><br>
           Implementé pantallas de <em>flotas</em> y <em>conductores</em> y avancé en <em>solicitudes</em> en Flutter. Registré el Sprint 2 en el informe. Actualicé conocimientos en formularios, validación y navegación.
+        <br>
+        <strong>TF: </strong><br>
+          Desarrollé pantallas en Flutter y conexión con backend para <em>rutas</em> y módulo de <em>drivers</em> con geolocalización; revisé y corregí el informe. Apliqué conocimientos en permisos, mapas y comunicación de servicios de ubicación.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong> <br>
         <strong>TB1: </strong><br>
@@ -751,6 +763,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br>
         <strong>TB2: </strong><br>
           Desarrollé pantallas de <em>login</em> y <em>registro</em> conectadas al backend, además de <em>solicitudes</em> y <em>home</em> en Flutter. Apliqué buenas prácticas en autenticación, manejo de errores y estados.
+      <br>
+        <strong>TF: </strong><br>
+          Implementé pantallas en Flutter y conexión con backend para <em>solicitudes</em> y <em>cotizaciones</em>, iniciando el flujo principal; realicé heurísticas, entrevista de validación y revisión/corrección del informe. Apliqué conocimientos en validación de formularios y criterios de usabilidad.
       </td>
       <td>
         <strong>TB1: </strong><br>
@@ -761,6 +776,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br><br>
         <strong>TB2: </strong><br>
         En TB2 se actualizó y aplicó conocimiento para cerrar el flujo principal de la solución: pantallas Flutter (chat, tratos, solicitudes, flotas/conductores, autenticación), app Android completa y backend alineado. Se reforzaron prácticas de pruebas, gestión de estado, mensajería en tiempo real y documentación del sprint.
+      <br><br>
+        <strong>TF: </strong><br>
+        En TF se integraron geolocalización y mensajería en tiempo real para el flujo completo; se realizaron entrevistas de validación, heurísticas y correcciones del informe. Se aplicaron aprendizajes en sincronización de eventos, servicios de ubicación, gestión de estados y trazabilidad de requisitos, fortaleciendo la calidad final del producto.
       </td>
     </tr>
     <tr>
@@ -776,6 +794,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TB2: </strong><br>
         El desarrollo de chat/tratos en tiempo real demandó profundizar en sincronización, reconexión y pruebas de UI; consolidé un plan de mejora continua en estado, navegación y calidad visual.
+        <br>
+        <strong>TF: </strong><br>
+        La validación con usuarios y la gestión de eventos en chat exigieron seguir aprendiendo sobre diseño conversacional, tolerancia a fallos y métricas de UX; mantengo iteraciones guiadas por evidencia.
         <br><br>
         <strong>Claudia Valeria Belledonne Espinoza</strong>  <br>
         <strong>TB1: </strong><br>
@@ -786,6 +807,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TB2: </strong><br>
         El cierre del flujo backend evidenció la necesidad de seguir profundizando en consistencia transaccional, idempotencia y observabilidad; mantengo ciclos de aprendizaje con pruebas y revisiones.
+        <br>
+        <strong>TF: </strong><br>
+        La integración de geolocalización y actualización de requisitos refuerza la necesidad de aprendizaje continuo en privacidad, rendimiento y trazabilidad; sostengo prácticas de documentación viva y monitoreo.
         <br><br>
         <strong>Mauricio Daniel Elera Rodríguez</strong>  <br>
         <strong>TB1: </strong><br>
@@ -796,6 +820,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
         <br>
         <strong>TB2: </strong><br>
         El cierre del flujo Android expuso casos límite de red y usabilidad; priorizo aprendizaje en pruebas automatizadas, manejo offline y monitoreo de rendimiento.
+        <br>
+        <strong>TF: </strong><br>
+        Completar el flujo con WebSockets y validación de campo evidencia la necesidad de seguir profundizando en observabilidad móvil, experiencia en tiempo real y calidad de servicio.
         <br><br>
         <strong>María Patricia Hernández Uchuya</strong>  <br>
         <strong>TB1: </strong><br>
@@ -806,6 +833,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
          <br>
         <strong>TB2: </strong><br>
         Las pantallas de flotas/conductores y solicitudes mostraron retos de usabilidad y validación; continúo aprendiendo patrones de formularios, accesibilidad y gestión de datos.
+        <br>
+        <strong>TF: </strong><br>
+        La integración de rutas y geolocalización demanda aprendizaje constante en permisos, consumo eficiente de APIs de mapas y buenas prácticas de privacidad; sostengo iteraciones con pruebas de campo.
         <br><br>
         <strong>Fabiola Del Rocio Saldaña Ayala</strong>  <br>
         <strong>TB1: </strong><br>
@@ -816,6 +846,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
        <br>
         <strong>TB2: </strong><br>
         Los flujos de autenticación y pantallas iniciales exigieron reforzar seguridad, manejo de errores y estados; sigo profundizando en buenas prácticas de auth y telemetría de UX.
+      <br>
+        <strong>TF: </strong><br>
+        La puesta en marcha de solicitudes/cotizaciones y la validación por heurísticas confirman la necesidad de aprendizaje continuo en formularios robustos, microcopys y evaluación de usabilidad.
       </td>
       <td>
         <strong>TB1: </strong><br>
@@ -826,6 +859,9 @@ conocimientos según sea necesario, utilizando estrategias de aprendizaje apropi
       <br><br>
         <strong>TB2: </strong><br>
         En TB2 reconocimos la necesidad de aprendizaje permanente para cerrar el flujo principal y mejorar calidad: profundizamos en estado y navegación en Flutter/Android, robustecimos backend en tiempo real, fortalecimos pruebas y documentamos Sprint 2. Mantuvimos ciclos de mejora con revisiones por pares y correcciones globales del trabajo.
+      <br><br>
+        <strong>TF: </strong><br>
+        En TF consolidamos aprendizaje continuo al integrar geolocalización y mensajería en tiempo real, ejecutar entrevistas de validación y aplicar heurísticas; además, realizamos correcciones finales del informe. Esto reforzó prácticas de evidencia empírica, observabilidad y mejora iterativa, elevando la robustez del producto final.
       </td>
     </tr>
   </tbody>
