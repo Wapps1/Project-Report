@@ -264,37 +264,37 @@
             <td>32</td>
             <td>30/11/2025</td>
             <td>Fabiola Del Rocio Saldaña Ayala</td>
-            <td>Sección de <b>Heurísticas de Usabilidad</b> (formato de evaluación), redacción de hallazgos y anexos correspondientes.</td>
+            <td>Redacción de Heurísticas de Usabilidad (formato de evaluación y hallazgos), entrevista de validación y correcciones generales del informe.</td>
         </tr>
         <tr>
             <td>33</td>
             <td>30/11/2025</td>
             <td>Ariana Cecilia Agreda Sobrino</td>
-            <td>Redacción de <b>Entrevistas de validación</b>: guion, transcripciones, síntesis y conclusiones; correcciones de estilo.</td>
+            <td>Sección de entrevista de validación (guion, síntesis y conclusiones) y revisión/corrección de estilo y consistencia del documento.</td>
         </tr>
         <tr>
             <td>34</td>
             <td>01/12/2025</td>
             <td>Claudia Valeria Belledonne Espinoza</td>
-            <td>Registro de <b>Sprint 3</b> en el informe y actualización de requisitos documentados con trazabilidad al flujo principal.</td>
+            <td>Actualización de requerimientos documentados del flujo principal e integración con geolocalización; registro de Sprint 3 en el informe.</td>
         </tr>
         <tr>
             <td>35</td>
-            <td>01/12/2025</td>
-            <td>Mauricio Daniel Elera Rodríguez</td>
-            <td>Sección <b>Collaboration Insights</b>: capturas del repositorio, descripción de PRs/ramas y resumen de métricas de contribución.</td>
+            <td>02/12/2025</td>
+            <td>María Patricia Hernández Uchuya</td>
+            <td>Documentación en el informe de rutas y módulo de drivers/geolocalización (descripción y figuras); revisión y corrección de redacción.</td>
         </tr>
         <tr>
             <td>36</td>
             <td>02/12/2025</td>
-            <td>María Patricia Hernández Uchuya</td>
-            <td>Revisión integral del informe: normalización de tablas/figuras, referencias y numeración; mejoras de redacción.</td>
+            <td>Mauricio Daniel Elera Rodríguez</td>
+            <td>Redacción de resultados de validación relacionados al flujo en tiempo real y correcciones de secciones referidas a mensajería y experiencia de usuario.</td>
         </tr>
         <tr>
             <td>37</td>
             <td>03/12/2025</td>
             <td>Equipo</td>
-            <td>Cierre TF del informe: correcciones finales, índice actualizado, anexos consolidados y preparación de versión de entrega.</td>
+            <td>Cierre TF del informe: revisión cruzada final, normalización de tablas/figuras, anexos y numeración; preparación de versión de entrega.</td>
         </tr>
     </table>
 <div>
