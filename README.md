@@ -11065,6 +11065,10 @@ A continuación, se presentan ejemplos de métricas de participación desde los 
   estas capacidades al frontend Flutter sobre el backend productivo.
 </p>
 
+<img src="./img/sprint-3/trello.png" width="250">
+
+link : https://trello.com/b/96tAkERX/apps-moviles-sprint-3
+
 <table>
   <tr>
     <th colspan="2">Sprint #</th>
