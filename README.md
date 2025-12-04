@@ -686,7 +686,6 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
           - [4.2.1.4. Testing Suite Evidence for Sprint Review](#4214-testing-suite-evidence-for-sprint-review)
           - [4.2.1.5. Execution Evidence for Sprint Review](#4215-execution-evidence-for-sprint-review)
           - [4.2.1.6. Services Documentation Evidence for Sprint Review](#4216-services-documentation-evidence-for-sprint-review)
-          - [4.2.1.7. Software Deployment Evidence for Sprint Review](#4217-software-deployment-evidence-for-sprint-review)
           - [4.2.1.8. Team Collaboration Insights during Sprint](#4218-team-collaboration-insights-during-sprint)
         - [4.2.2. Sprint 2](#422-sprint-2)
           - [4.2.2.1. Sprint Planning 2](#4221-sprint-planning-2)
@@ -698,6 +697,15 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
           - [4.2.2.6. Services Documentation Evidence for Sprint Review](#4226-services-documentation-evidence-for-sprint-review)
           - [4.2.2.7. Software Deployment Evidence for Sprint Review](#4227-software-deployment-evidence-for-sprint-review)
           - [4.2.2.8. Team Collaboration Insights during Sprint](#4228-team-collaboration-insights-during-sprint)
+        - [4.2.3. Sprint 3](#423-sprint-3)
+          - [4.2.3.1. Sprint Planning 3](#4231-sprint-planning-3)
+          - [4.2.3.2. Sprint Backlog 3](#4232-sprint-backlog-3)
+          - [4.2.3.3. Development Evidence for Sprint Review](#4233-development-evidence-for-sprint-review)
+          - [4.2.2.4. Testing Suite Evidence for Sprint Review](#4224-testing-suite-evidence-for-sprint-review-1)
+          - [4.2.3.5. Execution Evidence for Sprint Review](#4235-execution-evidence-for-sprint-review)
+          - [4.2.3.6. Services Documentation Evidence for Sprint Review](#4236-services-documentation-evidence-for-sprint-review)
+          - [4.2.3.7. Software Deployment Evidence for Sprint Review](#4237-software-deployment-evidence-for-sprint-review)
+          - [4.2.3.8. Team Collaboration Insights during Sprint](#4238-team-collaboration-insights-during-sprint)
       - [4.3. Validation Interviews](#43-validation-interviews)
         - [4.3.1. Diseño de Entrevistas](#431-diseño-de-entrevistas)
     - [Preguntas sobre la Aplicación (Red Carga)](#preguntas-sobre-la-aplicación-red-carga)
@@ -705,6 +713,8 @@ En esta entrega, cada miembro del equipo contribuyó activamente a la consolidac
       - [Para Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga](#para-segmento-2-administradores-de-empresas-que-se-encargan-del-transporte-interprovincial-de-carga)
     - [Cierre de Entrevista](#cierre-de-entrevista)
         - [4.3.2. Registro de Entrevistas](#432-registro-de-entrevistas)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-6)
+    - [**Resumen de la Entrevista**](#resumen-de-la-entrevista-7)
         - [4.3.3. Evaluaciones según heurísticas](#433-evaluaciones-según-heurísticas)
     - [**PROBLEMA #1: Botón de 3 puntos no ejecuta ninguna acción**](#problema-1-botón-de-3-puntos-no-ejecuta-ninguna-acción)
     - [**PROBLEMA #2: El módulo “Últimos tratos activos” no es interactivo** ](#problema-2-el-módulo-últimos-tratos-activos-no-es-interactivo-)
@@ -10264,7 +10274,6 @@ Link de video de demostración: <https://1drv.ms/f/c/2ed3f16b3465857f/En7pd0otwa
 ![Swagger 5](./img/Chapter-4/Sprint_Evidence_Swagger5.png)
 ![Swagger 6](./img/Chapter-4/Sprint_Evidence_Swagger6.png)
 
-###### 4.2.1.7. Software Deployment Evidence for Sprint Review
 ###### 4.2.1.8. Team Collaboration Insights during Sprint
 
 Durante el desarrollo del Sprint 1, todos los miembros del equipo participaron activamente en la implementación de los componentes principales del sistema Redcarga, distribuyendo responsabilidades entre las áreas de backend, frontend móvil y landing page.
@@ -11770,8 +11779,6 @@ En la aplicación **Flutter** se conectaron las principales pantallas de este fl
 
 ###### 4.2.3.7. Software Deployment Evidence for Sprint Review
 
-###### 4.2.2.7. Software Deployment Evidence for Sprint Review
-
 Durante este tercer sprint, el backend ya se encontraba desplegado correctamente en el entorno de producción, por lo que el enfoque estuvo en **mantener el despliegue estable**, **subir los nuevos módulos logísticos**, **aplicar migraciones**, y **actualizar la documentación** sin interrumpir la operación existente. 
 
 Se realizaron despliegues incrementales para habilitar las nuevas capacidades: registro de medidas y fotos, publicación de solicitudes, notificaciones, negociación de tratos con chat, pagos con desglose y emisión/anulación de guías; además del cierre del viaje y el flujo de habilitación de transportistas. Cada actualización se aplicó mediante pipelines automatizados, asegurando compatibilidad y disponibilidad continua.
@@ -11905,6 +11912,72 @@ Durante estas entrevistas se mostrará el prototipo funcional con los principale
   
 ##### 4.3.2. Registro de Entrevistas
 
+**Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
+
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Rafael Flores</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>37 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Dueño de empresa</td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 26:16 s - Fin: 30:57 s</td>
+  </tr>
+</table>
+
+<br>
+<img src="img/entrevistas-img/validation_interview_rafael.png" alt="Entrevista rafael" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### **Resumen de la Entrevista**
+
+Rafael, dueño de una empresa transportista nos comenta que le pareció bastante atractiva e intuitiva la aplicación de Red Carga. Destacó la practicidad para conectar a clientes con proveedores mediante un chat. Le agradó el manejo de las solicitudes y el proceso de cotización. Sugirió simplificar el proceso de ingreso de datos para las flotas y rutas. Asimismo comentó que le gustaría que se pudiera implementar un modo oscuro y de ser posible, una estimación de precio por la distancia de la ruta. 
+
+---
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Juan José Rodríguez</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>19 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Jefe de logística</td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 26:16 s - Fin: 30:57 s</td>
+  </tr>
+</table>
+
+<br>
+<img src="img/entrevistas-img/validation_interview_juanjose.png" alt="Entrevista Juan Jose" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### **Resumen de la Entrevista**
+
+Juan José, jefe de logística, nos indica que le pareció bastante útil el aplicativo para la gestión de transporte de carga y comenta que le pareció facil de entender la interfaz. Destacó la practicidad para conectar a clientes con proveedores mediante un chat, no obstante, igual considera vital incluir funcionalidad de llamadas o vincular a RedCarga con Whatsapp debido a que por chat no se puede tener una conversación más clara o genuina. De igual forma destaca que el concepto y ejecución de la aplicación superó sus expectativas y espera utilizarlo pronto. 
+
+---
 ##### 4.3.3. Evaluaciones según heurísticas
 
 **UX Heuristics & Principles Evaluation**
@@ -12122,8 +12195,12 @@ Link de Video Abouth the Product: <https://www.youtube.com/watch?v=plMw4Gsu8_U&t
 
 ### **Video About the Team**
 ![](./img/landing-page/about_the_team.png)
-Link de Video About the Team: <https://www.youtube.com/watch?v=lZEPgVxrYl0>
+Link de Video About the Team Sprint 2: <https://www.youtube.com/watch?v=lZEPgVxrYl0>
+
 <br>
+
+Link de Video About the Team Sprint 3: <https://youtu.be/zJqibBHS7_c>
+
 <br>
 
 # Bibliografía
