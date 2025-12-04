@@ -313,7 +313,7 @@ En esta entrega, cada miembro del equipo contribuyó activamente al desarrollo d
 En esta entrega, cada miembro del equipo contribuyó activamente a la consolidación de la solución, organizándose por frentes según el diseño y alcance definidos. Las capturas de Collaboration Insights de los repositorios oficiales evidencian la participación de todos.
 <img src="img/insights/insights-tp1.png" />
 <br><br><br><br>
-## TP1
+## TF1
 En esta entrega, cada miembro del equipo contribuyó activamente a la consolidación de la aplicación, organizándose por frentes según el diseño y alcance definidos. Las capturas de Collaboration Insights de los repositorios oficiales evidencian la participación de todos.
 <img src="img/insights/insights-tf1.png" />
 <br><br><br><br>
