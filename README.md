@@ -11912,6 +11912,106 @@ Durante estas entrevistas se mostrará el prototipo funcional con los principale
   
 ##### 4.3.2. Registro de Entrevistas
 
+**Video de entrevistas de validación:** [https://www.youtube.com/watch?v=dfohZpMzVZY&feature=youtu.be](https://www.youtube.com/watch?v=dfohZpMzVZY&feature=youtu.be)
+
+**Segmento 1: Personas o empresas que quieren transportar carga de forma interprovincial**
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Carlos Castilla</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>29 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Dueño de una pequeña empresa de venta de electrodomésticos</td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 02:15 min - Fin: 09:42 min</td>
+  </tr>
+</table>
+
+<br>
+<img src="./img/Chapter-4/ENTREVISTA-CARLOS-GPC.png" alt="Entrevista Carlos Castilla" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### **Resumen de la Entrevista**
+
+Carlos, dueño de una pequeña empresa que envía productos a distintas provincias, comentó que la app le pareció muy intuitiva desde el registro hasta la creación de su primera solicitud. Destacó que el formulario para ingresar origen, destino y detalles de la carga le resultó claro y rápido, y que las cotizaciones de los proveedores se mostraban de forma ordenada, facilitando la comparación. Mencionó que el chat le ayudó a coordinar pequeños cambios en el horario de recojo sin necesidad de hacer llamadas y que la pantalla de tracking le dio tranquilidad al ver en tiempo real dónde estaba su mercadería. Como sugerencia, indicó que sería útil poder guardar “direcciones frecuentes” para no volver a escribirlas en cada envío.
+
+---
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Collen Rodríguez</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>24 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Coordinadora de envíos de una tienda online de ropa</td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 11:03 min - Fin: 18:20 min</td>
+  </tr>
+</table>
+
+<br>
+<img src="./img/Chapter-4/ENTREVISTA-COLLLEEN.png" alt="Entrevista Collen Rodríguez" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### **Resumen de la Entrevista**
+
+Collen, encargada de coordinar envíos de pedidos online a distintas regiones, indicó que Red Carga le facilitó mucho ver todas sus solicitudes y el estado de cada una en una sola pantalla. Comentó que le pareció especialmente útil poder revisar varias cotizaciones para la misma solicitud y elegir la que mejor se ajustaba a su presupuesto y tiempos de entrega. Resaltó que el chat le permitió aclarar rápidamente dudas sobre horarios y tipo de carga, y que la interfaz le resultó “limpia” y fácil de entender, incluso sin tutorial. Sugirió como mejora poder exportar un pequeño resumen de cada envío (proveedor elegido, precio y fecha de entrega) para compartirlo con su equipo por correo.
+
+---
+
+<table align="center" style="margin: 0 auto;">
+  <tr>
+    <td><strong>Campo</strong></td>
+    <td><strong>Información</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Nombre completo</strong></td>
+    <td>Carlos Gonzales</td>
+  </tr>
+  <tr>
+    <td><strong>Edad</strong></td>
+    <td>33 años</td>
+  </tr>
+  <tr>
+    <td><strong>Cargo / Rol en la empresa</strong></td>
+    <td>Responsable de logística en una empresa de insumos para restaurantes</td>
+  </tr>
+  <tr>
+    <td><strong>Duración</strong></td>
+    <td>Inicio: 19:05 min - Fin: 26:40 min</td>
+  </tr>
+</table>
+
+<br>
+<img src="./img/Chapter-4/ENTREVISTA-CARLOTA.png" alt="Entrevista Carlos Gonzales" width="600" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+### **Resumen de la Entrevista**
+
+Carlos, responsable de logística de una empresa que envía insumos a restaurantes en distintas ciudades, mencionó que Red Carga le permitió tener un mejor control de los envíos activos gracias a la vista de tracking y al historial de solicitudes. Valoró que cada cotización mostrara claramente el precio, tiempos estimados y tipo de unidad, lo que le ayudó a justificar su elección frente a su jefe. Comentó también que el flujo de creación de solicitudes le pareció rápido y que el sistema de notificaciones dentro de la app le evitó estar revisando permanentemente el WhatsApp. Como posible mejora, propuso permitir marcar ciertos proveedores como “favoritos” para revisarlos primero en futuros envíos.
+
+---
+
 **Segmento 2: Administradores de empresas que se encargan del transporte interprovincial de carga**
 
 
