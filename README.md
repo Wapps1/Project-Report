@@ -12328,3 +12328,4 @@ Link de la Landing Page: https://redcarga-landing-page.vercel.app/ <br>
 Link del Backend Desplegado: redcarga-api-br01.azurewebsites.net <br>
 Link del Figma wireframes: https://www.figma.com/design/d8HuBb2ghZAFg0ed2YpmOp/Red-Carga-Borrador--Copy-?node-id=2023-340&t=SxNGwgIyilDw7GEy-1<br>
 Link del Figma mock-ups: https://www.figma.com/design/aPLmebJmJfhS3pAy79p1en/Red-Carga-MockUps?node-id=0-1&t=XrPN4i8mx35qDjoQ-1 <br>
+Link del video TF: https://upcedupe-my.sharepoint.com/personal/u202315044_upc_edu_pe/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fu202315044%5Fupc%5Fedu%5Fpe%2FDocuments%2F2025%2020%2E%20%5B1ACC0238%5D%20Aplicaciones%20para%20Dispositivos%20M%C3%B3viles%2Ftf&ga=1 <br>
